@@ -16,7 +16,7 @@ public class LoginController {
 
     private final HttpSession httpSession;
 
-    @GetMapping(value = {"/", "/hello"})
+    @GetMapping(value = {"/", "/oauth2/authorization/*"})
     public String welcome(Model model) {
 //        model.addAttribute("posts", postsService.findAll());
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
@@ -25,7 +25,7 @@ public class LoginController {
         } else {
             model.addAttribute("userName", "손님");
         }
-        System.out.println("user = " + user);
+        System.out.println("user = " + user.toString());
         return "index";
     }
 
