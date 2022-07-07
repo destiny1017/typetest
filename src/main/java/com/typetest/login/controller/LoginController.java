@@ -2,6 +2,7 @@ package com.typetest.login.controller;
 
 import com.typetest.login.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -25,7 +27,8 @@ public class LoginController {
         } else {
             model.addAttribute("userName", "손님");
         }
-        System.out.println("user = " + user.toString());
+        log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
+
         return "index";
     }
 
