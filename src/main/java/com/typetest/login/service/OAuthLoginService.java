@@ -45,7 +45,7 @@ public class OAuthLoginService implements LoginService, OAuth2UserService<OAuth2
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        // OAuth2 서비스 id (구글, 카카F오, 네이버)
+        // OAuth2 서비스 id (구글, 카카오, 네이버)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // OAuth2 로그인 진행 시 키가 되는 필드 값(PK)
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
