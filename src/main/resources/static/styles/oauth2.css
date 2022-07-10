@@ -1,0 +1,97 @@
+.icon-social {
+    height: 17px;
+    width: 17px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: text-top;
+    margin-right: 10px;
+}
+.icon-github {
+    background-image: url(/assets/images/social/github.png);
+}
+.icon-google {
+    background-image: url(/assets/images/social/google.png);
+}
+.icon-facebook {
+    background-image: url(/assets/images/social/facebook.png);
+}
+.icon-kakao {
+    background-image: url(/assets/images/social/kakao.png);
+}
+.icon-naver {
+    background-image: url(/assets/images/social/naver.png);
+}
+
+.btn-facebook,
+.btn-facebook:visited {
+    background-color: #1877F2;
+    color: #fff;
+}
+.btn-facebook:hover,
+.btn-facebook:active,
+.btn-facebook:focus {
+    background-color: #1877F2;
+    color: #fff;
+	box-shadow: 1px 1px 1px 1px #b3b3b3;
+}
+.btn-twitter,
+.btn-twitter:visited {
+    background-color: #32b9ff;
+    color: #fff;
+}
+.btn-twitter:hover,
+.btn-twitter:active,
+.btn-twitter:focus {
+    background-color: #30b1ef;
+    color: #fff;
+}
+.btn-google,
+.btn-google:visited {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #dfdfdf;
+}
+.btn-google:hover,
+.btn-google:active,
+.btn-google:focus {
+    background-color: #fff;
+    color: #000;
+    box-shadow: 1px 1px 1px 1px #b3b3b3;
+}
+.btn-github,
+.btn-github:visited {
+    background-color: #000;
+    color: #fff;
+}
+.btn-github:hover,
+.btn-github:active,
+.btn-github:focus {
+    background-color: #000;
+    color: #fff;
+	box-shadow: 1px 1px 1px 1px #b3b3b3;
+}
+.btn-kakao,
+.btn-kakao:visited {
+    background-color: #fee500;
+    color: #000;
+}
+.btn-kakao:hover,
+.btn-kakao:active,
+.btn-kakao:focus {
+    background-color: #fee500;
+    color: #000;
+    box-shadow: 1px 1px 1px 1px #b3b3b3;
+}
+.btn-naver,
+.btn-naver:visited {
+    background-color: #1EC800;
+    color: #fff;
+}
+.btn-naver:hover,
+.btn-naver:active,
+.btn-naver:focus {
+    background-color: #1EC800;
+    color: #fff;
+    box-shadow: 1px 1px 1px 1px #b3b3b3;
+}

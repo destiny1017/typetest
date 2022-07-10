@@ -32,8 +32,8 @@ public class LoginController {
         return "index";
     }
 
-    @GetMapping("/test")
-    public String test(Model model) {
-        return "test";
+    @GetMapping("/loginPage")
+    public String loginPage(Model model) {
+        return "login/login";
     }
 }
