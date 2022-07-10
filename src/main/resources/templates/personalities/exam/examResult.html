@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/personalities/fragments/header.html :: header">
+    <meta charset="utf-8">
+</head>
+<body>
+<div class="container-md" style="text-align: center;">
+    <!-- contents -->
+    <div style="width: 500px; display: inline-block;">
+        <!-- head -->
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1">ExamTest</span>
+            </div>
+        </nav>
+
+        <!-- body text -->
+        <figure class="text-center py-3">
+            <blockquote class="blockquote">
+                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid py-3" alt="...">
+                <p>
+                    Bootstrap’s components are largely built with a base-modifier nomenclature. We group as many shared properties as possible into a base class, like .btn, and then group individual styles for each variant into modifier classes, like .btn-primary or .btn-success.
+
+                    To build our modifier classes, we use Sass’s @each loops to iterate over a Sass map. This is especially helpful for generating variants of a component by our $theme-colors and creating responsive variants for each breakpoint. As you customize these Sass maps and recompile, you’ll automatically see your changes reflected in these loops.
+
+                    Check out our Sass maps and loops docs for how to customize these loops and extend Bootstrap’s base-modifier approach to your own code.
+                </p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+                Someone famous in <cite title="Source Title">Source Title</cite>
+            </figcaption>
+        </figure>
+
+        <!-- button line -->
+        <div class="text-center py-3">
+            <button class="btn btn-primary" onclick="location.href='examStart'">Retry</button>
+        </div>
+
+        <!-- Oauth2 button line -->
+        <div class="text-center py-5">
+            <div>
+                <p>Login to save your personal type..</p>
+            </div>
+            <button class="btn btn-secondary" onclick="location.href='examStart'">Login</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -17,4 +17,9 @@ public class ExamController {
     public String examTest(Model model) {
         return "personalities/exam/examTest";
     }
+
+    @GetMapping("/examResult")
+    public String examResult(Model model) {
+        return "personalities/exam/examResult";
+    }
 }

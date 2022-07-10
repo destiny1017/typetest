@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/personalities/fragments/header.html :: header">
+    <meta charset="utf-8">
 </head>
+<style>
+    input[name="answer"] {
+        margin: 5px 20px 5px 20px;
+    }
+</style>
 <body>
-테스트 진행 페이지
+<div class="container-md" style="text-align: center;">
+    <!-- contents -->
+    <div style="width: 500px; display: inline-block;">
+        <!-- head -->
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1">ExamTest</span>
+            </div>
+        </nav>
+
+        <!-- body text -->
+        <figure class="text-center py-3" >
+            <blockquote class="blockquote">
+                <p>A well-known quote, contained in a blockquote element.</p>
+            </blockquote>
+            <div class="figure">
+                <input type="radio" name="answer" value="1" id="answer1_1"/>
+                <input type="radio" name="answer" value="2" id="answer1_2"/>
+                <input type="radio" name="answer" value="3" id="answer1_3"/>
+                <input type="radio" name="answer" value="4" id="answer1_4"/>
+                <input type="radio" name="answer" value="5" id="answer1_5"/>
+            </div>
+        </figure>
+
+        <figure class="text-center py-3" >
+            <blockquote class="blockquote">
+                <p>A well-known quote, contained in a blockquote element.</p>
+            </blockquote>
+            <div class="figure">
+                <input type="radio" name="answer" value="1" id="answer2_1"/>
+                <input type="radio" name="answer" value="2" id="answer2_2"/>
+                <input type="radio" name="answer" value="3" id="answer2_3"/>
+                <input type="radio" name="answer" value="4" id="answer2_4"/>
+                <input type="radio" name="answer" value="5" id="answer2_5"/>
+            </div>
+        </figure>
+
+        <figure class="text-center py-3" >
+            <blockquote class="blockquote">
+                <p>A well-known quote, contained in a blockquote element.</p>
+            </blockquote>
+            <div class="figure">
+                <input type="radio" name="answer" value="1" id="answer3_1"/>
+                <input type="radio" name="answer" value="2" id="answer3_2"/>
+                <input type="radio" name="answer" value="3" id="answer3_3"/>
+                <input type="radio" name="answer" value="4" id="answer3_4"/>
+                <input type="radio" name="answer" value="5" id="answer3_5"/>
+            </div>
+        </figure>
+
+        <figure class="text-center py-3" >
+            <blockquote class="blockquote">
+                <p>A well-known quote, contained in a blockquote element.</p>
+            </blockquote>
+            <div class="figure">
+                <input type="radio" name="answer" value="1" id="answer4_1"/>
+                <input type="radio" name="answer" value="2" id="answer4_2"/>
+                <input type="radio" name="answer" value="3" id="answer4_3"/>
+                <input type="radio" name="answer" value="4" id="answer4_4"/>
+                <input type="radio" name="answer" value="5" id="answer4_5"/>
+            </div>
+        </figure>
+
+        <figure class="text-center py-3" >
+            <blockquote class="blockquote">
+                <p>A well-known quote, contained in a blockquote element.</p>
+            </blockquote>
+            <div class="figure">
+                <input type="radio" name="answer" value="1" id="answer5_1"/>
+                <input type="radio" name="answer" value="2" id="answer5_2"/>
+                <input type="radio" name="answer" value="3" id="answer5_3"/>
+                <input type="radio" name="answer" value="4" id="answer5_4"/>
+                <input type="radio" name="answer" value="5" id="answer5_5"/>
+            </div>
+        </figure>
+
+        <!-- button line -->
+        <div class="text-center py-3">
+            <button class="btn btn-primary" onclick="location.href='examResult'">Submit</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

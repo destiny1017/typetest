@@ -1,6 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/personalities/fragments/header.html :: header" />
+<head th:replace="/personalities/fragments/header.html :: header">
+    <meta charset="utf-8">
+</head>
 <body>
 <div class="container-md" style="text-align: center;">
     <!-- contents -->
@@ -13,9 +15,11 @@
         </nav>
 
         <!-- body text -->
-        <figure class="text-center" style="margin-top: 50px; margin-bottom: 50px;">
+        <figure class="text-center py-3">
             <blockquote class="blockquote">
-                <p>A well-known quote, contained in a blockquote element.</p>
+                <p>These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.
+                    Take for example our responsive alignment of the dropdowns where we mix an @each loop for the $grid-breakpoints
+                    Sass map with a media query include.</p>
             </blockquote>
             <figcaption class="blockquote-footer">
                 Someone famous in <cite title="Source Title">Source Title</cite>
@@ -23,7 +27,9 @@
         </figure>
 
         <!-- button line -->
-        <button class="btn btn-primary" onclick="location.href='examTest'">Start</button>
+        <div class="text-center py-3">
+            <button class="btn btn-primary" onclick="location.href='examTest'">Start</button>
+        </div>
     </div>
 </div>
 </body>
