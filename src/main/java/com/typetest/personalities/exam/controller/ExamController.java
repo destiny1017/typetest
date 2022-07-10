@@ -10,7 +10,11 @@ public class ExamController {
 
     @GetMapping("/examStart")
     public String exam(Model model) {
-
         return "personalities/exam/examStart";
+    }
+
+    @GetMapping("/examTest")
+    public String examTest(Model model) {
+        return "personalities/exam/examTest";
     }
 }

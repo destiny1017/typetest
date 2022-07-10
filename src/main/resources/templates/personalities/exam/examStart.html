@@ -2,11 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/personalities/fragments/header.html :: header" />
 <body>
-<nav class="navbar bg-light">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">ExamTest</span>
+<div class="container-md" style="text-align: center;">
+    <!-- contents -->
+    <div style="width: 500px; display: inline-block;">
+        <!-- head -->
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1">ExamTest</span>
+            </div>
+        </nav>
+
+        <!-- body text -->
+        <figure class="text-center" style="margin-top: 50px; margin-bottom: 50px;">
+            <blockquote class="blockquote">
+                <p>A well-known quote, contained in a blockquote element.</p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+                Someone famous in <cite title="Source Title">Source Title</cite>
+            </figcaption>
+        </figure>
+
+        <!-- button line -->
+        <button class="btn btn-primary" onclick="location.href='examTest'">Start</button>
     </div>
-</nav>
-<button class="btn btn-primary mt-5">Start</button>
+</div>
 </body>
 </html>
