@@ -35,9 +35,9 @@ class PersonalityTypeRepositoryTest {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3);
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3, 3);
 
         em.persist(user);
         em.persist(pt);
@@ -69,9 +69,9 @@ class PersonalityTypeRepositoryTest {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3);
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3, 3);
 
         em.persist(user);
         em.persist(pt);
@@ -94,9 +94,9 @@ class PersonalityTypeRepositoryTest {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3);
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3, 3);
 
         //when
         loginRepository.save(user);
@@ -117,5 +117,15 @@ class PersonalityTypeRepositoryTest {
         assertThat(findPtd1.getId()).isEqualTo(ptd1.getId());
         assertThat(findPtd2.getId()).isEqualTo(ptd2.getId());
         assertThat(findPtd3.getId()).isEqualTo(ptd3.getId());
+    }
+
+    @Test
+    void dataSaveTest() {
+        //given
+
+        //when
+
+        //then
+
     }
 }
