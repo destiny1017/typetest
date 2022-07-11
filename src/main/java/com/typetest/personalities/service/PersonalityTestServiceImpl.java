@@ -24,9 +24,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
             // 사용자가 선택한 응답 데이터
             Map<Integer, Integer> answer = answerInfo.getAnswer();
             // 응답 데이터와 점수 배정식으로 통합 점수 산정
-            for (int key : answer.keySet()) {
-                allocator.get(key).addPoint(answer.get(key));
-            }
+            answer.forEach((key, value) -> allocator.get(key).addPoint(value));
             // 합산된 점수로 유형 계산하여 반환
             type = examPointTable.getType();
         }
