@@ -11,7 +11,7 @@ import javax.persistence.*;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@Getter @ToString
+@Getter
 @NoArgsConstructor
 public class PersonalityType {
 
@@ -30,5 +30,14 @@ public class PersonalityType {
         this.user = user;
         this.testCode = testCode;
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonalityType{" +
+                "id=" + id +
+                ", testCode=" + testCode +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

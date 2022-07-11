@@ -13,10 +13,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ExamService implements PersonalityTestService {
 
-
     @Override
     public String calcType(PersonalitiesAnswerInfo answerInfo) {
         return null;
+    }
+
+    @Override
+    public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) {
+
     }
 
 }

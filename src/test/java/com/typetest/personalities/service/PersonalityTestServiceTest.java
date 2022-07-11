@@ -13,9 +13,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,23 +28,20 @@ class PersonalityTestServiceTest {
     @Autowired
     private LoginRepository loginRepository;
 
+    @Autowired
+    @Qualifier("personalityTestServiceImpl")
     private PersonalityTestService personalityTestService;
+
+    @Autowired
+    private PersonalityTypeDetailRepository ptdRepository;
+
+    @Autowired
+    private PersonalityTypeRepository ptRepository;
 
     @BeforeEach
     void beforeEach() {
         User user = new User("test_user", "test@test.com", "http://test.com/");
-//        PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-//        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1);
-//        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2);
-//        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3);
-//
         loginRepository.save(user);
-//        personalityTypeRepository.save(pt);
-//        personalityTypeDetailRepository.save(ptd1);
-//        personalityTypeDetailRepository.save(ptd2);
-//        personalityTypeDetailRepository.save(ptd3);
-
-        personalityTestService = new PersonalityTestServiceImpl();
     }
 
     @Test
@@ -72,5 +71,41 @@ class PersonalityTestServiceTest {
         //then
         System.out.println("type = " + type);
         Assertions.assertThat(type).hasSize(3);
+    }
+
+    @Test
+    void saveInfoTest() {
+        //given
+        User user = loginRepository.findByName("test_user").get();
+        PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
+        HashMap<Integer, Integer> answer = new HashMap<>();
+
+        answer.put(1, 1);
+        answer.put(2, 3);
+        answer.put(3, 5);
+        answer.put(4, 1);
+        answer.put(5, 3);
+        answer.put(6, 5);
+        answer.put(7, 1);
+        answer.put(8, 3);
+        answer.put(9, 5);
+
+        answerInfo.setUserId(user.getId());
+        answerInfo.setTestCode(TestCode.EXAM);
+        answerInfo.setAnswer(answer);
+
+        //when
+        personalityTestService.saveTestInfo(answerInfo, "CBA");
+
+        //then
+        PersonalityType byUser = ptRepository.findByUser(user);
+        List<PersonalityTypeDetail> byUserAndTestCode = ptdRepository.findByUserAndTestCode(user, TestCode.EXAM);
+
+        byUser.getUser();
+        System.out.println("byUs = " + byUser);
+        for (PersonalityTypeDetail ptd : byUserAndTestCode) {
+            ptd.getUser();
+            System.out.println("ptd = " + ptd);
+        }
     }
 }

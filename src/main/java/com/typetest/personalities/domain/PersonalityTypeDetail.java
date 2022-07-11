@@ -13,7 +13,7 @@ import java.util.Map;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@Getter @ToString
+@Getter
 @NoArgsConstructor
 public class PersonalityTypeDetail {
 
@@ -26,12 +26,23 @@ public class PersonalityTypeDetail {
 
     private TestCode testCode;
 
+    private int num;
     private int answer;
 
-    public PersonalityTypeDetail(User user, TestCode testCode, int answer) {
+    public PersonalityTypeDetail(User user, TestCode testCode, int num,  int answer) {
         this.user = user;
         this.testCode = testCode;
+        this.num = num;
         this.answer = answer;
     }
 
+    @Override
+    public String toString() {
+        return "PersonalityTypeDetail{" +
+                "id=" + id +
+                ", testCode=" + testCode +
+                ", num=" + num +
+                ", answer=" + answer +
+                '}';
+    }
 }

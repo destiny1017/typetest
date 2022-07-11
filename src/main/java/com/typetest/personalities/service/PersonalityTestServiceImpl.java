@@ -1,16 +1,32 @@
 package com.typetest.personalities.service;
 
+import com.typetest.exception.NotFoundEntityException;
+import com.typetest.login.domain.User;
+import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.ExamPointTable;
 import com.typetest.personalities.data.PointWrapper;
+import com.typetest.personalities.domain.PersonalityType;
+import com.typetest.personalities.domain.PersonalityTypeDetail;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.exam.repository.TestCode;
+import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
+import com.typetest.personalities.repository.PersonalityTypeRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Qualifier("personalityTestServiceImpl")
 public class PersonalityTestServiceImpl implements PersonalityTestService {
+
+    private final PersonalityTypeRepository personalityTypeRepository;
+    private final PersonalityTypeDetailRepository personalityTypeDetailRepository;
+    private final LoginRepository loginRepository;
 
     @Override
     public String calcType(PersonalitiesAnswerInfo answerInfo) {
@@ -29,6 +45,27 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
             type = examPointTable.getType();
         }
         return type;
+    }
+
+    @Override
+    public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
+        Long userId = answerInfo.getUserId();
+        TestCode code = answerInfo.getTestCode();
+        Map<Integer, Integer> answer = answerInfo.getAnswer();
+        Optional<User> byId = loginRepository.findById(userId);
+        User user;
+        if(byId.isPresent()) {
+            user = byId.get();
+            PersonalityType pt = new PersonalityType(user, code, type);
+            personalityTypeRepository.save(pt);
+            for (int key : answer.keySet()) {
+                PersonalityTypeDetail ptd = new PersonalityTypeDetail(user, code, key, answer.get(key));
+                personalityTypeDetailRepository.save(ptd);
+            }
+        } else {
+            throw new NotFoundEntityException("[" + userId + "] 사용자를 찾을 수 없습니다.");
+        }
+
     }
 
 }
