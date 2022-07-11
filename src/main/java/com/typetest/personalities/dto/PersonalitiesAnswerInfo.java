@@ -10,7 +10,7 @@ import java.util.Map;
 @Data
 @Getter @ToString
 public class PersonalitiesAnswerInfo {
-    String userId;
+    Long userId;
     TestCode testCode;
-    Map<String, Integer> answer;
+    Map<Integer, Integer> answer;
 }

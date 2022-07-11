@@ -19,8 +19,4 @@ public class ExamService implements PersonalityTestService {
         return null;
     }
 
-    @Override
-    public String getPersonalityType(PersonalitiesAnswerInfo answerInfo) {
-        return null;
-    }
 }
