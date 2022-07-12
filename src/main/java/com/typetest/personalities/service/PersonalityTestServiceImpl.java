@@ -13,6 +13,7 @@ import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Qualifier("personalityTestServiceImpl")
+@Primary
 public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     private final PersonalityTypeRepository personalityTypeRepository;

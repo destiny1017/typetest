@@ -10,6 +10,8 @@ import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
 import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ class PersonalityTestServiceTest {
     private LoginRepository loginRepository;
 
     @Autowired
-    @Qualifier("personalityTestServiceImpl")
+//    @Qualifier("personalityTestServiceImpl")
     private PersonalityTestService personalityTestService;
 
     @Autowired
@@ -38,16 +40,10 @@ class PersonalityTestServiceTest {
     @Autowired
     private PersonalityTypeRepository ptRepository;
 
-    @BeforeEach
-    void beforeEach() {
-        User user = new User("test_user", "test@test.com", "http://test.com/");
-        loginRepository.save(user);
-    }
-
     @Test
     public void calcTypeTest() throws Exception {
         //given
-        User user = loginRepository.findByName("test_user").get();
+        User user = new User("test_user", "test@test.com", "http://test.com/");;
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
 
@@ -76,7 +72,8 @@ class PersonalityTestServiceTest {
     @Test
     void saveInfoTest() {
         //given
-        User user = loginRepository.findByName("test_user").get();
+        User user = new User("test_user", "test@test.com", "http://test.com/");
+        loginRepository.save(user);
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
 
