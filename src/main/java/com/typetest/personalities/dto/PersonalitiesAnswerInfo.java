@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -12,5 +13,5 @@ import java.util.Map;
 public class PersonalitiesAnswerInfo {
     Long userId;
     TestCode testCode;
-    Map<Integer, Integer> answer;
+    HashMap<Integer, Integer> answer;
 }
