@@ -22,6 +22,7 @@ public class PersonalityType {
     @JoinColumn
     private User user;
 
+    @Enumerated(EnumType.STRING)
     private TestCode testCode;
 
     private String type;
