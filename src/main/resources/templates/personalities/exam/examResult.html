@@ -31,6 +31,14 @@
             </figcaption>
         </figure>
 
+        <div>
+            <p th:text="${#session.getAttribute('user')}">sessionUser</p>
+        </div>
+
+        <div>
+            <p th:text="${type}">TYPE</p>
+        </div>
+
         <!-- button line -->
         <div class="text-center py-3">
             <button class="btn btn-primary" onclick="location.href='examStart'">Retry</button>

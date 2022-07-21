@@ -8,6 +8,7 @@ import com.typetest.personalities.data.PointWrapper;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
+import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.repository.TestCode;
 import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
@@ -16,9 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -39,9 +38,12 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
             // 해당 테스트의 점수 배정식 호출
             List<PointWrapper> allocator = examPointTable.getAllocator();
             // 사용자가 선택한 응답 데이터
-            Map<Integer, Integer> answer = answerInfo.getAnswer();
+            HashMap<Integer, Integer> answer = answerInfo.getAnswer();
             // 응답 데이터와 점수 배정식으로 통합 점수 산정
-            answer.forEach((key, value) -> allocator.get(key).addPoint(value));
+//            answer.forEach((key, value) -> allocator.get(key).addPoint(value));
+            for (Integer key : answer.keySet()) {
+                allocator.get(key).addPoint(answer.get(key));
+            }
             // 합산된 점수로 유형 계산하여 반환
             type = examPointTable.getType();
         }
@@ -68,5 +70,6 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
         }
 
     }
+
 
 }
