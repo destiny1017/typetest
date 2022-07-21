@@ -40,16 +40,19 @@ public class ExamController {
     }
 
     @PostMapping("/examResult")
-    public String examResult(@RequestParam HashMap<Integer, Integer> answerMap, Model model, HttpSession session) {
-        log.info("answerMap = {}", answerMap);
+    public String examResult(@RequestParam HashMap<String, String> answerMapParam, Model model, HttpSession session) {
+        log.info("answerMap = {}", answerMapParam);
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
-        SessionUser user = (SessionUser) session.getAttribute("user");
+        HashMap<Integer, Integer> answerMap = new HashMap<>();
+        answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Integer.parseInt(value)));
         answerInfo.setAnswer(answerMap);
         answerInfo.setTestCode(TestCode.EXAM);
+
         log.info("answerInfo = {}", answerInfo);
         String type = personalityTestService.calcType(answerInfo);
         model.addAttribute("type", type);
 
+        SessionUser user = (SessionUser) session.getAttribute("user");
         if(user != null) {
             answerInfo.setUserId(user.getId());
             personalityTestService.saveTestInfo(answerInfo, type);
