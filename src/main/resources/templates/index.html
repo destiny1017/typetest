@@ -9,5 +9,11 @@
 <a href="/oauth2/authorization/google" class="btn btn-primary">Google 로그인</a>
 <a href="/oauth2/authorization/naver" class="btn btn-primary">Naver 로그인</a>
 <a href="/oauth2/authorization/kakao" class="btn btn-primary">Kakao 로그인</a>
+<div>
+    <button class="btn-primary" onclick="location.href='examStart'">Test Start</button>
+</div>
+<div>
+    <p th:text="${#session.getAttribute('user')}">sessionUser</p>
+</div>
 </body>
 </html>

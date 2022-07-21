@@ -17,8 +17,9 @@
         <!-- body text -->
         <figure class="text-center py-3">
             <blockquote class="blockquote">
-                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid py-3" alt="...">
-                <p>
+                <p th:text="${result.type}">TYPE</p>
+                <img th:src="${result.imageUrl}" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid py-3" alt="...">
+                <p th:text="${result.description}">
                     Bootstrap’s components are largely built with a base-modifier nomenclature. We group as many shared properties as possible into a base class, like .btn, and then group individual styles for each variant into modifier classes, like .btn-primary or .btn-success.
 
                     To build our modifier classes, we use Sass’s @each loops to iterate over a Sass map. This is especially helpful for generating variants of a component by our $theme-colors and creating responsive variants for each breakpoint. As you customize these Sass maps and recompile, you’ll automatically see your changes reflected in these loops.
@@ -30,14 +31,6 @@
                 Someone famous in <cite title="Source Title">Source Title</cite>
             </figcaption>
         </figure>
-
-        <div>
-            <p th:text="${#session.getAttribute('user')}">sessionUser</p>
-        </div>
-
-        <div>
-            <p th:text="${type}">TYPE</p>
-        </div>
 
         <!-- button line -->
         <div class="text-center py-3">
