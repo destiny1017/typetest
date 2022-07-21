@@ -37,18 +37,15 @@ public class ExamPointTable {
 
         // a 지표 결정
         if(a.getPoint() > 11) type += "A";
-        else if(a.getPoint() > 7) type += "B";
-        else type += "C";
+        else type += "B";
 
         // b 지표 결정
         if(b.getPoint() > 11) type += "A";
-        else if(b.getPoint() > 7) type += "B";
-        else type += "C";
+        else type += "B";
 
         // c 지표 결정
         if(c.getPoint() > 11) type += "A";
-        else if(c.getPoint() > 7) type += "B";
-        else type += "C";
+        else type += "B";
 
         return type;
     }

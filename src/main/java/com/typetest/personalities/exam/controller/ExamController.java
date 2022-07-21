@@ -3,6 +3,7 @@ package com.typetest.personalities.exam.controller;
 import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.exam.dto.ExamQuestionInfo;
+import com.typetest.personalities.exam.dto.ExamResultInfo;
 import com.typetest.personalities.exam.repository.TestCode;
 import com.typetest.personalities.exam.service.ExamService;
 import com.typetest.personalities.service.PersonalityTestService;
@@ -48,9 +49,14 @@ public class ExamController {
         answerInfo.setAnswer(answerMap);
         answerInfo.setTestCode(TestCode.EXAM);
 
+        // 유형 도출
         log.info("answerInfo = {}", answerInfo);
         String type = personalityTestService.calcType(answerInfo);
-        model.addAttribute("type", type);
+
+        // 유형 결과 반환
+        ExamResultInfo resultType = examService.getResult(type);
+        model.addAttribute("result", resultType);
+        log.info("resultType = {}", resultType);
 
         SessionUser user = (SessionUser) session.getAttribute("user");
         if(user != null) {
