@@ -4,16 +4,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "USER_INFO")
 @Getter
 @NoArgsConstructor
+@SequenceGenerator(name = "user_seq_generator",
+                    sequenceName = "user_seq",
+                    initialValue = 1,
+                    allocationSize = 1)
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     private Long id;
     private String name;
     private String email;
