@@ -65,7 +65,6 @@ class PersonalityTestServiceTest {
         String type = personalityTestService.calcType(answerInfo);
 
         //then
-        System.out.println("type = " + type);
         Assertions.assertThat(type).hasSize(3);
     }
 
@@ -78,21 +77,21 @@ class PersonalityTestServiceTest {
         HashMap<Integer, Integer> answer = new HashMap<>();
 
         answer.put(1, 1);
-        answer.put(2, 3);
-        answer.put(3, 5);
+        answer.put(2, 1);
+        answer.put(3, 1);
         answer.put(4, 1);
-        answer.put(5, 3);
-        answer.put(6, 5);
+        answer.put(5, 1);
+        answer.put(6, 1);
         answer.put(7, 1);
-        answer.put(8, 3);
-        answer.put(9, 5);
+        answer.put(8, 1);
+        answer.put(9, 1);
 
         answerInfo.setUserId(user.getId());
         answerInfo.setTestCode(TestCode.EXAM);
         answerInfo.setAnswer(answer);
 
         //when
-        personalityTestService.saveTestInfo(answerInfo, "CBA");
+        personalityTestService.saveTestInfo(answerInfo, "BBB");
 
         //then
         PersonalityType byUser = ptRepository.findByUser(user);

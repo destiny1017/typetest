@@ -58,31 +58,6 @@ class PersonalityTypeRepositoryTest {
     }
 
     @Test
-    public void detailRepositoryTest() throws Exception {
-        //given
-        User user = new User("test_user", "test@test.com", "http://test.com/");
-        PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 3, 3);
-
-        em.persist(user);
-        em.persist(pt);
-        em.persist(ptd1);
-        em.persist(ptd2);
-        em.persist(ptd3);
-
-//        em.flush();
-//        em.clear();
-
-        //when
-        List<PersonalityTypeDetail> findDetail = personalityTypeDetailRepository.findByUserAndTestCode(user, TestCode.MBTI);
-
-        //then
-        assertThat(findDetail).containsExactly(ptd1, ptd2, ptd3);
-    }
-
-    @Test
     public void savePersonal() throws Exception {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/");
@@ -108,13 +83,4 @@ class PersonalityTypeRepositoryTest {
         assertThat(byPersonalityType).contains(ptd1, ptd2, ptd3);
     }
 
-    @Test
-    void dataSaveTest() {
-        //given
-
-        //when
-
-        //then
-
-    }
 }
