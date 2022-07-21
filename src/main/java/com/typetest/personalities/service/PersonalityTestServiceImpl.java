@@ -62,7 +62,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
             PersonalityType pt = new PersonalityType(user, code, type);
             personalityTypeRepository.save(pt);
             for (int key : answer.keySet()) {
-                PersonalityTypeDetail ptd = new PersonalityTypeDetail(user, code, key, answer.get(key));
+                PersonalityTypeDetail ptd = new PersonalityTypeDetail(pt, user, code, key, answer.get(key));
                 personalityTypeDetailRepository.save(ptd);
             }
         } else {

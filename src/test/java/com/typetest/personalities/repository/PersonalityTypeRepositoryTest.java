@@ -35,9 +35,9 @@ class PersonalityTypeRepositoryTest {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3, 3);
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 3, 3);
 
         em.persist(user);
         em.persist(pt);
@@ -45,22 +45,15 @@ class PersonalityTypeRepositoryTest {
         em.persist(ptd2);
         em.persist(ptd3);
 
-        em.flush();
-        em.clear();
-
         //when
         User findUser = loginRepository.findById(user.getId()).get();
         PersonalityType findPt = personalityTypeRepository.findById(pt.getId()).get();
-        PersonalityTypeDetail findPtd1 = personalityTypeDetailRepository.findById(ptd1.getId()).get();
-        PersonalityTypeDetail findPtd2 = personalityTypeDetailRepository.findById(ptd2.getId()).get();
-        PersonalityTypeDetail findPtd3 = personalityTypeDetailRepository.findById(ptd3.getId()).get();
+        List<PersonalityTypeDetail> byPersonalityType = personalityTypeDetailRepository.findByPersonalityType(pt);
 
         //then
         assertThat(findUser.getId()).isEqualTo(user.getId());
         assertThat(findPt.getId()).isEqualTo(pt.getId());
-        assertThat(findPtd1.getId()).isEqualTo(ptd1.getId());
-        assertThat(findPtd2.getId()).isEqualTo(ptd2.getId());
-        assertThat(findPtd3.getId()).isEqualTo(ptd3.getId());
+        assertThat(byPersonalityType).contains(ptd1, ptd2, ptd3);
 
     }
 
@@ -69,9 +62,9 @@ class PersonalityTypeRepositoryTest {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3, 3);
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 3, 3);
 
         em.persist(user);
         em.persist(pt);
@@ -94,9 +87,9 @@ class PersonalityTypeRepositoryTest {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(user, TestCode.MBTI, 1, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(user, TestCode.MBTI, 2, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(user, TestCode.MBTI, 3, 3);
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 3, 3);
 
         //when
         loginRepository.save(user);
@@ -107,16 +100,12 @@ class PersonalityTypeRepositoryTest {
 
         User findUser = loginRepository.findById(user.getId()).get();
         PersonalityType findPt = personalityTypeRepository.findById(pt.getId()).get();
-        PersonalityTypeDetail findPtd1 = personalityTypeDetailRepository.findById(ptd1.getId()).get();
-        PersonalityTypeDetail findPtd2 = personalityTypeDetailRepository.findById(ptd2.getId()).get();
-        PersonalityTypeDetail findPtd3 = personalityTypeDetailRepository.findById(ptd3.getId()).get();
+        List<PersonalityTypeDetail> byPersonalityType = personalityTypeDetailRepository.findByPersonalityType(pt);
 
         //then
         assertThat(findUser.getId()).isEqualTo(user.getId());
         assertThat(findPt.getId()).isEqualTo(pt.getId());
-        assertThat(findPtd1.getId()).isEqualTo(ptd1.getId());
-        assertThat(findPtd2.getId()).isEqualTo(ptd2.getId());
-        assertThat(findPtd3.getId()).isEqualTo(ptd3.getId());
+        assertThat(byPersonalityType).contains(ptd1, ptd2, ptd3);
     }
 
     @Test

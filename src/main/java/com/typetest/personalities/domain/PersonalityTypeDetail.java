@@ -22,6 +22,10 @@ public class PersonalityTypeDetail {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn
+    private PersonalityType personalityType;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn
     private User user;
 
     @Enumerated(EnumType.STRING)
@@ -30,7 +34,8 @@ public class PersonalityTypeDetail {
     private int num;
     private int answer;
 
-    public PersonalityTypeDetail(User user, TestCode testCode, int num,  int answer) {
+    public PersonalityTypeDetail(PersonalityType personalityType, User user, TestCode testCode, int num, int answer) {
+        this.personalityType = personalityType;
         this.user = user;
         this.testCode = testCode;
         this.num = num;
@@ -40,8 +45,7 @@ public class PersonalityTypeDetail {
     @Override
     public String toString() {
         return "PersonalityTypeDetail{" +
-                "id=" + id +
-                ", testCode=" + testCode +
+                "testCode=" + testCode +
                 ", num=" + num +
                 ", answer=" + answer +
                 '}';
