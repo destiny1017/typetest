@@ -7,11 +7,20 @@
     input[name="answer"] {
         margin: 5px 20px 5px 20px;
     }
+
+    .questionDiv {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .slides {
+        scroll-behavior: auto;
+    }
 </style>
 <body>
-<div class="container-md" style="text-align: center;">
+<div class="" style="text-align: center;width: 500px;">
     <!-- contents -->
-    <div style="width: 500px; display: inline-block;">
+    <div style="">
         <!-- head -->
         <nav class="navbar bg-light">
             <div class="container-fluid">
@@ -23,14 +32,36 @@
         <!--<input type="hidden" th:field="*{userId}" name="userId" value="USERID"/>
         <input type="hidden" th:field="*{testCode}" name="testCode" value="EXAM"/>-->
         <form action="/examResult" method="post">
-            <figure class="text-center py-3" th:each="question : ${questions}">
-                <blockquote class="blockquote">
-                    <p th:text="${question.question}"></p>
-                </blockquote>
-                <div class="figure" th:each="selPoint : ${question.selectPoint}">
-                    <input type="radio" th:name="${question.questionNum}" th:value="${selPoint}"/>
+
+            <div class="slider">
+
+                <div class="slides">
+                    <div th:each="pageQuestion : ${questions}"  th:id="|question-${pageQuestionStat.index + 1}|">
+                        <div class="questionDiv" th:each="question : ${pageQuestion}">
+                            <div class="questionStr">
+                                <p th:text="${question.question}"></p>
+                            </div>
+                            <div>
+                                <div class="figure" th:each="selPoint : ${question.selectPoint}">
+                                    <input type="radio" th:name="${question.questionNum}" th:value="${selPoint}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<figure class="text-center py-3" th:each="question : ${questions}">
+                        <blockquote class="blockquote">
+                            <p th:text="${question.question}"></p>
+                        </blockquote>
+                        <div class="figure" th:each="selPoint : ${question.selectPoint}">
+                            <input type="radio" th:name="${question.questionNum}" th:value="${selPoint}"/>
+                        </div>
+                    </figure>-->
                 </div>
-            </figure>
+
+                <a th:each="pageQuestion : ${questions}" th:href="|#question-${pageQuestionStat.index + 1}|"
+                    th:text="${pageQuestionStat.index + 1}">1</a>
+
+            </div>
 
             <!-- button line -->
             <div class="text-center py-3">
@@ -40,9 +71,9 @@
 
 
     </div>
+    <footer th:replace="/personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>
-<footer th:replace="/personalities/fragments/footer.html :: footer"></footer>
 <!--
 <script th:inline="javascript">
     function formSubmit() {
