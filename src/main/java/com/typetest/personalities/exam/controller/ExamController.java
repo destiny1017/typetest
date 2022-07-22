@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -41,9 +43,9 @@ public class ExamController {
         return "personalities/exam/examTest";
     }
 
-    @PostMapping("/examResult")
+    @GetMapping("/examSubmit")
     public String examResult(@RequestParam HashMap<String, String> answerMapParam, Model model, HttpSession session) {
-        log.info("answerMap = {}", answerMapParam);
+        // 응답정보 객체 세팅
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answerMap = new HashMap<>();
         answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Integer.parseInt(value)));
@@ -51,19 +53,23 @@ public class ExamController {
         answerInfo.setTestCode(TestCode.EXAM);
 
         // 유형 도출
-        log.info("answerInfo = {}", answerInfo);
         String type = personalityTestService.calcType(answerInfo);
 
-        // 유형 결과 반환
-        ExamResultInfo resultType = examService.getResult(type);
-        model.addAttribute("result", resultType);
-        log.info("resultType = {}", resultType);
-
+        // 세션에 user정보 있으면 테스트결과 DB저장
         SessionUser user = (SessionUser) session.getAttribute("user");
         if(user != null) {
             answerInfo.setUserId(user.getId());
             personalityTestService.saveTestInfo(answerInfo, type);
         }
+
+        return "redirect:examResult?type=" + type;
+    }
+
+    @GetMapping("/examResult")
+    public String examResult(@RequestParam String type, Model model) {
+        // 유형 결과 반환
+        ExamResultInfo resultType = examService.getResult(type);
+        model.addAttribute("result", resultType);
         return "personalities/exam/examResult";
     }
 

@@ -31,10 +31,9 @@
         <!-- body text -->
         <!--<input type="hidden" th:field="*{userId}" name="userId" value="USERID"/>
         <input type="hidden" th:field="*{testCode}" name="testCode" value="EXAM"/>-->
-        <form action="/examResult" method="post">
+        <form action="/examSubmit" method="get">
 
             <div class="slider">
-
                 <div class="slides">
                     <div th:each="pageQuestion : ${questions}"  th:id="|question-${pageQuestionStat.index + 1}|">
                         <div class="questionDiv" th:each="question : ${pageQuestion}">

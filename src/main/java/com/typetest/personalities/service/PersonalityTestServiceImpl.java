@@ -60,10 +60,10 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
         if(byId.isPresent()) {
             user = byId.get();
             PersonalityType pt = new PersonalityType(user, code, type);
-            personalityTypeRepository.save(pt);
+            personalityTypeRepository.save(pt); // 유형정보 저장
             for (int key : answer.keySet()) {
                 PersonalityTypeDetail ptd = new PersonalityTypeDetail(pt, user, code, key, answer.get(key));
-                personalityTypeDetailRepository.save(ptd);
+                personalityTypeDetailRepository.save(ptd); // 테스트 상세 응답 정보 저장
             }
         } else {
             throw new NotFoundEntityException("[" + userId + "] 사용자를 찾을 수 없습니다.");
