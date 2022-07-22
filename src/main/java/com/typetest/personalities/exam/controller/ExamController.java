@@ -9,6 +9,7 @@ import com.typetest.personalities.exam.service.ExamService;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class ExamController {
     private final ExamService examService;
 
     @ModelAttribute("questions")
-    public List<ExamQuestionInfo> examQuestions() {
-        List<ExamQuestionInfo> questions = examService.createQuestions();
+    public List<List<ExamQuestionInfo>> examQuestions() {
+        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
         return questions;
     }
 
