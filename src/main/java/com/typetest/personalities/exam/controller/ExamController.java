@@ -44,7 +44,7 @@ public class ExamController {
     }
 
     @GetMapping("/examSubmit")
-    public String examResult(@RequestParam HashMap<String, String> answerMapParam, Model model, HttpSession session) {
+    public String examSubmit(@RequestParam Map<String, String> answerMapParam, Model model, HttpSession session) {
         // 응답정보 객체 세팅
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answerMap = new HashMap<>();

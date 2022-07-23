@@ -31,7 +31,7 @@
         <!-- body text -->
         <!--<input type="hidden" th:field="*{userId}" name="userId" value="USERID"/>
         <input type="hidden" th:field="*{testCode}" name="testCode" value="EXAM"/>-->
-        <form action="/examSubmit" method="get">
+        <form action="/examSubmit" method="get" id="examForm" class="exam-container">
 
             <div class="slider">
                 <div class="slides">
@@ -40,9 +40,18 @@
                             <div class="questionStr">
                                 <p th:text="${question.question}"></p>
                             </div>
-                            <div>
-                                <div class="figure" th:each="selPoint : ${question.selectPoint}">
-                                    <input type="radio" th:name="${question.questionNum}" th:value="${selPoint}"/>
+                            <div class="exam-radio-div">
+                                <div class="d-inline-block">
+                                    <p class="exam-radio-p margin-side-10">매우 그렇다</p>
+                                </div>
+                                <div class="d-inline-block">
+                                    <div class="figure margin-side-10" th:each="selPoint : ${question.selectPoint}">
+                                        <input class="form-check-input-exam" type="radio"
+                                               th:name="${question.questionNum}" th:value="${selPoint}"/>
+                                    </div>
+                                </div>
+                                <div class="d-inline-block">
+                                    <p class="exam-radio-p margin-side-10">전혀 아니다</p>
                                 </div>
                             </div>
                         </div>
@@ -57,8 +66,10 @@
                     </figure>-->
                 </div>
 
-                <a th:each="pageQuestion : ${questions}" th:href="|#question-${pageQuestionStat.index + 1}|"
-                    th:text="${pageQuestionStat.index + 1}">1</a>
+                <div class="margin-topdown-10">
+                    <a th:each="pageQuestion : ${questions}" th:href="|#question-${pageQuestionStat.index + 1}|"
+                        th:text="${pageQuestionStat.index + 1}">1</a>
+                </div>
 
             </div>
 
