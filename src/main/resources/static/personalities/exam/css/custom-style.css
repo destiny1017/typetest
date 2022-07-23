@@ -1,9 +1,22 @@
 /* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Noto+Sans+KR&display=swap');
+
 footer {
     position: relative;
     width: 500px;
     bottom: 0;
+}
+
+.login-container {
+    text-align: center;
+    justify-content: center;
+}
+
+.login-contents {
+    width: 500px;
+    display: inline-block;
+    background: #fff;
+    padding: 0px 30px 0px 30px;
 }
 
 .exam-container {
@@ -14,6 +27,40 @@ footer {
     padding: 0px 30px 0px 30px;
 }
 
+.exam-repeat-btn {
+    width: 150px;
+    border-radius: 50rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.exam-repeat-btn > span {
+    font-family: 'Dongle', sans-serif;
+    font-size: 25px;
+    height: 30px;
+}
+
+.exam-share-box {
+    display: inline-flex;
+    width: 200px;
+    height: 50px;
+    border: 3px solid #8ec6c59c;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Dongle', sans-serif;
+    font-size: 25px;
+}
+
+.share-div img {
+    border-radius: 1rem;
+}
+
+#urlInput {
+    position: absolute;
+    width: 10px;
+    z-index: -10;
+}
+
 /* icon */
 .refresh-icon {
     background-image: url("/assets/images/icon/-refresh_90271.svg");
@@ -22,6 +69,38 @@ footer {
     height: 20px;
     margin: 0px;
 }
+
+.share-url-icon {
+    background-image: url("/assets/images/icon/sharing_share_icon_124236.svg");
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.share-kakao-icon {
+    background-image: url("/assets/images/icon/kakaotalk_icon.svg");
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0px;
+    border-radius: 1rem;
+    vertical-align: middle;
+}
+
+.navbar-header {
+    background: #2b2b2b;
+}
+
+.header-logo {
+    background-image: url("/assets/images/logo/diang_logo_.png");
+    width: 160px;
+    height: 50px;
+    background-size: cover;
+}
+
 
 /* ExamTest */
 .form-check-input-exam {
@@ -213,7 +292,7 @@ footer {
   body {
     display: flex;
     align-items: center;
-    background: #78d1ff33;
+    background: #000;
     font-family: 'Ropa Sans', sans-serif;
     flex-direction: column;
   }

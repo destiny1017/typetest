@@ -6,20 +6,19 @@
 <body>
 <div class="exam-container" style="text-align: center; width: 500px;">
     <!-- contents -->
-    <div style="display: inline-block; height: 100%;">
+    <div style="display: inline-block; height: 90%;">
         <!-- head -->
-        <nav class="navbar bg-light">
+        <nav class="navbar bg-light" th:replace="/personalities/fragments/examHeader :: examHeader">
             <div class="container-fluid">
-                <span class="navbar-brand mb-0 h1">ExamTest</span>
+                <span class="h4">ExamTest</span>
             </div>
         </nav>
 
         <!-- body text -->
         <figure class="text-center py-3 exam-contents">
             <blockquote class="blockquote">
-                <p>These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.
-                    Take for example our responsive alignment of the dropdowns where we mix an @each loop for the $grid-breakpoints
-                    Sass map with a media query include.</p>
+                <img src="https://post-phinf.pstatic.net/MjAyMDExMDVfMjYz/MDAxNjA0NTY2NjIwNTY4.2Swhg8tD10gRVUUBqlz_GTxZNMul-tDoWP68mVYmksYg.jz0SwERh75iBwTodNzCPmWlSCEupNqnhOQ0vmeaXN6Ug.PNG/1.png?type=w1200" class="img-fluid py-3 form-floating" alt="...">
+                <p>These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.</p>
             </blockquote>
             <figcaption class="blockquote-footer">
                 Someone famous in <cite title="Source Title">Source Title</cite>
@@ -28,7 +27,7 @@
 
         <!-- button line -->
         <div class="text-center py-3">
-            <button class="btn btn-primary" onclick="location.href='examTest'">Start</button>
+            <button class="btn btn-primary exam-repeat-btn" onclick="location.href='examTest'"><span>테스트 시작!</span></button>
         </div>
     </div>
     <footer th:replace="/personalities/fragments/footer.html :: footer"></footer>

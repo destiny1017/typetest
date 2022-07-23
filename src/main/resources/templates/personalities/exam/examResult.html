@@ -5,37 +5,52 @@
 </head>
 <!-- SNS 공유용 주소 연결 용 -->
 <script type="text/javascript" async>
-  var url_default_ks = "https://story.kakao.com/share?url=";
-  var url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
-  var url_default_tw_txt = "https://twitter.com/intent/tweet?text=";
-  var url_default_tw_url = "&url=";
-  var url_default_band = "http://band.us/plugin/share?body=";
-  var url_route_band = "&route=";
-  var url_default_naver = "http://share.naver.com/web/shareView.nhn?url=";
-  var title_default_naver = "&title=";
-  var url_this_page = location.href;
-  var title_this_page = document.title;
-  var url_combine_ks = url_default_ks + url_this_page;
-  var url_combine_fb = url_default_fb + url_this_page;
-  var url_combine_tw = url_default_tw_txt + document.title + url_default_tw_url + url_this_page;
-  var url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
-  var url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
+    var url_default_ks = "https://story.kakao.com/share?url=";
+    var url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
+    var url_default_tw_txt = "https://twitter.com/intent/tweet?text=";
+    var url_default_tw_url = "&url=";
+    var url_default_band = "http://band.us/plugin/share?body=";
+    var url_route_band = "&route=";
+    var url_default_naver = "http://share.naver.com/web/shareView.nhn?url=";
+    var title_default_naver = "&title=";
+    var url_this_page = location.href;
+    var title_this_page = document.title;
+    var url_combine_ks = url_default_ks + url_this_page;
+    var url_combine_fb = url_default_fb + url_this_page;
+    var url_combine_tw = url_default_tw_txt + document.title + url_default_tw_url + url_this_page;
+    var url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
+    var url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
+
+    function shareLink() {
+        Kakao.Link.sendScrap({
+            requestUrl: location.href
+        });
+    };
+
+    function copyUrl() {
+        var urlInput = document.getElementById("urlInput");
+        urlInput.value = document.location.href;
+        urlInput.select();
+        document.execCommand("copy");
+        urlInput.blur();
+        alert("주소가 복사되었습니다.");
+    }
 </script>
 <body>
 <div class="" style="text-align: center; width: 500px;">
     <!-- contents -->
     <div style="display: inline-block; width: 100%;" class="exam-container">
         <!-- head -->
-        <nav class="navbar bg-light">
+        <nav class="navbar bg-light" th:replace="/personalities/fragments/examHeader :: examHeader">
             <div class="container-fluid">
-                <span class="navbar-brand mb-0 h1">ExamTest</span>
+                <span class="h4">ExamTest</span>
             </div>
         </nav>
 
         <!-- body text -->
-        <figure class="text-center py-3">
+        <figure class="text-center py-3 exam-contents">
             <blockquote class="blockquote">
-                <p th:text="${result.type}">TYPE</p>
+                <p class="my-3" th:text="${result.type}">TYPE</p>
                 <img th:src="${result.imageUrl}" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid py-3 form-floating" alt="...">
                 <p th:text="${result.description}">
                     Bootstrap’s components are largely built with a base-modifier nomenclature. We group as many shared properties as possible into a base class, like .btn, and then group individual styles for each variant into modifier classes, like .btn-primary or .btn-success.
@@ -50,31 +65,37 @@
             </figcaption>
         </figure>
 
+        <!-- repeat button line -->
+        <div class="text-center py-3 d-inline-block">
+            <button class="btn btn-primary d-flex exam-repeat-btn" onclick="location.href='examStart'">
+                <p class="refresh-icon" style="margin-right: 5px;"></p>
+                <span class="">다시하기</span></button>
+        </div>
+
         <!-- share result -->
         <div class="text-center py-5">
+            <div class="exam-share-box">
+                <span>친구에게 공유하기</span>
+            </div>
+            <div class="py-3"></div>
             <!-- SNS버튼 시작 -->
-            <div style="width: 100%; text-align: center;">
+            <div style="width: 100%; text-align: center;" class="share-div">
                 <!-- 페이스북 공유 버튼 --> <a href="" onclick="window.open(url_combine_fb, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/facebook.gif" title="페이스북으로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
                 <!-- 트위터 공유 버튼 --> <a href="" onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/twitter.gif" title="트위터로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
-                <!-- 카카오 스토리 공유 버튼 --> <a href="" onclick="window.open(url_combine_ks, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/story.gif" title="카카오스토리로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
+                <!-- 카카오 스토리 공유 버튼 --> <!--<a href="" onclick="window.open(url_combine_ks, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/story.gif" title="카카오스토리로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>-->
                 <!-- 네이버 공유 버튼 --> <a href="" onclick="window.open(url_combine_naver, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/naver.gif" title="네이버로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
-                <!-- 밴드 공유 버튼 --> <a href="" onclick="window.open(url_combine_band, '', 'scrollbars=no, width=584, height=635'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/band.gif" title="밴드로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
+                <!-- 밴드 공유 버튼 --> <!--<a href="" onclick="window.open(url_combine_band, '', 'scrollbars=no, width=584, height=635'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/band.gif" title="밴드로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>-->
+                <!-- 카카오톡 공유 버튼 --> <a href="javascript:shareLink()"><p class="share-kakao-icon d-inline-block"></p></a>
+                <!-- url 공유 버튼 --> <p class="share-url-icon d-inline-block" onclick="copyUrl()"></p><input type="text" id="urlInput">
             </div>
             <!-- SNS버튼 끝 -->
-            <div style="width: 100%; margin-top: 10px;">
-                <input class="d-inline-block" type="text" id="pageUrl" style="width: 50%;">
-                <button class="d-inline-block btn-outline-secondary" style="width: 20%;">URL복사</button>
-            </div>
+            <!--            <div style="width: 100%; margin-top: 10px;">
+                            <input class="d-inline-block" type="text" id="pageUrl" style="width: 50%;">
+                            <button class="d-inline-block btn-outline-secondary" style="width: 20%;">URL복사</button>
+                        </div>-->
         </div>
 
-
-        <!-- button line -->
-        <div class="text-center py-3 d-inline-block">
-            <button class="btn btn-primary d-flex" onclick="location.href='examStart'">
-                <p class="refresh-icon" style="margin-right: 5px;"></p>다시하기</button>
-        </div>
-
-        <!-- Oauth2 button line -->
+        <!-- login button line -->
         <div class="text-center py-5">
             <div>
                 <p>Login to save your personal type..</p>
