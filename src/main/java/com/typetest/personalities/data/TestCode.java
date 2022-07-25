@@ -1,4 +1,4 @@
-package com.typetest.personalities.exam.repository;
+package com.typetest.personalities.data;
 
 import lombok.Getter;
 

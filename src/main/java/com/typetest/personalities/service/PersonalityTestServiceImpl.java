@@ -8,12 +8,10 @@ import com.typetest.personalities.data.PointWrapper;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
-import com.typetest.personalities.exam.dto.ExamQuestionInfo;
-import com.typetest.personalities.exam.repository.TestCode;
+import com.typetest.personalities.data.TestCode;
 import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 

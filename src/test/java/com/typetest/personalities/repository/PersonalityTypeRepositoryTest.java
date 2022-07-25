@@ -4,11 +4,10 @@ import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
-import com.typetest.personalities.exam.repository.TestCode;
+import com.typetest.personalities.data.TestCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

@@ -1,6 +1,6 @@
 package com.typetest.test;
 
-import com.typetest.personalities.exam.repository.TestCode;
+import com.typetest.personalities.data.TestCode;
 import org.junit.jupiter.api.Test;
 
 public class ExamTest {

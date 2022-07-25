@@ -3,6 +3,7 @@ package com.typetest.personalities.exam.service;
 import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,14 +14,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @Qualifier("examService")
-@RequiredArgsConstructor
 public class ExamService {
 
-    public List<List<ExamQuestionInfo>> createQuestions() {
-        List<List<ExamQuestionInfo>> questions = new ArrayList<>();
+    private List<List<ExamQuestionInfo>> questions;
+    private int questionCnt;
+
+    public ExamService() {
+        log.info("ExamService Constructor");
+        questions = new ArrayList<>();
         ArrayList<Integer> points = new ArrayList<>(Arrays.asList(new Integer[]{1, 2, 3, 4, 5}));
         ArrayList<ExamQuestionInfo> questions1 = new ArrayList<>();
         ArrayList<ExamQuestionInfo> questions2 = new ArrayList<>();
@@ -86,6 +91,14 @@ public class ExamService {
         questions.add(questions2);
         questions.add(questions3);
 
+        questionCnt = questions.stream().mapToInt(i -> i.size()).sum();
+    }
+
+    public int getQuestionCnt() {
+        return questionCnt;
+    }
+
+    public List<List<ExamQuestionInfo>> createQuestions() {
         return questions;
     }
 

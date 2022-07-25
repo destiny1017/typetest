@@ -4,18 +4,15 @@ import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
-import com.typetest.personalities.exam.repository.TestCode;
+import com.typetest.personalities.data.TestCode;
 import com.typetest.personalities.exam.service.ExamService;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -41,9 +38,7 @@ public class ExamController {
     @GetMapping("/examTest")
     public String examTest(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
         List<List<ExamQuestionInfo>> questions = examService.createQuestions();
-        int questionCnt = 0;
-        questionCnt = questions.stream().mapToInt(i -> i.size()).sum();
-        model.addAttribute("questionCount", questionCnt);
+        model.addAttribute("questionCount", examService.getQuestionCnt());
         return "personalities/exam/examTest";
     }
 

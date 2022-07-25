@@ -5,24 +5,16 @@ import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
-import com.typetest.personalities.exam.repository.TestCode;
+import com.typetest.personalities.data.TestCode;
 import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
-import org.aspectj.lang.annotation.Before;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PersonalityTestServiceTest {

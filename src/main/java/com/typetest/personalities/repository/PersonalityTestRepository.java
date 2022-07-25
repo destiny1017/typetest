@@ -7,6 +7,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Map;
 
 public interface PersonalityTestRepository {
-    void savePersonalityType(String userId, String testCode, String type);
-    void savePersonalityTypeDetail(PersonalitiesAnswerInfo answerInfo);
 }

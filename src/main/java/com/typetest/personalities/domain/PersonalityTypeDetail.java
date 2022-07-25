@@ -1,14 +1,11 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.login.domain.User;
-import com.typetest.personalities.exam.repository.TestCode;
+import com.typetest.personalities.data.TestCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
-
-import java.util.Map;
 
 import static javax.persistence.FetchType.LAZY;
 
