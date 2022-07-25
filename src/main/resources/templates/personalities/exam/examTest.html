@@ -17,6 +17,35 @@
         scroll-behavior: auto;
     }
 </style>
+<script th:inline="javascript">
+    const questions = [[${questions}]];
+    
+    $(document).ready( () => {
+        $('.form-check-input-exam').click( () => {
+            if(checkSelect()) {
+                $('button[type="submit"]').attr("disabled", false);
+            } else {
+                $('button[type="submit"]').attr("disabled", true);                  
+            }
+        });
+    });
+    
+    function checkSelect() {
+        console.log("checkSelect");
+        let cnt = 0;
+        let checkAll = false;
+        for(questionPage of questions) {
+            for(question of questionPage) {
+                if(!$(`input[name="${question.questionNum}"]`).is(":checked")) {
+                    checkAll = false;
+                } else cnt++;
+            }
+        }
+        $("progress").val(cnt);
+        
+        return checkAll;
+    }
+</script>
 <body>
 <div class="" style="text-align: center;width: 500px;">
     <!-- contents -->
@@ -27,10 +56,13 @@
                 <span class="h4">ExamTest</span>
             </div>
         </nav>
+        
+        <!-- progress bar -->
+        <div class="progress-div">
+            <progress id="progress" value="0" min="0" th:max="${questionCount}" class="d-block"></progress>
+        </div>
 
         <!-- body text -->
-        <!--<input type="hidden" th:field="*{userId}" name="userId" value="USERID"/>
-        <input type="hidden" th:field="*{testCode}" name="testCode" value="EXAM"/>-->
         <form action="/examSubmit" method="get" id="examForm" class="exam-container">
 
             <div class="slider">
@@ -75,7 +107,7 @@
 
             <!-- button line -->
             <div class="text-center py-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary exam-rounded-btn font-singleDay" disabled>결과확인</button>
             </div>
         </form>
 
@@ -84,6 +116,10 @@
     <footer th:replace="/personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>
+
+<script>
+
+</script>
 <!--
 <script th:inline="javascript">
     function formSubmit() {

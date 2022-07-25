@@ -40,6 +40,10 @@ public class ExamController {
 
     @GetMapping("/examTest")
     public String examTest(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
+        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
+        int questionCnt = 0;
+        questionCnt = questions.stream().mapToInt(i -> i.size()).sum();
+        model.addAttribute("questionCount", questionCnt);
         return "personalities/exam/examTest";
     }
 
