@@ -33,7 +33,7 @@
     function checkSelect() {
         console.log("checkSelect");
         let cnt = 0;
-        let checkAll = false;
+        let checkAll = true;
         for(questionPage of questions) {
             for(question of questionPage) {
                 if(!$(`input[name="${question.questionNum}"]`).is(":checked")) {

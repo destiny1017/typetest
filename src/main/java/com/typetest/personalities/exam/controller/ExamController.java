@@ -26,8 +26,12 @@ public class ExamController {
 
     @ModelAttribute("questions")
     public List<List<ExamQuestionInfo>> examQuestions() {
-        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
-        return questions;
+        return examService.createQuestions();
+    }
+
+    @ModelAttribute("questionsSlide")
+    public List<ExamQuestionInfo> examQuestionSlide() {
+        return examService.createQuestionSlide();
     }
 
     @GetMapping("/examStart")
@@ -37,9 +41,16 @@ public class ExamController {
 
     @GetMapping("/examTest")
     public String examTest(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
-        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
+//        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
         model.addAttribute("questionCount", examService.getQuestionCnt());
         return "personalities/exam/examTest";
+    }
+
+    @GetMapping("/examTestSlide")
+    public String examTestSlide(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
+        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
+        model.addAttribute("questionCount", examService.getQuestionSlideCnt());
+        return "personalities/exam/examTestSlide";
     }
 
     @GetMapping("/examSubmit")

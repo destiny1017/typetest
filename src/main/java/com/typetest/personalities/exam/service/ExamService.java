@@ -21,15 +21,18 @@ import java.util.List;
 public class ExamService {
 
     private List<List<ExamQuestionInfo>> questions;
+    private List<ExamQuestionInfo> questionSlide;
     private int questionCnt;
+    private int questionSlideCnt;
 
     public ExamService() {
-        log.info("ExamService Constructor");
+        // 질문 목록 생성(추후 DB로 변경)
         questions = new ArrayList<>();
         ArrayList<Integer> points = new ArrayList<>(Arrays.asList(new Integer[]{1, 2, 3, 4, 5}));
         ArrayList<ExamQuestionInfo> questions1 = new ArrayList<>();
         ArrayList<ExamQuestionInfo> questions2 = new ArrayList<>();
         ArrayList<ExamQuestionInfo> questions3 = new ArrayList<>();
+
         questions1.add(new ExamQuestionInfo(1, points,
                 "Example question1"));
         questions1.add(new ExamQuestionInfo(2, points,
@@ -91,15 +94,58 @@ public class ExamService {
         questions.add(questions2);
         questions.add(questions3);
 
+
+        // slide question create
+        questionSlide = new ArrayList<>();
+        ArrayList<String> answers1 = new ArrayList<>();
+        ArrayList<Integer> pointsSlide1 = new ArrayList<>(Arrays.asList(new Integer[]{1, 3, 5}));
+        answers1.add("Example answer1");
+        answers1.add("Example answer2");
+        answers1.add("Example answer3");
+
+        ArrayList<String> answers2 = new ArrayList<>();
+        ArrayList<Integer> pointsSlide2 = new ArrayList<>(Arrays.asList(new Integer[]{1, 5}));
+        answers2.add("Example answer1");
+        answers2.add("Example answer2");
+
+        questionSlide.add(new ExamQuestionInfo(1, pointsSlide1,
+                "Example slide question1", answers1));
+        questionSlide.add(new ExamQuestionInfo(2, pointsSlide2,
+                "Example slide question2", answers2));
+        questionSlide.add(new ExamQuestionInfo(3, pointsSlide2,
+                "Example slide question3", answers2));
+        questionSlide.add(new ExamQuestionInfo(4, pointsSlide1,
+                "Example slide question4", answers1));
+        questionSlide.add(new ExamQuestionInfo(5, pointsSlide2,
+                "Example slide question5", answers2));
+        questionSlide.add(new ExamQuestionInfo(6, pointsSlide1,
+                "Example slide question6", answers1));
+        questionSlide.add(new ExamQuestionInfo(7, pointsSlide1,
+                "Example slide question7", answers1));
+        questionSlide.add(new ExamQuestionInfo(8, pointsSlide2,
+                "Example slide question8", answers2));
+        questionSlide.add(new ExamQuestionInfo(9, pointsSlide1,
+                "Example slide question9", answers1));
+
+        // 질문 개수 계산
         questionCnt = questions.stream().mapToInt(i -> i.size()).sum();
+        questionSlideCnt = questionSlide.size();
     }
 
     public int getQuestionCnt() {
         return questionCnt;
     }
 
+    public int getQuestionSlideCnt() {
+        return questionSlideCnt;
+    }
+
     public List<List<ExamQuestionInfo>> createQuestions() {
         return questions;
+    }
+
+    public List<ExamQuestionInfo> createQuestionSlide() {
+        return questionSlide;
     }
 
     public ExamResultInfo getResult(String type) {

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/personalities/fragments/header.html :: header">
+    <meta charset="utf-8">
+</head>
+<style>
+    input[name="answer"] {
+        margin: 5px 20px 5px 20px;
+    }
+
+    .questionDiv {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .slides {
+        scroll-behavior: auto;
+    }
+</style>
+<script th:inline="javascript">
+    const questions = [[${questionsSlide}]];
+
+    $(document).ready( () => {
+        $('.examAnswerCard').click( () => {
+            $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
+        });
+
+        $('.examAnswerCardDiv input').change( () => {
+            if(checkSelect()) {
+                $('#examForm').submit();
+            }
+        });
+
+    });
+
+    function checkSelect() {
+        console.log("checkSelect");
+        let cnt = 0;
+        let checkAll = true;
+        for(question of questions) {
+            if(!$(`input[name="${question.questionNum}"]`).is(":checked")) {
+                checkAll = false;
+            } else cnt++;
+        }
+        $("progress").val(cnt);
+
+        return checkAll;
+    }
+
+</script>
+<body>
+<div class="" style="text-align: center;width: 500px;">
+    <!-- contents -->
+    <div style="">
+        <!-- head -->
+        <nav class="navbar bg-light" th:replace="/personalities/fragments/examHeader :: examHeader">
+            <div class="container-fluid">
+                <span class="h4">ExamTest</span>
+            </div>
+        </nav>
+
+        <!-- progress bar -->
+        <div class="progress-div">
+            <progress id="progress" value="0" min="0" th:max="${questionCount}" class="d-block"></progress>
+        </div>
+
+        <!-- body text -->
+        <form action="/examSubmit" method="get" id="examForm" class="exam-container">
+
+            <div class="slider">
+                <div class="slides">
+                    <div th:each="question : ${questionsSlide}"  th:id="|question-${questionStat.index + 1}|">
+                        <div class="questionDiv">
+                            
+                            <!-- 질문 -->
+                            <div class="questionStr">
+                                <p th:text="${question.question}"></p>
+                            </div>
+                            
+                            <div class="py-2"></div>
+                            
+                            <!-- 응답 -->
+                            <div class="examAnswerCardDiv" th:each="answer : ${question.answer}"
+                                 th:with="inputId = |${question.questionNum}_${question.selectPoint[answerStat.index]}|">
+                                <input class="" type="radio" th:id="${inputId}"
+                                       th:name="${question.questionNum}" th:value="${question.selectPoint[answerStat.index]}"/>
+                                <label th:text="${answer}" th:for="${inputId}" class="examAnswerCard"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<figure class="text-center py-3" th:each="question : ${questions}">
+                        <blockquote class="blockquote">
+                            <p th:text="${question.question}"></p>
+                        </blockquote>
+                        <div class="figure" th:each="selPoint : ${question.selectPoint}">
+                            <input type="radio" th:name="${question.questionNum}" th:value="${selPoint}"/>
+                        </div>
+                    </figure>-->
+                </div>
+
+
+            </div>
+
+            <!-- button line -->
+            <!--<div class="text-center py-3">
+                <button type="submit" class="btn btn-primary exam-rounded-btn font-singleDay" disabled>결과확인</button>
+            </div>-->
+        </form>
+
+
+    </div>
+    <footer th:replace="/personalities/fragments/footer.html :: footer"></footer>
+</div>
+</body>
+
+</html>
+
