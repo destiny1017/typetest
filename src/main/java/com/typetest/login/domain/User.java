@@ -3,8 +3,10 @@ package com.typetest.login.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "USER_INFO")
 @Getter
@@ -20,6 +22,9 @@ public class User {
     private String name;
     private String email;
     private String picture;
+
+    @CreationTimestamp
+    private LocalDateTime createDate;
 
     @Builder
     public User(String name, String email, String picture/*, Role role */){

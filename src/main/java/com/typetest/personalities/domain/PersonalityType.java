@@ -4,8 +4,11 @@ import com.typetest.login.domain.User;
 import com.typetest.personalities.data.TestCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -25,6 +28,9 @@ public class PersonalityType {
     private TestCode testCode;
 
     private String type;
+
+    @CreationTimestamp
+    private LocalDateTime createDate;
 
     public PersonalityType(User user, TestCode testCode, String type) {
         this.user = user;
