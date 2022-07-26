@@ -3,6 +3,7 @@
 <head th:replace="/personalities/fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
+<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- SNS 공유용 주소 연결 용 -->
 <script type="text/javascript" async>
     var url_default_ks = "https://story.kakao.com/share?url=";
@@ -21,12 +22,6 @@
     var url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com';
     var url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page);
 
-    function shareLink() {
-        Kakao.Link.sendScrap({
-            requestUrl: location.href
-        });
-    };
-
     function copyUrl() {
         var urlInput = document.getElementById("urlInput");
         urlInput.value = document.location.href;
@@ -35,6 +30,18 @@
         urlInput.blur();
         alert("주소가 복사되었습니다.");
     }
+
+    $(document).ready( () => {
+        Kakao.init('27140768c4ba57a677d8073e1792449c');
+        Kakao.Share.createCustomButton({
+          container: '#kakaotalk-sharing-btn',
+          templateId: 80348,
+          templateArgs: {
+            'title': '제목 영역입니다.',
+            'description': '설명 영역입니다.'
+          }
+        });
+    });
 </script>
 <body>
 <div class="" style="text-align: center; width: 500px;">
@@ -85,7 +92,7 @@
                 <!-- 카카오 스토리 공유 버튼 --> <!--<a href="" onclick="window.open(url_combine_ks, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/story.gif" title="카카오스토리로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>-->
                 <!-- 네이버 공유 버튼 --> <a href="" onclick="window.open(url_combine_naver, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/naver.gif" title="네이버로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
                 <!-- 밴드 공유 버튼 --> <!--<a href="" onclick="window.open(url_combine_band, '', 'scrollbars=no, width=584, height=635'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/band.gif" title="밴드로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>-->
-                <!-- 카카오톡 공유 버튼 --> <a href="javascript:shareLink()"><p class="share-kakao-icon d-inline-block"></p></a>
+                <!-- 카카오톡 공유 버튼 --> <a href="#" id="kakaotalk-sharing-btn"><p class="share-kakao-icon d-inline-block"></p></a>
                 <!-- url 공유 버튼 --> <p class="share-url-icon d-inline-block" onclick="copyUrl()"></p><input type="text" id="urlInput">
             </div>
             <!-- SNS버튼 끝 -->
