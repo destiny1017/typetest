@@ -56,8 +56,8 @@ public class OAuthLoginService implements LoginService, OAuth2UserService<OAuth2
         httpSession.setAttribute("user", new SessionUser(user)); // SessionUser (직렬화된 dto 클래스 사용)
 
         return new DefaultOAuth2User(
-//                Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
-                null,
+                Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
+//                null,
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }

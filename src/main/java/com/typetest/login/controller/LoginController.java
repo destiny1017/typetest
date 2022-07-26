@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 @Slf4j
 @Controller
@@ -19,7 +21,7 @@ public class LoginController {
     private final HttpSession httpSession;
 
     @GetMapping(value = {"/", "/oauth2/authorization/*"})
-    public String welcome(Model model) {
+    public String welcome(Model model, HttpServletRequest request) {
 //        model.addAttribute("posts", postsService.findAll());
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) {
@@ -29,7 +31,10 @@ public class LoginController {
         }
         log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
 
-        return "index";
+//        return "redirect:" + request.getHeader("Referer");
+        Enumeration<String> headerNames = request.getHeaderNames();
+        headerNames.asIterator().forEachRemaining(i -> log.info(request.getHeader(i)));
+        return "personalities/exam/examStart";
     }
 
     @GetMapping("/loginPage")

@@ -1,5 +1,6 @@
 package com.typetest.login.dto;
 
+import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -90,7 +91,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
-//                .role(Role.GUEST) // 기본 권한 GUEST
+                .role(Role.USER) // 기본 권한 USER
                 .build();
     }
 

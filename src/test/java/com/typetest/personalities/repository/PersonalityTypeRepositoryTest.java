@@ -1,5 +1,6 @@
 package com.typetest.personalities.repository;
 
+import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.domain.PersonalityType;
@@ -32,7 +33,7 @@ class PersonalityTypeRepositoryTest {
     @Test
     public void EntityInsertTest() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/");
+        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER);
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
         PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
         PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
@@ -59,7 +60,7 @@ class PersonalityTypeRepositoryTest {
     @Test
     public void savePersonal() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/");
+        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER);
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
         PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
         PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
