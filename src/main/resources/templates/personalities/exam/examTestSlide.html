@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/personalities/fragments/header.html :: header">
+<head th:replace="personalities/fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
 <style>
@@ -53,7 +53,7 @@
     <!-- contents -->
     <div style="">
         <!-- head -->
-        <nav class="navbar bg-light" th:replace="/personalities/fragments/examHeader :: examHeader">
+        <nav class="navbar bg-light" th:replace="personalities/fragments/examHeader :: examHeader">
             <div class="container-fluid">
                 <span class="h4">ExamTest</span>
             </div>
@@ -109,7 +109,7 @@
 
 
     </div>
-    <footer th:replace="/personalities/fragments/footer.html :: footer"></footer>
+    <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>
 

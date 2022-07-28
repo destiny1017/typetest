@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/personalities/fragments/header.html :: header">
+<head th:replace="personalities/fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
 <body>
@@ -8,7 +8,7 @@
     <!-- contents -->
     <div style="display: inline-block; height: 90%;">
         <!-- head -->
-        <nav class="navbar bg-light" th:replace="/personalities/fragments/examHeader :: examHeader">
+        <nav class="navbar bg-light" th:replace="personalities/fragments/examHeader :: examHeader">
             <div class="container-fluid">
                 <span class="h4">ExamTest</span>
             </div>
@@ -28,10 +28,10 @@
         <!-- button line -->
         <div class="text-center py-3">
             <button class="btn btn-primary exam-rounded-btn" onclick="location.href='examTest'"><span>테스트 시작!</span></button>
-            <button class="btn btn-primary exam-rounded-btn" onclick="location.href='examTestSlide'"><span>Slide 테스트 시작!</span></button>
+            <button class="btn btn-primary exam-rounded-btn" onclick="location.href='examTestSlide'"><span>Slide 테스트</span></button>
         </div>
     </div>
-    <footer th:replace="/personalities/fragments/footer.html :: footer"></footer>
+    <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>
 </html>

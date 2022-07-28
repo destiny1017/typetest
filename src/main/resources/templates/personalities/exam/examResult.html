@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/personalities/fragments/header.html :: header">
+<head th:replace="personalities/fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
 <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -48,7 +48,7 @@
     <!-- contents -->
     <div style="display: inline-block; width: 100%;" class="exam-container">
         <!-- head -->
-        <nav class="navbar bg-light" th:replace="/personalities/fragments/examHeader :: examHeader">
+        <nav class="navbar bg-light" th:replace="personalities/fragments/examHeader :: examHeader">
             <div class="container-fluid">
                 <span class="h4">ExamTest</span>
             </div>
@@ -110,7 +110,7 @@
             <button class="btn btn-secondary" onclick="location.href='loginPage'">Login</button>
         </div>
     </div>
-    <footer th:replace="/personalities/fragments/footer.html :: footer"></footer>
+    <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>
 </html>
