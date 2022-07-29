@@ -1,6 +1,11 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Dongle&family=Noto+Sans+KR&family=Single+Day&display=swap');
 
+/* 모바일 환경에서만 적용할 css */
+@media screen and (min-width: 500px) {
+
+}
+
 footer {
     position: relative;
     width: 500px;
@@ -61,6 +66,10 @@ footer {
 
 .exam-container {
    background: #fdfdfd;
+   max-width: 500px;
+   margin: 0 auto;
+   display: flex;
+   flex-direction: column;
 }
 
 .exam-contents {
@@ -329,12 +338,13 @@ footer {
   html, body {
     height: 100%;
   }
+
   body {
-    display: flex;
-    align-items: center;
     background: #000;
     font-family: 'Ropa Sans', sans-serif;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
   }
 
   .questionStr {
@@ -368,4 +378,3 @@ footer {
 .examAnswerCard:active {
     background: #acffff;
 }
-
