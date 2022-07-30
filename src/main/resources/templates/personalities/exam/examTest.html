@@ -16,34 +16,59 @@
     .slides {
         scroll-behavior: auto;
     }
+    
+    .display-none {
+        display: none;
+    }
 </style>
 <script th:inline="javascript">
     const questions = [[${questions}]];
+    let nowPage = 0;
     
     $(document).ready( () => {
         $('.form-check-input-exam').click( () => {
-            if(checkSelect()) {
-                $('button[type="submit"]').attr("disabled", false);
-            } else {
-                $('button[type="submit"]').attr("disabled", true);                  
-            }
+            checkSelect();
         });
+        
+        $('#btnNext').click( () => {
+            nowPage++;
+            $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
+            $("#btnNext").prop("disabled", true);
+            location.href = "#examForm";
+        });
+
     });
     
     function checkSelect() {
         console.log("checkSelect");
-        let cnt = 0;
         let checkAll = true;
-        for(questionPage of questions) {
+        let cnt = 0;
+        for(const [i, questionPage] of questions.entries()) {
+            // 전체 체크된 개수 및 전체 체크여부 확인
+            let pageCnt = 0;
             for(question of questionPage) {
                 if(!$(`input[name="${question.questionNum}"]`).is(":checked")) {
                     checkAll = false;
-                } else cnt++;
+                } else pageCnt++;
+            }
+            cnt += pageCnt;
+            
+            // 현 페이지 내의 모든 질문이 체크됐으면 다음버튼 활성화
+            if(nowPage == i) {
+                if(questions[i].length == pageCnt) {
+                    $("#btnNext").prop("disabled", false);
+                }
             }
         }
+        
+        // progressBar 증가
         $("progress").val(cnt);
         
-        return checkAll;
+        // 모두 체크됐으면 submit 활성화
+        if(checkAll) {
+            $("#btnNext").addClass("display-none");
+            $('button[type="submit"]').removeClass("display-none");
+        }
     }
 </script>
 <body>
@@ -63,7 +88,7 @@
         </div>
 
         <!-- body text -->
-        <form action="/examSubmit" method="get" id="examForm" class="exam-container">
+        <form action="/examSubmit" method="get" id="examForm">
 
             <div class="slider">
                 <div class="slides">
@@ -88,26 +113,13 @@
                             </div>
                         </div>
                     </div>
-                    <!--<figure class="text-center py-3" th:each="question : ${questions}">
-                        <blockquote class="blockquote">
-                            <p th:text="${question.question}"></p>
-                        </blockquote>
-                        <div class="figure" th:each="selPoint : ${question.selectPoint}">
-                            <input type="radio" th:name="${question.questionNum}" th:value="${selPoint}"/>
-                        </div>
-                    </figure>-->
                 </div>
-
-                <div class="margin-topdown-10">
-                    <a th:each="pageQuestion : ${questions}" th:href="|#question-${pageQuestionStat.index + 1}|"
-                        th:text="${pageQuestionStat.index + 1}">1</a>
-                </div>
-
             </div>
 
             <!-- button line -->
             <div class="text-center py-3">
-                <button type="submit" class="btn btn-primary exam-rounded-btn font-singleDay" disabled>결과확인</button>
+                <button type="submit" class="btn btn-primary exam-rounded-btn font-singleDay display-none" id="btnSubmit">결과확인</button>
+                <button class="btn btn-primary exam-rounded-btn font-singleDay" id="btnNext" disabled>다음으로</button>
             </div>
         </form>
 
