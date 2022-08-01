@@ -62,20 +62,10 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
         Set<String> attrKeySet = attributes.keySet();
-        System.out.println("attributes.keySet() = " + attrKeySet);
-//        for (String key : attrKeySet) {
-//            Map<String, Object> attrMap = (Map<String, Object>) attributes.get(key);
-//            System.out.println("attrKey = " + key);
-//            for (String key2 : attrMap.keySet()) {
-//                System.out.println(key2 + " = " + attrMap.get(key2));
-//            }
-//        }
         // kakao는 kakao_account에 유저정보가 있다. (email)
         Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
-        System.out.println("kakaoAccount.keySet() = " + kakaoAccount.keySet());
         // kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
         Map<String, Object> kakaoProfile = (Map<String, Object>)attributes.get("properties");
-        System.out.println("kakaoProfile.keySet() = " + kakaoProfile.keySet());
 
         return OAuthAttributes.builder()
                 .name((String) kakaoProfile.get("nickname"))
