@@ -3,6 +3,7 @@ package com.typetest.login.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -22,6 +23,9 @@ public class User {
     private String name;
     private String email;
     private String picture;
+
+    @ColumnDefault("'닉네임을설정해주세요'")
+    private String nickname;
 
     @Enumerated(EnumType.STRING)
     private Role role;

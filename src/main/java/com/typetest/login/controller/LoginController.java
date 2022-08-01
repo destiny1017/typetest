@@ -22,7 +22,6 @@ public class LoginController {
 
     @GetMapping(value = {"/", "/oauth2/authorization/*"})
     public String welcome(Model model, HttpServletRequest request) {
-//        model.addAttribute("posts", postsService.findAll());
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) {
             model.addAttribute("userName", user.getName());
@@ -31,9 +30,6 @@ public class LoginController {
         }
         log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
 
-//        return "redirect:" + request.getHeader("Referer");
-        Enumeration<String> headerNames = request.getHeaderNames();
-        headerNames.asIterator().forEachRemaining(i -> log.info(request.getHeader(i)));
         return "personalities/exam/examStart";
     }
 
