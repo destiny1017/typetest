@@ -39,4 +39,4 @@ out/
 ### private info file ###
 /src/main/resources/application.yml
 /src/main/resources/application-oauth.yml
-/src/test/resoutces/application.yml
+/src/test/resources/application.yml
