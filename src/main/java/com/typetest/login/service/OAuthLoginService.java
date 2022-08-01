@@ -17,27 +17,18 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class OAuthLoginService implements LoginService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final LoginRepository loginRepository;
     private final HttpSession httpSession;
 
-    @Override
-    public int login(Map<String, String> loginInfo) {
-        return 0;
-    }
-
-    @Override
-    public int logout(String userId) {
-        return 0;
-    }
-
-    @Override
-    public User createUser(Map<String, String> userInfo) {
-        return null;
+    public boolean checkDuplication(String email) {
+        Optional<User> findUser = loginRepository.findByEmail(email);
+        return findUser.isPresent();
     }
 
     @Override
