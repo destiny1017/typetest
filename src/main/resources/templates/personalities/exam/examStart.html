@@ -31,11 +31,14 @@
             <button class="btn btn-primary exam-rounded-btn" onclick="location.href='examTestSlide'"><span>Slide 테스트</span></button>
         </div>
 
-        <div class="py-5"></div>
+        <div class="py-3"></div>
 
         <!-- login button line -->
-        <div class="text-center py-3">
-            <button class="btn btn-secondary" onclick="location.href='loginPage'">Login</button>
+        <div class="text-center py-5">
+            <div class="result-login-text">
+                <p>로그인 하면 더 정밀한 성격진단이 가능해요!</p>
+            </div>
+            <button class="btn btn-outline-info" onclick="location.href='loginPage'">Login</button>
         </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
