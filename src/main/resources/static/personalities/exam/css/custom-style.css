@@ -36,7 +36,7 @@ footer {
     padding-top: 1rem;
     padding-bottom: 1rem;
     width: 100%;
-    background: #537775;
+    background: #76a0df;
 }
 
 .font-singleDay {
@@ -52,7 +52,6 @@ footer {
 }
 
 .login-container {
-   background: #fdfdfd;
    max-width: 500px;
    margin: 0 auto;
    display: flex;
@@ -67,11 +66,11 @@ footer {
 }
 
 .exam-container {
-   background: #fdfdfd;
    max-width: 500px;
    margin: 0 auto;
    display: flex;
    flex-direction: column;
+   background: #eee;
 }
 
 .exam-contents {
@@ -267,7 +266,6 @@ footer {
     /*height: 300px;*/
     margin-right: 50px;
     /*border-radius: 10px;*/
-    background: #fbfbfb;
     transform-origin: center center;
     transform: scale(1);
     transition: transform 0.5s;
@@ -341,7 +339,6 @@ footer {
   }
 
   body {
-    background: #000;
     font-family: 'Ropa Sans', sans-serif;
     flex-direction: column;
     margin: 0;
