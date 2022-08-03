@@ -2,11 +2,13 @@ package com.typetest.personalities.domain;
 
 import com.typetest.personalities.data.TestCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class TypeImage {
 
     @Id @GeneratedValue
@@ -17,4 +19,9 @@ public class TypeImage {
     private TypeInfo typeInfo;
 
     private String imageUrl;
+
+    public TypeImage(TypeInfo typeInfo, String imageUrl) {
+        this.typeInfo = typeInfo;
+        this.imageUrl = imageUrl;
+    }
 }

@@ -2,22 +2,28 @@ package com.typetest.personalities.domain;
 
 import com.typetest.personalities.data.TestCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class TypeInfo {
 
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private TestCode testCode;
     private String type;
-    private TypeDescription description;
-    private TypeImage image;
+    private String typeName;
+//    private TypeDescription description;
+//    private TypeImage image;
+
+    public TypeInfo(TestCode testCode, String type, String typeName) {
+        this.testCode = testCode;
+        this.type = type;
+        this.typeName = typeName;
+    }
 }
