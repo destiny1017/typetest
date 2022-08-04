@@ -87,7 +87,7 @@ class PersonalityTestServiceTest {
         personalityTestService.saveTestInfo(answerInfo, "BBB");
 
         //then
-        PersonalityType byUser = ptRepository.findByUser(user);
+        PersonalityType byUser = ptRepository.findByUser(user).get(0);
         List<PersonalityTypeDetail> byUserAndTestCode = ptdRepository.findByUserAndTestCode(user, TestCode.EXAM);
 
         byUser.getUser();
