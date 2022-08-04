@@ -27,15 +27,15 @@ public class PersonalityType {
     @Enumerated(EnumType.STRING)
     private TestCode testCode;
 
-    private String type;
+    private String typeCode;
 
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    public PersonalityType(User user, TestCode testCode, String type) {
+    public PersonalityType(User user, TestCode testCode, String typeCode) {
         this.user = user;
         this.testCode = testCode;
-        this.type = type;
+        this.typeCode = typeCode;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PersonalityType {
         return "PersonalityType{" +
                 "id=" + id +
                 ", testCode=" + testCode +
-                ", type='" + type + '\'' +
+                ", type='" + typeCode + '\'' +
                 '}';
     }
 }

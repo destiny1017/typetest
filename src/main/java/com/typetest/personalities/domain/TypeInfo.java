@@ -16,14 +16,12 @@ public class TypeInfo {
 
     @Enumerated(EnumType.STRING)
     private TestCode testCode;
-    private String type;
+    private String typeCode;
     private String typeName;
-//    private TypeDescription description;
-//    private TypeImage image;
 
-    public TypeInfo(TestCode testCode, String type, String typeName) {
+    public TypeInfo(TestCode testCode, String typeCode, String typeName) {
         this.testCode = testCode;
-        this.type = type;
+        this.typeCode = typeCode;
         this.typeName = typeName;
     }
 }
