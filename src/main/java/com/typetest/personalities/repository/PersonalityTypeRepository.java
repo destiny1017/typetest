@@ -4,6 +4,12 @@ import com.typetest.login.domain.User;
 import com.typetest.personalities.domain.PersonalityType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PersonalityTypeRepository extends JpaRepository<PersonalityType, Long> {
-    PersonalityType findByUser(User user);
+import java.util.List;
+
+public interface PersonalityTypeRepository extends
+        JpaRepository<PersonalityType, Long>,
+        PersonalityTypeRepositoryCustom
+{
+    List<PersonalityType> findByUser(User user);
+    List<PersonalityType> findByUserId(Long userId);
 }
