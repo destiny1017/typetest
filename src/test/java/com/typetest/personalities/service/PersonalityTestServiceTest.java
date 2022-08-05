@@ -36,7 +36,7 @@ class PersonalityTestServiceTest {
     @Test
     public void calcTypeTest() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER);
+        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
 
@@ -64,7 +64,7 @@ class PersonalityTestServiceTest {
     @Test
     void saveInfoTest() {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER);
+        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
         loginRepository.save(user);
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();

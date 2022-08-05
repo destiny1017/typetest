@@ -9,6 +9,7 @@ import com.typetest.personalities.domain.PersonalityTypeDetail;
 import com.typetest.personalities.data.TestCode;
 import com.typetest.personalities.domain.TypeInfo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,7 +51,7 @@ class PersonalityTypeRepositoryTest {
     @Test
     public void EntityInsertTest() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER);
+        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
         PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
         PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
@@ -77,7 +78,7 @@ class PersonalityTypeRepositoryTest {
     @Test
     public void savePersonal() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER);
+        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
         PersonalityType pt = new PersonalityType(user, TestCode.MBTI, "TEST");
         PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 1, 1);
         PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, TestCode.MBTI, 2, 2);
@@ -101,9 +102,10 @@ class PersonalityTypeRepositoryTest {
     }
     
     @Test
-    void getUserInfoTest() {
+    @DisplayName("사용자 유형정보 가져오기 테스트")
+    void getUserTypeListTest() {
         //given
-        User user = new User("test1", "test1@test.com", "http://test.com/", Role.USER);
+        User user = new User("test1", "test1@test.com", "http://test.com/", Role.USER, "디앙");
         PersonalityType pt1 = new PersonalityType(user, TestCode.EXAM, "AAA");
         PersonalityType pt2 = new PersonalityType(user, TestCode.EXAM, "BBA");
         PersonalityType pt3 = new PersonalityType(user, TestCode.MBTI, "INTP");
@@ -115,13 +117,20 @@ class PersonalityTypeRepositoryTest {
         em.flush();
 
         //when
-        List<TypeInfoData> userTypeList = personalityTypeRepository.getUserTypeList(user);
+        User testUser = new User();
+        testUser.setId(user.getId());
+        List<TypeInfoData> userTypeList = personalityTypeRepository.getUserTypeList(testUser);
 
         //then
-        for (TypeInfoData typeInfoData : userTypeList) {
-            System.out.println("typeInfoData = " + typeInfoData);
-        }
         assertThat(userTypeList).hasSize(3);
+
+        assertThat(userTypeList.stream().map(u -> u.getTestCode())).contains(TestCode.EXAM);
+        assertThat(userTypeList.stream().map(u -> u.getTestCode())).contains(TestCode.MBTI);
+
+        assertThat(userTypeList.stream().map(u -> u.getTypeCode())).contains("AAA");
+        assertThat(userTypeList.stream().map(u -> u.getTypeCode())).contains("BBA");
+        assertThat(userTypeList.stream().map(u -> u.getTypeCode())).contains("INTP");
+
     }
 
 }
