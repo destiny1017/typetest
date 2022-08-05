@@ -1,5 +1,6 @@
 package com.typetest.login.dto;
 
+import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import lombok.Getter;
 import lombok.ToString;
@@ -17,6 +18,7 @@ public class SessionUser implements Serializable {
     private String email;
     private String picture;
     private String nickname;
+    private Role role;
 
     public SessionUser(User user){
         this.id = user.getId();
@@ -24,5 +26,6 @@ public class SessionUser implements Serializable {
         this.email = user.getEmail();
         this.picture = user.getPicture();
         this.nickname = user.getNickname();
+        this.role = user.getRole();
     }
 }
