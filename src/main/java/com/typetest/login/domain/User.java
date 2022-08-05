@@ -3,6 +3,7 @@ package com.typetest.login.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "USER_INFO")
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 @SequenceGenerator(name = "user_seq_generator",
                     sequenceName = "user_seq",
@@ -34,11 +35,12 @@ public class User {
     private LocalDateTime createDate;
 
     @Builder
-    public User(String name, String email, String picture, Role role ){
+    public User(String name, String email, String picture, Role role, String nickname){
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.role = role;
+        this.nickname = nickname;
     }
 
     public User update(String name, String picture){
