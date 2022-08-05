@@ -70,6 +70,7 @@ public class ExamController {
         if(user != null) {
             answerInfo.setUserId(user.getId());
             personalityTestService.saveTestInfo(answerInfo, type);
+            log.info("answerInfo = {}", answerInfo);
         }
 
         return "redirect:examResult?type=" + type;

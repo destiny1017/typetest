@@ -23,9 +23,11 @@ public class PersonalityTypeRepositoryImpl implements PersonalityTypeRepositoryC
     }
 
     public List<TypeInfoData> getUserTypeList(User user) {
-        return jpaQueryFactory.select(new QTypeInfoData(
+        return jpaQueryFactory
+                .select(new QTypeInfoData(
                     personalityType.testCode,
                     personalityType.typeCode,
+                    personalityType.createDate,
                     typeInfo.typeName))
                 .from(personalityType, typeInfo)
                 .where(
