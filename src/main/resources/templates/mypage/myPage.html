@@ -16,15 +16,15 @@
     <div style="display: inline-block; height: 90%;">
         <!-- profile -->
         <div class="profile-div">
-            <div class="profile-image">
+            <div class="profile-image" th:style="|background-image: url(${session.user.picture})|">
 
             </div>
             <div class="profile-desc">
                 <div class="nickname-div">
-                    <span id="nickname" th:text="${userInfo.nickname}"></span>
+                    <span id="nickname" th:text="${session.user.nickname}"></span>
                 </div>
                 <div class="type-div">
-                    <span class="type-label" th:each="typeInfo : ${userInfo.typeList}" th:text="${typeInfo.type}"></span>
+                    <span class="type-label" th:each="typeInfo : ${userTypeMap}" th:text="${typeInfo.value.typeName}"></span>
                 </div>
             </div>
         </div>
