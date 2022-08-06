@@ -15,7 +15,6 @@ import java.util.*;
 public class MyPageService {
 
     private final PersonalityTypeRepository personalityTypeRepository;
-    private final LoginRepository loginRepository;
 
     /**
      * # 사용자의 검사결과 데이터를 받아와서 가장 최근의 결과를 필터링 해서 돌려주는 메서드
