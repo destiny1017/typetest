@@ -1,12 +1,9 @@
 package com.typetest.personalities.repository;
 
-import com.typetest.personalities.data.TestCode;
+import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TypeDescription;
 import com.typetest.personalities.domain.TypeImage;
 import com.typetest.personalities.domain.TypeInfo;
-import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,9 +29,9 @@ public class TypeInfoRepositoryTest {
 
     @Test
     void typeInfoDescriptionTest() {
-        TypeInfo typeInfo1 = new TypeInfo(TestCode.EXAM, "BBB", "비비비타입");
-        TypeInfo typeInfo2 = new TypeInfo(TestCode.EXAM, "AAA", "에에에타입");
-        TypeInfo typeInfo3 = new TypeInfo(TestCode.EXAM, "ABB", "에비비타입");
+        TypeInfo typeInfo1 = new TypeInfo(AnswerType.BASIC, "BBB", "비비비타입");
+        TypeInfo typeInfo2 = new TypeInfo(AnswerType.BASIC, "AAA", "에에에타입");
+        TypeInfo typeInfo3 = new TypeInfo(AnswerType.BASIC, "ABB", "에비비타입");
         em.persist(typeInfo1);
         em.persist(typeInfo2);
         em.persist(typeInfo3);

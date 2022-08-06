@@ -1,6 +1,6 @@
 package com.typetest.personalities.domain;
 
-import com.typetest.personalities.data.TestCode;
+import com.typetest.personalities.data.AnswerType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,12 +15,12 @@ public class TypeInfo {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private TestCode testCode;
+    private AnswerType answerType;
     private String typeCode;
     private String typeName;
 
-    public TypeInfo(TestCode testCode, String typeCode, String typeName) {
-        this.testCode = testCode;
+    public TypeInfo(AnswerType answerType, String typeCode, String typeName) {
+        this.answerType = answerType;
         this.typeCode = typeCode;
         this.typeName = typeName;
     }

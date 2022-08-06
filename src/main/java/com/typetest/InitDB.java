@@ -2,12 +2,10 @@ package com.typetest;
 
 import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
-import com.typetest.personalities.data.TestCode;
+import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.TypeInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,11 +34,11 @@ public class InitDB {
 
         public void init() {
             if(!env.getProperty("spring.profiles.active").equals("test")) {
-                TypeInfo typeInfo1 = new TypeInfo(TestCode.EXAM, "BBA", "비비에이");
-                TypeInfo typeInfo2 = new TypeInfo(TestCode.EXAM, "AAA", "에에에이");
-                TypeInfo typeInfo3 = new TypeInfo(TestCode.EXAM, "BAB", "비에이비");
-                TypeInfo typeInfo4 = new TypeInfo(TestCode.MBTI, "INTP", "인팁");
-                TypeInfo typeInfo5 = new TypeInfo(TestCode.EXAM, "BBB", "비비비이");
+                TypeInfo typeInfo1 = new TypeInfo(AnswerType.BASIC, "BBA", "비비에이");
+                TypeInfo typeInfo2 = new TypeInfo(AnswerType.BASIC, "AAA", "에에에이");
+                TypeInfo typeInfo3 = new TypeInfo(AnswerType.BASIC, "BAB", "비에이비");
+                TypeInfo typeInfo4 = new TypeInfo(AnswerType.CARD, "INTP", "인팁");
+                TypeInfo typeInfo5 = new TypeInfo(AnswerType.BASIC, "BBB", "비비비이");
                 em.persist(typeInfo1);
                 em.persist(typeInfo2);
                 em.persist(typeInfo3);
@@ -51,9 +49,9 @@ public class InitDB {
                         "eogh6428@gmail.com",
                         "https://lh3.googleusercontent.com/a-/AFdZucr_8gjDmt791JrOHftPA1UX3kvt1WiRxW19AH4JdQ=s96-c",
                         Role.USER, "디앙");
-                PersonalityType pt1 = new PersonalityType(user, TestCode.EXAM, "AAA");
-                PersonalityType pt2 = new PersonalityType(user, TestCode.EXAM, "BBA");
-                PersonalityType pt3 = new PersonalityType(user, TestCode.MBTI, "INTP");
+                PersonalityType pt1 = new PersonalityType(user, AnswerType.BASIC, "AAA");
+                PersonalityType pt2 = new PersonalityType(user, AnswerType.BASIC, "BBA");
+                PersonalityType pt3 = new PersonalityType(user, AnswerType.CARD, "INTP");
                 em.persist(user);
                 em.persist(pt1);
                 em.persist(pt2);

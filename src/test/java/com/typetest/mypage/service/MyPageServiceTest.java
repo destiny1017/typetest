@@ -3,11 +3,9 @@ package com.typetest.mypage.service;
 import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.mypage.dto.TypeInfoData;
-import com.typetest.personalities.data.TestCode;
+import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.TypeInfo;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +16,6 @@ import javax.persistence.EntityManager;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -62,9 +59,9 @@ class MyPageServiceTest {
     @Test
     void getUserTypeInfoTest() {
         //given
-        TypeInfo typeInfo1 = new TypeInfo(TestCode.EXAM, "AAB", "비비에이");
-        TypeInfo typeInfo2 = new TypeInfo(TestCode.EXAM, "BAB", "비에이비");
-        TypeInfo typeInfo3 = new TypeInfo(TestCode.MBTI, "ISFP", "잇픕");
+        TypeInfo typeInfo1 = new TypeInfo(AnswerType.BASIC, "AAB", "비비에이");
+        TypeInfo typeInfo2 = new TypeInfo(AnswerType.BASIC, "BAB", "비에이비");
+        TypeInfo typeInfo3 = new TypeInfo(AnswerType.CARD, "ISFP", "잇픕");
         em.persist(typeInfo1);
         em.persist(typeInfo2);
         em.persist(typeInfo3);
@@ -75,19 +72,19 @@ class MyPageServiceTest {
                 Role.USER, "디앙");
         em.persist(user);
 
-        PersonalityType pt1 = new PersonalityType(user, TestCode.EXAM, "BAB");
-        PersonalityType pt2 = new PersonalityType(user, TestCode.MBTI, "ISFP");
+        PersonalityType pt1 = new PersonalityType(user, AnswerType.BASIC, "BAB");
+        PersonalityType pt2 = new PersonalityType(user, AnswerType.CARD, "ISFP");
         em.persist(pt1);
         em.persist(pt2);
 
         em.flush();
 
         //when
-        Map<TestCode, TypeInfoData> typeMap = myPageService.getUserTypeInfo(user);
+        Map<AnswerType, TypeInfoData> typeMap = myPageService.getUserTypeInfo(user);
 
         //then
         assertThat(typeMap).hasSize(2);
-        assertThat(typeMap.get(TestCode.EXAM).getTypeCode()).isEqualTo("BAB");
-        assertThat(typeMap.get(TestCode.MBTI).getTypeCode()).isEqualTo("ISFP");
+        assertThat(typeMap.get(AnswerType.BASIC).getTypeCode()).isEqualTo("BAB");
+        assertThat(typeMap.get(AnswerType.CARD).getTypeCode()).isEqualTo("ISFP");
     }
 }

@@ -3,10 +3,10 @@ package com.typetest.personalities.service;
 import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
+import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
-import com.typetest.personalities.data.TestCode;
 import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
 import org.assertj.core.api.Assertions;
@@ -51,7 +51,7 @@ class PersonalityTestServiceTest {
         answer.put(9, 5);
 
         answerInfo.setUserId(user.getId());
-        answerInfo.setTestCode(TestCode.EXAM);
+        answerInfo.setAnswerType(AnswerType.BASIC);
         answerInfo.setAnswer(answer);
 
         //when
@@ -80,7 +80,7 @@ class PersonalityTestServiceTest {
         answer.put(9, 1);
 
         answerInfo.setUserId(user.getId());
-        answerInfo.setTestCode(TestCode.EXAM);
+        answerInfo.setAnswerType(AnswerType.BASIC);
         answerInfo.setAnswer(answer);
 
         //when
@@ -88,7 +88,7 @@ class PersonalityTestServiceTest {
 
         //then
         PersonalityType byUser = ptRepository.findByUser(user).get(0);
-        List<PersonalityTypeDetail> byUserAndTestCode = ptdRepository.findByUserAndTestCode(user, TestCode.EXAM);
+        List<PersonalityTypeDetail> byUserAndTestCode = ptdRepository.findByUserAndAnswerType(user, AnswerType.BASIC);
 
         byUser.getUser();
         System.out.println("byUs = " + byUser);

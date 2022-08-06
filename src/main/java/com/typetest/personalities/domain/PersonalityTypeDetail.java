@@ -1,7 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.login.domain.User;
-import com.typetest.personalities.data.TestCode;
+import com.typetest.personalities.data.AnswerType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,15 +26,15 @@ public class PersonalityTypeDetail {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private TestCode testCode;
+    private AnswerType answerType;
 
     private int num;
     private int answer;
 
-    public PersonalityTypeDetail(PersonalityType personalityType, User user, TestCode testCode, int num, int answer) {
+    public PersonalityTypeDetail(PersonalityType personalityType, User user, AnswerType answerType, int num, int answer) {
         this.personalityType = personalityType;
         this.user = user;
-        this.testCode = testCode;
+        this.answerType = answerType;
         this.num = num;
         this.answer = answer;
     }
@@ -42,7 +42,7 @@ public class PersonalityTypeDetail {
     @Override
     public String toString() {
         return "PersonalityTypeDetail{" +
-                "testCode=" + testCode +
+                "testCode=" + answerType +
                 ", num=" + num +
                 ", answer=" + answer +
                 '}';

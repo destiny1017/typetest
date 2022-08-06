@@ -1,7 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.login.domain.User;
-import com.typetest.personalities.data.TestCode;
+import com.typetest.personalities.data.AnswerType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,16 +25,16 @@ public class PersonalityType {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private TestCode testCode;
+    private AnswerType answerType;
 
     private String typeCode;
 
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    public PersonalityType(User user, TestCode testCode, String typeCode) {
+    public PersonalityType(User user, AnswerType answerType, String typeCode) {
         this.user = user;
-        this.testCode = testCode;
+        this.answerType = answerType;
         this.typeCode = typeCode;
     }
 
@@ -42,7 +42,7 @@ public class PersonalityType {
     public String toString() {
         return "PersonalityType{" +
                 "id=" + id +
-                ", testCode=" + testCode +
+                ", testCode=" + answerType +
                 ", type='" + typeCode + '\'' +
                 '}';
     }

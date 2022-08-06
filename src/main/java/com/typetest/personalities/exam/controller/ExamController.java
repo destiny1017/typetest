@@ -1,10 +1,10 @@
 package com.typetest.personalities.exam.controller;
 
 import com.typetest.login.dto.SessionUser;
+import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
-import com.typetest.personalities.data.TestCode;
 import com.typetest.personalities.exam.service.ExamService;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +60,7 @@ public class ExamController {
         HashMap<Integer, Integer> answerMap = new HashMap<>();
         answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Integer.parseInt(value)));
         answerInfo.setAnswer(answerMap);
-        answerInfo.setTestCode(TestCode.EXAM);
+        answerInfo.setAnswerType(AnswerType.BASIC);
 
         // 유형 도출
         String type = personalityTestService.calcType(answerInfo);

@@ -4,7 +4,7 @@ import com.typetest.login.domain.User;
 import com.typetest.login.dto.SessionUser;
 import com.typetest.mypage.dto.TypeInfoData;
 import com.typetest.mypage.service.MyPageService;
-import com.typetest.personalities.data.TestCode;
+import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,7 +28,7 @@ public class MyPageController {
             User user = new User();
             user.setId(sessionUser.getId());
 //            List<TypeInfoData> userTypeList = personalityTypeRepository.getUserTypeList(user);
-            Map<TestCode, TypeInfoData> userTypeMap = myPageService.getUserTypeInfo(user);
+            Map<AnswerType, TypeInfoData> userTypeMap = myPageService.getUserTypeInfo(user);
             model.addAttribute("userTypeMap", userTypeMap);
             return "mypage/myPage";
         }

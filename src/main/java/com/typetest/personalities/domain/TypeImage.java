@@ -1,6 +1,5 @@
 package com.typetest.personalities.domain;
 
-import com.typetest.personalities.data.TestCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
