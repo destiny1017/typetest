@@ -25,16 +25,17 @@ public class PersonalityTypeDetail {
     @JoinColumn
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private AnswerType answerType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private TestCodeInfo testCode;
 
     private int num;
     private int answer;
 
-    public PersonalityTypeDetail(PersonalityType personalityType, User user, AnswerType answerType, int num, int answer) {
+    public PersonalityTypeDetail(PersonalityType personalityType, User user, TestCodeInfo testCode, int num, int answer) {
         this.personalityType = personalityType;
         this.user = user;
-        this.answerType = answerType;
+        this.testCode = testCode;
         this.num = num;
         this.answer = answer;
     }
@@ -42,7 +43,7 @@ public class PersonalityTypeDetail {
     @Override
     public String toString() {
         return "PersonalityTypeDetail{" +
-                "testCode=" + answerType +
+                "testCode=" + testCode +
                 ", num=" + num +
                 ", answer=" + answer +
                 '}';

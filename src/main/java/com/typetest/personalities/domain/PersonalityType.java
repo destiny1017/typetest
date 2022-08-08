@@ -24,17 +24,18 @@ public class PersonalityType {
     @JoinColumn
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private AnswerType answerType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private TestCodeInfo testCode;
 
     private String typeCode;
 
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    public PersonalityType(User user, AnswerType answerType, String typeCode) {
+    public PersonalityType(User user, TestCodeInfo testCode, String typeCode) {
         this.user = user;
-        this.answerType = answerType;
+        this.testCode = testCode;
         this.typeCode = typeCode;
     }
 
@@ -42,7 +43,7 @@ public class PersonalityType {
     public String toString() {
         return "PersonalityType{" +
                 "id=" + id +
-                ", testCode=" + answerType +
+                ", testCode=" + testCode +
                 ", type='" + typeCode + '\'' +
                 '}';
     }

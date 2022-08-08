@@ -14,13 +14,15 @@ public class TypeInfo {
     @Id @GeneratedValue
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private AnswerType answerType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private TestCodeInfo testCode;
+
     private String typeCode;
     private String typeName;
 
-    public TypeInfo(AnswerType answerType, String typeCode, String typeName) {
-        this.answerType = answerType;
+    public TypeInfo(TestCodeInfo testCode, String typeCode, String typeName) {
+        this.testCode = testCode;
         this.typeCode = typeCode;
         this.typeName = typeName;
     }
