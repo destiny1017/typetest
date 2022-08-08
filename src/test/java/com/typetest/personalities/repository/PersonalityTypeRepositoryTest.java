@@ -7,6 +7,7 @@ import com.typetest.mypage.dto.TypeInfoData;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,13 +34,19 @@ class PersonalityTypeRepositoryTest {
     private PersonalityTypeDetailRepository personalityTypeDetailRepository;
     @Autowired
     private PersonalityTypeRepository personalityTypeRepository;
+    @Autowired
+    private TestCodeInfoRepository testCodeInfoRepository;
 
     @BeforeEach
     public void beforeEach() {
-        TypeInfo typeInfo1 = new TypeInfo(AnswerType.BASIC, "BBA", "비비에이");
-        TypeInfo typeInfo2 = new TypeInfo(AnswerType.BASIC, "AAA", "에에에이");
-        TypeInfo typeInfo3 = new TypeInfo(AnswerType.BASIC, "BAB", "비에이비");
-        TypeInfo typeInfo4 = new TypeInfo(AnswerType.CARD, "INTP", "인팁");
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
+        TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
+        TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에이");
+        TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
+        TypeInfo typeInfo4 = new TypeInfo(testCodeInfo2, "INTP", "인팁");
+        em.persist(testCodeInfo1);
+        em.persist(testCodeInfo2);
         em.persist(typeInfo1);
         em.persist(typeInfo2);
         em.persist(typeInfo3);
@@ -52,10 +59,11 @@ class PersonalityTypeRepositoryTest {
     public void EntityInsertTest() throws Exception {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
-        PersonalityType pt = new PersonalityType(user, AnswerType.CARD, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, AnswerType.CARD, 1, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, AnswerType.CARD, 2, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, AnswerType.CARD, 3, 3);
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        PersonalityType pt = new PersonalityType(user, testCodeInfo1, "TEST");
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 3, 3);
 
         em.persist(user);
         em.persist(pt);
@@ -79,13 +87,15 @@ class PersonalityTypeRepositoryTest {
     public void savePersonal() throws Exception {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
-        PersonalityType pt = new PersonalityType(user, AnswerType.CARD, "TEST");
-        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, AnswerType.CARD, 1, 1);
-        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, AnswerType.CARD, 2, 2);
-        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, AnswerType.CARD, 3, 3);
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        PersonalityType pt = new PersonalityType(user, testCodeInfo1, "TEST");
+        PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 1, 1);
+        PersonalityTypeDetail ptd2 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 2, 2);
+        PersonalityTypeDetail ptd3 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 3, 3);
 
         //when
         loginRepository.save(user);
+        testCodeInfoRepository.save(testCodeInfo1);
         personalityTypeRepository.save(pt);
         personalityTypeDetailRepository.save(ptd1);
         personalityTypeDetailRepository.save(ptd2);
@@ -106,9 +116,11 @@ class PersonalityTypeRepositoryTest {
     void getUserTypeListTest() {
         //given
         User user = new User("test1", "test1@test.com", "http://test.com/", Role.USER, "디앙");
-        PersonalityType pt1 = new PersonalityType(user, AnswerType.BASIC, "AAA");
-        PersonalityType pt2 = new PersonalityType(user, AnswerType.BASIC, "BBA");
-        PersonalityType pt3 = new PersonalityType(user, AnswerType.CARD, "INTP");
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
+        PersonalityType pt1 = new PersonalityType(user, testCodeInfo1, "AAA");
+        PersonalityType pt2 = new PersonalityType(user, testCodeInfo1, "BBA");
+        PersonalityType pt3 = new PersonalityType(user, testCodeInfo2, "INTP");
         em.persist(user);
         em.persist(pt1);
         em.persist(pt2);
@@ -124,8 +136,8 @@ class PersonalityTypeRepositoryTest {
         //then
         assertThat(userTypeList).hasSize(3);
 
-        assertThat(userTypeList.stream().map(u -> u.getAnswerType())).contains(AnswerType.BASIC);
-        assertThat(userTypeList.stream().map(u -> u.getAnswerType())).contains(AnswerType.CARD);
+        assertThat(userTypeList.stream().map(u -> u.getTestCode())).contains("EXAMTEST");
+        assertThat(userTypeList.stream().map(u -> u.getTestCode())).contains("CARDTEST");
 
         assertThat(userTypeList.stream().map(u -> u.getTypeCode())).contains("AAA");
         assertThat(userTypeList.stream().map(u -> u.getTypeCode())).contains("BBA");

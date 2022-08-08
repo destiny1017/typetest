@@ -1,6 +1,7 @@
 package com.typetest.personalities.repository;
 
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeDescription;
 import com.typetest.personalities.domain.TypeImage;
 import com.typetest.personalities.domain.TypeInfo;
@@ -29,9 +30,11 @@ public class TypeInfoRepositoryTest {
 
     @Test
     void typeInfoDescriptionTest() {
-        TypeInfo typeInfo1 = new TypeInfo(AnswerType.BASIC, "BBB", "비비비타입");
-        TypeInfo typeInfo2 = new TypeInfo(AnswerType.BASIC, "AAA", "에에에타입");
-        TypeInfo typeInfo3 = new TypeInfo(AnswerType.BASIC, "ABB", "에비비타입");
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBB", "비비비타입");
+        TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에타입");
+        TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "ABB", "에비비타입");
+        em.persist(testCodeInfo1);
         em.persist(typeInfo1);
         em.persist(typeInfo2);
         em.persist(typeInfo3);

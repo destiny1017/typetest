@@ -6,9 +6,11 @@ import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
 import com.typetest.personalities.repository.PersonalityTypeRepository;
+import com.typetest.personalities.repository.TestCodeInfoRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +35,14 @@ class PersonalityTestServiceTest {
     @Autowired
     private PersonalityTypeRepository ptRepository;
 
+    @Autowired
+    TestCodeInfoRepository testCodeInfoRepository;
+
     @Test
     public void calcTypeTest() throws Exception {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
 
@@ -51,8 +57,9 @@ class PersonalityTestServiceTest {
         answer.put(9, 5);
 
         answerInfo.setUserId(user.getId());
-        answerInfo.setAnswerType(AnswerType.BASIC);
+        answerInfo.setAnswerType(AnswerType.EXAM);
         answerInfo.setAnswer(answer);
+        answerInfo.setTestCodeInfo(testCodeInfo1);
 
         //when
         String type = personalityTestService.calcType(answerInfo);
@@ -65,7 +72,9 @@ class PersonalityTestServiceTest {
     void saveInfoTest() {
         //given
         User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         loginRepository.save(user);
+        testCodeInfoRepository.save(testCodeInfo1);
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
 
@@ -80,15 +89,16 @@ class PersonalityTestServiceTest {
         answer.put(9, 1);
 
         answerInfo.setUserId(user.getId());
-        answerInfo.setAnswerType(AnswerType.BASIC);
+        answerInfo.setAnswerType(AnswerType.EXAM);
         answerInfo.setAnswer(answer);
+        answerInfo.setTestCodeInfo(testCodeInfo1);
 
         //when
         personalityTestService.saveTestInfo(answerInfo, "BBB");
 
         //then
         PersonalityType byUser = ptRepository.findByUser(user).get(0);
-        List<PersonalityTypeDetail> byUserAndTestCode = ptdRepository.findByUserAndAnswerType(user, AnswerType.BASIC);
+        List<PersonalityTypeDetail> byUserAndTestCode = ptdRepository.findByUserAndTestCode(user, testCodeInfo1);
 
         byUser.getUser();
         System.out.println("byUs = " + byUser);
