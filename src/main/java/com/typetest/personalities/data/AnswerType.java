@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum AnswerType {
-    BASIC("점수선택형", 0),
+    EXAM("점수선택형", 0),
     CARD("답변선택형", 1),
     INTER("인터렉티브", 2);
 

@@ -2,6 +2,7 @@ package com.typetest.personalities.exam.controller;
 
 import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
@@ -41,7 +42,6 @@ public class ExamController {
 
     @GetMapping("/examTest")
     public String examTest(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
-//        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
         model.addAttribute("questionCount", examService.getQuestionCnt());
         return "personalities/exam/examTest";
     }
@@ -54,13 +54,16 @@ public class ExamController {
     }
 
     @GetMapping("/examSubmit")
-    public String examSubmit(@RequestParam Map<String, String> answerMapParam, Model model, HttpSession session) {
+    public String examSubmit(@RequestParam Map<String, String> answerMapParam, HttpSession session) {
         // 응답정보 객체 세팅
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answerMap = new HashMap<>();
         answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Integer.parseInt(value)));
         answerInfo.setAnswer(answerMap);
-        answerInfo.setAnswerType(AnswerType.BASIC);
+        answerInfo.setAnswerType(AnswerType.EXAM);
+        // 임시 테스트코드
+        TestCodeInfo testCodeInfo = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        answerInfo.setTestCodeInfo(testCodeInfo);
 
         // 유형 도출
         String type = personalityTestService.calcType(answerInfo);

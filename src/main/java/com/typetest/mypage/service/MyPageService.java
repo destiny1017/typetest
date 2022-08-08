@@ -20,18 +20,18 @@ public class MyPageService {
      * @param user
      * @return
      */
-    public Map<AnswerType, TypeInfoData> getUserTypeInfo(User user) {
+    public Map<String, TypeInfoData> getUserTypeInfo(User user) {
         List<TypeInfoData> typeList = personalityTypeRepository.getUserTypeList(user);
-        Map<AnswerType, TypeInfoData> typeMap = new HashMap<>();
+        Map<String, TypeInfoData> typeMap = new HashMap<>();
         // 불러온 유형 데이터중 가장 최근의 유형결과만 TestCode별로 따로 추출
         for (TypeInfoData typeInfoData : typeList) {
-            TypeInfoData mappedData = typeMap.get(typeInfoData.getAnswerType());
+            TypeInfoData mappedData = typeMap.get(typeInfoData.getTestCode());
             if(mappedData != null) {
                 if (typeInfoData.getCreateDate().isAfter(mappedData.getCreateDate())) {
-                    typeMap.put(typeInfoData.getAnswerType(), typeInfoData);
+                    typeMap.put(typeInfoData.getTestCode(), typeInfoData);
                 }
             } else {
-                typeMap.put(typeInfoData.getAnswerType(), typeInfoData);
+                typeMap.put(typeInfoData.getTestCode(), typeInfoData);
             }
         }
         return typeMap;

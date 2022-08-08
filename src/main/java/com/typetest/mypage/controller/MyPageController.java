@@ -28,7 +28,7 @@ public class MyPageController {
             User user = new User();
             user.setId(sessionUser.getId());
 //            List<TypeInfoData> userTypeList = personalityTypeRepository.getUserTypeList(user);
-            Map<AnswerType, TypeInfoData> userTypeMap = myPageService.getUserTypeInfo(user);
+            Map<String, TypeInfoData> userTypeMap = myPageService.getUserTypeInfo(user);
             model.addAttribute("userTypeMap", userTypeMap);
             return "mypage/myPage";
         }

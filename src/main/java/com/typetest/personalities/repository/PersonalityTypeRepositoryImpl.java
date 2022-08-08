@@ -5,12 +5,14 @@ import com.typetest.login.domain.User;
 import com.typetest.mypage.dto.QTypeInfoData;
 import com.typetest.mypage.dto.TypeInfoData;
 import com.typetest.personalities.domain.QPersonalityType;
+import com.typetest.personalities.domain.QTestCodeInfo;
 import com.typetest.personalities.domain.QTypeInfo;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 import static com.typetest.personalities.domain.QPersonalityType.personalityType;
+import static com.typetest.personalities.domain.QTestCodeInfo.*;
 import static com.typetest.personalities.domain.QTypeInfo.typeInfo;
 
 
@@ -25,13 +27,15 @@ public class PersonalityTypeRepositoryImpl implements PersonalityTypeRepositoryC
     public List<TypeInfoData> getUserTypeList(User user) {
         return jpaQueryFactory
                 .select(new QTypeInfoData(
-                    personalityType.answerType,
+                    testCodeInfo.testCode,
+                    testCodeInfo.testName,
                     personalityType.typeCode,
-                    personalityType.createDate,
-                    typeInfo.typeName))
-                .from(personalityType, typeInfo)
+                    typeInfo.typeName,
+                    personalityType.createDate))
+                .from(personalityType, typeInfo, testCodeInfo)
                 .where(
                         personalityType.typeCode.eq(typeInfo.typeCode),
+                        personalityType.testCode.eq(testCodeInfo),
                         personalityType.user.eq(user))
                 .fetch();
     }

@@ -10,16 +10,18 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 public class TypeInfoData {
-    private AnswerType answerType;
+    private String testCode;
+    private String testName;
     private String typeCode;
     private String typeName;
     private LocalDateTime createDate;
 
     @QueryProjection
-    public TypeInfoData(AnswerType answerType, String typeCode, LocalDateTime createDate, String typeName) {
-        this.answerType = answerType;
+    public TypeInfoData(String testCode, String testName, String typeCode, String typeName, LocalDateTime createDate) {
+        this.testCode = testCode;
+        this.testName = testName;
         this.typeCode = typeCode;
-        this.createDate = createDate;
         this.typeName = typeName;
+        this.createDate = createDate;
     }
 }

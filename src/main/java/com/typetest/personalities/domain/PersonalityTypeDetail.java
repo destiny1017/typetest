@@ -43,7 +43,6 @@ public class PersonalityTypeDetail {
     @Override
     public String toString() {
         return "PersonalityTypeDetail{" +
-                "testCode=" + testCode +
                 ", num=" + num +
                 ", answer=" + answer +
                 '}';

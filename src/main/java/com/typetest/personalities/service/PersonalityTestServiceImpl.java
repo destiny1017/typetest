@@ -7,6 +7,7 @@ import com.typetest.personalities.data.ExamPointTable;
 import com.typetest.personalities.data.PointWrapper;
 import com.typetest.personalities.domain.PersonalityType;
 import com.typetest.personalities.domain.PersonalityTypeDetail;
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
@@ -30,7 +31,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     public String calcType(PersonalitiesAnswerInfo answerInfo) {
         AnswerType code = answerInfo.getAnswerType();
         String type = "";
-        if (code.equals(AnswerType.BASIC)) {
+        if (code.equals(AnswerType.EXAM)) {
             // 테스트 코드에 해당하는 포인트테이블 호출
             ExamPointTable examPointTable = new ExamPointTable();
             // 해당 테스트의 점수 배정식 호출
@@ -51,7 +52,8 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     @Override
     public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
         Long userId = answerInfo.getUserId();
-        AnswerType code = answerInfo.getAnswerType();
+//        AnswerType code = answerInfo.getAnswerType();
+        TestCodeInfo code = answerInfo.getTestCodeInfo();
         Map<Integer, Integer> answer = answerInfo.getAnswer();
         Optional<User> byId = loginRepository.findById(userId);
         User user;

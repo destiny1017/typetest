@@ -43,7 +43,6 @@ public class PersonalityType {
     public String toString() {
         return "PersonalityType{" +
                 "id=" + id +
-                ", testCode=" + testCode +
                 ", type='" + typeCode + '\'' +
                 '}';
     }
