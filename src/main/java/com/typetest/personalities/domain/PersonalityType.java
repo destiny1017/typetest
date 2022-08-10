@@ -25,7 +25,7 @@ public class PersonalityType {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "TEST_CODE")
     private TestCodeInfo testCode;
 
     private String typeCode;
