@@ -1,11 +1,13 @@
 package com.typetest.personalities.exam.controller;
 
+import com.typetest.exception.NotFoundEntityException;
 import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
 import com.typetest.personalities.exam.service.ExamService;
+import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,16 +25,20 @@ public class ExamController {
 
     private final PersonalityTestService personalityTestService;
     private final ExamService examService;
+    private final TestCodeInfoRepository testCodeInfoRepository;
 
     @GetMapping("/examStart")
-    public String exam(Model model) {
+    public String exam(@RequestParam String testCode, Model model) {
+        model.addAttribute("testCode", testCode);
         return "personalities/exam/examStart";
     }
 
     @GetMapping("/examTest")
-    public String examTest(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
-        model.addAttribute("questions", examService.createQuestions());
-        model.addAttribute("questionCount", examService.getQuestionCnt());
+    public String examTest(@RequestParam String testCode, Model model) {
+        model.addAttribute("testCode", testCode);
+        // 테스트 코드에 맞는 데이터를 모델에 담아서 돌려주는 로직 개발 예정
+        model.addAttribute("questions", examService.createQuestions(testCode));
+        model.addAttribute("questionCount", examService.getQuestionCnt(testCode));
         return "personalities/exam/examTest";
     }
 
@@ -45,15 +51,21 @@ public class ExamController {
 
     @GetMapping("/examSubmit")
     public String examSubmit(@RequestParam Map<String, String> answerMapParam, HttpSession session) {
+        // 테스트코드 정보 맵에서 추출
+        String testCode = answerMapParam.get("testCode");
+        answerMapParam.remove("testCode");
+        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        if(!testCodeInfo.isPresent()) {
+            throw new NotFoundEntityException("테스트 코드[" + testCode + "]에 해당하는 테스트를 찾을 수 없습니다.");
+        }
+
         // 응답정보 객체 세팅
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answerMap = new HashMap<>();
         answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Integer.parseInt(value)));
         answerInfo.setAnswer(answerMap);
         answerInfo.setAnswerType(AnswerType.EXAM);
-        // 임시 테스트코드
-        TestCodeInfo testCodeInfo = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
-        answerInfo.setTestCodeInfo(testCodeInfo);
+        answerInfo.setTestCodeInfo(testCodeInfo.get());
 
         // 유형 도출
         String type = personalityTestService.calcType(answerInfo);
@@ -66,14 +78,15 @@ public class ExamController {
             log.info("answerInfo = {}", answerInfo);
         }
 
-        return "redirect:examResult?type=" + type;
+        return "redirect:examResult?testCode=" + testCode + "&type=" + type;
     }
 
     @GetMapping("/examResult")
-    public String examResult(@RequestParam String type, Model model) {
+    public String examResult(@RequestParam String testCode, @RequestParam String type, Model model) {
         // 유형 결과 반환
-        ExamResultInfo resultType = examService.getResult(type);
+        ExamResultInfo resultType = examService.getResult(type, testCode);
         model.addAttribute("result", resultType);
+        model.addAttribute("testCode", testCode);
         return "personalities/exam/examResult";
     }
 

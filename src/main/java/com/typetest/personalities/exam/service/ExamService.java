@@ -132,7 +132,7 @@ public class ExamService {
         questionSlideCnt = questionSlide.size();
     }
 
-    public int getQuestionCnt() {
+    public int getQuestionCnt(String testCode) {
         return questionCnt;
     }
 
@@ -140,7 +140,7 @@ public class ExamService {
         return questionSlideCnt;
     }
 
-    public List<List<ExamQuestionInfo>> createQuestions() {
+    public List<List<ExamQuestionInfo>> createQuestions(String testCode) {
         return questions;
     }
 
@@ -148,7 +148,7 @@ public class ExamService {
         return questionSlide;
     }
 
-    public ExamResultInfo getResult(String type) {
+    public ExamResultInfo getResult(String type, String testCode) {
         ExamResultInfo examResultInfo = new ExamResultInfo();
 //        String imgSrc = "https://img.freepik.com/premium-vector/character-illustrations-of-students-learning-together_276340-157.jpg?w=740";
         String imgSrc = "https://post-phinf.pstatic.net/MjAyMDExMDVfMyAg/MDAxNjA0NTY2NjIwNTc1.8jOap6uQdNegKLE8UXA5xrYo0sYRfOGlCb4W5vPI_3Ag.uPwZ8ljqoThpaUFcjnH-L61oLScNgvLJGJ7J5i-gl3wg.PNG/2.png?type=w1200";
