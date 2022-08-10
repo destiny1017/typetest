@@ -1,9 +1,13 @@
 package com.typetest.personalities.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
+@Controller
 public class PersonalitiesController {
 
+    @GetMapping("/")
+    public String home() {
+        return "index";
+    }
 }

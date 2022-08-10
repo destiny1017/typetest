@@ -20,7 +20,7 @@ public class LoginController {
 
     private final HttpSession httpSession;
 
-    @GetMapping(value = {"/", "/oauth2/authorization/*"})
+    @GetMapping(value = {"/oauth2/authorization/*"})
     public String welcome(Model model, HttpServletRequest request) {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) {
