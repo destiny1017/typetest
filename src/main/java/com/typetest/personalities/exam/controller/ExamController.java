@@ -4,7 +4,6 @@ import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
-import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
 import com.typetest.personalities.exam.service.ExamService;
 import com.typetest.personalities.service.PersonalityTestService;
@@ -25,16 +24,6 @@ public class ExamController {
     private final PersonalityTestService personalityTestService;
     private final ExamService examService;
 
-    @ModelAttribute("questions")
-    public List<List<ExamQuestionInfo>> examQuestions() {
-        return examService.createQuestions();
-    }
-
-    @ModelAttribute("questionsSlide")
-    public List<ExamQuestionInfo> examQuestionSlide() {
-        return examService.createQuestionSlide();
-    }
-
     @GetMapping("/examStart")
     public String exam(Model model) {
         return "personalities/exam/examStart";
@@ -42,13 +31,14 @@ public class ExamController {
 
     @GetMapping("/examTest")
     public String examTest(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
+        model.addAttribute("questions", examService.createQuestions());
         model.addAttribute("questionCount", examService.getQuestionCnt());
         return "personalities/exam/examTest";
     }
 
     @GetMapping("/examTestSlide")
-    public String examTestSlide(@ModelAttribute("personalitiesAnswerInfo") PersonalitiesAnswerInfo answerInfo, Model model) {
-        List<List<ExamQuestionInfo>> questions = examService.createQuestions();
+    public String examTestSlide(Model model) {
+        model.addAttribute("questionsSlide", examService.createQuestionSlide());
         model.addAttribute("questionCount", examService.getQuestionSlideCnt());
         return "personalities/exam/examTestSlide";
     }
