@@ -15,7 +15,7 @@ public class TypeInfo {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "TEST_CODE")
     private TestCodeInfo testCode;
 
     private String typeCode;
