@@ -58,7 +58,13 @@ class PersonalityTypeRepositoryTest {
     @Test
     public void EntityInsertTest() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
+        User user = User.builder()
+                .name("test_user")
+                .email("test@test.com")
+                .picture("http://test.com/")
+                .role(Role.USER)
+                .nickname("디앙")
+                .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         PersonalityType pt = new PersonalityType(user, testCodeInfo1, "TEST");
         PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 1, 1);
@@ -86,7 +92,13 @@ class PersonalityTypeRepositoryTest {
     @Test
     public void savePersonal() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
+        User user = User.builder()
+                .name("test_user")
+                .email("test@test.com")
+                .picture("http://test.com/")
+                .role(Role.USER)
+                .nickname("디앙")
+                .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         PersonalityType pt = new PersonalityType(user, testCodeInfo1, "TEST");
         PersonalityTypeDetail ptd1 = new PersonalityTypeDetail(pt, user, testCodeInfo1, 1, 1);
@@ -115,7 +127,13 @@ class PersonalityTypeRepositoryTest {
     @DisplayName("사용자 유형정보 가져오기 테스트")
     void getUserTypeListTest() {
         //given
-        User user = new User("test1", "test1@test.com", "http://test.com/", Role.USER, "디앙");
+        User user = User.builder()
+                .name("test_user")
+                .email("test@test.com")
+                .picture("http://test.com/")
+                .role(Role.USER)
+                .nickname("디앙")
+                .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
         PersonalityType pt1 = new PersonalityType(user, testCodeInfo1, "AAA");
@@ -129,8 +147,7 @@ class PersonalityTypeRepositoryTest {
         em.flush();
 
         //when
-        User testUser = new User();
-        testUser.setId(user.getId());
+        User testUser = User.builder().id(user.getId()).build();
         List<TypeInfoData> userTypeList = personalityTypeRepository.getUserTypeList(testUser);
 
         //then

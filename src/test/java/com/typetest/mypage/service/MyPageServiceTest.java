@@ -42,10 +42,13 @@ class MyPageServiceTest {
 //        em.persist(typeInfo4);
 //        em.persist(typeInfo5);
 //
-//        User user = new User("김대호",
-//                "eogh6428@gmail.com",
-//                "https://lh3.googleusercontent.com/a-/AFdZucr_8gjDmt791JrOHftPA1UX3kvt1WiRxW19AH4JdQ=s96-c",
-//                Role.USER, "디앙");
+//        User user = User.builder()
+//            .name("김대호")
+//            .email("eogh6428@gmail.com")
+//            .picture("https://lh3.googleusercontent.com/a-/AFdZucr_8gjDmt791JrOHftPA1UX3kvt1WiRxW19AH4JdQ=s96-c")
+//            .role(Role.USER)
+//            .nickname("디앙")
+//            .build();
 //        PersonalityType pt1 = new PersonalityType(user, TestCode.EXAM, "AAA");
 //        PersonalityType pt2 = new PersonalityType(user, TestCode.EXAM, "BBA");
 //        PersonalityType pt3 = new PersonalityType(user, TestCode.MBTI, "INTP");
@@ -72,10 +75,14 @@ class MyPageServiceTest {
         em.persist(typeInfo2);
         em.persist(typeInfo3);
 
-        User user = new User("김대호",
-                "eogh6428@gmail.com",
-                "https://lh3.googleusercontent.com/a-/AFdZucr_8gjDmt791JrOHftPA1UX3kvt1WiRxW19AH4JdQ=s96-c",
-                Role.USER, "디앙");
+        User user = User.builder()
+                .name("김대호")
+                .email("eogh6428@gmail.com")
+                .picture("https://lh3.googleusercontent.com/a-/AFdZucr_8gjDmt791JrOHftPA1UX3kvt1WiRxW19AH4JdQ=s96-c")
+                .role(Role.USER)
+                .nickname("디앙")
+                .build();
+
         em.persist(user);
 
         PersonalityType pt1 = new PersonalityType(user, testCodeInfo1, "BAB");

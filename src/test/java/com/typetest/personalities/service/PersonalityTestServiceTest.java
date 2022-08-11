@@ -41,7 +41,13 @@ class PersonalityTestServiceTest {
     @Test
     public void calcTypeTest() throws Exception {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
+        User user = User.builder()
+                .name("test_user")
+                .email("test@test.com")
+                .picture("http://test.com/")
+                .role(Role.USER)
+                .nickname("디앙")
+                .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
@@ -71,7 +77,13 @@ class PersonalityTestServiceTest {
     @Test
     void saveInfoTest() {
         //given
-        User user = new User("test_user", "test@test.com", "http://test.com/", Role.USER, "디앙");
+        User user = User.builder()
+                .name("test_user")
+                .email("test@test.com")
+                .picture("http://test.com/")
+                .role(Role.USER)
+                .nickname("디앙")
+                .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         loginRepository.save(user);
         testCodeInfoRepository.save(testCodeInfo1);

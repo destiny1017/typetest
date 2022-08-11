@@ -25,8 +25,7 @@ public class MyPageController {
     public String myPage(HttpSession session, Model model) {
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         if(sessionUser != null) {
-            User user = new User();
-            user.setId(sessionUser.getId());
+            User user = User.builder().id(sessionUser.getId()).build();
 //            List<TypeInfoData> userTypeList = personalityTypeRepository.getUserTypeList(user);
             Map<String, TypeInfoData> userTypeMap = myPageService.getUserTypeInfo(user);
             model.addAttribute("userTypeMap", userTypeMap);

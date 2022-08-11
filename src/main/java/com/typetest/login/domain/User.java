@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "USER_INFO")
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @SequenceGenerator(name = "user_seq_generator",
                     sequenceName = "user_seq",
@@ -35,7 +35,8 @@ public class User {
     private LocalDateTime createDate;
 
     @Builder
-    public User(String name, String email, String picture, Role role, String nickname){
+    public User(Long id, String name, String email, String picture, Role role, String nickname){
+        this.id = id;
         this.name = name;
         this.email = email;
         this.picture = picture;
