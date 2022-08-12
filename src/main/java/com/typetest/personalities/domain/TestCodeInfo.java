@@ -11,7 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 @Entity
-@Getter @Setter
+@Getter
 @RequiredArgsConstructor
 public class TestCodeInfo {
 
