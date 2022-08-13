@@ -32,8 +32,11 @@ public class PersonalityAnswer {
 
     private String answerImage;
 
-    @Builder
+    public void setQuestion(PersonalityQuestion question) {
+        this.personalityQuestion = question;
+    }
 
+    @Builder
     public PersonalityAnswer(PersonalityQuestion personalityQuestion, TestCodeInfo testCode, String answer, int point, Tendency tendency, String answerImage) {
         this.personalityQuestion = personalityQuestion;
         this.testCode = testCode;
