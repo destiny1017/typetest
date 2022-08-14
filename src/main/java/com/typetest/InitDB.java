@@ -3,9 +3,9 @@ package com.typetest;
 import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.personalities.data.AnswerType;
-import com.typetest.personalities.domain.PersonalityType;
-import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.domain.TypeInfo;
+import com.typetest.personalities.data.Tendency;
+import com.typetest.personalities.domain.*;
+import com.typetest.personalities.repository.PersonalityQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class InitDB {
 
         private final EntityManager em;
         private final Environment env;
+        private final PersonalityQuestionRepository personalityQuestionRepository;
 
         public void init() {
             if(!env.getProperty("spring.profiles.active").equals("test")) {
@@ -67,6 +70,26 @@ public class InitDB {
                 em.persist(pt3);
 
                 em.flush();
+
+
+                List<PersonalityQuestion> questionList = new ArrayList<>();
+
+                for (int i = 1; i <= 12; i++) {
+                    questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion" + i, i));
+                }
+
+                for (int i = 0; i < questionList.size(); i++) {
+                    for (int j = 1; j <= 5; j++) {
+                        questionList.get(i).addAnswer(PersonalityAnswer.builder()
+                                .personalityQuestion(questionList.get(i))
+                                .testCode(testCodeInfo1)
+                                .point(j)
+                                .tendency(Tendency.A)
+                                .build());
+                    }
+                }
+
+                personalityQuestionRepository.saveAll(questionList);
             }
 
         }
