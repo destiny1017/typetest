@@ -47,7 +47,7 @@
             // 전체 체크된 개수 및 전체 체크여부 확인
             let pageCnt = 0;
             for(question of questionPage) {
-                if(!$(`input[name="${question.questionNum}"]`).is(":checked")) {
+                if(!$(`input[name="${question.num}"]`).is(":checked")) {
                     checkAll = false;
                 } else pageCnt++;
             }
@@ -102,9 +102,9 @@
                                     <p class="exam-radio-p margin-side-10">비동의</p>
                                 </div>
                                 <div class="d-inline-block">
-                                    <div class="figure margin-side-10" th:each="selPoint : ${question.selectPoint}">
+                                    <div class="figure margin-side-10" th:each="answer : ${question.answerList}">
                                         <input class="form-check-input-exam" type="radio"
-                                               th:name="${question.questionNum}" th:value="${selPoint}"/>
+                                               th:name="${question.num}" th:value="${answer.point}"/>
                                     </div>
                                 </div>
                                 <div class="d-inline-block">
