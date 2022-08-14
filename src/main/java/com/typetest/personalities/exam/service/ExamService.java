@@ -2,6 +2,7 @@ package com.typetest.personalities.exam.service;
 
 import com.typetest.personalities.domain.PersonalityAnswer;
 import com.typetest.personalities.domain.PersonalityQuestion;
+import com.typetest.personalities.exam.dto.ExamQuestionDto;
 import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,11 @@ import java.util.List;
 
 public interface ExamService {
 
-    List<List<PersonalityQuestion>> getQuestions(String testCode);
+    List<List<ExamQuestionDto>> getQuestions(String testCode);
 
     Long getQuestionCnt(String testCode);
 
     ExamResultInfo getResult(String type, String testCode);
 
-    Page<PersonalityQuestion> getQuestionsPage(String testCode);
+    Page<ExamQuestionDto> getQuestionsPage(String testCode);
 }

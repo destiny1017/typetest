@@ -4,6 +4,7 @@ import com.typetest.exception.NotFoundEntityException;
 import com.typetest.personalities.domain.PersonalityAnswer;
 import com.typetest.personalities.domain.PersonalityQuestion;
 import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.exam.dto.ExamQuestionDto;
 import com.typetest.personalities.exam.dto.ExamQuestionInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
 import com.typetest.personalities.repository.PersonalityAnswerRepository;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -147,10 +149,10 @@ public class ExamServiceImpl implements ExamService {
 //    }
 
     @Override
-    public List<List<PersonalityQuestion>> getQuestions(String testCode) {
+    public List<List<ExamQuestionDto>> getQuestions(String testCode) {
         Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
         if(testCodeInfoOp.isPresent()) {
-            List<List<PersonalityQuestion>> pageQuestions = new ArrayList<>();
+            List<List<ExamQuestionDto>> pageQuestions = new ArrayList<>();
             List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCode(testCodeInfoOp.get());
             int cnt = -1;
             for (int i = 0; i < questions.size(); i++) {
@@ -158,19 +160,20 @@ public class ExamServiceImpl implements ExamService {
                     pageQuestions.add(new ArrayList<>());
                     cnt++; // 10개 추가될 때 마다 다음 인덱스에 담기
                 }
-                pageQuestions.get(cnt).add(questions.get(i));
+                pageQuestions.get(cnt).add(new ExamQuestionDto(questions.get(i)));
             }
+
             return pageQuestions;
         } else {
-            throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 질문데이터를 찾을 수 없습니다.");
+            throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 테스트정보를 찾을 수 없습니다.");
         }
     }
 
     @Override
-    public Page<PersonalityQuestion> getQuestionsPage(String testCode) {
+    public Page<ExamQuestionDto> getQuestionsPage(String testCode) {
         Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
         if(testCodeInfoOp.isPresent()) {
-            Page<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCode(testCodeInfoOp.get(), PageRequest.of(0, 10));
+            Page<ExamQuestionDto> questions = personalityQuestionRepository.findByTestCode(testCodeInfoOp.get(), PageRequest.of(0, 10));
             return questions;
         } else {
             throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 질문데이터를 찾을 수 없습니다.");
@@ -179,7 +182,12 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Long getQuestionCnt(String testCode) {
-        return personalityQuestionRepository.countByTestCode(testCode);
+        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
+        if (testCodeInfoOp.isPresent()) {
+            return personalityQuestionRepository.countByTestCode(testCodeInfoOp.get());
+        } else {
+            throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 테스트정보를 찾을 수 없습니다.");
+        }
     }
 
     @Override
