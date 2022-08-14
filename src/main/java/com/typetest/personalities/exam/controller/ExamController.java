@@ -36,22 +36,21 @@ public class ExamController {
     @GetMapping("/examTest")
     public String examTest(@RequestParam String testCode, Model model) {
         model.addAttribute("testCode", testCode);
-        // 테스트 코드에 맞는 데이터를 모델에 담아서 돌려주는 로직 개발 예정
-        model.addAttribute("questions", examService.createQuestions(testCode));
+        model.addAttribute("questions", examService.getQuestions(testCode));
         model.addAttribute("questionCount", examService.getQuestionCnt(testCode));
         return "personalities/exam/examTest";
     }
 
-    @GetMapping("/examTestSlide")
-    public String examTestSlide(Model model) {
-        model.addAttribute("questionsSlide", examService.createQuestionSlide());
-        model.addAttribute("questionCount", examService.getQuestionSlideCnt());
-        return "personalities/exam/examTestSlide";
-    }
+//    @GetMapping("/examTestSlide")
+//    public String examTestSlide(Model model) {
+//        model.addAttribute("questionsSlide", examService.createQuestionSlide());
+//        model.addAttribute("questionCount", examService.getQuestionSlideCnt());
+//        return "personalities/exam/examTestSlide";
+//    }
 
     @GetMapping("/examSubmit")
     public String examSubmit(@RequestParam Map<String, String> answerMapParam, HttpSession session) {
-        // 테스트코드 정보 맵에서 추출
+        // 테스트코드 정보 파라미터 맵에서 추출
         String testCode = answerMapParam.get("testCode");
         answerMapParam.remove("testCode");
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
