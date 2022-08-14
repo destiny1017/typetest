@@ -17,7 +17,7 @@ public class PersonalityAnswer {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "PERSONALITY_QUESTION_ID")
     private PersonalityQuestion personalityQuestion;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,5 +44,18 @@ public class PersonalityAnswer {
         this.point = point;
         this.tendency = tendency;
         this.answerImage = answerImage;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonalityAnswer{" +
+                "id=" + id +
+                ", personalityQuestion=" + personalityQuestion +
+                ", testCode=" + testCode +
+                ", answer='" + answer + '\'' +
+                ", point=" + point +
+                ", tendency=" + tendency +
+                ", answerImage='" + answerImage + '\'' +
+                '}';
     }
 }

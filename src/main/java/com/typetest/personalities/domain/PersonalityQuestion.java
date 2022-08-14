@@ -15,6 +15,7 @@ public class PersonalityQuestion {
 
     @Id
     @GeneratedValue
+    @Column(name = "PERSONALITY_QUESTION_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,7 +28,7 @@ public class PersonalityQuestion {
 
     private String questionImage;
 
-    @OneToMany(mappedBy = "personalityQuestion")
+    @OneToMany(mappedBy = "personalityQuestion", cascade = CascadeType.ALL)
     private List<PersonalityAnswer> answerList = new ArrayList<>();
 
     // 연관관계 편의 메서드
