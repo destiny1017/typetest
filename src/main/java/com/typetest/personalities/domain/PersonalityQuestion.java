@@ -28,6 +28,10 @@ public class PersonalityQuestion {
 
     private int num;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private TypeIndicator typeIndicator;
+
     private String questionImage;
 
     @OneToMany(mappedBy = "personalityQuestion", cascade = CascadeType.ALL)
@@ -39,16 +43,18 @@ public class PersonalityQuestion {
         answer.setQuestion(this);
     }
 
-    public PersonalityQuestion(TestCodeInfo testCode, String question, int num) {
+    public PersonalityQuestion(TestCodeInfo testCode, String question, int num, TypeIndicator typeIndicator) {
         this.testCode = testCode;
         this.question = question;
         this.num = num;
+        this.typeIndicator = typeIndicator;
     }
 
-    public PersonalityQuestion(TestCodeInfo testCode, String question, int num, String questionImage) {
+    public PersonalityQuestion(TestCodeInfo testCode, String question, int num, TypeIndicator typeIndicator, String questionImage) {
         this.testCode = testCode;
         this.question = question;
         this.num = num;
+        this.typeIndicator = typeIndicator;
         this.questionImage = questionImage;
     }
 }

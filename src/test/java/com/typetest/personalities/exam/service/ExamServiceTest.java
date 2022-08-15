@@ -5,6 +5,7 @@ import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.PersonalityAnswer;
 import com.typetest.personalities.domain.PersonalityQuestion;
 import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.domain.TypeIndicator;
 import com.typetest.personalities.exam.dto.ExamQuestionDto;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
 import org.assertj.core.api.Assertions;
@@ -39,15 +40,19 @@ class ExamServiceTest {
         //given
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
+
+        TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
+
         em.persist(testCodeInfo1);
         em.persist(testCodeInfo2);
+        em.persist(indicatorA);
         em.flush();
 
         //when
         List<PersonalityQuestion> questionList = new ArrayList<>();
 
         for (int i = 1; i <= 12; i++) {
-            questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion" + i, i));
+            questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion" + i, i, indicatorA));
         }
 
         for (int i = 0; i < questionList.size(); i++) {

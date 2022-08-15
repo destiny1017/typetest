@@ -5,6 +5,7 @@ import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.PersonalityAnswer;
 import com.typetest.personalities.domain.PersonalityQuestion;
 import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.domain.TypeIndicator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,20 @@ public class QuestionAndAnswerTest {
         //given
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
+        TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
         em.persist(testCodeInfo1);
         em.persist(testCodeInfo2);
+        em.persist(indicatorA);
         em.flush();
 
         //when
         List<PersonalityQuestion> questionList = new ArrayList<>();
         List<PersonalityAnswer> answerList = new ArrayList<>();
 
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorA));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorA));
+
 
 
         for (int i = 0; i < questionList.size(); i++) {

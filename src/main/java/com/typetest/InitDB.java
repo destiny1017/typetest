@@ -46,6 +46,11 @@ public class InitDB {
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
                 TypeInfo typeInfo4 = new TypeInfo(testCodeInfo2, "INTP", "인팁");
                 TypeInfo typeInfo5 = new TypeInfo(testCodeInfo1, "BBB", "비비비이");
+
+                TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
+                TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
+                TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
+
                 em.persist(testCodeInfo1);
                 em.persist(testCodeInfo2);
                 em.persist(typeInfo1);
@@ -53,6 +58,9 @@ public class InitDB {
                 em.persist(typeInfo3);
                 em.persist(typeInfo4);
                 em.persist(typeInfo5);
+                em.persist(indicatorA);
+                em.persist(indicatorB);
+                em.persist(indicatorC);
 
                 User user = User.builder()
                             .name("김대호")
@@ -74,9 +82,20 @@ public class InitDB {
 
                 List<PersonalityQuestion> questionList = new ArrayList<>();
 
-                for (int i = 1; i <= 12; i++) {
-                    questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion" + i, i));
-                }
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
+
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
+
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
 
                 for (int i = 0; i < questionList.size(); i++) {
                     for (int j = 1; j <= 5; j++) {
