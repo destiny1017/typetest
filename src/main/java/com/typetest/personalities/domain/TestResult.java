@@ -1,7 +1,6 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.login.domain.User;
-import com.typetest.personalities.data.AnswerType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,7 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor
-public class PersonalityType {
+public class TestResult {
 
     @Id @GeneratedValue
     private Long id;
@@ -24,26 +23,21 @@ public class PersonalityType {
     @JoinColumn
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TEST_CODE")
     private TestCodeInfo testCode;
 
-    private String typeCode;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn
+    private TypeInfo typeInfo;
 
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    public PersonalityType(User user, TestCodeInfo testCode, String typeCode) {
+    public TestResult(User user, TestCodeInfo testCode, TypeInfo typeInfo) {
         this.user = user;
         this.testCode = testCode;
-        this.typeCode = typeCode;
+        this.typeInfo = typeInfo;
     }
 
-    @Override
-    public String toString() {
-        return "PersonalityType{" +
-                "id=" + id +
-                ", type='" + typeCode + '\'' +
-                '}';
-    }
 }

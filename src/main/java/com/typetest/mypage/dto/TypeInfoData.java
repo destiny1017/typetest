@@ -1,7 +1,7 @@
 package com.typetest.mypage.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.domain.TypeInfo;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 public class TypeInfoData {
     private String testCode;
     private String testName;
-    private String typeCode;
+    private TypeInfo typeInfo;
     private String typeName;
     private LocalDateTime createDate;
 
     @QueryProjection
-    public TypeInfoData(String testCode, String testName, String typeCode, String typeName, LocalDateTime createDate) {
+    public TypeInfoData(String testCode, String testName, TypeInfo typeInfo, String typeName, LocalDateTime createDate) {
         this.testCode = testCode;
         this.testName = testName;
-        this.typeCode = typeCode;
+        this.typeInfo = typeInfo;
         this.typeName = typeName;
         this.createDate = createDate;
     }

@@ -3,6 +3,8 @@ package com.typetest.personalities.domain;
 import com.typetest.personalities.data.AnswerType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 

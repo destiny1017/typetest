@@ -5,6 +5,6 @@ import com.typetest.mypage.dto.TypeInfoData;
 
 import java.util.List;
 
-public interface PersonalityTypeRepositoryCustom {
+public interface TestResultRepositoryCustom {
     public List<TypeInfoData> getUserTypeList(User user);
 }

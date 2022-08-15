@@ -61,9 +61,9 @@ public class InitDB {
                             .role(Role.USER)
                             .nickname("디앙")
                             .build();
-                PersonalityType pt1 = new PersonalityType(user, testCodeInfo1, "AAA");
-                PersonalityType pt2 = new PersonalityType(user, testCodeInfo1, "BBA");
-                PersonalityType pt3 = new PersonalityType(user, testCodeInfo2, "INTP");
+                TestResult pt1 = new TestResult(user, testCodeInfo1, typeInfo2);
+                TestResult pt2 = new TestResult(user, testCodeInfo1, typeInfo1);
+                TestResult pt3 = new TestResult(user, testCodeInfo2, typeInfo4);
                 em.persist(user);
                 em.persist(pt1);
                 em.persist(pt2);

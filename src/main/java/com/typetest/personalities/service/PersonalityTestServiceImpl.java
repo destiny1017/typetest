@@ -5,13 +5,15 @@ import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.ExamPointTable;
 import com.typetest.personalities.data.PointWrapper;
-import com.typetest.personalities.domain.PersonalityType;
-import com.typetest.personalities.domain.PersonalityTypeDetail;
+import com.typetest.personalities.domain.TestResult;
+import com.typetest.personalities.domain.TestResultDetail;
 import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.domain.TypeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.AnswerType;
-import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
-import com.typetest.personalities.repository.PersonalityTypeRepository;
+import com.typetest.personalities.repository.TestResultDetailRepository;
+import com.typetest.personalities.repository.TestResultRepository;
+import com.typetest.personalities.repository.TypeInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,10 @@ import java.util.*;
 @Primary
 public class PersonalityTestServiceImpl implements PersonalityTestService {
 
-    private final PersonalityTypeRepository personalityTypeRepository;
-    private final PersonalityTypeDetailRepository personalityTypeDetailRepository;
+    private final TestResultRepository testResultRepository;
+    private final TestResultDetailRepository testResultDetailRepository;
     private final LoginRepository loginRepository;
+    private final TypeInfoRepository typeInfoRepository;
 
     @Override
     public String calcType(PersonalitiesAnswerInfo answerInfo) {
@@ -59,11 +62,16 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
         User user;
         if(byId.isPresent()) {
             user = byId.get();
-            PersonalityType pt = new PersonalityType(user, code, type);
-            personalityTypeRepository.save(pt); // 유형정보 저장
-            for (int key : answer.keySet()) {
-                PersonalityTypeDetail ptd = new PersonalityTypeDetail(pt, user, code, key, answer.get(key));
-                personalityTypeDetailRepository.save(ptd); // 테스트 상세 응답 정보 저장
+            Optional<TypeInfo> typeInfo = typeInfoRepository.findByTypeCode(type);
+            if(typeInfo.isPresent()) {
+                TestResult pt = new TestResult(user, code, typeInfo.get());
+                testResultRepository.save(pt); // 유형정보 저장
+                for (int key : answer.keySet()) {
+                    TestResultDetail ptd = new TestResultDetail(pt, user, code, key, answer.get(key));
+                    testResultDetailRepository.save(ptd); // 테스트 상세 응답 정보 저장
+                }
+            } else {
+                throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
             }
         } else {
             throw new NotFoundEntityException("[" + userId + "] 사용자를 찾을 수 없습니다.");

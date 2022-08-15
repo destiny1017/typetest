@@ -50,11 +50,10 @@ public class QuestionAndAnswerTest {
         questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
         questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
 
-        personalityQuestionRepository.saveAll(questionList);
 
         for (int i = 0; i < questionList.size(); i++) {
             for (int j = 1; j <= 5; j++) {
-                answerList.add(PersonalityAnswer.builder()
+                questionList.get(i).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionList.get(i))
                         .testCode(testCodeInfo1)
                         .point(j)
@@ -63,7 +62,7 @@ public class QuestionAndAnswerTest {
             }
         }
 
-        personalityAnswerRepository.saveAll(answerList);
+        personalityQuestionRepository.saveAll(questionList);
 
         //then
         List<PersonalityQuestion> findQuestions = personalityQuestionRepository.findByTestCode(testCodeInfo1);
@@ -72,4 +71,5 @@ public class QuestionAndAnswerTest {
         assertThat(findAnswers).hasSize(15);
 
     }
+
 }

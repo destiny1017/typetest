@@ -4,8 +4,7 @@ import com.typetest.login.domain.User;
 import com.typetest.login.dto.SessionUser;
 import com.typetest.mypage.dto.TypeInfoData;
 import com.typetest.mypage.service.MyPageService;
-import com.typetest.personalities.data.AnswerType;
-import com.typetest.personalities.repository.PersonalityTypeRepository;
+import com.typetest.personalities.repository.TestResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyPageController {
 
-    private final PersonalityTypeRepository personalityTypeRepository;
+    private final TestResultRepository testResultRepository;
     private final MyPageService myPageService;
 
     @RequestMapping("/myPage")
@@ -26,7 +25,6 @@ public class MyPageController {
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         if(sessionUser != null) {
             User user = User.builder().id(sessionUser.getId()).build();
-//            List<TypeInfoData> userTypeList = personalityTypeRepository.getUserTypeList(user);
             Map<String, TypeInfoData> userTypeMap = myPageService.getUserTypeInfo(user);
             model.addAttribute("userTypeMap", userTypeMap);
             return "mypage/myPage";

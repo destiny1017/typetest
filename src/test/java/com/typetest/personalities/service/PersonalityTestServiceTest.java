@@ -4,22 +4,27 @@ import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.AnswerType;
-import com.typetest.personalities.domain.PersonalityType;
-import com.typetest.personalities.domain.PersonalityTypeDetail;
+import com.typetest.personalities.domain.TestResult;
+import com.typetest.personalities.domain.TestResultDetail;
 import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.domain.TypeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
-import com.typetest.personalities.repository.PersonalityTypeDetailRepository;
-import com.typetest.personalities.repository.PersonalityTypeRepository;
+import com.typetest.personalities.repository.TestResultDetailRepository;
+import com.typetest.personalities.repository.TestResultRepository;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
+import com.typetest.personalities.repository.TypeInfoRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.List;
 
 @SpringBootTest
+@Transactional
 class PersonalityTestServiceTest {
 
     @Autowired
@@ -30,13 +35,16 @@ class PersonalityTestServiceTest {
     private PersonalityTestService personalityTestService;
 
     @Autowired
-    private PersonalityTypeDetailRepository ptdRepository;
+    private TestResultDetailRepository ptdRepository;
 
     @Autowired
-    private PersonalityTypeRepository ptRepository;
+    private TestResultRepository ptRepository;
 
     @Autowired
     TestCodeInfoRepository testCodeInfoRepository;
+
+    @Autowired
+    EntityManager em;
 
     @Test
     public void calcTypeTest() throws Exception {
@@ -85,10 +93,13 @@ class PersonalityTestServiceTest {
                 .nickname("디앙")
                 .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
-        loginRepository.save(user);
-        testCodeInfoRepository.save(testCodeInfo1);
+        em.persist(user);
+        em.persist(testCodeInfo1);
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
+        TypeInfo typeInfo = new TypeInfo(testCodeInfo1, "BBB", "비비비");
+        em.persist(typeInfo);
+        em.flush();
 
         answer.put(1, 1);
         answer.put(2, 1);
@@ -106,15 +117,15 @@ class PersonalityTestServiceTest {
         answerInfo.setTestCodeInfo(testCodeInfo1);
 
         //when
-        personalityTestService.saveTestInfo(answerInfo, "BBB");
+        personalityTestService.saveTestInfo(answerInfo, typeInfo.getTypeCode());
 
         //then
-        PersonalityType byUser = ptRepository.findByUser(user).get(0);
-        List<PersonalityTypeDetail> byUserAndTestCode = ptdRepository.findByUserAndTestCode(user, testCodeInfo1);
+        TestResult byUser = ptRepository.findByUser(user).get(0);
+        List<TestResultDetail> byUserAndTestCode = ptdRepository.findByUserAndTestCode(user, testCodeInfo1);
 
         byUser.getUser();
         System.out.println("byUs = " + byUser);
-        for (PersonalityTypeDetail ptd : byUserAndTestCode) {
+        for (TestResultDetail ptd : byUserAndTestCode) {
             ptd.getUser();
             System.out.println("ptd = " + ptd);
         }

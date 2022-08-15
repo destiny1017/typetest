@@ -1,7 +1,6 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.login.domain.User;
-import com.typetest.personalities.data.AnswerType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,14 +11,14 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor
-public class PersonalityTypeDetail {
+public class TestResultDetail {
 
     @Id @GeneratedValue
     private Long id;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn
-    private PersonalityType personalityType;
+    private TestResult testResult;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn
@@ -32,8 +31,8 @@ public class PersonalityTypeDetail {
     private int num;
     private int answer;
 
-    public PersonalityTypeDetail(PersonalityType personalityType, User user, TestCodeInfo testCode, int num, int answer) {
-        this.personalityType = personalityType;
+    public TestResultDetail(TestResult testResult, User user, TestCodeInfo testCode, int num, int answer) {
+        this.testResult = testResult;
         this.user = user;
         this.testCode = testCode;
         this.num = num;
@@ -42,7 +41,7 @@ public class PersonalityTypeDetail {
 
     @Override
     public String toString() {
-        return "PersonalityTypeDetail{" +
+        return "TestResultDetail{" +
                 ", num=" + num +
                 ", answer=" + answer +
                 '}';

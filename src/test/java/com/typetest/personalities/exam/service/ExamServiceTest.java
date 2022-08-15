@@ -5,6 +5,7 @@ import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.PersonalityAnswer;
 import com.typetest.personalities.domain.PersonalityQuestion;
 import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.exam.dto.ExamQuestionDto;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -63,7 +64,7 @@ class ExamServiceTest {
         personalityQuestionRepository.saveAll(questionList);
 
         //when
-        List<List<PersonalityQuestion>> questions = examService.getQuestions("EXAMTEST");
+        List<List<ExamQuestionDto>> questions = examService.getQuestions("EXAMTEST");
 
         //then
         assertThat(questions).hasSize(2); // 12개이므로 2페이지
