@@ -4,10 +4,7 @@ import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.AnswerType;
-import com.typetest.personalities.domain.TestResult;
-import com.typetest.personalities.domain.TestResultDetail;
-import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.domain.TypeInfo;
+import com.typetest.personalities.domain.*;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.TestResultDetailRepository;
 import com.typetest.personalities.repository.TestResultRepository;
@@ -20,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,18 +55,66 @@ class PersonalityTestServiceTest {
                 .nickname("디앙")
                 .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+
+        TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
+        TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
+        TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
+
+        IndicatorSetting indicatorSetting1 = new IndicatorSetting(indicatorA, 0, "B");
+        IndicatorSetting indicatorSetting2 = new IndicatorSetting(indicatorA, 12, "A");
+        IndicatorSetting indicatorSetting3 = new IndicatorSetting(indicatorB, 0, "B");
+        IndicatorSetting indicatorSetting4 = new IndicatorSetting(indicatorB, 12, "A");
+        IndicatorSetting indicatorSetting5 = new IndicatorSetting(indicatorC, 0, "B");
+        IndicatorSetting indicatorSetting6 = new IndicatorSetting(indicatorC, 12, "A");
+
+        em.persist(testCodeInfo1);
+        em.persist(indicatorA);
+        em.persist(indicatorB);
+        em.persist(indicatorC);
+        em.persist(indicatorSetting1);
+        em.persist(indicatorSetting2);
+        em.persist(indicatorSetting3);
+        em.persist(indicatorSetting4);
+        em.persist(indicatorSetting5);
+        em.persist(indicatorSetting6);
+        
+
+        List<PersonalityQuestion> questionList = new ArrayList<>();
+
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorA));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorA));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4, indicatorA));
+
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5, indicatorB));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6, indicatorB));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7, indicatorB));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8, indicatorB));
+
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9, indicatorC));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10, indicatorC));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11, indicatorC));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12, indicatorC));
+
+        questionList.stream().forEach(entity -> em.persist(entity));
+
+        em.flush();
+
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
         HashMap<Integer, Integer> answer = new HashMap<>();
 
         answer.put(1, 1);
-        answer.put(2, 3);
-        answer.put(3, 5);
+        answer.put(2, 1);
+        answer.put(3, 1);
         answer.put(4, 1);
         answer.put(5, 3);
-        answer.put(6, 5);
-        answer.put(7, 1);
+        answer.put(6, 3);
+        answer.put(7, 3);
         answer.put(8, 3);
         answer.put(9, 5);
+        answer.put(10, 5);
+        answer.put(11, 5);
+        answer.put(12, 5);
 
         answerInfo.setUserId(user.getId());
         answerInfo.setAnswerType(AnswerType.EXAM);
@@ -80,6 +126,7 @@ class PersonalityTestServiceTest {
 
         //then
         Assertions.assertThat(type).hasSize(3);
+        Assertions.assertThat(type).isEqualTo("BBA");
     }
 
     @Test
