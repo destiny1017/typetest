@@ -17,10 +17,12 @@ public class TypeDescription {
     @JoinColumn
     private TypeInfo typeInfo;
 
+    private int discNum;
     private String description;
 
-    public TypeDescription(TypeInfo typeInfo, String description) {
+    public TypeDescription(TypeInfo typeInfo, int discNum, String description) {
         this.typeInfo = typeInfo;
+        this.discNum = discNum;
         this.description = description;
     }
 }

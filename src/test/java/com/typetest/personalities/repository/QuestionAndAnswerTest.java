@@ -51,9 +51,9 @@ public class QuestionAndAnswerTest {
         List<PersonalityQuestion> questionList = new ArrayList<>();
         List<PersonalityAnswer> answerList = new ArrayList<>();
 
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorA));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorA));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
 
 
 

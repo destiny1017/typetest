@@ -54,7 +54,7 @@ class ExamServiceTest {
         List<PersonalityQuestion> questionList = new ArrayList<>();
 
         for (int i = 1; i <= 12; i++) {
-            questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion" + i, i, indicatorA));
+            questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion" + i, i));
         }
 
         for (int i = 0; i < questionList.size(); i++) {

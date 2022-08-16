@@ -60,8 +60,8 @@ public class ExamController {
 
         // 응답정보 객체 세팅
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
-        HashMap<Integer, Integer> answerMap = new HashMap<>();
-        answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Integer.parseInt(value)));
+        HashMap<Integer, Long> answerMap = new HashMap<>();
+        answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Long.parseLong(value)));
         answerInfo.setAnswer(answerMap);
         answerInfo.setAnswerType(AnswerType.EXAM);
         answerInfo.setTestCodeInfo(testCodeInfo.get());

@@ -4,6 +4,7 @@ import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.TestResultDetailRepository;
@@ -61,6 +62,7 @@ class PersonalityTestServiceTest {
         TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
         TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
         TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
+        TypeIndicator indicatorList[] = {indicatorA, indicatorB, indicatorC};
 
         IndicatorSetting indicatorSetting1 = new IndicatorSetting(indicatorA, 0, "B");
         IndicatorSetting indicatorSetting2 = new IndicatorSetting(indicatorA, 12, "A");
@@ -83,40 +85,54 @@ class PersonalityTestServiceTest {
 
         List<PersonalityQuestion> questionList = new ArrayList<>();
 
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorA));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorA));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4, indicatorA));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4));
 
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5, indicatorB));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6, indicatorB));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7, indicatorB));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8, indicatorB));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8));
 
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9, indicatorC));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10, indicatorC));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11, indicatorC));
-        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12, indicatorC));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12));
 
         questionList.stream().forEach(entity -> em.persist(entity));
+
+        int cnt = 0;
+        for (int i = 0; i < questionList.size(); i++) {
+            for (int j = 1; j <= 5; j++) {
+                questionList.get(i).addAnswer(PersonalityAnswer.builder()
+                        .personalityQuestion(questionList.get(i))
+                        .testCode(testCodeInfo1)
+                        .point(j)
+                        .tendency(Tendency.A)
+                        .typeIndicator(indicatorList[cnt])
+                        .build());
+            }
+            if((i+1) % 4 == 0) cnt++;
+        }
 
         em.flush();
 
         PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
-        HashMap<Integer, Integer> answer = new HashMap<>();
+        HashMap<Integer, Long> answer = new HashMap<>();
 
-        answer.put(1, 1);
-        answer.put(2, 1);
-        answer.put(3, 1);
-        answer.put(4, 1);
-        answer.put(5, 3);
-        answer.put(6, 3);
-        answer.put(7, 3);
-        answer.put(8, 3);
-        answer.put(9, 5);
-        answer.put(10, 5);
-        answer.put(11, 5);
-        answer.put(12, 5);
+        answer.put(1, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(2, questionList.get(1).getAnswerList().get(0).getId());
+        answer.put(3, questionList.get(2).getAnswerList().get(0).getId());
+        answer.put(4, questionList.get(3).getAnswerList().get(0).getId());
+        answer.put(5, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(6, questionList.get(5).getAnswerList().get(2).getId());
+        answer.put(7, questionList.get(6).getAnswerList().get(2).getId());
+        answer.put(8, questionList.get(7).getAnswerList().get(2).getId());
+        answer.put(9,  questionList.get(8).getAnswerList().get(4).getId());
+        answer.put(10, questionList.get(9).getAnswerList().get(4).getId());
+        answer.put(11, questionList.get(10).getAnswerList().get(4).getId());
+        answer.put(12, questionList.get(11).getAnswerList().get(4).getId());
 
         answerInfo.setUserId(user.getId());
         answerInfo.setAnswerType(AnswerType.EXAM);
@@ -143,23 +159,105 @@ class PersonalityTestServiceTest {
                 .nickname("디앙")
                 .build();
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
-        em.persist(user);
-        em.persist(testCodeInfo1);
-        PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
-        HashMap<Integer, Integer> answer = new HashMap<>();
         TypeInfo typeInfo = new TypeInfo(testCodeInfo1, "BBB", "비비비");
-        em.persist(typeInfo);
+
+        TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
+        TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
+        TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
+        TypeIndicator indicatorList[] = {indicatorA, indicatorB, indicatorC};
+
+        IndicatorSetting indicatorSetting1 = new IndicatorSetting(indicatorA, 0, "B");
+        IndicatorSetting indicatorSetting2 = new IndicatorSetting(indicatorA, 12, "A");
+        IndicatorSetting indicatorSetting3 = new IndicatorSetting(indicatorB, 0, "B");
+        IndicatorSetting indicatorSetting4 = new IndicatorSetting(indicatorB, 12, "A");
+        IndicatorSetting indicatorSetting5 = new IndicatorSetting(indicatorC, 0, "B");
+        IndicatorSetting indicatorSetting6 = new IndicatorSetting(indicatorC, 12, "A");
+
+        em.persist(testCodeInfo1);
+        em.persist(indicatorA);
+        em.persist(indicatorB);
+        em.persist(indicatorC);
+        em.persist(indicatorSetting1);
+        em.persist(indicatorSetting2);
+        em.persist(indicatorSetting3);
+        em.persist(indicatorSetting4);
+        em.persist(indicatorSetting5);
+        em.persist(indicatorSetting6);
+
+        List<PersonalityQuestion> questionList = new ArrayList<>();
+
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4));
+
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8));
+
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11));
+        questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12));
+
+        questionList.stream().forEach(entity -> em.persist(entity));
+
+        int cnt = 0;
+        for (int i = 0; i < questionList.size(); i++) {
+            for (int j = 1; j <= 5; j++) {
+                questionList.get(i).addAnswer(PersonalityAnswer.builder()
+                        .personalityQuestion(questionList.get(i))
+                        .testCode(testCodeInfo1)
+                        .point(j)
+                        .tendency(Tendency.A)
+                        .typeIndicator(indicatorList[cnt])
+                        .build());
+            }
+            if((i+1) % 4 == 0) cnt++;
+        }
+
         em.flush();
 
-        answer.put(1, 1);
-        answer.put(2, 1);
-        answer.put(3, 1);
-        answer.put(4, 1);
-        answer.put(5, 1);
-        answer.put(6, 1);
-        answer.put(7, 1);
-        answer.put(8, 1);
-        answer.put(9, 1);
+        PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
+        HashMap<Integer, Long> answer = new HashMap<>();
+
+        answer.put(1, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(2, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(3, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(4, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(5, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(6, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(7, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(8, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(9,  questionList.get(8).getAnswerList().get(4).getId());
+        answer.put(10, questionList.get(8).getAnswerList().get(4).getId());
+        answer.put(11, questionList.get(8).getAnswerList().get(4).getId());
+        answer.put(12, questionList.get(8).getAnswerList().get(4).getId());
+
+        answerInfo.setUserId(user.getId());
+        answerInfo.setAnswerType(AnswerType.EXAM);
+        answerInfo.setAnswer(answer);
+        answerInfo.setTestCodeInfo(testCodeInfo1);
+
+        em.persist(user);
+        em.persist(testCodeInfo1);
+        em.persist(typeInfo);
+
+        em.flush();
+
+        answer.put(1, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(2, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(3, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(4, questionList.get(0).getAnswerList().get(0).getId());
+        answer.put(5, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(6, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(7, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(8, questionList.get(4).getAnswerList().get(2).getId());
+        answer.put(9,  questionList.get(8).getAnswerList().get(4).getId());
+        answer.put(10, questionList.get(8).getAnswerList().get(4).getId());
+        answer.put(11, questionList.get(8).getAnswerList().get(4).getId());
+        answer.put(12, questionList.get(8).getAnswerList().get(4).getId());
 
         answerInfo.setUserId(user.getId());
         answerInfo.setAnswerType(AnswerType.EXAM);

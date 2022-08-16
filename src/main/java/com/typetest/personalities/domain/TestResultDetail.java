@@ -29,21 +29,24 @@ public class TestResultDetail {
     private TestCodeInfo testCode;
 
     private int num;
-    private int answer;
 
-    public TestResultDetail(TestResult testResult, User user, TestCodeInfo testCode, int num, int answer) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private PersonalityAnswer personalityAnswer;
+
+    public TestResultDetail(TestResult testResult, User user, TestCodeInfo testCode, int num, PersonalityAnswer personalityAnswer) {
         this.testResult = testResult;
         this.user = user;
         this.testCode = testCode;
         this.num = num;
-        this.answer = answer;
+        this.personalityAnswer = personalityAnswer;
     }
 
     @Override
     public String toString() {
         return "TestResultDetail{" +
                 ", num=" + num +
-                ", answer=" + answer +
+                ", answer=" + personalityAnswer +
                 '}';
     }
 }

@@ -41,12 +41,12 @@ public class TypeInfoRepositoryTest {
         em.persist(typeInfo2);
         em.persist(typeInfo3);
 
-        TypeImage typeImage1 = new TypeImage(typeInfo1, "tempUrl1");
-        TypeImage typeImage2 = new TypeImage(typeInfo1, "tempUrl2");
-        TypeImage typeImage3 = new TypeImage(typeInfo2, "tempUrl3");
-        TypeImage typeImage4 = new TypeImage(typeInfo2, "tempUrl4");
-        TypeImage typeImage5 = new TypeImage(typeInfo3, "tempUrl5");
-        TypeImage typeImage6 = new TypeImage(typeInfo3, "tempUrl6");
+        TypeImage typeImage1 = new TypeImage(typeInfo1, 1, "tempUrl1");
+        TypeImage typeImage2 = new TypeImage(typeInfo1, 2, "tempUrl2");
+        TypeImage typeImage3 = new TypeImage(typeInfo2, 3, "tempUrl3");
+        TypeImage typeImage4 = new TypeImage(typeInfo2, 4, "tempUrl4");
+        TypeImage typeImage5 = new TypeImage(typeInfo3, 5, "tempUrl5");
+        TypeImage typeImage6 = new TypeImage(typeInfo3, 6, "tempUrl6");
         em.persist(typeImage1);
         em.persist(typeImage2);
         em.persist(typeImage3);
@@ -54,12 +54,12 @@ public class TypeInfoRepositoryTest {
         em.persist(typeImage5);
         em.persist(typeImage6);
 
-        TypeDescription description1 = new TypeDescription(typeInfo1, "description1");
-        TypeDescription description2 = new TypeDescription(typeInfo1, "description2");
-        TypeDescription description3 = new TypeDescription(typeInfo2, "description3");
-        TypeDescription description4 = new TypeDescription(typeInfo2, "description4");
-        TypeDescription description5 = new TypeDescription(typeInfo3, "description5");
-        TypeDescription description6 = new TypeDescription(typeInfo3, "description6");
+        TypeDescription description1 = new TypeDescription(typeInfo1, 1, "description1");
+        TypeDescription description2 = new TypeDescription(typeInfo1, 2, "description2");
+        TypeDescription description3 = new TypeDescription(typeInfo2, 3, "description3");
+        TypeDescription description4 = new TypeDescription(typeInfo2, 4, "description4");
+        TypeDescription description5 = new TypeDescription(typeInfo3, 5, "description5");
+        TypeDescription description6 = new TypeDescription(typeInfo3, 6, "description6");
         em.persist(description1);
         em.persist(description2);
         em.persist(description3);

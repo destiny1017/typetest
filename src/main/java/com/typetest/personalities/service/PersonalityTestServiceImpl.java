@@ -28,6 +28,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     private final TypeIndicatorRepository typeIndicatorRepository;
     private final IndicatorSettingRepository indicatorSettingRepository;
     private final PersonalityQuestionRepository personalityQuestionRepository;
+    private final PersonalityAnswerRepository personalityAnswerRepository;
 
 //    @Override
 //    public String calcType(PersonalitiesAnswerInfo answerInfo) {
@@ -53,17 +54,24 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     @Override
     public String calcType(PersonalitiesAnswerInfo answerInfo) {
-        TestCodeInfo testCodeInfo = answerInfo.getTestCodeInfo();
-        HashMap<Integer, Integer> answer = answerInfo.getAnswer();
-        List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCodeOrderByNum(testCodeInfo);
+//        TestCodeInfo testCodeInfo = answerInfo.getTestCodeInfo();
+        HashMap<Integer, Long> answer = answerInfo.getAnswer();
+        List<PersonalityAnswer> answerList = personalityAnswerRepository.findByIdIn(answer.values());
+//        List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCodeOrderByNum(testCodeInfo);
         Map<TypeIndicator, Integer> pointMap = new LinkedHashMap<>();
         StringBuffer type = new StringBuffer();
 
-        // 번호대로 정렬한 질문 수만큼 응답받은 답변 점수 합산
-        questions.stream().forEach(question ->
-                // 질문의 지표값을 키로, 답변에서 현재 질문 번호에 해당하는 응답 값을 밸류로 합산
-                pointMap.put(question.getTypeIndicator(),
-                    pointMap.getOrDefault(question.getTypeIndicator(), 0) + answer.get(question.getNum())));
+        // 응답받은 답변 엔티티들의 점수 합산
+        answerList.stream().forEach(selectedAnswer ->
+                // 선택한 답변에 해당하는 indicator를 key로, 선택한 답변의 point를 value로
+                pointMap.put(selectedAnswer.getTypeIndicator(),
+                        pointMap.getOrDefault(selectedAnswer.getTypeIndicator(), 0) + selectedAnswer.getPoint()));
+
+//        // 번호대로 정렬한 질문 수만큼 응답받은 답변 점수 합산
+//        questions.stream().forEach(question ->
+//                // 질문의 지표값을 키로, 답변에서 현재 질문 번호에 해당하는 응답 값을 밸류로 합산
+//                pointMap.put(question.getTypeIndicator(),
+//                    pointMap.getOrDefault(question.getTypeIndicator(), 0) + answer.get(question.getNum())));
 
         // result 하나만 받아올 pageRequest
         PageRequest pr = PageRequest.of(0, 1);
@@ -81,7 +89,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
         Long userId = answerInfo.getUserId();
         TestCodeInfo code = answerInfo.getTestCodeInfo();
-        Map<Integer, Integer> answer = answerInfo.getAnswer();
+        Map<Integer, Long> answer = answerInfo.getAnswer();
         Optional<User> byId = loginRepository.findById(userId);
         User user;
         if(byId.isPresent()) {
@@ -91,7 +99,8 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
                 TestResult pt = new TestResult(user, code, typeInfo.get());
                 testResultRepository.save(pt); // 유형정보 저장
                 for (int key : answer.keySet()) {
-                    TestResultDetail ptd = new TestResultDetail(pt, user, code, key, answer.get(key));
+                    Optional<PersonalityAnswer> findAnswer = personalityAnswerRepository.findById(answer.get(key));
+                    TestResultDetail ptd = new TestResultDetail(pt, user, code, key, findAnswer.get());
                     testResultDetailRepository.save(ptd); // 테스트 상세 응답 정보 저장
                 }
             } else {

@@ -13,6 +13,6 @@ import java.util.HashMap;
 public class PersonalitiesAnswerInfo {
     private Long userId;
     private AnswerType answerType;
-    private HashMap<Integer, Integer> answer;
+    private HashMap<Integer, Long> answer;
     private TestCodeInfo testCodeInfo;
 }

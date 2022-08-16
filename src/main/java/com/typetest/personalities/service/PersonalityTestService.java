@@ -9,4 +9,5 @@ import java.util.Map;
 public interface PersonalityTestService {
     String calcType(PersonalitiesAnswerInfo answerInfo);
     void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type);
+
 }

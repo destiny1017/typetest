@@ -8,20 +8,20 @@ import lombok.Getter;
 public class ExamAnswerDto {
 
     private String answer;
-    private int point;
+    private Long answerId;
     private Tendency tendency;
     private String answerImage;
 
-    public ExamAnswerDto(String answer, int point, Tendency tendency, String answerImage) {
+    public ExamAnswerDto(String answer, Long answerId, Tendency tendency, String answerImage) {
         this.answer = answer;
-        this.point = point;
+        this.answerId = answerId;
         this.tendency = tendency;
         this.answerImage = answerImage;
     }
 
     public ExamAnswerDto(PersonalityAnswer personalityAnswer) {
         this.answer = personalityAnswer.getAnswer();
-        this.point = personalityAnswer.getPoint();
+        this.answerId = personalityAnswer.getId();
         this.tendency = personalityAnswer.getTendency();
         this.answerImage = personalityAnswer.getAnswerImage();
     }

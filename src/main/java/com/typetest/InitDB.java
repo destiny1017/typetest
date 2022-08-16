@@ -50,6 +50,7 @@ public class InitDB {
                 TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
                 TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
                 TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
+                TypeIndicator indicatorList[] = {indicatorA, indicatorB, indicatorC};
 
                 IndicatorSetting indicatorSetting1 = new IndicatorSetting(indicatorA, 0, "B");
                 IndicatorSetting indicatorSetting2 = new IndicatorSetting(indicatorA, 12, "A");
@@ -95,21 +96,22 @@ public class InitDB {
 
                 List<PersonalityQuestion> questionList = new ArrayList<>();
 
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorA));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorA));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4, indicatorA));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4));
 
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5, indicatorB));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6, indicatorB));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7, indicatorB));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8));
 
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9, indicatorC));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10, indicatorC));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11, indicatorC));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12));
 
+                int cnt = 0;
                 for (int i = 0; i < questionList.size(); i++) {
                     for (int j = 1; j <= 5; j++) {
                         questionList.get(i).addAnswer(PersonalityAnswer.builder()
@@ -117,8 +119,10 @@ public class InitDB {
                                 .testCode(testCodeInfo1)
                                 .point(j)
                                 .tendency(Tendency.A)
+                                .typeIndicator(indicatorList[cnt])
                                 .build());
                     }
+                    if((i+1) % 4 == 0) cnt++;
                 }
 
                 personalityQuestionRepository.saveAll(questionList);
