@@ -51,6 +51,13 @@ public class InitDB {
                 TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
                 TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
 
+                IndicatorSetting indicatorSetting1 = new IndicatorSetting(indicatorA, 0, "B");
+                IndicatorSetting indicatorSetting2 = new IndicatorSetting(indicatorA, 12, "A");
+                IndicatorSetting indicatorSetting3 = new IndicatorSetting(indicatorB, 0, "B");
+                IndicatorSetting indicatorSetting4 = new IndicatorSetting(indicatorB, 12, "A");
+                IndicatorSetting indicatorSetting5 = new IndicatorSetting(indicatorC, 0, "B");
+                IndicatorSetting indicatorSetting6 = new IndicatorSetting(indicatorC, 12, "A");
+
                 em.persist(testCodeInfo1);
                 em.persist(testCodeInfo2);
                 em.persist(typeInfo1);
@@ -61,6 +68,12 @@ public class InitDB {
                 em.persist(indicatorA);
                 em.persist(indicatorB);
                 em.persist(indicatorC);
+                em.persist(indicatorSetting1);
+                em.persist(indicatorSetting2);
+                em.persist(indicatorSetting3);
+                em.persist(indicatorSetting4);
+                em.persist(indicatorSetting5);
+                em.persist(indicatorSetting6);
 
                 User user = User.builder()
                             .name("김대호")
@@ -83,19 +96,19 @@ public class InitDB {
                 List<PersonalityQuestion> questionList = new ArrayList<>();
 
                 questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1, indicatorA));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorA));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorA));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4, indicatorA));
 
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7, indicatorB));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8, indicatorB));
 
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11, indicatorC));
+                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12, indicatorC));
 
                 for (int i = 0; i < questionList.size(); i++) {
                     for (int j = 1; j <= 5; j++) {
