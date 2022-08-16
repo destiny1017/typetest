@@ -70,7 +70,9 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
 
         // indicator별 결과를 type에 차례대로 append
         pointMap.forEach((indicator, point) ->
-                type.append(indicatorSettingRepository.findIndicatorResult(indicator, point, pr).get(0)));
+                type.append(indicatorSettingRepository
+                        .findByTypeIndicatorAndCuttingPointLessThanOrderByCuttingPointDesc(indicator, point, pr)
+                        .get(0).getResult()));
 
         return type.toString();
     }
@@ -78,7 +80,6 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     @Override
     public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
         Long userId = answerInfo.getUserId();
-//        AnswerType code = answerInfo.getAnswerType();
         TestCodeInfo code = answerInfo.getTestCodeInfo();
         Map<Integer, Integer> answer = answerInfo.getAnswer();
         Optional<User> byId = loginRepository.findById(userId);

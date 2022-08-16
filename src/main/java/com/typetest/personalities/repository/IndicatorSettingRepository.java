@@ -16,4 +16,7 @@ public interface IndicatorSettingRepository extends JpaRepository<IndicatorSetti
             " and i.cuttingPoint < :point" +
             " order by i.cuttingPoint desc")
     List<String> findIndicatorResult(@Param("indicator") TypeIndicator indicator, @Param("point") int point, Pageable pageable);
+
+    // 위 쿼리와 동일한 동작을하는 DataJPA 쿼리
+    List<IndicatorSetting> findByTypeIndicatorAndCuttingPointLessThanOrderByCuttingPointDesc(TypeIndicator indicator, int point, Pageable pageable);
 }
