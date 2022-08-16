@@ -11,6 +11,7 @@ import com.typetest.personalities.repository.TestResultRepository;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.repository.TypeInfoRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +46,7 @@ class PersonalityTestServiceTest {
     EntityManager em;
 
     @Test
+    @DisplayName("사용자 선택값으로 유형 결과 도출하는 로직 테스트")
     public void calcTypeTest() throws Exception {
         //given
         User user = User.builder()
@@ -130,6 +132,7 @@ class PersonalityTestServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 유형테스트 결과 저장 테스트")
     void saveInfoTest() {
         //given
         User user = User.builder()

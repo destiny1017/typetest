@@ -7,6 +7,7 @@ import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestResult;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeInfo;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +30,7 @@ class MyPageServiceTest {
     private EntityManager em;
 
     @Test
+    @DisplayName("사용자의 저장된 테스트 결과 정보 가져오기")
     void getUserTypeInfoTest() {
         // 임시 테스트코드
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);

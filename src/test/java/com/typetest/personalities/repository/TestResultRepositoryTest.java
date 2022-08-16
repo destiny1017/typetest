@@ -56,6 +56,7 @@ class TestResultRepositoryTest {
     }
 
     @Test
+    @DisplayName("사용자, 테스트결과, 테스트 응답 상세 데이터 저장 테스트")
     public void EntityInsertTest() throws Exception {
         //given
         User user = User.builder()
@@ -92,6 +93,7 @@ class TestResultRepositoryTest {
     }
 
     @Test
+    @DisplayName("사용자 유형테스트 결과 여러개 저장 테스트")
     public void savePersonal() throws Exception {
         //given
         User user = User.builder()

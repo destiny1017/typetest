@@ -5,6 +5,7 @@ import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeDescription;
 import com.typetest.personalities.domain.TypeImage;
 import com.typetest.personalities.domain.TypeInfo;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +30,7 @@ public class TypeInfoRepositoryTest {
     private TypeImageRepository typeImageRepository;
 
     @Test
+    @DisplayName("유형 설명정보 및 이미지정보 세팅 테스트")
     void typeInfoDescriptionTest() {
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBB", "비비비타입");

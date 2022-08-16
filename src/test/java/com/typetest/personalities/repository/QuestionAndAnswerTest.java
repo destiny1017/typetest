@@ -7,6 +7,7 @@ import com.typetest.personalities.domain.PersonalityQuestion;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeIndicator;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +36,7 @@ public class QuestionAndAnswerTest {
     private EntityManager em;
 
     @Test
+    @DisplayName("유형 검사 질문 및 답변 생성 테스트")
     void createTest() {
         //given
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);

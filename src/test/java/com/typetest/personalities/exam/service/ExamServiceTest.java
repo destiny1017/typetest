@@ -9,6 +9,7 @@ import com.typetest.personalities.domain.TypeIndicator;
 import com.typetest.personalities.exam.dto.ExamQuestionDto;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,6 +37,7 @@ class ExamServiceTest {
     private PersonalityQuestionRepository personalityQuestionRepository;
 
     @Test
+    @DisplayName("EXAM 질문 정보 저장 테스트")
     void getQuestionTest() {
         //given
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
