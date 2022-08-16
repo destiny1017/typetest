@@ -17,10 +17,12 @@ public class TypeImage {
     @JoinColumn
     private TypeInfo typeInfo;
 
+    private int imgNum;
     private String imageUrl;
 
-    public TypeImage(TypeInfo typeInfo, String imageUrl) {
+    public TypeImage(TypeInfo typeInfo, int imgNum, String imageUrl) {
         this.typeInfo = typeInfo;
+        this.imgNum = imgNum;
         this.imageUrl = imageUrl;
     }
 }

@@ -104,7 +104,7 @@
                                 <div class="d-inline-block">
                                     <div class="figure margin-side-10" th:each="answer : ${question.answerList}">
                                         <input class="form-check-input-exam" type="radio"
-                                               th:name="${question.num}" th:value="${answer.point}"/>
+                                               th:name="${question.num}" th:value="${answer.answerId}"/>
                                     </div>
                                 </div>
                                 <div class="d-inline-block">
