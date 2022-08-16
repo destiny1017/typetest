@@ -6,5 +6,5 @@ import com.typetest.mypage.dto.TypeInfoData;
 import java.util.List;
 
 public interface TestResultRepositoryCustom {
-    public List<TypeInfoData> getUserTypeList(User user);
+    List<TypeInfoData> getUserTypeList(User user);
 }
