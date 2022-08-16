@@ -5,17 +5,13 @@ import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.ExamPointTable;
 import com.typetest.personalities.data.PointWrapper;
-import com.typetest.personalities.domain.TestResult;
-import com.typetest.personalities.domain.TestResultDetail;
-import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.domain.TypeInfo;
+import com.typetest.personalities.domain.*;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.AnswerType;
-import com.typetest.personalities.repository.TestResultDetailRepository;
-import com.typetest.personalities.repository.TestResultRepository;
-import com.typetest.personalities.repository.TypeInfoRepository;
+import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,27 +25,54 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     private final TestResultDetailRepository testResultDetailRepository;
     private final LoginRepository loginRepository;
     private final TypeInfoRepository typeInfoRepository;
+    private final TypeIndicatorRepository typeIndicatorRepository;
+    private final IndicatorSettingRepository indicatorSettingRepository;
+    private final PersonalityQuestionRepository personalityQuestionRepository;
+
+//    @Override
+//    public String calcType(PersonalitiesAnswerInfo answerInfo) {
+//        AnswerType code = answerInfo.getAnswerType();
+//        String type = "";
+//        if (code.equals(AnswerType.EXAM)) {
+//            // 테스트 코드에 해당하는 포인트테이블 호출
+//            ExamPointTable examPointTable = new ExamPointTable();
+//            // 해당 테스트의 점수 배정식 호출
+//            List<PointWrapper> allocator = examPointTable.getAllocator();
+//            // 사용자가 선택한 응답 데이터
+//            HashMap<Integer, Integer> answer = answerInfo.getAnswer();
+//            // 응답 데이터와 점수 배정식으로 통합 점수 산정
+////            answer.forEach((key, value) -> allocator.get(key).addPoint(value));
+//            for (Integer key : answer.keySet()) {
+//                allocator.get(key).addPoint(answer.get(key));
+//            }
+//            // 합산된 점수로 유형 계산하여 반환
+//            type = examPointTable.getType();
+//        }
+//        return type;
+//    }
 
     @Override
     public String calcType(PersonalitiesAnswerInfo answerInfo) {
-        AnswerType code = answerInfo.getAnswerType();
-        String type = "";
-        if (code.equals(AnswerType.EXAM)) {
-            // 테스트 코드에 해당하는 포인트테이블 호출
-            ExamPointTable examPointTable = new ExamPointTable();
-            // 해당 테스트의 점수 배정식 호출
-            List<PointWrapper> allocator = examPointTable.getAllocator();
-            // 사용자가 선택한 응답 데이터
-            HashMap<Integer, Integer> answer = answerInfo.getAnswer();
-            // 응답 데이터와 점수 배정식으로 통합 점수 산정
-//            answer.forEach((key, value) -> allocator.get(key).addPoint(value));
-            for (Integer key : answer.keySet()) {
-                allocator.get(key).addPoint(answer.get(key));
-            }
-            // 합산된 점수로 유형 계산하여 반환
-            type = examPointTable.getType();
-        }
-        return type;
+        TestCodeInfo testCodeInfo = answerInfo.getTestCodeInfo();
+        HashMap<Integer, Integer> answer = answerInfo.getAnswer();
+        List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCodeOrderByNum(testCodeInfo);
+        Map<TypeIndicator, Integer> pointMap = new LinkedHashMap<>();
+        StringBuffer type = new StringBuffer();
+
+        // 번호대로 정렬한 질문 수만큼 응답받은 답변 점수 합산
+        questions.stream().forEach(question ->
+                // 질문의 지표값을 키로, 답변에서 현재 질문 번호에 해당하는 응답 값을 밸류로 합산
+                pointMap.put(question.getTypeIndicator(),
+                    pointMap.getOrDefault(question.getTypeIndicator(), 0) + answer.get(question.getNum())));
+
+        // result 하나만 받아올 pageRequest
+        PageRequest pr = PageRequest.of(0, 1);
+
+        // indicator별 결과를 type에 차례대로 append
+        pointMap.forEach((indicator, point) ->
+                type.append(indicatorSettingRepository.findIndicatorResult(indicator, point, pr).get(0)));
+
+        return type.toString();
     }
 
     @Override

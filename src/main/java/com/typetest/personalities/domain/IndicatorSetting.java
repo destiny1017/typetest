@@ -19,4 +19,9 @@ public class IndicatorSetting {
 
     private String result;
 
+    public IndicatorSetting(TypeIndicator typeIndicator, int cuttingPoint, String result) {
+        this.typeIndicator = typeIndicator;
+        this.cuttingPoint = cuttingPoint;
+        this.result = result;
+    }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface PersonalityQuestionRepository extends JpaRepository<PersonalityQuestion, Long> {
     List<PersonalityQuestion> findByTestCode(TestCodeInfo testCode);
+    List<PersonalityQuestion> findByTestCodeOrderByNum(TestCodeInfo testCode);
 
     @Query("select new com.typetest.personalities.exam.dto.ExamQuestionDto(pq) " +
             "from PersonalityQuestion pq " +
