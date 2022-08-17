@@ -14,15 +14,19 @@ public class TypeDescription {
     private Long id;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "TYPE_INFO_ID")
     private TypeInfo typeInfo;
 
-    private int discNum;
+    private int descNum;
     private String description;
 
-    public TypeDescription(TypeInfo typeInfo, int discNum, String description) {
+    public void setTypeInfo(TypeInfo typeInfo) {
         this.typeInfo = typeInfo;
-        this.discNum = discNum;
+    }
+
+    public TypeDescription(TypeInfo typeInfo, int descNum, String description) {
+        this.typeInfo = typeInfo;
+        this.descNum = descNum;
         this.description = description;
     }
 }

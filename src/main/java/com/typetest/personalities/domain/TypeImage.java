@@ -14,11 +14,15 @@ public class TypeImage {
     private Long id;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "TYPE_INFO_ID")
     private TypeInfo typeInfo;
 
     private int imgNum;
     private String imageUrl;
+
+    public void setTypeInfo(TypeInfo typeInfo) {
+        this.typeInfo = typeInfo;
+    }
 
     public TypeImage(TypeInfo typeInfo, int imgNum, String imageUrl) {
         this.typeInfo = typeInfo;

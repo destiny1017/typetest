@@ -7,6 +7,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,6 +16,7 @@ import javax.persistence.*;
 public class TypeInfo {
 
     @Id @GeneratedValue
+    @Column(name = "TYPE_INFO_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,7 +26,24 @@ public class TypeInfo {
     private String typeCode;
     private String typeName;
 
+    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
+    List<TypeDescription> descriptions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
+    List<TypeImage> images = new ArrayList<>();
+
+    public void addDescription(TypeDescription description) {
+        this.descriptions.add(description);
+        description.setTypeInfo(this);
+    }
+
+    public void addImage(TypeImage image) {
+        this.images.add(image);
+        image.setTypeInfo(this);
+    }
+
     public TypeInfo(TestCodeInfo testCode, String typeCode, String typeName) {
+
         this.testCode = testCode;
         this.typeCode = typeCode;
         this.typeName = typeName;
