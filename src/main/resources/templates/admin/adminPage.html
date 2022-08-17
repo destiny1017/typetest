@@ -7,18 +7,11 @@
 <div class="primary-container">
     <nav class="navbar bg-light" th:replace="personalities/fragments/examHeader :: examHeader">
         <div class="container-fluid">
-            <span class="h4">ExamTest</span>
+            <span class="h4">Diang.Lab</span>
         </div>
     </nav>
-    <div class="py-2">
-        <p th:text="${userName} + '님 로그인'" >손님</p>
-    </div>
     <hr>
-    <a href="/examStart?testCode=EXAMTEST" class="btn btn-outline-secondary">EXAMTEST</a>
-    <div class="py-1"></div>
-    <a href="/myPage" class="btn btn-outline-secondary">MYPAGE</a>
-    <div class="py-1"/></div>
-    <a href="/adminPage" class="btn btn-outline-secondary">ADMINPAGE</a>
+
     <hr>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
