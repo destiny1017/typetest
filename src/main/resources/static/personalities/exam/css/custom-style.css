@@ -58,6 +58,33 @@ footer {
    flex-direction: column;
 }
 
+
+/*
+ * 테스트 관리 페이지
+ */
+
+.ta-container {
+    max-width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    box-shadow: 2px 3px 3px 2px #ddd;
+    border-radius: 1rem;
+    overflow: auto;
+}
+
+.ta-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-family: Noto Sans KR;
+    font-size: 22px;
+    border-bottom: 1px solid #ddd;
+}
+
+
 .login-contents {
     max-width: 500px;
     display: inline-block;
