@@ -27,7 +27,7 @@
 
         <!-- button line -->
         <div class="text-center py-3">
-            <a class="btn btn-primary exam-rounded-btn" th:href="@{examTest(testCode=${testCode})}">
+            <a class="btn btn-primary exam-rounded-btn" th:href="|/${testCode}/testAnswer|">
                 <span>테스트 시작!</span>
             </a>
             <!--<button class="btn btn-primary exam-rounded-btn" th:onclick="|location.href='@{examTestSlide(testCode=${testCode})}'|">

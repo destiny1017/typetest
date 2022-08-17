@@ -26,7 +26,7 @@ public class LoginController {
         if (user != null) {
             model.addAttribute("userName", user.getName());
         } else {
-            model.addAttribute("userName", "손님");
+            model.addAttribute("userName", "손");
         }
         log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
 

@@ -28,14 +28,14 @@ public class ExamController {
     private final ExamService examService;
     private final TestCodeInfoRepository testCodeInfoRepository;
 
-    @GetMapping("/examStart")
-    public String exam(@RequestParam String testCode, Model model) {
+    @GetMapping("/{testCode}/testMain")
+    public String examPath(@PathVariable String testCode, Model model) {
         model.addAttribute("testCode", testCode);
         return "personalities/exam/examStart";
     }
 
-    @GetMapping("/examTest")
-    public String examTest(@RequestParam String testCode, Model model) {
+    @GetMapping("/{testCode}/testAnswer")
+    public String examTest(@PathVariable String testCode, Model model) {
         model.addAttribute("testCode", testCode);
         model.addAttribute("questions", examService.getQuestions(testCode));
         model.addAttribute("questionCount", examService.getQuestionCnt(testCode));
@@ -78,11 +78,11 @@ public class ExamController {
             log.info("answerInfo = {}", answerInfo);
         }
 
-        return "redirect:examResult?testCode=" + testCode + "&type=" + type;
+        return "redirect:" + testCode + "/testResult/" + type;
     }
 
-    @GetMapping("/examResult")
-    public String examResult(@RequestParam String testCode, @RequestParam String type, Model model) {
+    @GetMapping("/{testCode}/testResult/{type}")
+    public String examResult(@PathVariable String testCode, @PathVariable String type, Model model) {
         // 유형 결과 반환
         TestResultDto testResultDto = personalityTestService.createTestResultInfo(testCode, type);
         model.addAttribute("result", testResultDto);
