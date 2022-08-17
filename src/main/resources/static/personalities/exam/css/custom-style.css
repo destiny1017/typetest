@@ -328,6 +328,7 @@ span.type-label {
   flex-direction: column;
   justify-content: center;
   padding: 20px 0px 20px 0px;
+  justify-content: flex-start;
 }
 
 .slides > div:target {

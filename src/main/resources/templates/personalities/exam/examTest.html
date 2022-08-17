@@ -30,10 +30,10 @@
             checkSelect();
         });
         
-        $('#btnNext').click( () => {
+        $('.btnNext').click( () => {
             nowPage++;
             $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
-            $("#btnNext").prop("disabled", true);
+            $(".btnNext").prop("disabled", true);
             location.href = "#examForm";
         });
 
@@ -56,7 +56,7 @@
             // 현 페이지 내의 모든 질문이 체크됐으면 다음버튼 활성화
             if(nowPage == i) {
                 if(questions[i].length == pageCnt) {
-                    $("#btnNext").prop("disabled", false);
+                    $(".btnNext").prop("disabled", false);
                 }
             }
         }
@@ -66,7 +66,7 @@
         
         // 모두 체크됐으면 submit 활성화
         if(checkAll) {
-            $("#btnNext").addClass("display-none");
+            $(".btnNext").addClass("display-none");
             $('button[type="submit"]').removeClass("display-none");
         }
     }
@@ -112,15 +112,15 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- button line -->
+                        <div class="text-center py-5">
+                            <button type="submit" class="btn btn-primary exam-rounded-btn font-singleDay display-none" id="btnSubmit">결과확인</button>
+                            <button class="btn btn-primary exam-rounded-btn font-singleDay btnNext" disabled>다음으로</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- button line -->
-            <div class="text-center py-3">
-                <button type="submit" class="btn btn-primary exam-rounded-btn font-singleDay display-none" id="btnSubmit">결과확인</button>
-                <button class="btn btn-primary exam-rounded-btn font-singleDay" id="btnNext" disabled>다음으로</button>
-            </div>
         </form>
 
 
