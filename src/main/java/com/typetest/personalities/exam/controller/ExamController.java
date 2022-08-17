@@ -3,6 +3,7 @@ package com.typetest.personalities.exam.controller;
 import com.typetest.exception.NotFoundEntityException;
 import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.exam.dto.ExamResultInfo;
@@ -83,8 +84,8 @@ public class ExamController {
     @GetMapping("/examResult")
     public String examResult(@RequestParam String testCode, @RequestParam String type, Model model) {
         // 유형 결과 반환
-        ExamResultInfo resultType = examService.getResult(type, testCode);
-        model.addAttribute("result", resultType);
+        TestResultDto testResultDto = personalityTestService.createTestResultInfo(testCode, type);
+        model.addAttribute("result", testResultDto);
         model.addAttribute("testCode", testCode);
         return "personalities/exam/examResult";
     }

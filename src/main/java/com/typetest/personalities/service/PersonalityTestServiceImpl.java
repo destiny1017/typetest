@@ -3,6 +3,7 @@ package com.typetest.personalities.service;
 import com.typetest.exception.NotFoundEntityException;
 import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
+import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.*;
@@ -24,6 +25,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     private final TypeInfoRepository typeInfoRepository;
     private final IndicatorSettingRepository indicatorSettingRepository;
     private final PersonalityAnswerRepository personalityAnswerRepository;
+    private final TestCodeInfoRepository testCodeInfoRepository;
 
     @Override
     public String calcType(PersonalitiesAnswerInfo answerInfo) {
@@ -53,19 +55,19 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     @Override
     public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
         Long userId = answerInfo.getUserId();
-        TestCodeInfo code = answerInfo.getTestCodeInfo();
+        TestCodeInfo testCode = answerInfo.getTestCodeInfo();
         Map<Integer, Long> answer = answerInfo.getAnswer();
         Optional<User> byId = loginRepository.findById(userId);
         User user;
         if(byId.isPresent()) {
             user = byId.get();
-            Optional<TypeInfo> typeInfo = typeInfoRepository.findByTypeCode(type);
+            Optional<TypeInfo> typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCode, type);
             if(typeInfo.isPresent()) {
-                TestResult pt = new TestResult(user, code, typeInfo.get());
+                TestResult pt = new TestResult(user, testCode, typeInfo.get());
                 testResultRepository.save(pt); // 유형정보 저장
                 for (int key : answer.keySet()) {
                     Optional<PersonalityAnswer> findAnswer = personalityAnswerRepository.findById(answer.get(key));
-                    TestResultDetail ptd = new TestResultDetail(pt, user, code, key, findAnswer.get());
+                    TestResultDetail ptd = new TestResultDetail(pt, user, testCode, key, findAnswer.get());
                     testResultDetailRepository.save(ptd); // 테스트 상세 응답 정보 저장
                 }
             } else {
@@ -77,5 +79,19 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     }
 
-
+    @Override
+    public TestResultDto createTestResultInfo(String testCode, String type) {
+        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        if(testCodeInfo.isPresent()) {
+            Optional<TypeInfo> typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo.get(), type);
+            if(typeInfo.isPresent()) {
+                TestResultDto testResultDto = new TestResultDto(typeInfo.get());
+                return testResultDto;
+            } else {
+                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+            }
+        } else {
+            throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
+        }
+    }
 }

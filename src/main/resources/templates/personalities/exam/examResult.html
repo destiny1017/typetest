@@ -55,9 +55,9 @@
     <!-- body text -->
     <figure class="text-center py-3 exam-contents">
         <blockquote class="blockquote">
-            <p class="my-3" th:text="${result.type}">TYPE</p>
-            <img th:src="${result.imageUrl}" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid py-3 form-floating" alt="...">
-            <p th:text="${result.description}">
+            <p class="my-3" th:text="${result.typeName}">TYPE</p>
+            <img th:src="${result.images[1]}" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid py-3 form-floating" alt="...">
+            <p th:text="${result.descriptions[1]}">
                 default description..
             </p>
         </blockquote>

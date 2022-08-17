@@ -59,6 +59,16 @@ public class InitDB {
                 IndicatorSetting indicatorSetting5 = new IndicatorSetting(indicatorC, 0, "B");
                 IndicatorSetting indicatorSetting6 = new IndicatorSetting(indicatorC, 12, "A");
 
+                TypeDescription bbbDescription1 = new TypeDescription(typeInfo5, 1, "BBB description1");
+                TypeDescription aaaDescription1 = new TypeDescription(typeInfo2, 1, "AAA description1");
+//                typeInfo5.addDescription(bbbDescription1);
+//                typeInfo2.addDescription(aaaDescription1);
+
+                TypeImage bbbImage1 = new TypeImage(typeInfo5, 1, "https://post-phinf.pstatic.net/MjAyMDExMDVfMyAg/MDAxNjA0NTY2NjIwNTc1.8jOap6uQdNegKLE8UXA5xrYo0sYRfOGlCb4W5vPI_3Ag.uPwZ8ljqoThpaUFcjnH-L61oLScNgvLJGJ7J5i-gl3wg.PNG/2.png?type=w1200");
+                TypeImage aaaImage1 = new TypeImage(typeInfo2, 1, "https://post-phinf.pstatic.net/MjAyMDExMDVfMyAg/MDAxNjA0NTY2NjIwNTc1.8jOap6uQdNegKLE8UXA5xrYo0sYRfOGlCb4W5vPI_3Ag.uPwZ8ljqoThpaUFcjnH-L61oLScNgvLJGJ7J5i-gl3wg.PNG/2.png?type=w1200");
+//                typeInfo5.addImage(bbbImage1);
+//                typeInfo2.addImage(aaaImage1);
+
                 em.persist(testCodeInfo1);
                 em.persist(testCodeInfo2);
                 em.persist(typeInfo1);
@@ -75,6 +85,10 @@ public class InitDB {
                 em.persist(indicatorSetting4);
                 em.persist(indicatorSetting5);
                 em.persist(indicatorSetting6);
+                em.persist(bbbDescription1);
+                em.persist(aaaDescription1);
+                em.persist(bbbImage1);
+                em.persist(aaaImage1);
 
                 User user = User.builder()
                             .name("김대호")
