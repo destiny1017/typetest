@@ -178,9 +178,10 @@ footer {
 
 .header-logo {
     background-image: url("/assets/images/logo/diang_logo_.png");
-    width: 160px;
+    width: 150px;
     height: 50px;
     background-size: cover;
+    cursor: pointer;
 }
 
 /*
