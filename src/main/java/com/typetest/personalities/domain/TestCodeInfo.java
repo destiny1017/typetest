@@ -23,9 +23,21 @@ public class TestCodeInfo {
     @Enumerated(EnumType.STRING)
     private AnswerType answerType;
 
+    private String image;
+    private String description;
+    private Long playCount;
+
     public TestCodeInfo(String testCode, String testName, AnswerType answerType) {
         this.testCode = testCode;
         this.testName = testName;
         this.answerType = answerType;
+    }
+
+    public TestCodeInfo(String testCode, String testName, AnswerType answerType, String image, String description) {
+        this.testCode = testCode;
+        this.testName = testName;
+        this.answerType = answerType;
+        this.image = image;
+        this.description = description;
     }
 }

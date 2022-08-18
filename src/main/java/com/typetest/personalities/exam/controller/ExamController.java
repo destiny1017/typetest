@@ -30,6 +30,10 @@ public class ExamController {
 
     @GetMapping("/{testCode}/testMain")
     public String examPath(@PathVariable String testCode, Model model) {
+        Optional<TestCodeInfo> testInfo = testCodeInfoRepository.findById(testCode);
+        if (testInfo.isPresent()) {
+            model.addAttribute("testInfo", testInfo.get());
+        }
         model.addAttribute("testCode", testCode);
         return "personalities/exam/examStart";
     }

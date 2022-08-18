@@ -39,8 +39,13 @@ public class InitDB {
         public void init() {
             if(!env.getProperty("spring.profiles.active").equals("test")) {
                 // 임시 테스트코드
-                TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
-                TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
+//                TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+                TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,
+                        "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
+                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.");
+                TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD,
+                        "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
+                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.");
                 TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
                 TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에이");
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");

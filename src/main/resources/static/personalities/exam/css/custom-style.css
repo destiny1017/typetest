@@ -13,7 +13,7 @@ footer {
 
 #progress {
     appearance: none;
-    width: 400px;
+    width: 80%;
 }
 
 #progress::-webkit-progress-bar {

@@ -5,11 +5,24 @@
 </head>
 <body>
 <div class="ta-container">
-    <div class="ta-title">
+    <!--<div class="ta-title">
         <span class="">테스트 생성</span>
-    </div>
-    <div style="height: 500px;">
-
+    </div>-->
+    <div class="px-3 py-3 vstack" style="height: 500px;">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Disabled</a>
+            </li>
+        </ul>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
