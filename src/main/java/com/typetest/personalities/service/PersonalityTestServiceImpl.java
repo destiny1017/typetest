@@ -23,7 +23,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     private final TestResultDetailRepository testResultDetailRepository;
     private final LoginRepository loginRepository;
     private final TypeInfoRepository typeInfoRepository;
-    private final IndicatorSettingRepository indicatorSettingRepository;
+    private final IndicatorSettingRepositoryRepository indicatorSettingRepository;
     private final PersonalityAnswerRepository personalityAnswerRepository;
     private final TestCodeInfoRepository testCodeInfoRepository;
 

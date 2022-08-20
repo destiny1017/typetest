@@ -8,9 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface IndicatorSettingRepository extends JpaRepository<IndicatorSetting, Long> {
+public interface IndicatorSettingRepositoryRepository extends JpaRepository<IndicatorSetting, Long>, IndicatorSettingRepositoryCustom {
     @Query("select i.result from IndicatorSetting i" +
             " where i.typeIndicator = :indicator" +
             " and i.cuttingPoint < :point" +
@@ -19,4 +18,11 @@ public interface IndicatorSettingRepository extends JpaRepository<IndicatorSetti
 
     // 위 쿼리와 동일한 동작을하는 DataJPA 쿼리
     List<IndicatorSetting> findByTypeIndicatorAndCuttingPointLessThanOrderByCuttingPointDesc(TypeIndicator indicator, int point, Pageable pageable);
+
+//    @Query("select new com.typetest.admin.testadmin.data.IndicatorInfoDto(" +
+//            "ti.indicatorNum, ti.indicatorName, is.cuttingPoint, is.result)" +
+//            " from IndicatorSetting is right join is.typeIndicator ti" +
+////            " on ti.id = is.typeIndicator" +
+//            " where ti.testCode = :testCodeInfo")
+//    List<IndicatorInfoDto> getIndicatorInfo(@Param("testCodeInfo") TestCodeInfo testCodeInfo);
 }

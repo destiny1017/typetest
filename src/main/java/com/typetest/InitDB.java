@@ -57,12 +57,12 @@ public class InitDB {
                 TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
                 TypeIndicator indicatorList[] = {indicatorA, indicatorB, indicatorC};
 
-                IndicatorSetting indicatorSetting1 = new IndicatorSetting(indicatorA, 0, "B");
-                IndicatorSetting indicatorSetting2 = new IndicatorSetting(indicatorA, 12, "A");
-                IndicatorSetting indicatorSetting3 = new IndicatorSetting(indicatorB, 0, "B");
-                IndicatorSetting indicatorSetting4 = new IndicatorSetting(indicatorB, 12, "A");
-                IndicatorSetting indicatorSetting5 = new IndicatorSetting(indicatorC, 0, "B");
-                IndicatorSetting indicatorSetting6 = new IndicatorSetting(indicatorC, 12, "A");
+                IndicatorSetting indicatorSetting1 = new IndicatorSetting(indicatorA, testCodeInfo1, 0, "B");
+                IndicatorSetting indicatorSetting2 = new IndicatorSetting(indicatorA, testCodeInfo1, 12, "A");
+                IndicatorSetting indicatorSetting3 = new IndicatorSetting(indicatorB, testCodeInfo1, 0, "B");
+                IndicatorSetting indicatorSetting4 = new IndicatorSetting(indicatorB, testCodeInfo1, 12, "A");
+                IndicatorSetting indicatorSetting5 = new IndicatorSetting(indicatorC, testCodeInfo1, 0, "B");
+                IndicatorSetting indicatorSetting6 = new IndicatorSetting(indicatorC, testCodeInfo1, 12, "A");
 
                 TypeDescription bbbDescription1 = new TypeDescription(typeInfo5, 1, "BBB description1");
                 TypeDescription aaaDescription1 = new TypeDescription(typeInfo2, 1, "AAA description1");

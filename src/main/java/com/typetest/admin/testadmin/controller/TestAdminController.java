@@ -37,6 +37,7 @@ public class TestAdminController {
     @GetMapping("/testAdminPage/{testCode}")
     public String testAdminPage(@PathVariable String testCode, Model model) {
         model.addAttribute("testInfoDto", testAdminService.createTestInfoDto(testCode));
+        model.addAttribute("indicatorList", testAdminService.findIndicatorInfo(testCode));
         return "admin/testadmin/testAdminPage";
     }
 
@@ -46,4 +47,5 @@ public class TestAdminController {
         testAdminService.saveTestInfo(testInfoDto);
         return "redirect:/testAdminPage/" + testInfoDto.getTestCode();
     }
+
 }

@@ -1,5 +1,6 @@
 package com.typetest.admin.testadmin.service;
 
+import com.typetest.admin.testadmin.data.IndicatorInfoDto;
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.personalities.domain.TestCodeInfo;
 
@@ -9,4 +10,5 @@ public interface TestAdminService {
     TestInfoDto createTestInfoDto(String testCode);
     List<TestCodeInfo> findAllTestInfo();
     TestInfoDto saveTestInfo(TestInfoDto testInfoDto);
+    List<IndicatorInfoDto> findIndicatorInfo(String testCode);
 }
