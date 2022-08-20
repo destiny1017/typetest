@@ -3,26 +3,101 @@
 <head th:replace="personalities/fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
+<script>
+    $(document).ready( () => {
+
+    });
+</script>
 <body>
 <div class="ta-container">
     <!--<div class="ta-title">
         <span class="">테스트 생성</span>
     </div>-->
-    <div class="px-3 py-3 vstack" style="height: 500px;">
+    <div class="px-3 py-3 vstack testInfo-contents">
+        <!-- 상단 tabs -->
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Active</a>
+                <a id="step1" class="nav-link active" aria-current="page" href="#">STEP1</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a id="step2" class="nav-link" href="#">STEP2</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a id="step3" class="nav-link" href="#">STEP3</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
+                <a id="step4" class="nav-link">STEP4</a>
             </li>
         </ul>
+
+        <!-- tab contents div-->
+        <div id="step1Content" class="tab-contents active">
+            <form method="get" action="/testAdmin/step1Submit" class="tab-contentsForm">
+                <div class="select-div">
+                    <div>
+                        <label>테스트 선택</label>
+                    </div>
+                    <select class="type-select">
+                        <option value="NEW">새로 만들기</option>
+                        <option th:each="testInfo : ${testList}"
+                                th:text="${testInfo.testName}" th:value="${testInfo.testCode}"
+                                th:selected="${testCode} == ${testInfo.testCode}"></option>
+                    </select>
+                </div>
+                <div class="testCode-div">
+                    <div>
+                        <label>테스트 코드 입력</label>
+                    </div>
+                    <div class="testCode-text-div">
+                        <input type="text" th:field="*{testInfoDto.testCode}">
+                        <input type="text" th:field="*{testInfoDto.testName}">
+                    </div>
+                </div>
+                <div class="answerType-div">
+                    <div>
+                        <label>테스트 방식 선택</label>
+                    </div>
+                    <div class="answerType-content">
+                        <div th:each="answerType : ${answerTypeList}">
+                            <div>
+                                <input type="radio" th:field="*{testInfoDto.answerType}" th:value="${answerType}">
+                                <label th:text="${answerType.getKrType()}" th:for="${#ids.prev('answerType')}"></label>
+                            </div>
+                            <div>
+                                <img class="answerType-img" th:src="${answerType.getImage()}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="introImgUp-div">
+                    <label>테스트 메인 이미지</label>
+                    <div>
+                        <input type="text" th:field="*{testInfoDto.image}">
+                    </div>
+                </div>
+                <div class="introDesc-div">
+                    <label>테스트 설명</label>
+                    <div>
+                        <textarea class="desc-textarea" th:field="*{testInfoDto.description}"></textarea>
+                    </div>
+                </div>
+                <div class="tabSubmit-div">
+                    <button class="btn btn-primary" type="submit">저장</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="step2Content" class="tab-contents active">
+
+        </div>
+
+        <div id="step3Content" class="tab-contents active">
+
+        </div>
+
+        <div id="step4Content" class="tab-contents active">
+
+        </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>

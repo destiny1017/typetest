@@ -1,5 +1,6 @@
 package com.typetest.personalities.domain;
 
+import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.personalities.data.AnswerType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,13 @@ public class TestCodeInfo {
         this.answerType = answerType;
         this.image = image;
         this.description = description;
+    }
+
+    public TestCodeInfo(TestInfoDto testInfoDto) {
+        this.testCode = testInfoDto.getTestCode();
+        this.testName = testInfoDto.getTestName();
+        this.answerType = testInfoDto.getAnswerType();
+        this.image = testInfoDto.getImage();
+        this.description = testInfoDto.getDescription();
     }
 }

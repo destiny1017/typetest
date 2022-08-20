@@ -62,7 +62,6 @@ footer {
 /*
  * 테스트 관리 페이지
  */
-
 .ta-container {
     max-width: 80%;
     margin: 0 auto;
@@ -83,6 +82,46 @@ footer {
     font-size: 22px;
     border-bottom: 1px solid #ddd;
 }
+
+.tab-contentsForm > div{
+    margin: 25px 10px 0px 10px;
+}
+
+.tab-contentsForm input {
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+}
+
+.tab-content {
+
+}
+
+select-div {
+
+}
+
+.answerType-content {
+    display: flex;
+}
+
+.answerType-content > div {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.answerType-img {
+    width: 150px;
+    height: 180px;
+}
+
+.desc-textarea {
+    resize: none;
+    width: 75%;
+    height: 150px;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+}
+
 
 
 .login-contents {
