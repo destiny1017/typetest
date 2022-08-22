@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,6 +22,9 @@ public class TypeIndicator {
     private int indicatorNum;
 
     private String indicatorName;
+
+    @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
+    private List<IndicatorSetting> indicatorSettings = new ArrayList<>();
 
     public TypeIndicator(TestCodeInfo testCode, int indicatorNum, String indicatorName) {
         this.testCode = testCode;

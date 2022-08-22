@@ -1,11 +1,12 @@
 package com.typetest.admin.testadmin.service;
 
-import com.typetest.admin.testadmin.data.IndicatorInfoDto;
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.exception.NotFoundEntityException;
 import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.domain.TypeIndicator;
 import com.typetest.personalities.repository.IndicatorSettingRepositoryRepository;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
+import com.typetest.personalities.repository.TypeIndicatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class TestAdminServiceImpl implements TestAdminService {
 
     private final TestCodeInfoRepository testCodeInfoRepository;
     private final IndicatorSettingRepositoryRepository indicatorSettingRepository;
+    private final TypeIndicatorRepository typeIndicatorRepository;
 
     @Override
     public TestInfoDto createTestInfoDto(String testCode) {
@@ -46,13 +48,13 @@ public class TestAdminServiceImpl implements TestAdminService {
     }
 
     @Override
-    public List<IndicatorInfoDto> findIndicatorInfo(String testCode) {
+    public List<TypeIndicator> findIndicatorInfo(String testCode) {
         if(testCode.equals("NEW")) {
             return new ArrayList<>();
         } else {
             Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
             if(testCodeInfo.isPresent()) {
-                return indicatorSettingRepository.getIndicatorInfoList(testCodeInfo.get());
+                return typeIndicatorRepository.findByTestCode(testCodeInfo.get());
             } else {
                 throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
             }
