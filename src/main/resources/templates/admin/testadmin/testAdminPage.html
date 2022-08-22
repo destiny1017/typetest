@@ -3,11 +3,6 @@
 <head th:replace="personalities/fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
-<script>
-    $(document).ready( () => {
-
-    });
-</script>
 <body>
 <div class="ta-container">
     <!--<div class="ta-title">
@@ -49,8 +44,8 @@
                         <label>테스트 코드 입력</label>
                     </div>
                     <div class="testCode-text-div">
-                        <input type="text" th:field="*{testInfoDto.testCode}">
-                        <input type="text" th:field="*{testInfoDto.testName}">
+                        <input type="text" class="form-control" th:field="*{testInfoDto.testCode}">
+                        <input type="text" class="form-control" th:field="*{testInfoDto.testName}">
                     </div>
                 </div>
                 <div class="answerType-div">
@@ -72,13 +67,13 @@
                 <div class="introImgUp-div">
                     <label>테스트 메인 이미지</label>
                     <div>
-                        <input type="text" th:field="*{testInfoDto.image}">
+                        <input type="text" class="form-control" th:field="*{testInfoDto.image}">
                     </div>
                 </div>
                 <div class="introDesc-div">
                     <label>테스트 설명</label>
                     <div>
-                        <textarea class="desc-textarea" th:field="*{testInfoDto.description}"></textarea>
+                        <textarea class="form-control" th:field="*{testInfoDto.description}"></textarea>
                     </div>
                 </div>
                 <div class="tabSubmit-div">
@@ -87,19 +82,126 @@
             </form>
         </div>
 
-        <div id="step2Content" class="tab-contents active">
+        <div id="step2Content" class="tab-contents">
+            <form method="get" action="/testAdmin/step2Submit" class="tab-contentsForm" th:object="${indicatorForm}" id="tab2Form">
+                <input type="hidden" th:field="*{testCode}">
+                <div class="indicator-div" th:each="indicator : *{indicatorList}" th:id="|indicatorDiv${indicatorStat.index + 1}|">
+                    <div class="indicator-title">
+                        <p><span class="material-icons">edit</span>유형 지표 정보</p>
+                        <span class="material-icons indicatorDelete" th:id="|indiDel${indicatorStat.index + 1}|">close</span>
+                    </div>
+                    <div class="indicatorInfo-div">
+                        <div class="indicatorElement-div">
+                            <label>지표 번호</label>
+                            <input type="text" class="form-control" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorNum}"
+                                   th:value="${indicator.indicatorNum}">
+                        </div>
+                        <div class="indicatorElement-div">
+                            <label>지표 이름</label>
+                            <input type="text" class="form-control" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorName}"
+                                   th:value="${indicator.indicatorName}">
+                        </div>
+                    </div>
+                    <div class="setting-div">
+                        <div class="settingInfo-div d-flex" th:each="indicatorSetting, stat : *{indicatorList[__${indicatorStat.index}__].indicatorSettings}">
+                            <div class="settingElement-div">
+                                <label>지표 코드</label>
+                                <input type="text" class="form-control"
+                                       th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].result}"
+                                       th:value="${indicatorSetting.result}">
+                            </div>
+                            <div class="settingElement-div">
+                                <label>지표 결정 점수</label>
+                                <input type="text" class="form-control"
+                                       th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].cuttingPoint}"
+                                       th:value="${indicatorSetting.cuttingPoint}">
+                            </div>
+                        </div>
+                        <div class="settingAdd-div">
+                            <span id="settingAdd">+ 지표 정보 추가</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="addIndicator-div" id="addIndicator">
+                    <div class="add-icon">
+                        <p class="plus1"></p>
+                        <p class="plus2"></p>
+                    </div>
+                </div>
+                <div class="tabSubmit-div">
+                    <button class="btn btn-primary" type="submit">저장</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="step3Content" class="tab-contents">
 
         </div>
 
-        <div id="step3Content" class="tab-contents active">
-
-        </div>
-
-        <div id="step4Content" class="tab-contents active">
+        <div id="step4Content" class="tab-contents">
 
         </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>
+<script th:inline="javascript">
+    console.log("we");
+    const indicatorList = [[${indicatorForm.indicatorList}]];
+    let indicatorCnt = [];
+    let selectIndicator = 0;
+
+    $(document).ready( () => {
+        $(".nav-link").click( (e) => {
+            $('[id^="step"]').removeClass("active");
+            $(`[id^="${e.target.id}"]`).addClass("active");
+        });
+
+        $("#addIndicator").click( () => {
+                let indicatorDiv =
+                `
+                    <div class="indicator-div" id="indicatorDiv${indicatorList.length + 1}">
+                        <div class="indicator-title">
+                            <p><span class="material-icons">edit</span>유형 지표 정보</p>
+                            <span class="material-icons indicatorDelete" id="indiDelTmp${indicatorList.length + 1}"">close</span>
+                        </div>
+                        <div class="indicatorInfo-div">
+                            <div class="indicatorElement-div">
+                                <label>지표 번호</label>
+                                <input type="text" class="form-control" th:name="indicatorList[${indicatorList.length}].indicatorNum">
+                            </div>
+                            <div>
+                                <label>지표 이름</label>
+                                <input type="text" class="form-control" th:name="indicatorList[${indicatorList.length}].indicatorName">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="settingAdd-div">
+                                <span id="settingAdd">+ 지표 정보 추가</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            $("#addIndicator").before(indicatorDiv);
+            indicatorList.push({indicatorSettings:[]});
+
+            $(".indicatorDelete").click( (e) => {
+                indicatorDeleteEvent(e);
+            });
+        });
+
+        $(".indicatorDelete").click( (e) => {
+            //indicatorDeleteEvent(e);
+        });
+
+        function indicatorDeleteEvent(e) {
+            let targetNum = e.target.id.replace("indiDelTmp", "");
+            $("#indicatorDiv" + targetNum).hide();
+            $("#indicatorDiv" + targetNum + " input").val("");
+        };
+
+    });
+</script>
 </html>
+
+

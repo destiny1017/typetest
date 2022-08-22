@@ -84,12 +84,120 @@ footer {
 }
 
 .tab-contentsForm > div{
-    margin: 25px 10px 0px 10px;
+    margin: 20px 10px 20px 10px;
 }
 
 .tab-contentsForm input {
     border-radius: 0.5rem;
     border: 1px solid #ccc;
+}
+
+.tab-contents {
+    display: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.testInfo-contents > .active {
+    display: inline-block !important;
+}
+
+.indicator-title {
+    font-size: 20px;
+    color: #6464ff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.indicator-title span {
+    padding-right: 10px;
+}
+
+.indicator-title p {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.indicatorDelete {
+    padding: 0;
+    cursor: pointer;
+    height: 25px;
+}
+
+.indicator-div {
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 4px 1px #ddd;
+    padding: 10px 15px 10px 20px;
+    min-width: 450px;
+}
+
+.indicatorInfo-div {
+    max-width: 700px;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.indicatorElement-div {
+
+}
+
+.indicatorInfo-div div {
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+}
+
+.settingInfo-div {
+    margin: 10px 0px 10px 0px;
+    align-items: center;
+}
+
+.settingElement-div {
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+}
+
+.indicatorInfo-div > div > div {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+}
+
+.settingElement-div > input {
+    width: 60px;
+}
+
+#step2Content label {
+    position: absolute;
+}
+
+#step2Content label {
+    width: 120px;
+}
+
+#step2Content label + input {
+    margin-left: 120px;
+}
+
+.setting-div > div::before {
+    font-family: "Material Icons";
+    content: "\e5da";
+    width: 20px;
+}
+
+span#settingAdd {
+    margin-left: 10px;
+    font-weight: 700;
+    color: #6464ff;
+}
+
+span#settingAdd:hover {
+    color: #9494fe;
+    cursor: pointer;
 }
 
 .tab-content {
@@ -104,11 +212,6 @@ select-div {
     display: flex;
 }
 
-.answerType-content > div {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
 .answerType-img {
     width: 150px;
     height: 180px;
@@ -121,6 +224,48 @@ select-div {
     border-radius: 0.5rem;
     border: 1px solid #ccc;
 }
+
+.addIndicator-div {
+    background: #eee;
+    border-radius: 1rem;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addIndicator-div:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+div.add-icon {
+    background: #ddd;
+    width: 60px;
+    height: 60px;
+    border-radius: 2rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plus1 {
+    position: absolute;
+    width: 6px;
+    height: 40px;
+    background: #888;
+    margin: 0;
+}
+
+.plus2 {
+    position: absolute;
+    width: 40px;
+    height: 6px;
+    margin: 0;
+    background: #888;
+}
+
 
 
 
