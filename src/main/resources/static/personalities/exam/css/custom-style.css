@@ -152,12 +152,19 @@ footer {
 .settingInfo-div {
     margin: 10px 0px 10px 0px;
     align-items: center;
+    display: flex;
 }
 
 .settingElement-div {
     display: flex;
     align-items: center;
     padding-right: 15px;
+}
+
+.delSetting {
+    color: #6464ff;
+    margin-left: 10px;
+    cursor: pointer;
 }
 
 .indicatorInfo-div > div > div {
@@ -189,13 +196,13 @@ footer {
     width: 20px;
 }
 
-span#settingAdd {
+span.settingAdd {
     margin-left: 10px;
     font-weight: 700;
     color: #6464ff;
 }
 
-span#settingAdd:hover {
+span.settingAdd:hover {
     color: #9494fe;
     cursor: pointer;
 }

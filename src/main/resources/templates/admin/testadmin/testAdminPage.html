@@ -103,7 +103,8 @@
                         </div>
                     </div>
                     <div class="setting-div">
-                        <div class="settingInfo-div d-flex" th:each="indicatorSetting, stat : *{indicatorList[__${indicatorStat.index}__].indicatorSettings}">
+                        <div th:each="indicatorSetting, stat : *{indicatorList[__${indicatorStat.index}__].indicatorSettings}"
+                             class="settingInfo-div" th:id="|settingDiv-${indicatorStat.index + 1}-${stat.index}|">
                             <div class="settingElement-div">
                                 <label>지표 코드</label>
                                 <input type="text" class="form-control"
@@ -116,9 +117,12 @@
                                        th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].cuttingPoint}"
                                        th:value="${indicatorSetting.cuttingPoint}">
                             </div>
+                            <span class="material-icons delSetting" th:id="|delSetting-${indicatorStat.index + 1}-${stat.index}|">
+                                delete
+                            </span>
                         </div>
-                        <div class="settingAdd-div">
-                            <span id="settingAdd">+ 지표 정보 추가</span>
+                        <div class="settingAdd-div" th:id="|settingAdd-div-${indicatorStat.index + 1}|">
+                            <span class="settingAdd" th:id="|settingAdd-${indicatorStat.index + 1}|">+ 지표 정보 추가</span>
                         </div>
                     </div>
                 </div>
@@ -143,9 +147,7 @@
         </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
-</div>
-</body>
-<script th:inline="javascript">
+    <script th:inline="javascript">
     console.log("we");
     const indicatorList = [[${indicatorForm.indicatorList}]];
     let indicatorCnt = [];
@@ -163,7 +165,7 @@
                     <div class="indicator-div" id="indicatorDiv${indicatorList.length + 1}">
                         <div class="indicator-title">
                             <p><span class="material-icons">edit</span>유형 지표 정보</p>
-                            <span class="material-icons indicatorDelete" id="indiDelTmp${indicatorList.length + 1}"">close</span>
+                            <span class="material-icons indicatorDelete" id="indiDelTmp${indicatorList.length + 1}">close</span>
                         </div>
                         <div class="indicatorInfo-div">
                             <div class="indicatorElement-div">
@@ -175,23 +177,39 @@
                                 <input type="text" class="form-control" th:name="indicatorList[${indicatorList.length}].indicatorName">
                             </div>
                         </div>
-                        <div>
+                        <div class="setting-div" id="settingAdd-div-${indicatorList.length + 1}">
                             <div class="settingAdd-div">
-                                <span id="settingAdd">+ 지표 정보 추가</span>
+                                <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
                             </div>
+                        </div>
+                        <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
+                            <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
                         </div>
                     </div>
                 `;
             $("#addIndicator").before(indicatorDiv);
             indicatorList.push({indicatorSettings:[]});
 
-            $(".indicatorDelete").click( (e) => {
+            // 추가한 요소들에 클릭이벤트 추가
+            $("#indiDelTmp" + (indicatorList.length)).click( (e) => {
                 indicatorDeleteEvent(e);
+            });
+
+            $("#settingAdd-" + (indicatorList.length)).click( (e) => {
+                settingAddEvent(e);
             });
         });
 
+        $(".settingAdd").click( (e) => {
+            settingAddEvent(e);
+        });
+
         $(".indicatorDelete").click( (e) => {
-            //indicatorDeleteEvent(e);
+            indicatorDeleteEvent(e);
+        });
+
+        $(".delSetting").click( (e) => {
+            settingDeleteEvent(e);
         });
 
         function indicatorDeleteEvent(e) {
@@ -200,8 +218,47 @@
             $("#indicatorDiv" + targetNum + " input").val("");
         };
 
+        function settingDeleteEvent(e) {
+            let targetNum = e.target.id.replace("delSetting", "");
+            $("#settingDiv" + targetNum).hide();
+            $("#settingDiv" + targetNum + " input").val("");
+        };
+
+        function settingAddEvent(e) {
+            let targetNum = e.target.id.replace("settingAdd-", "");
+            let settingDiv =
+            `
+                <div class="settingInfo-div"
+                    id="settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
+                    <div class="settingElement-div">
+                        <label>지표 코드</label>
+                        <input type="text" class="form-control"
+                            name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].result">
+                    </div>
+                    <div class="settingElement-div">
+                        <label>지표 결정 점수</label>
+                        <input type="text" class="form-control"
+                            name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].cuttingPoint">
+                    </div>
+                    <span class="material-icons delSetting" id="delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
+                        delete
+                    </span>
+                </div>
+            `;
+
+            $("#settingAdd-div-" + targetNum).before(settingDiv);
+            indicatorList[targetNum - 1].indicatorSettings.push({});
+
+            console.log(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`);
+            $(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).click( (e) => {
+                settingDeleteEvent(e);
+            });
+        }
+
     });
 </script>
+</div>
+</body>
 </html>
 
 
