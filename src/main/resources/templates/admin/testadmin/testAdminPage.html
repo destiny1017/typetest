@@ -151,84 +151,62 @@
         </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
+    
     <script th:inline="javascript">
     console.log("we");
     const indicatorList = [[${indicatorForm.indicatorList}]];
-    let indicatorCnt = [];
-    let selectIndicator = 0;
 
     $(document).ready( () => {
+        
+        /**
+         *  클릭 이벤트 연결
+         */
+        
+        // tab클릭 시 내용 전환 이벤트
         $(".nav-link").click( (e) => {
             $('[id^="step"]').removeClass("active");
             $(`[id^="${e.target.id}"]`).addClass("active");
         });
 
+        // indicator 추가 클릭
         $("#addIndicator").click( () => {
-                let indicatorDiv =
-                `
-                    <div class="indicator-div" id="indicatorDiv${indicatorList.length + 1}">
-                        <div class="indicator-title">
-                            <p><span class="material-icons">edit</span>유형 지표 정보</p>
-                            <span class="material-icons indicatorDelete" id="indiDelTmp${indicatorList.length + 1}">close</span>
-                        </div>
-                        <div class="indicatorInfo-div">
-                            <div class="indicatorElement-div">
-                                <label>지표 번호</label>
-                                <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum">
-                            </div>
-                            <div>
-                                <label>지표 이름</label>
-                                <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorName">
-                            </div>
-                        </div>
-                        <div class="setting-div">
-                            <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
-                                <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            $("#addIndicator").before(indicatorDiv);
-            indicatorList.push({indicatorSettings:[]});
-
-            // 추가한 요소들에 클릭이벤트 추가
-            $("#indiDelTmp" + (indicatorList.length)).click( (e) => {
-                indicatorDeleteEvent(e);
-            });
-
-            $("#settingAdd-" + (indicatorList.length)).click( (e) => {
-                settingAddEvent(e);
-            });
+            indicatorAddEvent();
         });
 
+        // setting 추가 클릭
         $(".settingAdd").click( (e) => {
             settingAddEvent(e);
         });
 
+        // indicator 삭제 클릭
         $(".indicatorDelete").click( (e) => {
             indicatorDeleteEvent(e);
         });
 
+        // setting 삭제 클릭
         $(".delSetting").click( (e) => {
             settingDeleteEvent(e);
         });
 
+        // setting 삭제아이콘 hover시에만 나타나도록
         $(".settingInfo-div").hover( (e) => {
             settingInfoHoverInEvent(e);
         }, (e) => {
             settingInfoHoverOutEvent(e);
         });
+        
+        
 
         function indicatorDeleteEvent(e) {
             let targetNum = e.target.id.replace("indiDelTmp", "");
             $("#indicatorDiv" + targetNum).hide();
-            $("#indicatorDiv" + targetNum + " input").val("");
+            $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
         };
 
         function settingDeleteEvent(e) {
             let targetNum = e.target.id.replace("delSetting", "");
             $("#settingDiv" + targetNum).hide();
-            $("#settingDiv" + targetNum + " input").val("");
+            $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val("");
         };
 
         function settingInfoHoverInEvent(e) {
@@ -240,8 +218,52 @@
             let targetId = e.currentTarget.id.replace("settingDiv", "");
             $("#delSetting" + targetId).hide();
         }
+        
+        function indicatorAddEvent() {
+            // 새롭게 추가될 indicatorDiv 내용
+            let indicatorDiv =
+            `
+                <div class="indicator-div" id="indicatorDiv${indicatorList.length + 1}">
+                    <div class="indicator-title">
+                        <p><span class="material-icons">edit</span>유형 지표 정보</p>
+                        <span class="material-icons indicatorDelete" id="indiDelTmp${indicatorList.length + 1}">close</span>
+                    </div>
+                    <div class="indicatorInfo-div">
+                        <div class="indicatorElement-div">
+                            <label>지표 번호</label>
+                            <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum">
+                        </div>
+                        <div>
+                            <label>지표 이름</label>
+                            <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorName">
+                        </div>
+                    </div>
+                    <div class="setting-div">
+                        <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
+                            <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // 추가버튼 위에 새 div 추가
+            $("#addIndicator").before(indicatorDiv);
+            
+            // 요소 개수 카운트를 위해 indicator배열에 빈 객체 추가
+            indicatorList.push({indicatorSettings:[]});
+
+            // 추가된 indicator 삭제버튼에 이벤트 연결
+            $("#indiDelTmp" + (indicatorList.length)).click( (e) => {
+                indicatorDeleteEvent(e);
+            });
+
+            // 추가된 setting추가 버튼에 이벤트 연결
+            $("#settingAdd-" + (indicatorList.length)).click( (e) => {
+                settingAddEvent(e);
+            });
+        }
 
         function settingAddEvent(e) {
+            // 새롭게 추가될 setting div 내용
             let targetNum = e.target.id.replace("settingAdd-", "");
             let settingDiv =
             `
@@ -263,14 +285,18 @@
                     </span>
                 </div>
             `;
-
+            // 추가버튼 위에 div 추가
             $("#settingAdd-div-" + targetNum).before(settingDiv);
+            
+            // 데이터 카운트를 위해 빈 객체 추가
             indicatorList[targetNum - 1].indicatorSettings.push({});
 
+            // 추가된 삭제버튼에 삭제 이벤트 연결
             $(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).click( (e) => {
                 settingDeleteEvent(e);
             });
 
+            // 추가된 삭제버튼에 hover 이벤트 연결
             $(`#settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).hover( (e) => {
                 settingInfoHoverInEvent(e);
             }, (e) => {

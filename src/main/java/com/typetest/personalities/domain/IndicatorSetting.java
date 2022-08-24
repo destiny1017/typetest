@@ -1,6 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.typetest.admin.testadmin.data.IndicatorSettingDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,16 @@ public class IndicatorSetting {
     private int cuttingPoint;
 
     private String result;
+
+    public boolean checkSameValue(IndicatorSettingDto indicatorSettingDto) {
+        return this.result == indicatorSettingDto.getResult()
+                && this.cuttingPoint == indicatorSettingDto.getCuttingPoint();
+    }
+
+    public void updateIndicatorSetting(IndicatorSettingDto indicatorSetting) {
+        this.cuttingPoint = indicatorSetting.getCuttingPoint();
+        this.result = indicatorSetting.getResult();
+    }
 
     public IndicatorSetting(TypeIndicator typeIndicator, TestCodeInfo testCode, int cuttingPoint, String result) {
         this.typeIndicator = typeIndicator;

@@ -1,5 +1,6 @@
 package com.typetest.personalities.domain;
 
+import com.typetest.admin.testadmin.data.TypeIndicatorDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,16 @@ public class TypeIndicator {
 
     @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
     private List<IndicatorSetting> indicatorSettings = new ArrayList<>();
+
+    public void updateIndicatorInfo(TypeIndicatorDto indicatorDto) {
+        this.indicatorNum = indicatorDto.getIndicatorNum();
+        this.indicatorName = indicatorDto.getIndicatorName();
+    }
+
+    public boolean checkSameValue(TypeIndicatorDto indicatorDto) {
+        return this.indicatorName == indicatorDto.getIndicatorName()
+                && this.indicatorNum == indicatorDto.getIndicatorNum();
+    }
 
     public TypeIndicator(TestCodeInfo testCode, int indicatorNum, String indicatorName) {
         this.testCode = testCode;

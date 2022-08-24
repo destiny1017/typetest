@@ -1,9 +1,12 @@
 package com.typetest.admin.testadmin.controller;
 
 import com.typetest.admin.testadmin.data.IndicatorForm;
+import com.typetest.admin.testadmin.data.IndicatorSettingDto;
 import com.typetest.admin.testadmin.data.TestInfoDto;
+import com.typetest.admin.testadmin.data.TypeIndicatorDto;
 import com.typetest.admin.testadmin.service.TestAdminService;
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.domain.IndicatorSetting;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeIndicator;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +43,7 @@ public class TestAdminController {
     @GetMapping("/testAdminPage/{testCode}")
     public String testAdminPage(@PathVariable String testCode, Model model) {
         model.addAttribute("testInfoDto", testAdminService.createTestInfoDto(testCode));
-        List<TypeIndicator> indicatorList = testAdminService.findIndicatorInfo(testCode);
+        List<TypeIndicatorDto> indicatorList = testAdminService.findIndicatorInfo(testCode);
         IndicatorForm indicatorForm = new IndicatorForm();
         indicatorForm.setTestCode(testCode);
 
@@ -60,7 +63,19 @@ public class TestAdminController {
 
     @GetMapping("/testAdmin/step2Submit")
     public String step2Submit(@ModelAttribute IndicatorForm indicatorForm) {
-        log.info("indicatorForm = {}", indicatorForm.getIndicatorList());
+        List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
+        for (TypeIndicatorDto indicator : indicatorList) {
+            System.out.println("indicator.getIndicatorNum() = " + indicator.getIndicatorNum());
+            System.out.println("indicator.getIndicatorName() = " + indicator.getIndicatorName());
+            System.out.println("=================================================");
+            for (IndicatorSettingDto indicatorSetting : indicator.getIndicatorSettings()) {
+                System.out.println("indicatorSetting.getResult() = " + indicatorSetting.getResult());
+                System.out.println("indicatorSetting.getCuttingPoint() = " + indicatorSetting.getCuttingPoint());
+                System.out.println("############################");
+            }
+            System.out.println("=================================================");
+        }
+        testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getTestCode());
         return "redirect:/testAdminPage/" + indicatorForm.getTestCode();
     }
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ public class TypeIndicatorDto {
     private Long id;
     private Integer indicatorNum;
     private String indicatorName;
-    private List<IndicatorSettingDto> indicatorSettings;
+    private List<IndicatorSettingDto> indicatorSettings = new ArrayList<>();
 
     public TypeIndicatorDto(TypeIndicator typeIndicator) {
         this.id = typeIndicator.getId();
