@@ -160,7 +160,6 @@ label.name-label {
     border-radius: 0.5rem;
     box-shadow: 2px 2px 4px 1px #ddd;
     padding: 10px 15px 10px 20px;
-    min-width: 450px;
 }
 
 .indicatorInfo-div {
@@ -210,19 +209,7 @@ label.name-label {
 }
 
 #step2Content label {
-    position: absolute;
-}
-
-#step2Content label {
     width: 120px;
-}
-
-#step2Content label + input:not(.code-input) {
-    margin-left: 120px;
-}
-
-.code-input {
-    margin-left: 100px;
 }
 
 .setting-div > div::before {
@@ -289,24 +276,77 @@ div.add-icon {
     justify-content: center;
 }
 
-.plus1 {
-    position: absolute;
-    width: 6px;
-    height: 40px;
-    background: #888;
-    margin: 0;
+.plus-icon {
+    font-size: 48px !important;
+    color: #888;
 }
 
-.plus2 {
-    position: absolute;
-    width: 40px;
-    height: 6px;
-    margin: 0;
-    background: #888;
+.question-div {
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 4px 1px #ddd;
+    padding: 20px 15px 10px 20px;
+}
+
+.question-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.questionHeadInfo-div {
+    display: flex;
+    width: 100%;
+}
+
+.question-icon {
+    padding: 0 10px 0 5px;
+}
+
+.questionDelete {
+    padding-left: 10px;
+}
+
+.q-num-input {
+    width: 3rem;
+    padding-left: 0.5rem;
+}
+
+.q-name-input {
+    width: 88%;
+    padding-left: 0.5rem;
+}
+
+.questionInfo-div {
+    padding-left: 39px;
+}
+
+.answer-div {
+    padding-left: 60px;
+    padding-top: 15px;
+}
+
+.answerElementDetail-div {
+    display: flex;
+}
+
+.answerDetail-div input[type="text"] {
+    width: 5rem;
+}
+
+.answerDetail-div {
+    margin-right: 10px;
+}
+
+.answerInfo-div {
+    border-radius: 0.5rem;
+    padding: 20px 15px 20px 20px;
+    border: 1px solid #ddd;
+    margin: 10px 0 10px 0;
 }
 
 
 
+
+/***********************************************/
 
 .login-contents {
     max-width: 500px;

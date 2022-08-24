@@ -133,8 +133,7 @@
                 </div>
                 <div class="addIndicator-div" id="addIndicator">
                     <div class="add-icon">
-                        <p class="plus1"></p>
-                        <p class="plus2"></p>
+                        <span class="material-icons plus-icon">add</span>
                     </div>
                 </div>
                 <div class="tabSubmit-div">
@@ -149,16 +148,17 @@
                 <input type="hidden" th:field="*{questionTestCode}">
                 <div class="question-div" th:each="questionInfo : *{questionList}" th:id="|questionDiv${questionInfoStat.index + 1}|">
                     <div class="question-title">
-                        <div>
-                            <span class="material-icons">edit</span>
-                            <input type="text" th:field="*{questionList[__${questionInfoStat.index}__].num}">
-                            <input type="text" th:field="*{questionList[__${questionInfoStat.index}__].question}">
+                        <div class="questionHeadInfo-div">
+                            <span class="material-icons question-icon">question_answer</span>
+                            <input type="text" class="q-num-input" th:field="*{questionList[__${questionInfoStat.index}__].num}">
+                            <div class="px-1"></div>
+                            <input type="text" class="q-name-input" th:field="*{questionList[__${questionInfoStat.index}__].question}">
                         </div>
                         <span class="material-icons questionDelete" th:id="|questionDel${questionInfoStat.index + 1}|">close</span>
                     </div>
-                    <div>
+                    <div class="questionContent-div">
                         <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].id}">
-                        <div class="indicatorInfo-div">
+                        <div class="questionInfo-div">
                             <div class="indicatorElement-div">
                                 <label>질문 이미지</label>
                                 <input type="text" class="form-control" th:field="*{questionList[__${questionInfoStat.index}__].questionImage}">
@@ -172,36 +172,38 @@
                             <div th:each="answer, stat : *{questionList[__${questionInfoStat.index}__].answerList}"
                                  class="answerInfo-div" th:id="|answerDiv-${questionInfoStat.index + 1}-${stat.index}|">
                                 <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].id}">
-                                <div class="answerElement-div">
+                                <div class="answerElement-div answerContent-div">
                                     <label>답변 이미지</label>
                                     <input type="text" class="form-control code-input"
                                            th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].answerImage}">
                                 </div>
-                                <div class="answerElement-div">
+                                <div class="answerElement-div answerContent-div">
                                     <label>답변 내용</label>
                                     <input type="text" class="form-control"
                                            th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].answer}">
                                 </div>
-                                <div class="answerElement-div">
-                                    <label>답변 점수</label>
-                                    <input type="text" class="form-control"
-                                           th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].point}">
-                                </div>
-                                <div class="answerElement-div">
-                                    <label>답변 지표</label>
-                                    <select class="answer-select form-select">
-                                        <option th:each="indicator : ${indicatorForm.indicatorList}"
-                                                th:text="${indicator.indicatorName}" th:value="${indicator.id}"
-                                                th:selected="${indicator.id} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].typeIndicator.id}"></option>
-                                    </select>
-                                </div>
-                                <div class="answerElement-div">
-                                    <label>답변 성향</label>
-                                    <select class="answer-select form-select">
-                                        <option th:each="tendency : ${tendencyList}"
-                                                th:text="${tendency.getFullName()}" th:value="${tendency}"
-                                                th:selected="${tendency} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].tendency}"></option>
-                                    </select>
+                                <div class="answerElement-div answerElementDetail-div">
+                                    <div class="answerDetail-div">
+                                        <label>답변 점수</label>
+                                        <input type="text" class="form-control"
+                                               th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].point}">
+                                    </div>
+                                    <div class="answerDetail-div">
+                                        <label>답변 지표</label>
+                                        <select class="answer-select form-select">
+                                            <option th:each="indicator : ${indicatorForm.indicatorList}"
+                                                    th:text="${indicator.indicatorName}" th:value="${indicator.id}"
+                                                    th:selected="${indicator.id} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].typeIndicator.id}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="answerDetail-div">
+                                        <label>답변 성향</label>
+                                        <select class="answer-select form-select">
+                                            <option th:each="tendency : ${tendencyList}"
+                                                    th:text="${tendency.getFullName()}" th:value="${tendency}"
+                                                    th:selected="${tendency} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].tendency}"></option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <!--<span class="material-icons delSetting" th:id="|delSetting-${indicatorStat.index + 1}-${stat.index}|"
                                       style="display: none;">
@@ -228,9 +230,9 @@
     const indicatorList = [[${indicatorForm.indicatorList}]];
 
     $(document).ready( () => {
-        
+
         /**
-         *  클릭 이벤트 연결
+         *  이벤트 연결
          */
         
         // tab클릭 시 내용 전환 이벤트
@@ -265,8 +267,12 @@
         }, (e) => {
             settingInfoHoverOutEvent(e);
         });
-        
-        
+
+        // 테스트 방식 변경
+        $('input[name="answerType"]').change( (e) => {
+            answerTypeChange();
+        })
+
 
         function indicatorDeleteEvent(e) {
             let targetNum = e.target.id.replace("indiDelTmp", "");
@@ -289,6 +295,16 @@
             let targetId = e.currentTarget.id.replace("settingDiv", "");
             $("#delSetting" + targetId).hide();
         }
+
+        function answerTypeChange() {
+            if($("#answerType1").is(":checked")) {
+                $(".answerContent-div").hide();
+            } else {
+                $(".answerContent-div").show();
+            }
+        }
+
+        $('input[name="answerType"]').trigger("change"); // 화면 최초 로딩 후 테스트 방식에 따른 tab3 요소 변경
         
         function indicatorAddEvent() {
             // 새롭게 추가될 indicatorDiv 내용
