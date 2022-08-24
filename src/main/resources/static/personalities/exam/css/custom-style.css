@@ -103,6 +103,22 @@ footer {
     display: inline-block !important;
 }
 
+.testInfo-contents label {
+    margin: 10px 0 10px 0;
+}
+
+.testCode-text-div {
+    display: flex;
+}
+
+.answerType-content div {
+    margin-right: 10px;
+}
+
+label.name-label {
+    font-size: 17px;
+}
+
 .indicator-title {
     font-size: 20px;
     color: #6464ff;
@@ -165,6 +181,7 @@ footer {
     color: #6464ff;
     margin-left: 10px;
     cursor: pointer;
+    display: none;
 }
 
 .indicatorInfo-div > div > div {
@@ -186,8 +203,12 @@ footer {
     width: 120px;
 }
 
-#step2Content label + input {
+#step2Content label + input:not(.code-input) {
     margin-left: 120px;
+}
+
+.code-input {
+    margin-left: 100px;
 }
 
 .setting-div > div::before {

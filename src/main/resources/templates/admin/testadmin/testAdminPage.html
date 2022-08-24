@@ -30,9 +30,9 @@
             <form method="get" action="/testAdmin/step1Submit" class="tab-contentsForm">
                 <div class="select-div">
                     <div>
-                        <label>테스트 선택</label>
+                        <label class="name-label">테스트 선택</label>
                     </div>
-                    <select class="type-select">
+                    <select class="type-select form-select">
                         <option value="NEW">새로 만들기</option>
                         <option th:each="testInfo : ${testList}"
                                 th:text="${testInfo.testName}" th:value="${testInfo.testCode}"
@@ -41,16 +41,17 @@
                 </div>
                 <div class="testCode-div">
                     <div>
-                        <label>테스트 코드 입력</label>
+                        <label class="name-label">테스트 코드 입력</label>
                     </div>
                     <div class="testCode-text-div">
-                        <input type="text" class="form-control" th:field="*{testInfoDto.testCode}">
-                        <input type="text" class="form-control" th:field="*{testInfoDto.testName}">
+                        <input type="text" class="form-control" th:field="*{testInfoDto.testCode}" placeholder="테스트코드">
+                        <div class="px-1"></div>
+                        <input type="text" class="form-control" th:field="*{testInfoDto.testName}" placeholder="테스트이름">
                     </div>
                 </div>
                 <div class="answerType-div">
                     <div>
-                        <label>테스트 방식 선택</label>
+                        <label class="name-label">테스트 방식 선택</label>
                     </div>
                     <div class="answerType-content">
                         <div th:each="answerType : ${answerTypeList}">
@@ -65,13 +66,13 @@
                     </div>
                 </div>
                 <div class="introImgUp-div">
-                    <label>테스트 메인 이미지</label>
+                    <label class="name-label">테스트 메인 이미지</label>
                     <div>
                         <input type="text" class="form-control" th:field="*{testInfoDto.image}">
                     </div>
                 </div>
                 <div class="introDesc-div">
-                    <label>테스트 설명</label>
+                    <label class="name-label">테스트 설명</label>
                     <div>
                         <textarea class="form-control" th:field="*{testInfoDto.description}"></textarea>
                     </div>
@@ -107,7 +108,7 @@
                              class="settingInfo-div" th:id="|settingDiv-${indicatorStat.index + 1}-${stat.index}|">
                             <div class="settingElement-div">
                                 <label>지표 코드</label>
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control code-input"
                                        th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].result}"
                                        th:value="${indicatorSetting.result}">
                             </div>
@@ -117,7 +118,8 @@
                                        th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].cuttingPoint}"
                                        th:value="${indicatorSetting.cuttingPoint}">
                             </div>
-                            <span class="material-icons delSetting" th:id="|delSetting-${indicatorStat.index + 1}-${stat.index}|">
+                            <span class="material-icons delSetting" th:id="|delSetting-${indicatorStat.index + 1}-${stat.index}|"
+                                  style="display: none;">
                                 delete
                             </span>
                         </div>
@@ -177,13 +179,10 @@
                                 <input type="text" class="form-control" th:name="indicatorList[${indicatorList.length}].indicatorName">
                             </div>
                         </div>
-                        <div class="setting-div" id="settingAdd-div-${indicatorList.length + 1}">
-                            <div class="settingAdd-div">
+                        <div class="setting-div">
+                            <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
                                 <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
                             </div>
-                        </div>
-                        <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
-                            <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
                         </div>
                     </div>
                 `;
@@ -212,6 +211,12 @@
             settingDeleteEvent(e);
         });
 
+        $(".settingInfo-div").hover( (e) => {
+            settingInfoHoverInEvent(e);
+        }, (e) => {
+            settingInfoHoverOutEvent(e);
+        });
+
         function indicatorDeleteEvent(e) {
             let targetNum = e.target.id.replace("indiDelTmp", "");
             $("#indicatorDiv" + targetNum).hide();
@@ -224,6 +229,16 @@
             $("#settingDiv" + targetNum + " input").val("");
         };
 
+        function settingInfoHoverInEvent(e) {
+            let targetId = e.currentTarget.id.replace("settingDiv", "");
+            $("#delSetting" + targetId).show();
+        }
+
+        function settingInfoHoverOutEvent(e) {
+            let targetId = e.currentTarget.id.replace("settingDiv", "");
+            $("#delSetting" + targetId).hide();
+        }
+
         function settingAddEvent(e) {
             let targetNum = e.target.id.replace("settingAdd-", "");
             let settingDiv =
@@ -232,7 +247,7 @@
                     id="settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
                     <div class="settingElement-div">
                         <label>지표 코드</label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control code-input"
                             name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].result">
                     </div>
                     <div class="settingElement-div">
@@ -240,7 +255,8 @@
                         <input type="text" class="form-control"
                             name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].cuttingPoint">
                     </div>
-                    <span class="material-icons delSetting" id="delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
+                    <span class="material-icons delSetting" id="delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}"
+                            style="display: none;">
                         delete
                     </span>
                 </div>
@@ -249,9 +265,14 @@
             $("#settingAdd-div-" + targetNum).before(settingDiv);
             indicatorList[targetNum - 1].indicatorSettings.push({});
 
-            console.log(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`);
             $(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).click( (e) => {
                 settingDeleteEvent(e);
+            });
+
+            $(`#settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).hover( (e) => {
+                settingInfoHoverInEvent(e);
+            }, (e) => {
+                settingInfoHoverOutEvent(e);
             });
         }
 
