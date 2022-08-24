@@ -54,12 +54,12 @@
                         <label class="name-label">테스트 방식 선택</label>
                     </div>
                     <div class="answerType-content">
-                        <div th:each="answerType : ${answerTypeList}">
-                            <div>
-                                <input type="radio" th:field="*{testInfoDto.answerType}" th:value="${answerType}">
-                                <label th:text="${answerType.getKrType()}" th:for="${#ids.prev('answerType')}"></label>
+                        <div th:each="answerType : ${answerTypeList}" class="answerType-div">
+                            <div class="answerType-title-div">
+                                <input type="radio" class="form-check-input" th:field="*{testInfoDto.answerType}" th:value="${answerType}">
+                                <label class="form-check-label" th:text="${answerType.getKrType()}" th:for="${#ids.prev('answerType')}"></label>
                             </div>
-                            <div>
+                            <div class="answerType-img-div">
                                 <img class="answerType-img" th:src="${answerType.getImage()}">
                             </div>
                         </div>

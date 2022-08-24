@@ -115,6 +115,19 @@ footer {
     margin-right: 10px;
 }
 
+.answerType-div {
+
+}
+
+.answerType-title-div {
+    display: flex;
+    align-items: center;
+}
+
+.answerType-title-div > input {
+    margin: 0 10px 0 5px;
+}
+
 label.name-label {
     font-size: 17px;
 }
@@ -245,12 +258,9 @@ select-div {
     height: 180px;
 }
 
-.desc-textarea {
+.introDesc-div textarea {
     resize: none;
-    width: 75%;
     height: 150px;
-    border-radius: 0.5rem;
-    border: 1px solid #ccc;
 }
 
 .addIndicator-div {

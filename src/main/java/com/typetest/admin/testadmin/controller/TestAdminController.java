@@ -64,17 +64,6 @@ public class TestAdminController {
     @GetMapping("/testAdmin/step2Submit")
     public String step2Submit(@ModelAttribute IndicatorForm indicatorForm) {
         List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
-        for (TypeIndicatorDto indicator : indicatorList) {
-            System.out.println("indicator.getIndicatorNum() = " + indicator.getIndicatorNum());
-            System.out.println("indicator.getIndicatorName() = " + indicator.getIndicatorName());
-            System.out.println("=================================================");
-            for (IndicatorSettingDto indicatorSetting : indicator.getIndicatorSettings()) {
-                System.out.println("indicatorSetting.getResult() = " + indicatorSetting.getResult());
-                System.out.println("indicatorSetting.getCuttingPoint() = " + indicatorSetting.getCuttingPoint());
-                System.out.println("############################");
-            }
-            System.out.println("=================================================");
-        }
         testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getTestCode());
         return "redirect:/testAdminPage/" + indicatorForm.getTestCode();
     }
