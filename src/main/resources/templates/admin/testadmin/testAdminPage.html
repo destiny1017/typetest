@@ -32,7 +32,7 @@
                     <div>
                         <label class="name-label">테스트 선택</label>
                     </div>
-                    <select class="type-select form-select">
+                    <select class="type-select form-select" onchange="location.href='/testAdminPage/' + this.value">
                         <option value="NEW">새로 만들기</option>
                         <option th:each="testInfo : ${testList}"
                                 th:text="${testInfo.testName}" th:value="${testInfo.testCode}"
@@ -91,6 +91,7 @@
                         <p><span class="material-icons">edit</span>유형 지표 정보</p>
                         <span class="material-icons indicatorDelete" th:id="|indiDel${indicatorStat.index + 1}|">close</span>
                     </div>
+                    <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].id}">
                     <div class="indicatorInfo-div">
                         <div class="indicatorElement-div">
                             <label>지표 번호</label>
@@ -106,6 +107,7 @@
                     <div class="setting-div">
                         <div th:each="indicatorSetting, stat : *{indicatorList[__${indicatorStat.index}__].indicatorSettings}"
                              class="settingInfo-div" th:id="|settingDiv-${indicatorStat.index + 1}-${stat.index}|">
+                            <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].id}">
                             <div class="settingElement-div">
                                 <label>지표 코드</label>
                                 <input type="text" class="form-control code-input"
@@ -172,11 +174,11 @@
                         <div class="indicatorInfo-div">
                             <div class="indicatorElement-div">
                                 <label>지표 번호</label>
-                                <input type="text" class="form-control" th:name="indicatorList[${indicatorList.length}].indicatorNum">
+                                <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum">
                             </div>
                             <div>
                                 <label>지표 이름</label>
-                                <input type="text" class="form-control" th:name="indicatorList[${indicatorList.length}].indicatorName">
+                                <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorName">
                             </div>
                         </div>
                         <div class="setting-div">
