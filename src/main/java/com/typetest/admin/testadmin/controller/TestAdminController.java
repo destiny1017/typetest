@@ -1,11 +1,9 @@
 package com.typetest.admin.testadmin.controller;
 
-import com.typetest.admin.testadmin.data.IndicatorForm;
-import com.typetest.admin.testadmin.data.IndicatorSettingDto;
-import com.typetest.admin.testadmin.data.TestInfoDto;
-import com.typetest.admin.testadmin.data.TypeIndicatorDto;
+import com.typetest.admin.testadmin.data.*;
 import com.typetest.admin.testadmin.service.TestAdminService;
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.IndicatorSetting;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeIndicator;
@@ -35,6 +33,11 @@ public class TestAdminController {
         return AnswerType.values();
     }
 
+    @ModelAttribute(name = "tendencyList")
+    public Tendency[] tendencyList() {
+        return Tendency.values();
+    }
+
     @ModelAttribute(name = "testList")
     public List<TestCodeInfo> testList() {
         return testAdminService.findAllTestInfo();
@@ -43,20 +46,26 @@ public class TestAdminController {
     @GetMapping("/testAdminPage/{testCode}")
     public String testAdminPage(@PathVariable String testCode, Model model) {
         model.addAttribute("testInfoDto", testAdminService.createTestInfoDto(testCode));
+
+        // 테스트 코드에 해당하는 지표정보 세팅하기
         List<TypeIndicatorDto> indicatorList = testAdminService.findIndicatorInfo(testCode);
         IndicatorForm indicatorForm = new IndicatorForm();
-        indicatorForm.setTestCode(testCode);
-
+        indicatorForm.setIndicatorTestCode(testCode);
         indicatorForm.setIndicatorList(indicatorList);
 
+        // 테스트 코드에 해당하는 질문답변 정보 세팅하기
+        List<QuestionDto> questionList = testAdminService.findQuestionInfo(testCode);
+        QuestionForm questionForm = new QuestionForm();
+        questionForm.setQuestionTestCode(testCode);
+        questionForm.setQuestionList(questionList);
+
         model.addAttribute("indicatorForm", indicatorForm);
-        log.info("indicatorWrapper.indicatorList = {}", indicatorForm.getIndicatorList());
+        model.addAttribute("questionForm", questionForm);
         return "admin/testadmin/testAdminPage";
     }
 
     @GetMapping("/testAdmin/step1Submit")
     public String step1Submit(@ModelAttribute TestInfoDto testInfoDto, Model model) {
-        log.info("testInfoDto = {}", testInfoDto);
         testAdminService.saveTestInfo(testInfoDto);
         return "redirect:/testAdminPage/" + testInfoDto.getTestCode();
     }
@@ -64,8 +73,8 @@ public class TestAdminController {
     @GetMapping("/testAdmin/step2Submit")
     public String step2Submit(@ModelAttribute IndicatorForm indicatorForm) {
         List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
-        testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getTestCode());
-        return "redirect:/testAdminPage/" + indicatorForm.getTestCode();
+        testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
+        return "redirect:/testAdminPage/" + indicatorForm.getIndicatorTestCode();
     }
 
 }

@@ -11,6 +11,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class IndicatorForm {
-    String testCode;
+    String indicatorTestCode;
     List<TypeIndicatorDto> indicatorList;
 }

@@ -37,7 +37,7 @@ public class InitDB {
         private final PersonalityQuestionRepository personalityQuestionRepository;
 
         public void init() {
-            if(!env.getProperty("spring.profiles.active").equals("test") && false) {
+            if(!env.getProperty("spring.profiles.active").equals("test")) {
                 // 임시 테스트코드
 //                TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
                 TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,

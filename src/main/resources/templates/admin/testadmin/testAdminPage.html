@@ -25,7 +25,7 @@
             </li>
         </ul>
 
-        <!-- tab contents div-->
+        <!-- tab1 contents div-->
         <div id="step1Content" class="tab-contents active">
             <form method="get" action="/testAdmin/step1Submit" class="tab-contentsForm">
                 <div class="select-div">
@@ -83,9 +83,10 @@
             </form>
         </div>
 
+        <!-- tab2 contents div-->
         <div id="step2Content" class="tab-contents">
             <form method="get" action="/testAdmin/step2Submit" class="tab-contentsForm" th:object="${indicatorForm}" id="tab2Form">
-                <input type="hidden" th:field="*{testCode}">
+                <input type="hidden" th:field="*{indicatorTestCode}">
                 <div class="indicator-div" th:each="indicator : *{indicatorList}" th:id="|indicatorDiv${indicatorStat.index + 1}|">
                     <div class="indicator-title">
                         <p><span class="material-icons">edit</span>유형 지표 정보</p>
@@ -142,8 +143,78 @@
             </form>
         </div>
 
+        <!-- tab3 contents div-->
         <div id="step3Content" class="tab-contents">
-
+            <form method="get" action="/testAdmin/step3Submit" class="tab-contentsForm" th:object="${questionForm}" id="tab3Form">
+                <input type="hidden" th:field="*{questionTestCode}">
+                <div class="question-div" th:each="questionInfo : *{questionList}" th:id="|questionDiv${questionInfoStat.index + 1}|">
+                    <div class="question-title">
+                        <div>
+                            <span class="material-icons">edit</span>
+                            <input type="text" th:field="*{questionList[__${questionInfoStat.index}__].num}">
+                            <input type="text" th:field="*{questionList[__${questionInfoStat.index}__].question}">
+                        </div>
+                        <span class="material-icons questionDelete" th:id="|questionDel${questionInfoStat.index + 1}|">close</span>
+                    </div>
+                    <div>
+                        <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].id}">
+                        <div class="indicatorInfo-div">
+                            <div class="indicatorElement-div">
+                                <label>질문 이미지</label>
+                                <input type="text" class="form-control" th:field="*{questionList[__${questionInfoStat.index}__].questionImage}">
+                            </div>
+                            <div class="indicatorElement-div">
+                                <label>질문 내용</label>
+                                <input type="text" class="form-control" th:field="*{questionList[__${questionInfoStat.index}__].question}">
+                            </div>
+                        </div>
+                        <div class="answer-div">
+                            <div th:each="answer, stat : *{questionList[__${questionInfoStat.index}__].answerList}"
+                                 class="answerInfo-div" th:id="|answerDiv-${questionInfoStat.index + 1}-${stat.index}|">
+                                <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].id}">
+                                <div class="answerElement-div">
+                                    <label>답변 이미지</label>
+                                    <input type="text" class="form-control code-input"
+                                           th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].answerImage}">
+                                </div>
+                                <div class="answerElement-div">
+                                    <label>답변 내용</label>
+                                    <input type="text" class="form-control"
+                                           th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].answer}">
+                                </div>
+                                <div class="answerElement-div">
+                                    <label>답변 점수</label>
+                                    <input type="text" class="form-control"
+                                           th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].point}">
+                                </div>
+                                <div class="answerElement-div">
+                                    <label>답변 지표</label>
+                                    <select class="answer-select form-select">
+                                        <option th:each="indicator : ${indicatorForm.indicatorList}"
+                                                th:text="${indicator.indicatorName}" th:value="${indicator.id}"
+                                                th:selected="${indicator.id} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].typeIndicator.id}"></option>
+                                    </select>
+                                </div>
+                                <div class="answerElement-div">
+                                    <label>답변 성향</label>
+                                    <select class="answer-select form-select">
+                                        <option th:each="tendency : ${tendencyList}"
+                                                th:text="${tendency.getFullName()}" th:value="${tendency}"
+                                                th:selected="${tendency} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].tendency}"></option>
+                                    </select>
+                                </div>
+                                <!--<span class="material-icons delSetting" th:id="|delSetting-${indicatorStat.index + 1}-${stat.index}|"
+                                      style="display: none;">
+                                    delete
+                                </span>-->
+                            </div>
+                            <div class="answerAdd-div" th:id="|answerAdd-div-${questionInfoStat.index + 1}|">
+                                <span class="answerAdd" th:id="|answerAdd-${questionInfoStat.index + 1}|">+ 답변 정보 추가</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <div id="step4Content" class="tab-contents">

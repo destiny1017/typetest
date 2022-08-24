@@ -1,15 +1,15 @@
 package com.typetest.admin.testadmin.service;
 
 import com.typetest.admin.testadmin.data.IndicatorSettingDto;
+import com.typetest.admin.testadmin.data.QuestionDto;
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.admin.testadmin.data.TypeIndicatorDto;
 import com.typetest.exception.NotFoundEntityException;
 import com.typetest.personalities.domain.IndicatorSetting;
+import com.typetest.personalities.domain.PersonalityQuestion;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeIndicator;
-import com.typetest.personalities.repository.IndicatorSettingRepositoryRepository;
-import com.typetest.personalities.repository.TestCodeInfoRepository;
-import com.typetest.personalities.repository.TypeIndicatorRepository;
+import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,8 @@ public class TestAdminServiceImpl implements TestAdminService {
     private final TestCodeInfoRepository testCodeInfoRepository;
     private final IndicatorSettingRepositoryRepository indicatorSettingRepository;
     private final TypeIndicatorRepository typeIndicatorRepository;
+    private final PersonalityQuestionRepository personalityQuestionRepository;
+    private final PersonalityAnswerRepository personalityAnswerRepository;
 
     @Override
     public TestInfoDto createTestInfoDto(String testCode) {
@@ -61,6 +63,22 @@ public class TestAdminServiceImpl implements TestAdminService {
                 List<TypeIndicator> indicatorList = typeIndicatorRepository.findByTestCode(testCodeInfo.get());
                 List<TypeIndicatorDto> indicatorDtoList = indicatorList.stream().map(TypeIndicatorDto::new).collect(Collectors.toList());
                 return indicatorDtoList;
+            } else {
+                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+            }
+        }
+    }
+
+    @Override
+    public List<QuestionDto> findQuestionInfo(String testCode) {
+        if(testCode.equals("NEW")) {
+            return new ArrayList<>();
+        } else {
+            Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+            if(testCodeInfo.isPresent()) {
+                List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCodeInfo.get());
+                List<QuestionDto> questionDtoList = questionList.stream().map(QuestionDto::new).collect(Collectors.toList());
+                return questionDtoList;
             } else {
                 throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
             }
@@ -144,4 +162,5 @@ public class TestAdminServiceImpl implements TestAdminService {
         }
         return 1;
     }
+
 }

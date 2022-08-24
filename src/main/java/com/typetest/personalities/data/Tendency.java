@@ -1,5 +1,8 @@
 package com.typetest.personalities.data;
 
+import lombok.Getter;
+
+@Getter
 public enum Tendency {
     H("Honesty-Humility", 1),
     E("Emotionality", 2),
