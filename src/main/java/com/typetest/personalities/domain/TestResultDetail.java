@@ -28,7 +28,7 @@ public class TestResultDetail {
     @JoinColumn
     private TestCodeInfo testCode;
 
-    private int num;
+    private Integer num;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

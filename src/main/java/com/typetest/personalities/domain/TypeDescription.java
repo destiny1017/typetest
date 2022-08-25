@@ -17,7 +17,7 @@ public class TypeDescription {
     @JoinColumn(name = "TYPE_INFO_ID")
     private TypeInfo typeInfo;
 
-    private int descNum;
+    private Integer descNum;
     private String description;
 
     public void setTypeInfo(TypeInfo typeInfo) {

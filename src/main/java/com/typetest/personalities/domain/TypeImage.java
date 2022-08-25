@@ -17,7 +17,7 @@ public class TypeImage {
     @JoinColumn(name = "TYPE_INFO_ID")
     private TypeInfo typeInfo;
 
-    private int imgNum;
+    private Integer imgNum;
     private String imageUrl;
 
     public void setTypeInfo(TypeInfo typeInfo) {
