@@ -169,8 +169,13 @@
                             </div>
                         </div>
                         <div class="answer-div">
+                            <div class="answerTitle-div">
+                                <label>답변 정보</label>
+                            </div>
                             <div th:each="answer, stat : *{questionList[__${questionInfoStat.index}__].answerList}"
                                  class="answerInfo-div" th:id="|answerDiv-${questionInfoStat.index + 1}-${stat.index}|">
+                                <span class="material-icons answerDelete" style="display: none;"
+                                      th:id="|delAnswer-${questionInfoStat.index + 1}-${stat.index}|">close</span>
                                 <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].id}">
                                 <div class="answerElement-div answerContent-div">
                                     <label>답변 이미지</label>
@@ -190,31 +195,33 @@
                                     </div>
                                     <div class="answerDetail-div">
                                         <label>답변 지표</label>
-                                        <select class="answer-select form-select">
+                                        <select class="answer-select form-select" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].typeIndicator}">
                                             <option th:each="indicator : ${indicatorForm.indicatorList}"
-                                                    th:text="${indicator.indicatorName}" th:value="${indicator.id}"
-                                                    th:selected="${indicator.id} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].typeIndicator.id}"></option>
+                                                    th:text="${indicator.indicatorName}" th:value="${indicator.id}"></option>
                                         </select>
                                     </div>
                                     <div class="answerDetail-div">
                                         <label>답변 성향</label>
-                                        <select class="answer-select form-select">
+                                        <select class="answer-select form-select" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].tendency}">
                                             <option th:each="tendency : ${tendencyList}"
-                                                    th:text="${tendency.getFullName()}" th:value="${tendency}"
-                                                    th:selected="${tendency} == *{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].tendency}"></option>
+                                                    th:text="${tendency.getFullName()}" th:value="${tendency}"></option>
                                         </select>
                                     </div>
                                 </div>
-                                <!--<span class="material-icons delSetting" th:id="|delSetting-${indicatorStat.index + 1}-${stat.index}|"
-                                      style="display: none;">
-                                    delete
-                                </span>-->
                             </div>
                             <div class="answerAdd-div" th:id="|answerAdd-div-${questionInfoStat.index + 1}|">
                                 <span class="answerAdd" th:id="|answerAdd-${questionInfoStat.index + 1}|">+ 답변 정보 추가</span>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="addIndicator-div" id="addQuestion">
+                    <div class="add-icon">
+                        <span class="material-icons plus-icon">add</span>
+                    </div>
+                </div>
+                <div class="tabSubmit-div">
+                    <button class="btn btn-primary" type="submit">저장</button>
                 </div>
             </form>
         </div>
@@ -224,175 +231,16 @@
         </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
-    
+
+    <!-- script -->
     <script th:inline="javascript">
-    console.log("we");
-    const indicatorList = [[${indicatorForm.indicatorList}]];
-
-    $(document).ready( () => {
-
-        /**
-         *  이벤트 연결
-         */
-        
-        // tab클릭 시 내용 전환 이벤트
-        $(".nav-link").click( (e) => {
-            $('[id^="step"]').removeClass("active");
-            $(`[id^="${e.target.id}"]`).addClass("active");
-        });
-
-        // indicator 추가 클릭
-        $("#addIndicator").click( () => {
-            indicatorAddEvent();
-        });
-
-        // setting 추가 클릭
-        $(".settingAdd").click( (e) => {
-            settingAddEvent(e);
-        });
-
-        // indicator 삭제 클릭
-        $(".indicatorDelete").click( (e) => {
-            indicatorDeleteEvent(e);
-        });
-
-        // setting 삭제 클릭
-        $(".delSetting").click( (e) => {
-            settingDeleteEvent(e);
-        });
-
-        // setting 삭제아이콘 hover시에만 나타나도록
-        $(".settingInfo-div").hover( (e) => {
-            settingInfoHoverInEvent(e);
-        }, (e) => {
-            settingInfoHoverOutEvent(e);
-        });
-
-        // 테스트 방식 변경
-        $('input[name="answerType"]').change( (e) => {
-            answerTypeChange();
-        })
-
-
-        function indicatorDeleteEvent(e) {
-            let targetNum = e.target.id.replace("indiDelTmp", "");
-            $("#indicatorDiv" + targetNum).hide();
-            $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        };
-
-        function settingDeleteEvent(e) {
-            let targetNum = e.target.id.replace("delSetting", "");
-            $("#settingDiv" + targetNum).hide();
-            $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        };
-
-        function settingInfoHoverInEvent(e) {
-            let targetId = e.currentTarget.id.replace("settingDiv", "");
-            $("#delSetting" + targetId).show();
-        }
-
-        function settingInfoHoverOutEvent(e) {
-            let targetId = e.currentTarget.id.replace("settingDiv", "");
-            $("#delSetting" + targetId).hide();
-        }
-
-        function answerTypeChange() {
-            if($("#answerType1").is(":checked")) {
-                $(".answerContent-div").hide();
-            } else {
-                $(".answerContent-div").show();
-            }
-        }
-
-        $('input[name="answerType"]').trigger("change"); // 화면 최초 로딩 후 테스트 방식에 따른 tab3 요소 변경
-        
-        function indicatorAddEvent() {
-            // 새롭게 추가될 indicatorDiv 내용
-            let indicatorDiv =
-            `
-                <div class="indicator-div" id="indicatorDiv${indicatorList.length + 1}">
-                    <div class="indicator-title">
-                        <p><span class="material-icons">edit</span>유형 지표 정보</p>
-                        <span class="material-icons indicatorDelete" id="indiDelTmp${indicatorList.length + 1}">close</span>
-                    </div>
-                    <div class="indicatorInfo-div">
-                        <div class="indicatorElement-div">
-                            <label>지표 번호</label>
-                            <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum">
-                        </div>
-                        <div>
-                            <label>지표 이름</label>
-                            <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorName">
-                        </div>
-                    </div>
-                    <div class="setting-div">
-                        <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
-                            <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-            // 추가버튼 위에 새 div 추가
-            $("#addIndicator").before(indicatorDiv);
-            
-            // 요소 개수 카운트를 위해 indicator배열에 빈 객체 추가
-            indicatorList.push({indicatorSettings:[]});
-
-            // 추가된 indicator 삭제버튼에 이벤트 연결
-            $("#indiDelTmp" + (indicatorList.length)).click( (e) => {
-                indicatorDeleteEvent(e);
-            });
-
-            // 추가된 setting추가 버튼에 이벤트 연결
-            $("#settingAdd-" + (indicatorList.length)).click( (e) => {
-                settingAddEvent(e);
-            });
-        }
-
-        function settingAddEvent(e) {
-            // 새롭게 추가될 setting div 내용
-            let targetNum = e.target.id.replace("settingAdd-", "");
-            let settingDiv =
-            `
-                <div class="settingInfo-div"
-                    id="settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
-                    <div class="settingElement-div">
-                        <label>지표 코드</label>
-                        <input type="text" class="form-control code-input"
-                            name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].result">
-                    </div>
-                    <div class="settingElement-div">
-                        <label>지표 결정 점수</label>
-                        <input type="text" class="form-control"
-                            name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].cuttingPoint">
-                    </div>
-                    <span class="material-icons delSetting" id="delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}"
-                            style="display: none;">
-                        delete
-                    </span>
-                </div>
-            `;
-            // 추가버튼 위에 div 추가
-            $("#settingAdd-div-" + targetNum).before(settingDiv);
-            
-            // 데이터 카운트를 위해 빈 객체 추가
-            indicatorList[targetNum - 1].indicatorSettings.push({});
-
-            // 추가된 삭제버튼에 삭제 이벤트 연결
-            $(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).click( (e) => {
-                settingDeleteEvent(e);
-            });
-
-            // 추가된 삭제버튼에 hover 이벤트 연결
-            $(`#settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).hover( (e) => {
-                settingInfoHoverInEvent(e);
-            }, (e) => {
-                settingInfoHoverOutEvent(e);
-            });
-        }
-
-    });
-</script>
+        // 외부 js파일에는 JS inline기능이 지원이 안 되어 전역변수 미리 선언
+        const indicatorList = [[${indicatorForm.indicatorList}]];
+        const questionList = [[${questionForm.questionList}]];
+        const tendencyList = [[${tendencyList}]];
+        const tendencyNameList = [[${tendencyNameList}]];
+    </script>
+    <script src="/js/testAdminPage.js"></script>
 </div>
 </body>
 </html>

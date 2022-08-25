@@ -290,19 +290,17 @@ div.add-icon {
 .question-title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .questionHeadInfo-div {
     display: flex;
     width: 100%;
+    align-items: center;
 }
 
 .question-icon {
     padding: 0 10px 0 5px;
-}
-
-.questionDelete {
-    padding-left: 10px;
 }
 
 .q-num-input {
@@ -316,12 +314,36 @@ div.add-icon {
 }
 
 .questionInfo-div {
-    padding-left: 39px;
 }
 
 .answer-div {
-    padding-left: 60px;
     padding-top: 15px;
+}
+
+.answerAdd-div {
+    padding-left: 10px;
+}
+
+.answerAdd {
+    font-weight: 700;
+    color: #9494fe;
+    cursor: pointer;
+}
+
+.questionDelete {
+    padding-left: 10px;
+    cursor: pointer;
+    height: 25px;
+}
+
+.answerDelete {
+    padding-left: 10px;
+    cursor: pointer;
+    height: 25px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: none;
 }
 
 .answerElementDetail-div {
@@ -341,6 +363,7 @@ div.add-icon {
     padding: 20px 15px 20px 20px;
     border: 1px solid #ddd;
     margin: 10px 0 10px 0;
+    position: relative;
 }
 
 

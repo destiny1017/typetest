@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,11 @@ public class TestAdminController {
     @ModelAttribute(name = "tendencyList")
     public Tendency[] tendencyList() {
         return Tendency.values();
+    }
+
+    @ModelAttribute(name = "tendencyNameList")
+    public List<String> tendencyNameList() {
+        return Arrays.stream(Tendency.values()).map(i -> i.getFullName()).collect(Collectors.toList());
     }
 
     @ModelAttribute(name = "testList")

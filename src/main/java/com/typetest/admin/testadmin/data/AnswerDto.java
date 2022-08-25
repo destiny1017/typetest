@@ -16,7 +16,7 @@ public class AnswerDto {
     private Integer point;
     private String answerImage;
     private Tendency tendency;
-    private TypeIndicator typeIndicator;
+    private Long typeIndicator;
 
     public AnswerDto(PersonalityAnswer answer) {
         this.id = answer.getId();
@@ -24,6 +24,6 @@ public class AnswerDto {
         this.point = answer.getPoint();
         this.answerImage = answer.getAnswerImage();
         this.tendency = answer.getTendency();
-        this.typeIndicator = answer.getTypeIndicator();
+        this.typeIndicator = answer.getTypeIndicator().getId();
     }
 }
