@@ -146,6 +146,9 @@
         <div id="step3Content" class="tab-contents">
             <form method="post" action="/testAdmin/step3Submit" class="tab-contentsForm" th:object="${questionForm}" id="tab3Form">
                 <input type="hidden" th:field="*{questionTestCode}">
+                <div class="question-main-title">
+                    <p><span class="material-icons">edit</span>질문&답변 정보</p>
+                </div>
                 <div class="question-div" th:each="questionInfo : *{questionList}" th:id="|questionDiv${questionInfoStat.index + 1}|">
                     <div class="question-title">
                         <div class="questionHeadInfo-div">

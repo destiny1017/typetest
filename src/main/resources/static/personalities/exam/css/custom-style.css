@@ -281,6 +281,23 @@ div.add-icon {
     color: #888;
 }
 
+
+/**
+ *  tab3
+ */
+.question-main-title {
+    font-size: 20px;
+    color: #6464ff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.question-main-title p {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
 .fold-btn {
     border: 0;
     background: inherit;
