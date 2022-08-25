@@ -83,4 +83,11 @@ public class TestAdminController {
         return "redirect:/testAdminPage/" + indicatorForm.getIndicatorTestCode();
     }
 
+    @PostMapping("/testAdmin/step3Submit")
+    public String step3Submit(@ModelAttribute QuestionForm questionForm) {
+        List<QuestionDto> questionList = questionForm.getQuestionList();
+        testAdminService.saveQuestionInfo(questionList, questionForm.getQuestionTestCode());
+        return "redirect:/testAdminPage/" + questionForm.getQuestionTestCode();
+    }
+
 }

@@ -144,7 +144,7 @@
 
         <!-- tab3 contents div-->
         <div id="step3Content" class="tab-contents">
-            <form method="get" action="/testAdmin/step3Submit" class="tab-contentsForm" th:object="${questionForm}" id="tab3Form">
+            <form method="post" action="/testAdmin/step3Submit" class="tab-contentsForm" th:object="${questionForm}" id="tab3Form">
                 <input type="hidden" th:field="*{questionTestCode}">
                 <div class="question-div" th:each="questionInfo : *{questionList}" th:id="|questionDiv${questionInfoStat.index + 1}|">
                     <div class="question-title">
@@ -162,10 +162,6 @@
                             <div class="indicatorElement-div">
                                 <label>질문 이미지</label>
                                 <input type="text" class="form-control" th:field="*{questionList[__${questionInfoStat.index}__].questionImage}">
-                            </div>
-                            <div class="indicatorElement-div">
-                                <label>질문 내용</label>
-                                <input type="text" class="form-control" th:field="*{questionList[__${questionInfoStat.index}__].question}">
                             </div>
                         </div>
                         <div class="answer-div">
@@ -195,7 +191,7 @@
                                     </div>
                                     <div class="answerDetail-div">
                                         <label>답변 지표</label>
-                                        <select class="answer-select form-select" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].typeIndicator}">
+                                        <select class="answer-select form-select" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].typeIndicatorId}">
                                             <option th:each="indicator : ${indicatorForm.indicatorList}"
                                                     th:text="${indicator.indicatorName}" th:value="${indicator.id}"></option>
                                         </select>

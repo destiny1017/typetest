@@ -1,5 +1,6 @@
 package com.typetest.personalities.domain;
 
+import com.typetest.admin.testadmin.data.QuestionDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class PersonalityQuestion {
 
     private String question;
 
-    private int num;
+    private Integer num;
 
     private String questionImage;
 
@@ -37,6 +38,22 @@ public class PersonalityQuestion {
     public void addAnswer(PersonalityAnswer answer) {
         answerList.add(answer);
         answer.setQuestion(this);
+    }
+
+    public boolean checkSameValue(QuestionDto questionDto) {
+        return this.num == questionDto.getNum() &&
+                (this.question == null ?
+                        questionDto.getQuestion() == null :
+                        this.question.equals(questionDto.getQuestion())) &&
+                (this.questionImage == null ?
+                        questionDto.getQuestionImage() == null :
+                        this.questionImage.equals(questionDto.getQuestionImage()));
+    }
+
+    public void updateQuestionInfo(QuestionDto questionDto) {
+        this.num = questionDto.getNum();
+        this.question = questionDto.getQuestion();
+        this.questionImage = questionDto.getQuestionImage();
     }
 
     public PersonalityQuestion(TestCodeInfo testCode, String question, int num) {

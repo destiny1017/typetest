@@ -18,4 +18,9 @@ public class IndicatorSettingDto {
         this.result = indicatorSetting.getResult();
         this.cuttingPoint = indicatorSetting.getCuttingPoint();
     }
+
+    public boolean emptyValueCheck() {
+        return (result == null || result.isEmpty()) &&
+                cuttingPoint == null;
+    }
 }

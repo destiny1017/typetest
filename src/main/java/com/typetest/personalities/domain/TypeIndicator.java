@@ -20,7 +20,7 @@ public class TypeIndicator {
     @JoinColumn(name = "TEST_CODE")
     private TestCodeInfo testCode;
 
-    private int indicatorNum;
+    private Integer indicatorNum;
 
     private String indicatorName;
 
@@ -33,8 +33,10 @@ public class TypeIndicator {
     }
 
     public boolean checkSameValue(TypeIndicatorDto indicatorDto) {
-        return this.indicatorName == indicatorDto.getIndicatorName()
-                && this.indicatorNum == indicatorDto.getIndicatorNum();
+        return (this.indicatorName == null ?
+                    indicatorDto.getIndicatorName() == null :
+                    indicatorDto.getIndicatorName().equals(this.indicatorName)) &&
+                this.indicatorNum == indicatorDto.getIndicatorNum();
     }
 
     public TypeIndicator(TestCodeInfo testCode, int indicatorNum, String indicatorName) {

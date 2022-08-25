@@ -1,5 +1,6 @@
 package com.typetest.personalities.domain;
 
+import com.typetest.admin.testadmin.data.AnswerDto;
 import com.typetest.personalities.data.Tendency;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class PersonalityAnswer {
     private TestCodeInfo testCode;
 
     private String answer;
-    private int point;
+    private Integer point;
 
     @Enumerated(EnumType.STRING)
     private Tendency tendency;
@@ -35,6 +36,26 @@ public class PersonalityAnswer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private TypeIndicator typeIndicator;
+
+    public boolean checkSameValue(AnswerDto answerDto) {
+        return  (this.answer == null ?
+                        answerDto.getAnswer() == null :
+                        this.answer.equals(answerDto.getAnswer())) &&
+                (this.answerImage == null ?
+                        answerDto.getAnswerImage() == null :
+                        this.answerImage.equals(answerDto.getAnswerImage())) &&
+                this.point == answerDto.getPoint() &&
+                this.tendency == answerDto.getTendency() &&
+                this.typeIndicator.getId() == answerDto.getTypeIndicatorId();
+    }
+
+    public void updateAnswerInfo(AnswerDto answerDto) {
+        this.answer = answerDto.getAnswer();
+        this.point = answerDto.getPoint();
+        this.tendency = answerDto.getTendency();
+        this.answerImage = answerDto.getAnswerImage();
+        this.typeIndicator = answerDto.getTypeIndicator();
+    }
 
     public void setQuestion(PersonalityQuestion question) {
         this.personalityQuestion = question;

@@ -1,14 +1,8 @@
 package com.typetest.admin.testadmin.service;
 
-import com.typetest.admin.testadmin.data.IndicatorSettingDto;
-import com.typetest.admin.testadmin.data.QuestionDto;
-import com.typetest.admin.testadmin.data.TestInfoDto;
-import com.typetest.admin.testadmin.data.TypeIndicatorDto;
+import com.typetest.admin.testadmin.data.*;
 import com.typetest.exception.NotFoundEntityException;
-import com.typetest.personalities.domain.IndicatorSetting;
-import com.typetest.personalities.domain.PersonalityQuestion;
-import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.domain.TypeIndicator;
+import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -98,6 +92,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                     if(typeIndicatorDto.getIndicatorNum() == null
                             && typeIndicatorDto.getIndicatorName().length() == 0) {
                         typeIndicatorRepository.delete(indicator);
+                        indicator = null;
                     } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
                         if(!indicator.checkSameValue(typeIndicatorDto)) {
                             indicator.updateIndicatorInfo(typeIndicatorDto);
@@ -163,4 +158,93 @@ public class TestAdminServiceImpl implements TestAdminService {
         return 1;
     }
 
+    @Override
+    public int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode) {
+        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        for (QuestionDto questionDto : questionDtoList) {
+            PersonalityQuestion question;
+            if (questionDto.getId() != null) {
+                Optional<PersonalityQuestion> findQuestion = personalityQuestionRepository.findById(questionDto.getId());
+                if (findQuestion.isPresent()) {
+                    question = findQuestion.get();
+                    // 질문번호와 질문내용 입력된 거 없으면 삭제
+                    if (questionDto.emptyValueCheck()) {
+                        personalityQuestionRepository.delete(question);
+                        question = null;
+                    } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
+                        if (!question.checkSameValue(questionDto)) {
+                            question.updateQuestionInfo(questionDto);
+                            personalityQuestionRepository.save(question);
+                        }
+                    }
+                } else {
+                    throw new NotFoundEntityException();
+                }
+            } else {
+                if (questionDto.emptyValueCheck()) {
+                    // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
+                    question = null;
+                } else {
+                    // DTO에 id값 없고 value값은 있으면, 즉 신규 엔티티면 새로 만들기
+                    question = new PersonalityQuestion(
+                            testCodeInfo.get(),
+                            questionDto.getQuestion(),
+                            questionDto.getNum(),
+                            questionDto.getQuestionImage());
+
+                    personalityQuestionRepository.save(question);
+                }
+            }
+
+            if (question != null) {
+                for (AnswerDto answerDto : questionDto.getAnswerList()) {
+                    if (answerDto.getId() != null) {
+                        Optional<PersonalityAnswer> findAnswer = personalityAnswerRepository.findById(answerDto.getId());
+                        if (findAnswer.isPresent()) {
+                            PersonalityAnswer answer = findAnswer.get();
+                            // 입력값 없으면 삭제
+                            if (answerDto.emptyValueCheck()) {
+                                personalityAnswerRepository.delete(answer);
+                            } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
+                                if (!answer.checkSameValue(answerDto)) {
+                                    Optional<TypeIndicator> indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
+                                    if (indicator.isPresent()) {
+                                        answerDto.setTypeIndicator(indicator.get());
+                                        answer.updateAnswerInfo(answerDto);
+                                        personalityAnswerRepository.save(answer);
+                                    } else {
+                                        throw new NotFoundEntityException();
+                                    }
+                                }
+                            }
+                        } else {
+                            throw new NotFoundEntityException();
+                        }
+                    } else {
+                        if (answerDto.emptyValueCheck()) {
+                            // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
+                        } else {
+                            Optional<TypeIndicator> indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
+                            if(indicator.isPresent()) {
+                                PersonalityAnswer answer = new PersonalityAnswer(
+                                        question,
+                                        testCodeInfo.get(),
+                                        answerDto.getAnswer(),
+                                        answerDto.getPoint(),
+                                        answerDto.getTendency(),
+                                        answerDto.getAnswerImage(),
+                                        indicator.get()
+                                );
+                                personalityAnswerRepository.save(answer);
+                            } else {
+                                throw new NotFoundEntityException();
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        return 1;
+    }
 }

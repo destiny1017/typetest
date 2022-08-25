@@ -26,4 +26,10 @@ public class QuestionDto {
         this.answerList = question.getAnswerList().stream()
                 .map(AnswerDto::new).collect(Collectors.toList());
     }
+
+    public boolean emptyValueCheck() {
+        return  (question == null || question.isEmpty()) &&
+                (questionImage == null || questionImage.isEmpty()) &&
+                num == null;
+    }
 }

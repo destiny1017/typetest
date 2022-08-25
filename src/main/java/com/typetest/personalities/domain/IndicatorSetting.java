@@ -24,12 +24,14 @@ public class IndicatorSetting {
     @JoinColumn(name = "TEST_CODE")
     private TestCodeInfo testCode;
 
-    private int cuttingPoint;
+    private Integer cuttingPoint;
 
     private String result;
 
     public boolean checkSameValue(IndicatorSettingDto indicatorSettingDto) {
-        return this.result == indicatorSettingDto.getResult()
+        return (this.result == null ?
+                indicatorSettingDto.getResult() == null :
+                indicatorSettingDto.getResult().equals(this.result))
                 && this.cuttingPoint == indicatorSettingDto.getCuttingPoint();
     }
 

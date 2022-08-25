@@ -83,13 +83,13 @@ $(document).ready( () => {
         let targetNum = e.target.id.replace("indiDel", "");
         $("#indicatorDiv" + targetNum).hide();
         $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
-    };
+    }
 
     function settingDeleteEvent(e) {
         let targetNum = e.target.id.replace("delSetting", "");
         $("#settingDiv" + targetNum).hide();
         $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val("");
-    };
+    }
 
     function settingInfoHoverInEvent(e) {
         let targetId = e.currentTarget.id.replace("settingDiv", "");
@@ -120,6 +120,7 @@ $(document).ready( () => {
         let targetNum = e.target.id.replace("delAnswer", "");
         $("#answerDiv" + targetNum).hide();
         $("#answerDiv" + targetNum + ' input:not([type="hidden"])').val("");
+        $("#answerDiv" + targetNum + " option").remove();
     };
     
     function answerInfoHoverInEvent(e) {
@@ -228,22 +229,18 @@ $(document).ready( () => {
                     <div class="question-title">
                         <div class="questionHeadInfo-div">
                             <span class="material-icons question-icon">question_answer</span>
-                            <input type="text" class="q-num-input" name="questionList[${questionList.length}].num}">
+                            <input type="text" class="q-num-input" name="questionList[${questionList.length}].num">
                             <div class="px-1"></div>
-                            <input type="text" class="q-name-input" name="*{questionList[${questionList.length}].question}">
+                            <input type="text" class="q-name-input" name="questionList[${questionList.length}].question">
                         </div>
                         <span class="material-icons questionDelete" id="questionDel${questionList.length + 1}">close</span>
                     </div>
                     <div class="questionContent-div">
-                        <input type="hidden" name="questionList[${questionList.length}].id}">
+                        <input type="hidden" name="questionList[${questionList.length}].id">
                         <div class="questionInfo-div">
                             <div class="indicatorElement-div">
                                 <label>질문 이미지</label>
-                                <input type="text" class="form-control" name="questionList[${questionList.length}].questionImage}">
-                            </div>
-                            <div class="indicatorElement-div">
-                                <label>질문 내용</label>
-                                <input type="text" class="form-control" name="questionList[${questionList.length}].question}">
+                                <input type="text" class="form-control" name="questionList[${questionList.length}].questionImage">
                             </div>
                         </div>
                         <div class="answer-div">
@@ -315,7 +312,7 @@ $(document).ready( () => {
                     <div class="answerDetail-div">
                         <label>답변 지표</label>
                         <select class="answer-select form-select" 
-                                name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].indicator">
+                                name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].typeIndicatorId">
                             ${indicatorListOption}
                         </select>
                     </div>

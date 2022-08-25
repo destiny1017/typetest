@@ -16,7 +16,8 @@ public class AnswerDto {
     private Integer point;
     private String answerImage;
     private Tendency tendency;
-    private Long typeIndicator;
+    private Long typeIndicatorId;
+    private TypeIndicator typeIndicator;
 
     public AnswerDto(PersonalityAnswer answer) {
         this.id = answer.getId();
@@ -24,6 +25,14 @@ public class AnswerDto {
         this.point = answer.getPoint();
         this.answerImage = answer.getAnswerImage();
         this.tendency = answer.getTendency();
-        this.typeIndicator = answer.getTypeIndicator().getId();
+        this.typeIndicatorId = answer.getTypeIndicator().getId();
+    }
+
+    public boolean emptyValueCheck() {
+        return  (answer == null || answer.isEmpty()) &&
+                (answerImage == null || answerImage.isEmpty()) &&
+                point == null &&
+                tendency == null &&
+                typeIndicatorId == null;
     }
 }

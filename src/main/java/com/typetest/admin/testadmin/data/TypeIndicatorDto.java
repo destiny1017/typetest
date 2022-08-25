@@ -25,4 +25,9 @@ public class TypeIndicatorDto {
         this.indicatorSettings = typeIndicator.getIndicatorSettings().stream()
                 .map(IndicatorSettingDto::new).collect(Collectors.toList());
     }
+
+    public boolean emptyValueCheck() {
+        return (indicatorName == null || indicatorName.isEmpty()) &&
+                indicatorNum == null;
+    }
 }
