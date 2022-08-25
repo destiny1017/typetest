@@ -33,6 +33,9 @@ public class TypeInfo {
     @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
     List<TypeImage> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
+    List<TypeRelation> relations = new ArrayList<>();
+
     public void addDescription(TypeDescription description) {
         this.descriptions.add(description);
         description.setTypeInfo(this);
