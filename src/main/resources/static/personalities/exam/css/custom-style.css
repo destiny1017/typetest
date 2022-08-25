@@ -281,10 +281,21 @@ div.add-icon {
     color: #888;
 }
 
+.fold-btn {
+    border: 0;
+    background: inherit;
+    display: flex;
+    padding: 0;
+}
+
+.questionHeadInfo-div > .collapsed {
+    transform: rotate(270deg);
+}
+
 .question-div {
     border-radius: 0.5rem;
     box-shadow: 2px 2px 4px 1px #ddd;
-    padding: 20px 15px 10px 20px;
+    padding: 20px 15px 20px 15px;
 }
 
 .question-title {
@@ -306,11 +317,16 @@ div.add-icon {
 .q-num-input {
     width: 3rem;
     padding-left: 0.5rem;
+    margin-left: 10px;
 }
 
 .q-name-input {
     width: 88%;
     padding-left: 0.5rem;
+}
+
+.questionContent-div {
+    margin-top: 10px;
 }
 
 .questionInfo-div {

@@ -9,6 +9,11 @@ $(document).ready( () => {
         $(`[id^="${e.target.id}"]`).addClass("active");
     });
     
+    // submit 중복 클릭 막기
+    $('button[type="submit"]').click( (e) => {
+        $(e.target).css("pointer-events", "none");
+    });
+    
     /**
      *  tab1 event
      */
@@ -228,14 +233,20 @@ $(document).ready( () => {
                 <div class="question-div" id="questionDiv${questionList.length + 1}">
                     <div class="question-title">
                         <div class="questionHeadInfo-div">
-                            <span class="material-icons question-icon">question_answer</span>
+                            <button class="fold-btn" type="button" data-bs-toggle="collapse" aria-expanded="true"
+                                    data-bs-target="#questionContentDiv${questionList.length + 1}"
+                                    aria-controls="questionContentDiv${questionList.length + 1}">
+                                <span class="material-icons">
+                                expand_more
+                                </span>
+                            </button>
                             <input type="text" class="q-num-input" name="questionList[${questionList.length}].num">
                             <div class="px-1"></div>
                             <input type="text" class="q-name-input" name="questionList[${questionList.length}].question">
                         </div>
                         <span class="material-icons questionDelete" id="questionDel${questionList.length + 1}">close</span>
                     </div>
-                    <div class="questionContent-div">
+                    <div class="questionContent-div collapse show" id="questionContentDiv${questionList.length + 1}">
                         <input type="hidden" name="questionList[${questionList.length}].id">
                         <div class="questionInfo-div">
                             <div class="indicatorElement-div">

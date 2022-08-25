@@ -89,8 +89,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                 if(findTypeIndicator.isPresent()) {
                     indicator = findTypeIndicator.get();
                     // 넘버와 네임에 입력된 값 없으면 삭제
-                    if(typeIndicatorDto.getIndicatorNum() == null
-                            && typeIndicatorDto.getIndicatorName().length() == 0) {
+                    if(typeIndicatorDto.emptyValueCheck()) {
                         typeIndicatorRepository.delete(indicator);
                         indicator = null;
                     } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
@@ -103,8 +102,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                     throw new NotFoundEntityException();
                 }
             } else {
-                if(typeIndicatorDto.getIndicatorNum() == null
-                        && typeIndicatorDto.getIndicatorName().length() == 0) {
+                if(typeIndicatorDto.emptyValueCheck()) {
                     // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
                     indicator = null;
                 } else {
@@ -125,8 +123,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                         if (findSetting.isPresent()) {
                             IndicatorSetting indicatorSetting = findSetting.get();
                             // 포인트와 결과에 입력된 값 없으면 삭제
-                            if(indicatorSettingDto.getCuttingPoint() == null
-                                    && indicatorSettingDto.getResult().length() == 0) {
+                            if(indicatorSettingDto.emptyValueCheck()) {
                                 indicatorSettingRepository.delete(indicatorSetting);
                             } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
                                 if(!indicatorSetting.checkSameValue(indicatorSettingDto)) {
@@ -138,8 +135,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                             throw new NotFoundEntityException();
                         }
                     } else {
-                        if(indicatorSettingDto.getCuttingPoint() == null
-                                && indicatorSettingDto.getResult().length() == 0) {
+                        if(indicatorSettingDto.emptyValueCheck()) {
                             // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
                         } else {
                             // Dto에 ID값 없고 value값 있는 신규 엔티티면 생성
