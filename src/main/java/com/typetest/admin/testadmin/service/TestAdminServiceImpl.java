@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class TestAdminServiceImpl implements TestAdminService {
 
     private final TestCodeInfoRepository testCodeInfoRepository;
-    private final IndicatorSettingRepositoryRepository indicatorSettingRepository;
+    private final IndicatorSettingRepository indicatorSettingRepository;
     private final TypeIndicatorRepository typeIndicatorRepository;
     private final PersonalityQuestionRepository personalityQuestionRepository;
     private final PersonalityAnswerRepository personalityAnswerRepository;
@@ -259,5 +260,50 @@ public class TestAdminServiceImpl implements TestAdminService {
 
         }
         return 1;
+    }
+
+    @Override
+    public List<String> getEssentialTypeList(String testCode) {
+        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        if (testCodeInfo.isPresent()) {
+            HashMap<Integer, List<String>> indicatorMap = new HashMap<>();
+            List<IndicatorSetting> indiSetList = indicatorSettingRepository.findByTestCode(testCodeInfo.get());
+            for (IndicatorSetting indicatorSetting : indiSetList) {
+                Integer indiNum = indicatorSetting.getTypeIndicator().getIndicatorNum() - 1; // 0인덱스부터 조합하기 위해 1 빼줌
+                indicatorMap // 지표 번호(순서)를 key로, 가능한 결과값을 리스트로 생성하여 value에 추가해주기
+                        .getOrDefault(indiNum, indicatorMap.putIfAbsent(indiNum, new ArrayList<>()))
+                        .add(indicatorSetting.getResult());
+            }
+            int typeLength = indicatorMap.size(); // 결과유형 길이
+            String[] tmpArr = new String[typeLength];
+            List<String> allCaseOfType = new ArrayList<>();
+
+            return getAllCaseOfType(0, typeLength, indicatorMap, tmpArr, allCaseOfType);
+        } else {
+            throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+        }
+    }
+
+    /***
+     *  도출될 수 있는 모든 유형을 구하는 백트래킹 조합 알고리즘
+     * @param depth     각 사이클마다 할당되는 depth(index)
+     * @param m         결과값 길이
+     * @param valueMap  depth(indicatorNum)별 다르게 적용되는 조합지표 정보
+     * @param tmpArr    조합가능한 유형 담아둘 배열
+     * @param result    결과 담아서 보내줄 리스트
+     * @return
+     */
+    public List<String> getAllCaseOfType(int depth, int m, HashMap<Integer, List<String>> valueMap,
+                                      String[] tmpArr, List<String> result) {
+        if(depth == m) {
+            result.add(String.join("", tmpArr));
+            return null;
+        }
+
+        for (int i = 0; i < valueMap.get(depth).size(); i++) {
+            tmpArr[depth] = valueMap.get(depth).get(i);
+            getAllCaseOfType(depth+1, m, valueMap, tmpArr, result);
+        }
+        return result;
     }
 }

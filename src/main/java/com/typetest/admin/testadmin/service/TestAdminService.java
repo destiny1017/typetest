@@ -18,4 +18,5 @@ public interface TestAdminService {
     int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode);
     List<QuestionDto> findQuestionInfo(String testCode);
     List<TypeInfoDto> findTypeInfo(String testCode);
+    List<String> getEssentialTypeList(String testCode);
 }
