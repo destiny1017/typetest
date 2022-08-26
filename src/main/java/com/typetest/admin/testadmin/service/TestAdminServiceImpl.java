@@ -21,6 +21,7 @@ public class TestAdminServiceImpl implements TestAdminService {
     private final TypeIndicatorRepository typeIndicatorRepository;
     private final PersonalityQuestionRepository personalityQuestionRepository;
     private final PersonalityAnswerRepository personalityAnswerRepository;
+    private final TypeInfoRepository typeInfoRepository;
 
     @Override
     public TestInfoDto createTestInfoDto(String testCode) {
@@ -73,6 +74,22 @@ public class TestAdminServiceImpl implements TestAdminService {
                 List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCodeInfo.get());
                 List<QuestionDto> questionDtoList = questionList.stream().map(QuestionDto::new).collect(Collectors.toList());
                 return questionDtoList;
+            } else {
+                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+            }
+        }
+    }
+
+    @Override
+    public List<TypeInfoDto> findTypeInfo(String testCode) {
+        if(testCode.equals("NEW")) {
+            return new ArrayList<>();
+        } else {
+            Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+            if(testCodeInfo.isPresent()) {
+                List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo.get());
+                List<TypeInfoDto> typeInfoDtoList = typeInfoList.stream().map(TypeInfoDto::new).collect(Collectors.toList());
+                return typeInfoDtoList;
             } else {
                 throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
             }

@@ -14,7 +14,7 @@ public class TypeRelation {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "TYPE_INFO_ID")
     private TypeInfo typeInfo;
 

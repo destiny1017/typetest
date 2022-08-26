@@ -3,6 +3,7 @@ package com.typetest.admin.testadmin.service;
 import com.typetest.admin.testadmin.data.QuestionDto;
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.admin.testadmin.data.TypeIndicatorDto;
+import com.typetest.admin.testadmin.data.TypeInfoDto;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeIndicator;
 
@@ -16,4 +17,5 @@ public interface TestAdminService {
     int saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode);
     int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode);
     List<QuestionDto> findQuestionInfo(String testCode);
+    List<TypeInfoDto> findTypeInfo(String testCode);
 }

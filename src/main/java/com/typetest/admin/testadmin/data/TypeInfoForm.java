@@ -11,6 +11,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class TypeInfoForm {
-    private String testCode;
+    private String typeInfoTestCode;
     private List<TypeInfoDto> typeInfoList = new ArrayList<>();
 }

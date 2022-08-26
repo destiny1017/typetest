@@ -70,6 +70,9 @@ public class InitDB {
                 TypeImage bbbImage1 = new TypeImage(typeInfo5, 1, "https://post-phinf.pstatic.net/MjAyMDExMDVfMyAg/MDAxNjA0NTY2NjIwNTc1.8jOap6uQdNegKLE8UXA5xrYo0sYRfOGlCb4W5vPI_3Ag.uPwZ8ljqoThpaUFcjnH-L61oLScNgvLJGJ7J5i-gl3wg.PNG/2.png?type=w1200");
                 TypeImage aaaImage1 = new TypeImage(typeInfo2, 1, "https://post-phinf.pstatic.net/MjAyMDExMDVfMyAg/MDAxNjA0NTY2NjIwNTc1.8jOap6uQdNegKLE8UXA5xrYo0sYRfOGlCb4W5vPI_3Ag.uPwZ8ljqoThpaUFcjnH-L61oLScNgvLJGJ7J5i-gl3wg.PNG/2.png?type=w1200");
 
+                TypeRelation typeRelation1 = new TypeRelation(typeInfo2, typeInfo1, typeInfo5);
+                TypeRelation typeRelation2 = new TypeRelation(typeInfo5, typeInfo3, typeInfo2);
+
                 em.persist(testCodeInfo1);
                 em.persist(testCodeInfo2);
                 em.persist(typeInfo1);
@@ -90,6 +93,8 @@ public class InitDB {
                 em.persist(aaaDescription1);
                 em.persist(bbbImage1);
                 em.persist(aaaImage1);
+                em.persist(typeRelation1);
+                em.persist(typeRelation2);
 
                 User user = User.builder()
                             .name("김대호")

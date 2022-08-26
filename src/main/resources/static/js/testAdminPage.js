@@ -76,11 +76,59 @@ $(document).ready( () => {
         answerDeleteEvent(e);
     });
     
-        // setting 삭제아이콘 hover시에만 나타나도록
+    // answer 삭제아이콘 hover시에만 나타나도록
     $(".answerInfo-div").hover( (e) => {
         answerInfoHoverInEvent(e);
     }, (e) => {
         answerInfoHoverOutEvent(e);
+    });
+    
+    /**
+     *  tab4 event
+     */
+    // typeInfo 추가 클릭
+    $("#addTypeInfo").click( () => {
+        typeInfoAddEvent();
+    });
+    
+    // typeInfo 삭제 클릭
+    $(".typeInfoDelete").click( (e) => {
+        typeInfoDeleteEvent(e);
+    });
+    
+    // typeImage 추가 클릭
+    $(".typeImageAdd").click( (e) => {
+        typeImageAddEvent(e);
+    });
+
+    // typeImage 삭제 클릭
+    $(".typeImageDelete").click( (e) => {
+        typeImageDeleteEvent(e);
+    });
+    
+    
+    // typeImage 삭제아이콘 hover시에만 나타나도록
+    $(".typeImageInfo-div").hover( (e) => {
+        typeImageInfoHoverInEvent(e);
+    }, (e) => {
+        typeImageInfoHoverOutEvent(e);
+    });
+    
+    // typeDescription 추가 클릭
+    $(".typeDescriptionAdd").click( (e) => {
+        typeDescriptionAddEvent(e);
+    });
+
+    // typeDescription 삭제 클릭
+    $(".typeDescriptionDelete").click( (e) => {
+        typeDescriptionDeleteEvent(e);
+    });
+    
+    // typeDescription 삭제아이콘 hover시에만 나타나도록
+    $(".typeDescriptionInfo-div").hover( (e) => {
+        typeDescriptionInfoHoverInEvent(e);
+    }, (e) => {
+        typeDescriptionInfoHoverOutEvent(e);
     });
 
 
@@ -138,8 +186,47 @@ $(document).ready( () => {
         $("#delAnswer" + targetId).hide();
     }
     
+    
+    function typeInfoDeleteEvent(e) {
+        let targetNum = e.target.id.replace("typeInfoDel", "");
+        $("#typeInfoDiv" + targetNum).hide();
+        $("#typeInfoDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    };
 
-    $('input[name="answerType"]').trigger("change"); // 화면 최초 로딩 후 테스트 방식에 따른 tab3 요소 변경
+    function typeImageDeleteEvent(e) {
+        let targetNum = e.target.id.replace("delTypeImage", "");
+        $("#typeImageDiv" + targetNum).hide();
+        $("#typeImageDiv" + targetNum + ' input:not([type="hidden"])').val("");
+        $("#typeImageDiv" + targetNum + " option").remove();
+    };
+    
+    function typeImageInfoHoverInEvent(e) {
+        let targetId = e.currentTarget.id.replace("typeImageDiv", "");
+        $("#delTypeImage" + targetId).show();
+    }
+
+    function typeImageInfoHoverOutEvent(e) {
+        let targetId = e.currentTarget.id.replace("typeImageDiv", "");
+        $("#delTypeImage" + targetId).hide();
+    }
+    
+    function typeDescriptionDeleteEvent(e) {
+        let targetNum = e.target.id.replace("delTypeDescription", "");
+        $("#typeDescriptionDiv" + targetNum).hide();
+        $("#typeDescriptionDiv" + targetNum + ' input:not([type="hidden"])').val("");
+        $("#typeDescriptionDiv" + targetNum + " option").remove();
+    };
+    
+    function typeDescriptionInfoHoverInEvent(e) {
+        let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
+        $("#delTypeDescription" + targetId).show();
+    }
+
+    function typeDescriptionInfoHoverOutEvent(e) {
+        let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
+        $("#delTypeDescription" + targetId).hide();
+    }
+ 
 
     function indicatorAddEvent() {
         // 새롭게 추가될 indicatorDiv 내용
@@ -357,5 +444,196 @@ $(document).ready( () => {
         
         answerTypeChange();
     }
+    
+    function typeInfoAddEvent() {
+        let typeInfoListOption = "";
+        // 유형 select박스 내용 만들기
+        $.each(typeInfoList, (i, val) => {
+            let optionStr = `<option value="${val.id}">${val.typeCode}(${val.typeName})</option>`;
+            typeInfoListOption += optionStr;
+        });
+
+        // 새롭게 추가될 questionDiv 내용
+        let typeInfoDiv =
+        `
+            <div class="typeInfo-div" id="typeInfoDiv${typeInfoList.length + 1}">
+                <div class="typeInfo-title">
+                    <div class="typeInfoHeadInfo-div">
+                        <button class="fold-btn collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false"
+                                data-bs-target="#typeInfoContentDiv${typeInfoList.length + 1}"
+                                aria-controls="typeInfoContentDiv${typeInfoList.length + 1}">
+                            <span class="material-icons">
+                            expand_more
+                            </span>
+                        </button>
+                        <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode"">
+                        <div class="px-1"></div>
+                        <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName"">
+                    </div>
+                    <span class="material-icons typeInfoDelete" id="typeInfoDel${typeInfoList.length + 1}">close</span>
+                </div>
+                <div class="typeInfoContent-div collapse" id="typeInfoContentDiv${typeInfoList.length + 1}">
+                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].id"">
+                    <div class="typeImage-div">
+                        <div class="typeImageTitle-div">
+                            <label>결과 이미지</label>
+                        </div>
+
+                        <div class="typeImageAdd-div" id="typeImageAdd-div-${typeInfoList.length + 1}">
+                            <span class="typeImageAdd" id="typeImageAdd-${typeInfoList.length + 1}">+ 이미지 추가</span>
+                        </div>
+                    </div>
+
+                    <div class="typeDescription-div">
+                        <div class="typeDescriptionTitle-div">
+                            <label>유형 설명</label>
+                        </div>
+
+                        <div class="typeDescriptionAdd-div" id="typeDescriptionAdd-div-${typeInfoList.length + 1}">
+                            <span class="typeDescriptionAdd" id="typeDescriptionAdd-${typeInfoList.length + 1}">+ 설명 추가</span>
+                        </div>
+                    </div>
+
+                    <div class="typeRelation-div">
+                        <div class="typeRelationTitle-div">
+                            <label>유형 관계 정보</label>
+                        </div>
+                        <div class="typeRelationInfo-div" id="typeRelationDiv-${typeInfoList.length + 1}">
+                            <span class="material-icons typeRelationDelete" style="display: none;"
+                                  id="delTypeRelation-${typeInfoList.length + 1}">close</span>
+                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.id"">
+                            <div class="typeRelationElement-div typeRelationContent-div">
+                                <label>Best 유형</label>
+                                <select class="typeRelation-select form-select" name="typeInfoList[${typeInfoList.length}].typeRelation.bestTypeId"">
+                                    <option value="">미지정</option>
+                                    ${typeInfoListOption}
+                                </select>
+                            </div>
+                            <div class="typeRelationElement-div typeRelationContent-div">
+                                <label>Worst 유형</label>
+                                <select class="typeRelation-select form-select" name="typeInfoList[${typeInfoList.length}].typeRelation.worstTypeId"">
+                                    <option value="">미지정</option>
+                                    ${typeInfoListOption}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        // 추가버튼 위에 새 div 추가
+        $("#addTypeInfo").before(typeInfoDiv);
+
+        // 요소 개수 카운트를 위해 typeInfo 빈 객체 추가
+        typeInfoList.push({typeImageList:[], typeDescriptionList:[]});
+
+        // 추가된 typeInfo 삭제버튼에 이벤트 연결
+        console.log("#typeInfoDel" + (typeInfoList.length));
+        $("#typeInfoDel" + (typeInfoList.length)).click( (e) => {
+            typeInfoDeleteEvent(e);
+        });
+
+        // 추가된 image 버튼에 이벤트 연결
+        $("#typeImageAdd-" + (typeInfoList.length)).click( (e) => {
+            typeImageAddEvent(e);
+        });
+        
+        // 추가된 description 버튼에 이벤트 연결
+        $("#typeDescriptionAdd-" + (typeInfoList.length)).click( (e) => {
+            typeDescriptionAddEvent(e);
+        });
+    }
+    
+    function typeImageAddEvent(e) {
+        // 새롭게 추가될 image div 내용
+        let targetNum = e.target.id.replace("typeImageAdd-", "");
+        let typeImageDiv =
+        `
+            <div class="typeImageInfo-div" id="typeImageDiv-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">
+                <span class="material-icons typeImageDelete" style="display: none;"
+                      id="delTypeImage-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">close</span>
+                <input type="hidden" name="typeInfoList[${targetNum}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].id">
+                <div class="typeImageDetail-div">
+                    <div class="typeImageNum-div typeImageContent-div">
+                        <label>이미지 번호</label>
+                        <input type="text" class="form-control code-input"
+                               name="typeInfoList[${targetNum}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imgNum">
+                    </div>
+                    <div class="typeImageUrl-div typeImageContent-div">
+                        <label>이미지 URL</label>
+                        <input type="text" class="form-control"
+                               name="typeInfoList[${targetNum}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imageUrl">
+                    </div>
+                </div>
+                <div class="typeImagePicture-div">
+                    <label>이미지</label>
+                    <div class="">
+                        <img src="">
+                    </div>
+                </div>
+            </div>
+        `
+        // 추가버튼 위에 div 추가
+        $("#typeImageAdd-div-" + targetNum).before(typeImageDiv);
+
+        // 데이터 카운트를 위해 빈 객체 추가
+        typeInfoList[targetNum - 1].typeImageList.push({});
+
+        // 추가된 삭제버튼에 삭제 이벤트 연결
+        $(`#delTypeImage-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length - 1}`).click( (e) => {
+            typeImageDeleteEvent(e);
+        });
+
+        // 추가된 삭제버튼에 hover 이벤트 연결
+        $(`#typeImageDiv-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length - 1}`).hover( (e) => {
+            typeImageInfoHoverInEvent(e);
+        }, (e) => {
+            typeImageInfoHoverOutEvent(e);
+        });
+    }
+    
+    function typeDescriptionAddEvent(e) {
+        // 새롭게 추가될 image div 내용
+        let targetNum = e.target.id.replace("typeDescriptionAdd-", "");
+        let typeDescriptionDiv = 
+        `
+            <div class="typeDescriptionInfo-div" id="typeDescriptionDiv-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">
+                <span class="material-icons typeDescriptionDelete" style="display: none;"
+                      id="delTypeDescription-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">close</span>
+                <input type="hidden" name="typeInfoList[${targetNum}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].id">
+                <div class="typeDescriptionElement-div typeDescriptionContent-div">
+                    <label>설명 번호</label>
+                    <input type="text" class="form-control code-input"
+                           name="typeInfoList[${targetNum}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].descNum">
+                </div>
+                <div class="typeDescriptionElement-div typeDescriptionContent-div">
+                    <label>설명</label>
+                    <textarea type="text" class="form-control"
+                           name="typeInfoList[${targetNum}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].description">
+                    </textarea>
+                </div>
+            </div>
+        `
+        // 추가버튼 위에 div 추가
+        $("#typeDescriptionAdd-div-" + targetNum).before(typeDescriptionDiv);
+
+        // 데이터 카운트를 위해 빈 객체 추가
+        typeInfoList[targetNum - 1].typeDescriptionList.push({});
+
+        // 추가된 삭제버튼에 삭제 이벤트 연결
+        $(`#delTypeDescription-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length - 1}`).click( (e) => {
+            typeDescriptionDeleteEvent(e);
+        });
+
+        // 추가된 삭제버튼에 hover 이벤트 연결
+        $(`#typeDescriptionDiv-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length - 1}`).hover( (e) => {
+            typeDescriptionInfoHoverInEvent(e);
+        }, (e) => {
+            typeDescriptionInfoHoverOutEvent(e);
+        });
+    }
+    
+    
+    $('input[name="answerType"]').trigger("change"); // 화면 최초 로딩 후 테스트 방식에 따른 tab3 요소 변경
 
 });

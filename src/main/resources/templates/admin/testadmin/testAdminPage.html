@@ -232,7 +232,127 @@
         </div>
 
         <div id="step4Content" class="tab-contents">
+            <form method="post" action="/testAdmin/step3Submit" class="tab-contentsForm" th:object="${typeInfoForm}" id="tab4Form">
+                <input type="hidden" th:field="*{typeInfoTestCode}">
+                <div class="typeInfo-main-title">
+                    <p><span class="material-icons">edit</span>유형 정보</p>
+                </div>
+                <div class="typeInfo-div" th:each="typeInfo : *{typeInfoList}" th:id="|typeInfoDiv${typeInfoStat.index + 1}|">
+                    <div class="typeInfo-title">
+                        <div class="typeInfoHeadInfo-div">
+                            <button class="fold-btn collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false"
+                                    th:data-bs-target="|#typeInfoContentDiv${typeInfoStat.index + 1}|"
+                                    th:aria-controls="|typeInfoContentDiv${typeInfoStat.index + 1}|">
+                                <span class="material-icons">
+                                expand_more
+                                </span>
+                            </button>
+                            <input type="text" class="typeCode-input" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeCode}">
+                            <div class="px-1"></div>
+                            <input type="text" class="typeName-input" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeName}">
+                        </div>
+                        <span class="material-icons typeInfoDelete" th:id="|typeInfoDel${typeInfoStat.index + 1}|">close</span>
+                    </div>
+                    <div class="typeInfoContent-div collapse" th:id="|typeInfoContentDiv${typeInfoStat.index + 1}|">
+                        <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].id}">
+                        <div class="typeImage-div">
+                            <div class="typeImageTitle-div">
+                                <label>결과 이미지</label>
+                            </div>
+                            <div th:each="typeImage, stat : *{typeInfoList[__${typeInfoStat.index}__].typeImageList}"
+                                 class="typeImageInfo-div" th:id="|typeImageDiv-${typeInfoStat.index + 1}-${stat.index}|">
+                                <span class="material-icons typeImageDelete" style="display: none;"
+                                      th:id="|delTypeImage-${typeInfoStat.index + 1}-${stat.index}|">close</span>
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].id}">
+                                <div class="typeImageDetail-div">
+                                    <div class="typeImageNum-div typeImageContent-div">
+                                        <label>이미지 번호</label>
+                                        <input type="text" class="form-control code-input"
+                                               th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].imgNum}">
+                                    </div>
+                                    <div class="typeImageUrl-div typeImageContent-div">
+                                        <label>이미지 URL</label>
+                                        <input type="text" class="form-control"
+                                               th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].imageUrl}">
+                                    </div>
+                                </div>
+                                <div class="typeImagePicture-div">
+                                    <label>이미지</label>
+                                    <div class="">
+                                        <img th:src="${typeImage.imageUrl}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="typeImageAdd-div" th:id="|typeImageAdd-div-${typeInfoStat.index + 1}|">
+                                <span class="typeImageAdd" th:id="|typeImageAdd-${typeInfoStat.index + 1}|">+ 이미지 추가</span>
+                            </div>
+                        </div>
 
+                        <div class="typeDescription-div">
+                            <div class="typeDescriptionTitle-div">
+                                <label>유형 설명</label>
+                            </div>
+                            <div th:each="typeDescription, stat : *{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList}"
+                                 class="typeDescriptionInfo-div" th:id="|typeDescriptionDiv-${typeInfoStat.index + 1}-${stat.index}|">
+                                <span class="material-icons typeDescriptionDelete" style="display: none;"
+                                      th:id="|delTypeDescription-${typeInfoStat.index + 1}-${stat.index}|">close</span>
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].id}">
+                                <div class="typeDescriptionElement-div typeDescriptionContent-div">
+                                    <label>설명 번호</label>
+                                    <input type="text" class="form-control code-input"
+                                           th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].descNum}">
+                                </div>
+                                <div class="typeDescriptionElement-div typeDescriptionContent-div">
+                                    <label>설명</label>
+                                    <textarea type="text" class="form-control"
+                                           th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].description}">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="typeDescriptionAdd-div" th:id="|typeDescriptionAdd-div-${typeInfoStat.index + 1}|">
+                                <span class="typeDescriptionAdd" th:id="|typeDescriptionAdd-${typeInfoStat.index + 1}|">+ 설명 추가</span>
+                            </div>
+                        </div>
+
+                        <div class="typeRelation-div">
+                            <div class="typeRelationTitle-div">
+                                <label>유형 관계 정보</label>
+                            </div>
+                            <div class="typeRelationInfo-div" th:id="|typeRelationDiv-${typeInfoStat.index + 1}|">
+                                <span class="material-icons typeRelationDelete" style="display: none;"
+                                      th:id="|delTypeRelation-${typeInfoStat.index + 1}|">close</span>
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.id}">
+                                <div class="typeRelationElement-div typeRelationContent-div">
+                                    <label>Best 유형</label>
+                                    <select class="typeRelation-select form-select" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.bestTypeId}">
+                                        <option value="">미지정</option>
+                                        <option th:each="typeInfoSel : ${typeInfoForm.typeInfoList}"
+                                                th:text="|${typeInfoSel.typeCode}(${typeInfoSel.typeName})|"
+                                                th:value="${typeInfoSel.id}"></option>
+                                    </select>
+                                </div>
+                                <div class="typeRelationElement-div typeRelationContent-div">
+                                    <label>Worst 유형</label>
+                                    <select class="typeRelation-select form-select" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.worstTypeId}">
+                                        <option value="">미지정</option>
+                                        <option th:each="typeInfoSel : ${typeInfoForm.typeInfoList}"
+                                                th:text="|${typeInfoSel.typeCode}(${typeInfoSel.typeName})|"
+                                                th:value="${typeInfoSel.id}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="addIndicator-div" id="addTypeInfo">
+                    <div class="add-icon">
+                        <span class="material-icons plus-icon">add</span>
+                    </div>
+                </div>
+                <div class="tabSubmit-div">
+                    <button class="btn btn-primary" type="submit">저장</button>
+                </div>
+            </form>
         </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
@@ -244,6 +364,7 @@
         const questionList = [[${questionForm.questionList}]];
         const tendencyList = [[${tendencyList}]];
         const tendencyNameList = [[${tendencyNameList}]];
+        const typeInfoList = [[${typeInfoForm.typeInfoList}]];
     </script>
     <script src="/js/testAdminPage.js"></script>
 </div>

@@ -10,13 +10,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TypeRelationDto {
-    private TypeInfo typeInfo;
-    private TypeInfo bestType;
-    private TypeInfo worstType;
+    private Long id;
+    private Long typeInfoId;
+    private Long bestTypeId;
+    private Long worstTypeId;
 
     public TypeRelationDto(TypeRelation typeRelation) {
-        this.typeInfo = typeRelation.getTypeInfo();
-        this.bestType = typeRelation.getBestType();
-        this.worstType = typeRelation.getWorstType();
+        this.id = typeRelation.getId();
+        this.typeInfoId = typeRelation.getTypeInfo().getId();
+        this.bestTypeId = typeRelation.getBestType().getId();
+        this.worstTypeId = typeRelation.getWorstType().getId();
     }
 }

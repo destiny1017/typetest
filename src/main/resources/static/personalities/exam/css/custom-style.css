@@ -84,6 +84,10 @@ footer {
     border-bottom: 1px solid #ddd;
 }
 
+.nav-link {
+    cursor: pointer;
+}
+
 .tab-contentsForm > div{
     margin: 20px 10px 20px 10px;
 }
@@ -369,7 +373,7 @@ div.add-icon {
     height: 25px;
 }
 
-.answerDelete {
+.answerDelete, .typeImageDelete, .typeDescriptionDelete {
     padding-left: 10px;
     cursor: pointer;
     height: 25px;
@@ -399,7 +403,125 @@ div.add-icon {
     position: relative;
 }
 
+/**
+ *  tab4
+ */
+ .typeInfo-main-title {
+     font-size: 20px;
+     color: #6464ff;
+     display: flex;
+     justify-content: space-between;
+ }
 
+ .typeInfo-main-title p {
+     display: flex;
+     align-items: center;
+     margin-top: 0.5rem;
+     margin-bottom: 0.5rem;
+ }
+
+.typeInfo-div {
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 4px 1px #ddd;
+    padding: 20px 15px 20px 15px;
+}
+
+.typeInfo-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.typeInfoHeadInfo-div > .collapsed {
+    transform: rotate(270deg);
+}
+
+.typeCode-input {
+    width: 5rem;
+    padding-left: 0.5rem;
+    margin-left: 10px;
+}
+
+.typeName-input {
+    width: 80%;
+    padding-left: 0.5rem;
+}
+
+.essential-type {
+    border: 2px solid #8389ff;
+}
+
+.typeInfoDelete {
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.typeInfoContent-div > div {
+    margin-top: 20px;
+}
+
+.typeInfoHeadInfo-div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.typeImageInfo-div {
+    border-radius: 0.5rem;
+    padding: 10px 15px 20px 20px;
+    border: 1px solid #ddd;
+    margin: 10px 0 10px 0;
+    position: relative;
+}
+
+.typeImagePicture-div {
+    display: flex;
+}
+
+.typeImagePicture-div > div > img {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+}
+
+.typeImagePicture-div > label {
+    width: 5rem;
+}
+
+.typeImageDetail-div {
+    display: flex;
+}
+
+.typeImageNum-div {
+    width: 6rem;
+}
+
+.typeImageNum-div > input {
+    width: 85%;
+}
+
+.typeImageUrl-div {
+    width: 85%;
+}
+
+.typeDescriptionInfo-div {
+    border-radius: 0.5rem;
+    padding: 10px 15px 20px 20px;
+    border: 1px solid #ddd;
+    margin: 10px 0 10px 0;
+    position: relative;
+}
+
+.typeDescriptionElement-div > textarea {
+    resize: none;
+    height: 150px;
+}
+
+.typeImageAdd, .typeDescriptionAdd {
+    font-weight: 700;
+    color: #9494fe;
+    cursor: pointer;
+}
 
 
 /***********************************************/

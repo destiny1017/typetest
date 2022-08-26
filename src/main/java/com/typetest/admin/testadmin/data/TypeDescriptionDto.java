@@ -9,10 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TypeDescriptionDto {
+    private Long id;
     private Integer descNum;
     private String description;
 
     public TypeDescriptionDto(TypeDescription typeDescription) {
+        this.id = typeDescription.getId();
         this.descNum = typeDescription.getDescNum();
         this.description = typeDescription.getDescription();
     }

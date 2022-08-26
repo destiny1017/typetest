@@ -28,13 +28,13 @@ public class TypeInfo {
     private Integer resultCount;
 
     @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
-    List<TypeDescription> descriptions = new ArrayList<>();
+    private List<TypeDescription> descriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
-    List<TypeImage> images = new ArrayList<>();
+    private List<TypeImage> images = new ArrayList<>();
 
-    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
-    List<TypeRelation> relations = new ArrayList<>();
+    @OneToOne(mappedBy = "typeInfo", cascade = CascadeType.ALL)
+    private TypeRelation typeRelation;
 
     public void addDescription(TypeDescription description) {
         this.descriptions.add(description);

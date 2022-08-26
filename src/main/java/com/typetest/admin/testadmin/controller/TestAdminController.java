@@ -65,8 +65,16 @@ public class TestAdminController {
         questionForm.setQuestionTestCode(testCode);
         questionForm.setQuestionList(questionList);
 
+        // 테스트 코드에 해당하는 유형 정보 세팅하기
+        List<TypeInfoDto> typeInfoList = testAdminService.findTypeInfo(testCode);
+        TypeInfoForm typeInfoForm = new TypeInfoForm();
+        typeInfoForm.setTypeInfoTestCode(testCode);
+        typeInfoForm.setTypeInfoList(typeInfoList);
+
         model.addAttribute("indicatorForm", indicatorForm);
         model.addAttribute("questionForm", questionForm);
+        model.addAttribute("typeInfoForm", typeInfoForm);
+
         return "admin/testadmin/testAdminPage";
     }
 
