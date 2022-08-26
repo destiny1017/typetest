@@ -107,4 +107,11 @@ public class TestAdminController {
         return "redirect:/testAdminPage/" + typeInfoForm.getTypeInfoTestCode() + "/4";
     }
 
+    @GetMapping("/testAdminPage/{testCode}/essentialType")
+    public String essentialTypeList(@PathVariable String testCode, Model model) {
+        List<String> essentialTypeList = testAdminService.getEssentialTypeList(testCode);
+        model.addAttribute("essentialTypeList", essentialTypeList);
+        return "forward:/testAdminPage/" + testCode + "/4";
+    }
+
 }

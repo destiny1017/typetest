@@ -51,6 +51,7 @@ public class InitDB {
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
                 TypeInfo typeInfo4 = new TypeInfo(testCodeInfo2, "INTP", "인팁");
                 TypeInfo typeInfo5 = new TypeInfo(testCodeInfo1, "BBB", "비비비이");
+                TypeInfo typeInfo6 = new TypeInfo(testCodeInfo1, "BBC", "비비씨?");
 
                 TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
                 TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
@@ -80,6 +81,7 @@ public class InitDB {
                 em.persist(typeInfo3);
                 em.persist(typeInfo4);
                 em.persist(typeInfo5);
+                em.persist(typeInfo6);
                 em.persist(indicatorA);
                 em.persist(indicatorB);
                 em.persist(indicatorC);

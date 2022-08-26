@@ -466,9 +466,9 @@ $(document).ready( () => {
                             expand_more
                             </span>
                         </button>
-                        <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode"">
+                        <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode">
                         <div class="px-1"></div>
-                        <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName"">
+                        <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName">
                     </div>
                     <span class="material-icons typeInfoDelete" id="typeInfoDel${typeInfoList.length + 1}">close</span>
                 </div>
@@ -635,5 +635,25 @@ $(document).ready( () => {
     
     
     $('input[name="answerType"]').trigger("change"); // 화면 최초 로딩 후 테스트 방식에 따른 tab3 요소 변경
+    
+    // 필수유형 추가돼 있는지 확인하여 없으면 추가해주는 로직
+    if(essentialTypeList != null) {
+        for(essentialType of essentialTypeList) {
+            let exist = false;
+            for(const [i, typeInfo] of typeInfoList.entries()) {
+                if(essentialType == typeInfo.typeCode) {
+                    $(`#typeInfoDiv${i+1}`).addClass("essential-type");
+                    exist = true;
+                    break;
+                }
+            }
+            
+            if(exist == false) {
+                typeInfoAddEvent();
+                $(`input[name="typeInfoList[${typeInfoList.length-1}].typeCode"]`).val(essentialType);
+                $(`#typeInfoDiv${typeInfoList.length}`).addClass("essential-type");
+            }
+        }
+    }
 
 });

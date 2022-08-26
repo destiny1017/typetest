@@ -351,6 +351,8 @@
                 </div>
                 <div class="tabSubmit-div">
                     <button class="btn btn-primary" type="submit">저장</button>
+                    <a class="btn btn-outline-warning"
+                       th:href="|/testAdminPage/${typeInfoForm.typeInfoTestCode}/essentialType|">필수 유형 세팅</a>
                 </div>
             </form>
         </div>
@@ -365,6 +367,7 @@
         const tendencyList = [[${tendencyList}]];
         const tendencyNameList = [[${tendencyNameList}]];
         const typeInfoList = [[${typeInfoForm.typeInfoList}]];
+        const essentialTypeList = [[${essentialTypeList}]];
     </script>
     <script src="/js/testAdminPage.js"></script>
 </div>
