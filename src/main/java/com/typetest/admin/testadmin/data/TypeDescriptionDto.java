@@ -13,9 +13,16 @@ public class TypeDescriptionDto {
     private Integer descNum;
     private String description;
 
+    private Integer updated = 0;
+    private Integer deleted = 0;
+
     public TypeDescriptionDto(TypeDescription typeDescription) {
         this.id = typeDescription.getId();
         this.descNum = typeDescription.getDescNum();
         this.description = typeDescription.getDescription();
+    }
+
+    public boolean isNewEntity() {
+        return id == null;
     }
 }

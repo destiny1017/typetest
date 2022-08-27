@@ -13,6 +13,9 @@ public class IndicatorSettingDto {
     private String result;
     private Integer cuttingPoint;
 
+    private Integer updated = 0;
+    private Integer deleted = 0;
+
     public IndicatorSettingDto(IndicatorSetting indicatorSetting) {
         this.id = indicatorSetting.getId();
         this.result = indicatorSetting.getResult();
@@ -22,5 +25,9 @@ public class IndicatorSettingDto {
     public boolean emptyValueCheck() {
         return (result == null || result.isEmpty()) &&
                 cuttingPoint == null;
+    }
+
+    public boolean isNewEntity() {
+        return id == null;
     }
 }

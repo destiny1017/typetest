@@ -21,6 +21,9 @@ public class TypeInfoDto {
     List<TypeDescriptionDto> typeDescriptionList = new ArrayList<>();
     TypeRelationDto typeRelation;
 
+    private Integer updated = 0;
+    private Integer deleted = 0;
+
     public TypeInfoDto(TypeInfo typeInfo) {
         this.id = typeInfo.getId();
         this.typeCode = typeInfo.getTypeCode();
@@ -41,5 +44,9 @@ public class TypeInfoDto {
         if(typeInfo.getTypeRelation() != null) {
             this.typeRelation = new TypeRelationDto(typeInfo.getTypeRelation());
         }
+    }
+
+    public boolean isNewEntity() {
+        return id == null;
     }
 }

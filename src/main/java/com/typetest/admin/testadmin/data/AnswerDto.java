@@ -19,6 +19,9 @@ public class AnswerDto {
     private Long typeIndicatorId;
     private TypeIndicator typeIndicator;
 
+    private Integer updated = 0;
+    private Integer deleted = 0;
+
     public AnswerDto(PersonalityAnswer answer) {
         this.id = answer.getId();
         this.answer = answer.getAnswer();
@@ -34,5 +37,9 @@ public class AnswerDto {
                 point == null &&
                 tendency == null &&
                 typeIndicatorId == null;
+    }
+
+    public boolean isNewEntity() {
+        return id == null;
     }
 }

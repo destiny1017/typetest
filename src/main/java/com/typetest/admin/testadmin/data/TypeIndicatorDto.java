@@ -18,6 +18,9 @@ public class TypeIndicatorDto {
     private String indicatorName;
     private List<IndicatorSettingDto> indicatorSettings = new ArrayList<>();
 
+    private Integer updated = 0;
+    private Integer deleted = 0;
+
     public TypeIndicatorDto(TypeIndicator typeIndicator) {
         this.id = typeIndicator.getId();
         this.indicatorNum = typeIndicator.getIndicatorNum();
@@ -29,5 +32,9 @@ public class TypeIndicatorDto {
     public boolean emptyValueCheck() {
         return (indicatorName == null || indicatorName.isEmpty()) &&
                 indicatorNum == null;
+    }
+
+    public boolean isNewEntity() {
+        return id == null;
     }
 }

@@ -13,9 +13,16 @@ public class TypeImageDto {
     private Integer imgNum;
     private String imageUrl;
 
+    private Integer updated = 0;
+    private Integer deleted = 0;
+
     public TypeImageDto(TypeImage typeImage) {
         this.id = typeImage.getId();
         this.imgNum = typeImage.getImgNum();
         this.imageUrl = typeImage.getImageUrl();
+    }
+
+    public boolean isNewEntity() {
+        return id == null;
     }
 }

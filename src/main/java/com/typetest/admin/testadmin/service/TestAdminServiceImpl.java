@@ -176,85 +176,63 @@ public class TestAdminServiceImpl implements TestAdminService {
     public int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode) {
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
         for (QuestionDto questionDto : questionDtoList) {
-            PersonalityQuestion question;
-            if (questionDto.getId() != null) {
-                Optional<PersonalityQuestion> findQuestion = personalityQuestionRepository.findById(questionDto.getId());
-                if (findQuestion.isPresent()) {
-                    question = findQuestion.get();
-                    // 질문번호와 질문내용 입력된 거 없으면 삭제
-                    if (questionDto.emptyValueCheck()) {
-                        personalityQuestionRepository.delete(question);
-                        question = null;
-                    } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
-                        if (!question.checkSameValue(questionDto)) {
-                            question.updateQuestionInfo(questionDto);
-                            personalityQuestionRepository.save(question);
-                        }
-                    }
-                } else {
-                    throw new NotFoundEntityException();
-                }
-            } else {
-                if (questionDto.emptyValueCheck()) {
-                    // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
-                    question = null;
-                } else {
-                    // DTO에 id값 없고 value값은 있으면, 즉 신규 엔티티면 새로 만들기
-                    question = new PersonalityQuestion(
-                            testCodeInfo.get(),
-                            questionDto.getQuestion(),
-                            questionDto.getNum(),
-                            questionDto.getQuestionImage());
-
+            PersonalityQuestion question = null;
+            // 삭제된 데이터가 아니라면..
+            if (questionDto.getDeleted() != 1) {
+                // 신규 엔티티면 새로 만들기
+                if (questionDto.isNewEntity()) {
+                    question = new PersonalityQuestion(questionDto, testCodeInfo.get());
                     personalityQuestionRepository.save(question);
+                } else {
+                    // 신규 엔티티 아니고 업데이트된 내용 있으면 업데이트
+                    if(questionDto.getUpdated() == 1) {
+                        question = new PersonalityQuestion(questionDto, testCodeInfo.get());
+                        personalityQuestionRepository.save(question);
+                    }
                 }
-            }
 
-            if (question != null) {
+                // 답변 리스트 순회
                 for (AnswerDto answerDto : questionDto.getAnswerList()) {
-                    if (answerDto.getId() != null) {
-                        Optional<PersonalityAnswer> findAnswer = personalityAnswerRepository.findById(answerDto.getId());
-                        if (findAnswer.isPresent()) {
-                            PersonalityAnswer answer = findAnswer.get();
-                            // 입력값 없으면 삭제
-                            if (answerDto.emptyValueCheck()) {
-                                personalityAnswerRepository.delete(answer);
-                            } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
-                                if (!answer.checkSameValue(answerDto)) {
-                                    Optional<TypeIndicator> indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
-                                    if (indicator.isPresent()) {
-                                        answerDto.setTypeIndicator(indicator.get());
-                                        answer.updateAnswerInfo(answerDto);
-                                        personalityAnswerRepository.save(answer);
-                                    } else {
-                                        throw new NotFoundEntityException();
-                                    }
-                                }
-                            }
-                        } else {
-                            throw new NotFoundEntityException();
-                        }
-                    } else {
-                        if (answerDto.emptyValueCheck()) {
-                            // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
-                        } else {
+                    PersonalityAnswer answer = null;
+                    // 삭제한 데이터가 아니면
+                    if(answerDto.getDeleted() != 1) {
+                        // 신규 데이터면 엔티티 새로 만들어 주기
+                        if (answerDto.isNewEntity()) {
                             Optional<TypeIndicator> indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
                             if(indicator.isPresent()) {
-                                PersonalityAnswer answer = new PersonalityAnswer(
-                                        question,
-                                        testCodeInfo.get(),
-                                        answerDto.getAnswer(),
-                                        answerDto.getPoint(),
-                                        answerDto.getTendency(),
-                                        answerDto.getAnswerImage(),
-                                        indicator.get()
-                                );
+                                if(question == null) {
+                                    question = new PersonalityQuestion(questionDto, testCodeInfo.get());
+                                }
+                                answerDto.setTypeIndicator(indicator.get());
+                                answer = new PersonalityAnswer(answerDto, question, testCodeInfo.get());
                                 personalityAnswerRepository.save(answer);
                             } else {
                                 throw new NotFoundEntityException();
                             }
+                        } else {
+                            // 신규엔티티 아니고 업데이트된 데이터 있으면 업데이트
+                            if(answerDto.getUpdated() == 1) {
+                                Optional<TypeIndicator> findIndicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
+                                if (findIndicator.isPresent()) {
+                                    answerDto.setTypeIndicator(findIndicator.get());
+                                    answer = new PersonalityAnswer(answerDto, question, testCodeInfo.get());
+                                    personalityAnswerRepository.save(answer);
+                                } else {
+                                    throw new NotFoundEntityException();
+                                }
+                            }
+                        }
+                    } else {
+                        // 삭제데이터이면서 신규데이터가 아니라면 삭제
+                        if(!answerDto.isNewEntity()) {
+                            personalityAnswerRepository.deleteById(answerDto.getId());
                         }
                     }
+                }
+            } else {
+                // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
+                if(!questionDto.isNewEntity()) {
+                    personalityQuestionRepository.deleteById(questionDto.getId());
                 }
             }
 

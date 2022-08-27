@@ -56,6 +56,14 @@ public class PersonalityQuestion {
         this.questionImage = questionDto.getQuestionImage();
     }
 
+    public PersonalityQuestion(QuestionDto questionDto, TestCodeInfo testCode) {
+        this.id = questionDto.getId();
+        this.testCode = testCode;
+        this.question = questionDto.getQuestion();
+        this.num = questionDto.getNum();
+        this.questionImage = questionDto.getQuestionImage();
+    }
+
     public PersonalityQuestion(TestCodeInfo testCode, String question, int num) {
         this.testCode = testCode;
         this.question = question;

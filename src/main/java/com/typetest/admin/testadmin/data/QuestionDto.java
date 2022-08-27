@@ -18,6 +18,9 @@ public class QuestionDto {
     private String questionImage;
     private List<AnswerDto> answerList = new ArrayList<>();
 
+    private Integer updated = 0;
+    private Integer deleted = 0;
+
     public QuestionDto(PersonalityQuestion question) {
         this.id = question.getId();
         this.question = question.getQuestion();
@@ -31,5 +34,9 @@ public class QuestionDto {
         return  (question == null || question.isEmpty()) &&
                 (questionImage == null || questionImage.isEmpty()) &&
                 num == null;
+    }
+
+    public boolean isNewEntity() {
+        return id == null;
     }
 }

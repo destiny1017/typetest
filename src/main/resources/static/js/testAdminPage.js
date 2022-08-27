@@ -14,6 +14,22 @@ $(document).ready( () => {
         $(e.target).css("pointer-events", "none");
     });
     
+    // 값 변경시 update
+    $("#tab3Form [name]").focusin( (e) => {
+        prevValue = e.target.value;
+    });
+
+    $("#tab3Form [name]").focusout( (e) => {   
+        let nowValue = e.target.value;
+
+        if(prevValue != nowValue) {
+            let target = e.target.name;
+            let targetUpdate = target.substr(0, target.lastIndexOf(".")) + ".updated";
+            $(`[name="${targetUpdate}"]`).val(1);
+        }
+
+    });
+    
     /**
      *  tab1 event
      */
@@ -167,13 +183,16 @@ $(document).ready( () => {
         let targetNum = e.target.id.replace("questionDel", "");
         $("#questionDiv" + targetNum).hide();
         $("#questionDiv" + targetNum + ' input:not([type="hidden"])').val("");
+        $(`[name="questionList[${targetNum - 1}].deleted"]`).val(1);
     };
 
     function answerDeleteEvent(e) {
         let targetNum = e.target.id.replace("delAnswer", "");
+        let targetIndexes = targetNum.split("-"); // delAnswer-n-n
         $("#answerDiv" + targetNum).hide();
         $("#answerDiv" + targetNum + ' input:not([type="hidden"])').val("");
         $("#answerDiv" + targetNum + " option").remove();
+        $(`[name="questionList[${targetIndexes[1] - 1}].answerList[${targetIndexes[2]}].deleted"]`).val(1);
     };
     
     function answerInfoHoverInEvent(e) {
@@ -225,6 +244,12 @@ $(document).ready( () => {
     function typeDescriptionInfoHoverOutEvent(e) {
         let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
         $("#delTypeDescription" + targetId).hide();
+    }
+    
+    function setDeleteValue(e) {
+        let target = e.target.name;
+        let targetDelete = target.substr(0, target.lastIndexOf(".")) + ".updated";
+        $(`[name="${targetDelete}"]`).val(1);
     }
  
 
@@ -335,6 +360,8 @@ $(document).ready( () => {
                     </div>
                     <div class="questionContent-div collapse show" id="questionContentDiv${questionList.length + 1}">
                         <input type="hidden" name="questionList[${questionList.length}].id">
+                        <input type="hidden" name="questionList[${questionList.length}].updated" value="0">
+                        <input type="hidden" name="questionList[${questionList.length}].deleted" value="0">
                         <div class="questionInfo-div">
                             <div class="indicatorElement-div">
                                 <label>질문 이미지</label>

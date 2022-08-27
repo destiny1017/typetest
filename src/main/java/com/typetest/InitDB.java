@@ -118,20 +118,24 @@ public class InitDB {
 
                 List<PersonalityQuestion> questionList = new ArrayList<>();
 
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4));
-
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8));
-
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11));
-                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12));
+                for (int i = 1; i <= 12; i++) {
+                     questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion"+i, i));
+                }
+//
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4));
+//
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8));
+//
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11));
+//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12));
 
                 int cnt = 0;
                 for (int i = 0; i < questionList.size(); i++) {
@@ -144,7 +148,7 @@ public class InitDB {
                                 .typeIndicator(indicatorList[cnt])
                                 .build());
                     }
-                    if((i+1) % 4 == 0) cnt++;
+                    if((i+1) % (questionList.size() / 3) == 0 && cnt < indicatorList.length-1) cnt++;
                 }
 
                 personalityQuestionRepository.saveAll(questionList);

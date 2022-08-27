@@ -71,4 +71,15 @@ public class PersonalityAnswer {
         this.answerImage = answerImage;
         this.typeIndicator = typeIndicator;
     }
+
+    public PersonalityAnswer(AnswerDto answerDto, PersonalityQuestion question, TestCodeInfo testCode) {
+        this.id = answerDto.getId();
+        this.testCode = testCode;
+        this.answer = answerDto.getAnswer();
+        this.point = answerDto.getPoint();
+        this.tendency = answerDto.getTendency();
+        this.answerImage = answerDto.getAnswerImage();
+        this.typeIndicator = answerDto.getTypeIndicator();
+        this.personalityQuestion = question;
+    }
 }
