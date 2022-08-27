@@ -15,11 +15,11 @@ $(document).ready( () => {
     });
     
     // 값 변경시 update
-    $("#tab3Form [name]").focusin( (e) => {
+    $(".tab-contentsForm [name]").focusin( (e) => {
         prevValue = e.target.value;
     });
 
-    $("#tab3Form [name]").focusout( (e) => {   
+    $(".tab-contentsForm [name]").focusout( (e) => {   
         let nowValue = e.target.value;
 
         if(prevValue != nowValue) {
@@ -152,12 +152,15 @@ $(document).ready( () => {
         let targetNum = e.target.id.replace("indiDel", "");
         $("#indicatorDiv" + targetNum).hide();
         $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
+        $(`[name="indicatorList[${targetNum - 1}].deleted"]`).val(1);
     }
 
     function settingDeleteEvent(e) {
         let targetNum = e.target.id.replace("delSetting", "");
+        let targetIndexes = targetNum.split("-");
         $("#settingDiv" + targetNum).hide();
         $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val("");
+        $(`[name="indicatorList[${targetIndexes[1] - 1}].indicatorSettings[${targetIndexes[2]}].deleted"]`).val(1);
     }
 
     function settingInfoHoverInEvent(e) {
@@ -210,13 +213,16 @@ $(document).ready( () => {
         let targetNum = e.target.id.replace("typeInfoDel", "");
         $("#typeInfoDiv" + targetNum).hide();
         $("#typeInfoDiv" + targetNum + ' input:not([type="hidden"])').val("");
+        $(`[name="typeInfoList[${targetNum - 1}].deleted"]`).val(1);
     };
 
     function typeImageDeleteEvent(e) {
         let targetNum = e.target.id.replace("delTypeImage", "");
+        let targetIndexes = targetNum.split("-");
         $("#typeImageDiv" + targetNum).hide();
         $("#typeImageDiv" + targetNum + ' input:not([type="hidden"])').val("");
         $("#typeImageDiv" + targetNum + " option").remove();
+        $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeImageList[${targetIndexes[2]}].deleted"]`).val(1);
     };
     
     function typeImageInfoHoverInEvent(e) {
@@ -231,9 +237,11 @@ $(document).ready( () => {
     
     function typeDescriptionDeleteEvent(e) {
         let targetNum = e.target.id.replace("delTypeDescription", "");
+        let targetIndexes = targetNum.split("-");
         $("#typeDescriptionDiv" + targetNum).hide();
         $("#typeDescriptionDiv" + targetNum + ' input:not([type="hidden"])').val("");
         $("#typeDescriptionDiv" + targetNum + " option").remove();
+        $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeDescriptionList[${targetIndexes[2]}].deleted"]`).val(1);
     };
     
     function typeDescriptionInfoHoverInEvent(e) {
@@ -244,12 +252,6 @@ $(document).ready( () => {
     function typeDescriptionInfoHoverOutEvent(e) {
         let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
         $("#delTypeDescription" + targetId).hide();
-    }
-    
-    function setDeleteValue(e) {
-        let target = e.target.name;
-        let targetDelete = target.substr(0, target.lastIndexOf(".")) + ".updated";
-        $(`[name="${targetDelete}"]`).val(1);
     }
  
 
@@ -262,6 +264,9 @@ $(document).ready( () => {
                     <p><span class="material-icons">edit</span>유형 지표 정보</p>
                     <span class="material-icons indicatorDelete" id="indiDel${indicatorList.length + 1}">close</span>
                 </div>
+                <input type="hidden" name="indicatorList[${indicatorList.length}].id">
+                <input type="hidden" name="indicatorList[${indicatorList.length}].updated" value="0">
+                <input type="hidden" name="indicatorList[${indicatorList.length}].deleted" value="0">
                 <div class="indicatorInfo-div">
                     <div class="indicatorElement-div">
                         <label>지표 번호</label>
@@ -303,6 +308,9 @@ $(document).ready( () => {
         `
             <div class="settingInfo-div"
                 id="settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
+                <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].id">
+                <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].updated" value="0">
+                <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].deleted" value="0">
                 <div class="settingElement-div">
                     <label>지표 코드</label>
                     <input type="text" class="form-control code-input"
@@ -418,6 +426,8 @@ $(document).ready( () => {
                 <span class="material-icons answerDelete" style="display: none;"
                       id="delAnswer-${targetNum}-${questionList[targetNum-1].answerList.length}">close</span>
                 <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].id">
+                <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].updated" value="0">
+                <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].deleted" value="0">
                 <div class="answerElement-div answerContent-div">
                     <label>답변 이미지</label>
                     <input type="text" class="form-control code-input"
@@ -500,7 +510,9 @@ $(document).ready( () => {
                     <span class="material-icons typeInfoDelete" id="typeInfoDel${typeInfoList.length + 1}">close</span>
                 </div>
                 <div class="typeInfoContent-div collapse" id="typeInfoContentDiv${typeInfoList.length + 1}">
-                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].id"">
+                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].id">
+                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].updated" value="0">
+                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].deleted" value="0">
                     <div class="typeImage-div">
                         <div class="typeImageTitle-div">
                             <label>결과 이미지</label>
@@ -528,7 +540,9 @@ $(document).ready( () => {
                         <div class="typeRelationInfo-div" id="typeRelationDiv-${typeInfoList.length + 1}">
                             <span class="material-icons typeRelationDelete" style="display: none;"
                                   id="delTypeRelation-${typeInfoList.length + 1}">close</span>
-                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.id"">
+                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.id">
+                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.updated" value="0">
+                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.deleted" value="0">
                             <div class="typeRelationElement-div typeRelationContent-div">
                                 <label>Best 유형</label>
                                 <select class="typeRelation-select form-select" name="typeInfoList[${typeInfoList.length}].typeRelation.bestTypeId"">
@@ -579,17 +593,19 @@ $(document).ready( () => {
             <div class="typeImageInfo-div" id="typeImageDiv-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">
                 <span class="material-icons typeImageDelete" style="display: none;"
                       id="delTypeImage-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">close</span>
-                <input type="hidden" name="typeInfoList[${targetNum}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].id">
+                <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].id">
+                <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].updated" value="0">
+                <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].deleted" value="0">
                 <div class="typeImageDetail-div">
                     <div class="typeImageNum-div typeImageContent-div">
                         <label>이미지 번호</label>
                         <input type="text" class="form-control code-input"
-                               name="typeInfoList[${targetNum}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imgNum">
+                               name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imgNum">
                     </div>
                     <div class="typeImageUrl-div typeImageContent-div">
                         <label>이미지 URL</label>
                         <input type="text" class="form-control"
-                               name="typeInfoList[${targetNum}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imageUrl">
+                               name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imageUrl">
                     </div>
                 </div>
                 <div class="typeImagePicture-div">
@@ -627,16 +643,18 @@ $(document).ready( () => {
             <div class="typeDescriptionInfo-div" id="typeDescriptionDiv-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">
                 <span class="material-icons typeDescriptionDelete" style="display: none;"
                       id="delTypeDescription-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">close</span>
-                <input type="hidden" name="typeInfoList[${targetNum}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].id">
+                <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].id">
+                <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].updated" value="0">
+                <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].deleted" value="0">
                 <div class="typeDescriptionElement-div typeDescriptionContent-div">
                     <label>설명 번호</label>
                     <input type="text" class="form-control code-input"
-                           name="typeInfoList[${targetNum}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].descNum">
+                           name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].descNum">
                 </div>
                 <div class="typeDescriptionElement-div typeDescriptionContent-div">
                     <label>설명</label>
                     <textarea type="text" class="form-control"
-                           name="typeInfoList[${targetNum}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].description">
+                           name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].description">
                     </textarea>
                 </div>
             </div>

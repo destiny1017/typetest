@@ -93,6 +93,8 @@
                         <span class="material-icons indicatorDelete" th:id="|indiDel${indicatorStat.index + 1}|">close</span>
                     </div>
                     <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].id}">
+                    <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].updated}">
+                    <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].deleted}">
                     <div class="indicatorInfo-div">
                         <div class="indicatorElement-div">
                             <label>지표 번호</label>
@@ -109,6 +111,8 @@
                         <div th:each="indicatorSetting, stat : *{indicatorList[__${indicatorStat.index}__].indicatorSettings}"
                              class="settingInfo-div" th:id="|settingDiv-${indicatorStat.index + 1}-${stat.index}|">
                             <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].id}">
+                            <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].updated}">
+                            <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].deleted}">
                             <div class="settingElement-div">
                                 <label>지표 코드</label>
                                 <input type="text" class="form-control code-input"
@@ -242,6 +246,9 @@
                     <p><span class="material-icons">edit</span>유형 정보</p>
                 </div>
                 <div class="typeInfo-div" th:each="typeInfo : *{typeInfoList}" th:id="|typeInfoDiv${typeInfoStat.index + 1}|">
+                    <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].id}">
+                    <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].updated}">
+                    <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].deleted}">
                     <div class="typeInfo-title">
                         <div class="typeInfoHeadInfo-div">
                             <button class="fold-btn collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false"
@@ -258,7 +265,6 @@
                         <span class="material-icons typeInfoDelete" th:id="|typeInfoDel${typeInfoStat.index + 1}|">close</span>
                     </div>
                     <div class="typeInfoContent-div collapse" th:id="|typeInfoContentDiv${typeInfoStat.index + 1}|">
-                        <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].id}">
                         <div class="typeImage-div">
                             <div class="typeImageTitle-div">
                                 <label>결과 이미지</label>
@@ -268,6 +274,8 @@
                                 <span class="material-icons typeImageDelete" style="display: none;"
                                       th:id="|delTypeImage-${typeInfoStat.index + 1}-${stat.index}|">close</span>
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].id}">
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].updated}">
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].deleted}">
                                 <div class="typeImageDetail-div">
                                     <div class="typeImageNum-div typeImageContent-div">
                                         <label>이미지 번호</label>
@@ -301,6 +309,8 @@
                                 <span class="material-icons typeDescriptionDelete" style="display: none;"
                                       th:id="|delTypeDescription-${typeInfoStat.index + 1}-${stat.index}|">close</span>
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].id}">
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].updated}">
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].deleted}">
                                 <div class="typeDescriptionElement-div typeDescriptionContent-div">
                                     <label>설명 번호</label>
                                     <input type="text" class="form-control code-input"
@@ -326,6 +336,8 @@
                                 <span class="material-icons typeRelationDelete" style="display: none;"
                                       th:id="|delTypeRelation-${typeInfoStat.index + 1}|">close</span>
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.id}">
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.updated}">
+                                <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.deleted}">
                                 <div class="typeRelationElement-div typeRelationContent-div">
                                     <label>Best 유형</label>
                                     <select class="typeRelation-select form-select" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.bestTypeId}">
