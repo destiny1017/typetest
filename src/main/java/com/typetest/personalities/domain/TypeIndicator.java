@@ -44,4 +44,11 @@ public class TypeIndicator {
         this.indicatorNum = indicatorNum;
         this.indicatorName = indicatorName;
     }
+
+    public TypeIndicator(TestCodeInfo testCode, TypeIndicatorDto typeIndicatorDto) {
+        this.id = typeIndicatorDto.getId();
+        this.testCode = testCode;
+        this.indicatorNum = typeIndicatorDto.getIndicatorNum();
+        this.indicatorName = typeIndicatorDto.getIndicatorName();
+    }
 }

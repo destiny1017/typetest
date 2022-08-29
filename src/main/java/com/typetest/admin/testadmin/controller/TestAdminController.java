@@ -104,6 +104,8 @@ public class TestAdminController {
 
     @PostMapping("/testAdmin/step4Submit")
     public String step4Submit(@ModelAttribute TypeInfoForm typeInfoForm) {
+        List<TypeInfoDto> typeInfoList = typeInfoForm.getTypeInfoList();
+        testAdminService.saveTypeInfo(typeInfoList, typeInfoForm.getTypeInfoTestCode());
         return "redirect:/testAdminPage/" + typeInfoForm.getTypeInfoTestCode() + "/4";
     }
 

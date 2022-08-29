@@ -16,6 +16,7 @@ public interface TestAdminService {
     List<TypeIndicatorDto> findIndicatorInfo(String testCode);
     int saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode);
     int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode);
+    int saveTypeInfo(List<TypeInfoDto> typeInfoDtoList, String testCode);
     List<QuestionDto> findQuestionInfo(String testCode);
     List<TypeInfoDto> findTypeInfo(String testCode);
     List<String> getEssentialTypeList(String testCode);

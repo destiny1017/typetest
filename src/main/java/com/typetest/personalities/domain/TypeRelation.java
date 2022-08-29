@@ -1,5 +1,6 @@
 package com.typetest.personalities.domain;
 
+import com.typetest.admin.testadmin.data.TypeRelationDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
 public class TypeRelation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -32,6 +33,13 @@ public class TypeRelation {
     }
 
     public TypeRelation(TypeInfo typeInfo, TypeInfo bestType, TypeInfo worstType) {
+        this.typeInfo = typeInfo;
+        this.bestType = bestType;
+        this.worstType = worstType;
+    }
+
+    public TypeRelation(TypeRelationDto typeRelationDto) {
+        this.id = typeRelationDto.getId();
         this.typeInfo = typeInfo;
         this.bestType = bestType;
         this.worstType = worstType;

@@ -1,5 +1,6 @@
 package com.typetest.personalities.domain;
 
+import com.typetest.admin.testadmin.data.TypeDescriptionDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,5 +29,12 @@ public class TypeDescription {
         this.typeInfo = typeInfo;
         this.descNum = descNum;
         this.description = description;
+    }
+
+    public TypeDescription(TypeInfo typeInfo, TypeDescriptionDto typeDescriptionDto) {
+        this.id = typeDescriptionDto.getId();
+        this.typeInfo = typeInfo;
+        this.descNum = typeDescriptionDto.getDescNum();
+        this.description = typeDescriptionDto.getDescription();
     }
 }

@@ -46,4 +46,12 @@ public class IndicatorSetting {
         this.cuttingPoint = cuttingPoint;
         this.result = result;
     }
+
+    public IndicatorSetting(TypeIndicator typeIndicator, TestCodeInfo testCode, IndicatorSettingDto indicatorSettingDto) {
+        this.id = indicatorSettingDto.getId();
+        this.typeIndicator = typeIndicator;
+        this.testCode = testCode;
+        this.cuttingPoint = indicatorSettingDto.getCuttingPoint();
+        this.result = indicatorSettingDto.getResult();
+    }
 }

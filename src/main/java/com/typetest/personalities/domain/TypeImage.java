@@ -1,5 +1,6 @@
 package com.typetest.personalities.domain;
 
+import com.typetest.admin.testadmin.data.TypeImageDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,5 +29,12 @@ public class TypeImage {
         this.typeInfo = typeInfo;
         this.imgNum = imgNum;
         this.imageUrl = imageUrl;
+    }
+
+    public TypeImage(TypeInfo typeInfo, TypeImageDto typeImageDto) {
+        this.id = typeImageDto.getId();
+        this.typeInfo = typeInfo;
+        this.imgNum = typeImageDto.getImgNum();
+        this.imageUrl = typeImageDto.getImageUrl();
     }
 }

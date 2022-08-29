@@ -147,7 +147,6 @@ $(document).ready( () => {
         typeDescriptionInfoHoverOutEvent(e);
     });
 
-
     function indicatorDeleteEvent(e) {
         let targetNum = e.target.id.replace("indiDel", "");
         $("#indicatorDiv" + targetNum).hide();
@@ -654,8 +653,7 @@ $(document).ready( () => {
                 <div class="typeDescriptionElement-div typeDescriptionContent-div">
                     <label>설명</label>
                     <textarea type="text" class="form-control"
-                           name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].description">
-                    </textarea>
+                           name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].description"></textarea>
                 </div>
             </div>
         `
@@ -676,6 +674,13 @@ $(document).ready( () => {
         }, (e) => {
             typeDescriptionInfoHoverOutEvent(e);
         });
+    }
+    
+    
+    function callEssential(url) {
+        if(confirm("필수유형세팅을 진행하면 기존 입력값이 초기화됩니다.\n진행하시겠습니까?")) {
+            location.href = url;
+        }
     }
     
     

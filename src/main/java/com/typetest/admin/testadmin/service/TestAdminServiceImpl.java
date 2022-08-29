@@ -23,6 +23,9 @@ public class TestAdminServiceImpl implements TestAdminService {
     private final PersonalityQuestionRepository personalityQuestionRepository;
     private final PersonalityAnswerRepository personalityAnswerRepository;
     private final TypeInfoRepository typeInfoRepository;
+    private final TypeImageRepository typeImageRepository;
+    private final TypeDescriptionRepository typeDescriptionRepository;
+    private final TypeRelationRepository typeRelationRepository;
 
     @Override
     public TestInfoDto createTestInfoDto(String testCode) {
@@ -101,73 +104,41 @@ public class TestAdminServiceImpl implements TestAdminService {
     public int saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode) {
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
         for (TypeIndicatorDto typeIndicatorDto : indicatorDtoList) {
-            TypeIndicator indicator;
-            if(typeIndicatorDto.getId() != null) {
-                Optional<TypeIndicator> findTypeIndicator = typeIndicatorRepository.findById(typeIndicatorDto.getId());
-                if(findTypeIndicator.isPresent()) {
-                    indicator = findTypeIndicator.get();
-                    // 넘버와 네임에 입력된 값 없으면 삭제
-                    if(typeIndicatorDto.emptyValueCheck()) {
-                        typeIndicatorRepository.delete(indicator);
-                        indicator = null;
-                    } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
-                        if(!indicator.checkSameValue(typeIndicatorDto)) {
-                            indicator.updateIndicatorInfo(typeIndicatorDto);
-                            typeIndicatorRepository.save(indicator);
-                        }
-                    }
-                } else {
-                    throw new NotFoundEntityException();
-                }
-            } else {
-                if(typeIndicatorDto.emptyValueCheck()) {
-                    // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
-                    indicator = null;
-                } else {
-                    // DTO에 id값 없고 value값은 있으면, 즉 신규 엔티티면 새로 만들기
-                    indicator = new TypeIndicator(
-                            testCodeInfo.get(),
-                            typeIndicatorDto.getIndicatorNum(),
-                            typeIndicatorDto.getIndicatorName());
-
+            TypeIndicator indicator = null;
+            // 삭제된 데이터가 아니라면..
+            if(typeIndicatorDto.getDeleted() != 1) {
+                // 신규 엔티티이거나 업데이트된 엔티티면 save
+                if(typeIndicatorDto.isNewEntity() || typeIndicatorDto.getUpdated() == 1) {
+                    indicator = new TypeIndicator(testCodeInfo.get(), typeIndicatorDto);
                     typeIndicatorRepository.save(indicator);
                 }
-            }
 
-            if(indicator != null) {
+                // 자식 리스트 순회
                 for (IndicatorSettingDto indicatorSettingDto : typeIndicatorDto.getIndicatorSettings()) {
-                    if(indicatorSettingDto.getId() != null) {
-                        Optional<IndicatorSetting> findSetting = indicatorSettingRepository.findById(indicatorSettingDto.getId());
-                        if (findSetting.isPresent()) {
-                            IndicatorSetting indicatorSetting = findSetting.get();
-                            // 포인트와 결과에 입력된 값 없으면 삭제
-                            if(indicatorSettingDto.emptyValueCheck()) {
-                                indicatorSettingRepository.delete(indicatorSetting);
-                            } else { // 값 있으면 기존 값과 같은지 체크 후 다르면 업데이트
-                                if(!indicatorSetting.checkSameValue(indicatorSettingDto)) {
-                                    indicatorSetting.updateIndicatorSetting(indicatorSettingDto);
-                                    indicatorSettingRepository.save(indicatorSetting);
-                                }
+                    IndicatorSetting indicatorSetting = null;
+                    // 삭제된 데이터가 아니라면..
+                    if(indicatorSettingDto.getDeleted() != 1) {
+                        // 신규 엔티티이거나 업데이트된 엔티티면 save
+                        if(indicatorSettingDto.isNewEntity() || indicatorSettingDto.getUpdated() == 1) {
+                            if(indicator == null) {
+                                indicator = new TypeIndicator(testCodeInfo.get(), typeIndicatorDto);
                             }
-                        } else {
-                            throw new NotFoundEntityException();
+                            indicatorSetting = new IndicatorSetting(indicator, testCodeInfo.get(), indicatorSettingDto);
+                            indicatorSettingRepository.save(indicatorSetting);
                         }
                     } else {
-                        if(indicatorSettingDto.emptyValueCheck()) {
-                            // id값도 value값도 없는 데이터는 무시. 신규생성 눌렀다 취소한 엔티티임
-                        } else {
-                            // Dto에 ID값 없고 value값 있는 신규 엔티티면 생성
-                            IndicatorSetting indicatorSetting = new IndicatorSetting(
-                                    indicator,
-                                    testCodeInfo.get(),
-                                    indicatorSettingDto.getCuttingPoint(),
-                                    indicatorSettingDto.getResult());
-                            indicatorSettingRepository.save(indicatorSetting);
+                        // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
+                        if(!indicatorSettingDto.isNewEntity()) {
+                            indicatorSettingRepository.deleteById(indicatorSettingDto.getId());
                         }
                     }
                 }
+            } else {
+                // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
+                if(!typeIndicatorDto.isNewEntity()) {
+                    typeIndicatorRepository.deleteById(typeIndicatorDto.getId());
+                }
             }
-
         }
         return 1;
     }
@@ -179,25 +150,19 @@ public class TestAdminServiceImpl implements TestAdminService {
             PersonalityQuestion question = null;
             // 삭제된 데이터가 아니라면..
             if (questionDto.getDeleted() != 1) {
-                // 신규 엔티티면 새로 만들기
-                if (questionDto.isNewEntity()) {
+                // 신규 엔티티 혹은 업데이트된 엔티티면 save
+                if (questionDto.isNewEntity() || questionDto.getUpdated() == 1) {
                     question = new PersonalityQuestion(questionDto, testCodeInfo.get());
                     personalityQuestionRepository.save(question);
-                } else {
-                    // 신규 엔티티 아니고 업데이트된 내용 있으면 업데이트
-                    if(questionDto.getUpdated() == 1) {
-                        question = new PersonalityQuestion(questionDto, testCodeInfo.get());
-                        personalityQuestionRepository.save(question);
-                    }
                 }
 
-                // 답변 리스트 순회
+                // 자식 리스트 순회
                 for (AnswerDto answerDto : questionDto.getAnswerList()) {
                     PersonalityAnswer answer = null;
                     // 삭제한 데이터가 아니면
                     if(answerDto.getDeleted() != 1) {
                         // 신규 데이터면 엔티티 새로 만들어 주기
-                        if (answerDto.isNewEntity()) {
+                        if (answerDto.isNewEntity() || answerDto.getUpdated() == 1) {
                             Optional<TypeIndicator> indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
                             if(indicator.isPresent()) {
                                 if(question == null) {
@@ -208,18 +173,6 @@ public class TestAdminServiceImpl implements TestAdminService {
                                 personalityAnswerRepository.save(answer);
                             } else {
                                 throw new NotFoundEntityException();
-                            }
-                        } else {
-                            // 신규엔티티 아니고 업데이트된 데이터 있으면 업데이트
-                            if(answerDto.getUpdated() == 1) {
-                                Optional<TypeIndicator> findIndicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
-                                if (findIndicator.isPresent()) {
-                                    answerDto.setTypeIndicator(findIndicator.get());
-                                    answer = new PersonalityAnswer(answerDto, question, testCodeInfo.get());
-                                    personalityAnswerRepository.save(answer);
-                                } else {
-                                    throw new NotFoundEntityException();
-                                }
                             }
                         }
                     } else {
@@ -283,5 +236,87 @@ public class TestAdminServiceImpl implements TestAdminService {
             getAllCaseOfType(depth+1, m, valueMap, tmpArr, result);
         }
         return result;
+    }
+
+    @Override
+    public int saveTypeInfo(List<TypeInfoDto> typeInfoDtoList, String testCode) {
+        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        for (TypeInfoDto typeInfoDto : typeInfoDtoList) {
+            TypeInfo typeInfo = null;
+            // 삭제된 데이터가 아니라면..
+            if(typeInfoDto.getDeleted() != 1) {
+                // 신규 엔티티이거나 업데이트된 엔티티면 save
+                if(typeInfoDto.isNewEntity() || typeInfoDto.getUpdated() == 1) {
+                    typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                    typeInfoRepository.save(typeInfo);
+                }
+
+                // 1:1 관계인 typeRelation 처리
+                TypeRelationDto typeRelationDto = typeInfoDto.getTypeRelation();
+                if (typeRelationDto.getUpdated() == 1) {
+                    if (typeRelationDto.isNewEntity()) {
+                        if(typeInfo == null) {
+                            typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                        }
+                        typeRelationDto.setTypeInfoId(typeInfo.getId());
+                        typeRelationRepository.insertTypeRelation(typeRelationDto);
+                    } else {
+                        typeRelationRepository.updateTypeRelation(typeRelationDto);
+                    }
+                }
+
+                // 자식 리스트 순회
+                for (TypeImageDto typeImageDto : typeInfoDto.getTypeImageList()) {
+                    TypeImage typeImage = null;
+                    // 삭제된 데이터가 아니라면..
+                    if(typeImageDto.getDeleted() != 1) {
+                        // 신규 엔티티면 새로 만들기
+                        if(typeImageDto.isNewEntity() || typeImageDto.getUpdated() == 1) {
+                            if(typeInfo == null) {
+                                typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                            }
+                            typeImage = new TypeImage(typeInfo, typeImageDto);
+                            typeImageRepository.save(typeImage);
+                        }
+
+                    } else {
+                        // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
+                        if(!typeImageDto.isNewEntity()) {
+                            typeImageRepository.deleteById(typeImageDto.getId());
+                        }
+                    }
+                }
+
+                // 자식 리스트 순회
+                for (TypeDescriptionDto typeDescriptionDto : typeInfoDto.getTypeDescriptionList()) {
+                    TypeDescription typeDescription = null;
+                    // 삭제된 데이터가 아니라면..
+                    if(typeDescriptionDto.getDeleted() != 1) {
+                        // 신규 엔티티면 새로 만들기
+                        if(typeDescriptionDto.isNewEntity() || typeDescriptionDto.getUpdated() == 1) {
+                            if(typeInfo == null) {
+                                typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                            }
+                            typeDescription = new TypeDescription(typeInfo, typeDescriptionDto);
+                            typeDescriptionRepository.save(typeDescription);
+                        }
+
+                    } else {
+                        // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
+                        if(!typeDescriptionDto.isNewEntity()) {
+                            typeDescriptionRepository.deleteById(typeDescriptionDto.getId());
+                        }
+                    }
+                }
+
+            } else {
+                // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
+                if(!typeInfoDto.isNewEntity()) {
+                    typeInfoRepository.deleteById(typeInfoDto.getId());
+                }
+            }
+
+        }
+        return 1;
     }
 }
