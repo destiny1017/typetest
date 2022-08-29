@@ -39,7 +39,6 @@ public class InitDB {
         public void init() {
             if(!env.getProperty("spring.profiles.active").equals("test")) {
                 // 임시 테스트코드
-//                TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
                 TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,
                         "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
                         "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.");
@@ -121,21 +120,6 @@ public class InitDB {
                 for (int i = 1; i <= 12; i++) {
                      questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion"+i, i));
                 }
-//
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion1", 1));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion2", 2));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion3", 3));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion4", 4));
-//
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion5", 5));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion6", 6));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion7", 7));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion8", 8));
-//
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion9", 9));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion10", 10));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion11", 11));
-//                questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion12", 12));
 
                 int cnt = 0;
                 for (int i = 0; i < questionList.size(); i++) {
