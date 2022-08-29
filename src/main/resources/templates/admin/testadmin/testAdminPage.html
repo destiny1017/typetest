@@ -367,8 +367,8 @@
                 </div>
                 <div class="tabSubmit-div">
                     <button class="btn btn-primary" type="submit">저장</button>
-                    <button class="btn btn-outline-warning" id="essentialTypeBtn"
-                       th:onclick="|callEssential(@{/testAdminPage/${typeInfoForm.typeInfoTestCode}/essentialType})|">필수 유형 세팅</button>
+                    <a class="btn btn-info" th:testCode="${testCode}"
+                        th:onclick="callEssential(this.getAttribute('testCode'))">필수 유형 세팅</a>
                 </div>
             </form>
         </div>

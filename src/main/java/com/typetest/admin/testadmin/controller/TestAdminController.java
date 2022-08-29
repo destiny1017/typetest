@@ -75,6 +75,7 @@ public class TestAdminController {
         model.addAttribute("indicatorForm", indicatorForm);
         model.addAttribute("questionForm", questionForm);
         model.addAttribute("typeInfoForm", typeInfoForm);
+        model.addAttribute("testCode", testCode);
 
         if(tab == null) tab = 1;
         model.addAttribute("tab", tab);

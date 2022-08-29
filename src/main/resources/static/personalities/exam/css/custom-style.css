@@ -523,6 +523,10 @@ div.add-icon {
     cursor: pointer;
 }
 
+.tabSubmit-div > .btn-info {
+    color: white;
+}
+
 
 /***********************************************/
 

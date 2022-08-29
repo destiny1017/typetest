@@ -676,12 +676,7 @@ $(document).ready( () => {
         });
     }
     
-    
-    function callEssential(url) {
-        if(confirm("필수유형세팅을 진행하면 기존 입력값이 초기화됩니다.\n진행하시겠습니까?")) {
-            location.href = url;
-        }
-    }
+
     
     
     $('input[name="answerType"]').trigger("change"); // 화면 최초 로딩 후 테스트 방식에 따른 tab3 요소 변경
@@ -707,3 +702,11 @@ $(document).ready( () => {
     }
 
 });
+
+    
+function callEssential(testCode) {
+    
+    if(confirm("필수유형세팅을 진행하면 기존 입력값이 초기화됩니다.\n진행하시겠습니까?")) {
+        location.href = `/testAdminPage/${testCode}/essentialType`;
+    }
+}
