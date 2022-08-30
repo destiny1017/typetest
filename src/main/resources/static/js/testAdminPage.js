@@ -359,9 +359,9 @@ $(document).ready( () => {
                                 expand_more
                                 </span>
                             </button>
-                            <input type="text" class="q-num-input" name="questionList[${questionList.length}].num">
+                            <input type="text" class="q-num-input" name="questionList[${questionList.length}].num" placeholder="번호">
                             <div class="px-1"></div>
-                            <input type="text" class="q-name-input" name="questionList[${questionList.length}].question">
+                            <input type="text" class="q-name-input" name="questionList[${questionList.length}].question" placeholder="질문내용">
                         </div>
                         <span class="material-icons questionDelete" id="questionDel${questionList.length + 1}">close</span>
                     </div>
@@ -419,6 +419,7 @@ $(document).ready( () => {
             let optionStr = `<option value="${tendencyList[i]}">${val}</option>`;
             tendencyListOption += optionStr;
         });
+        
         let answerDiv =
         `
             <div class="answerInfo-div" id="answerDiv-${targetNum}-${questionList[targetNum-1].answerList.length}">
@@ -489,7 +490,7 @@ $(document).ready( () => {
             typeInfoListOption += optionStr;
         });
 
-        // 새롭게 추가될 questionDiv 내용
+        // 새롭게 추가될 typeInfoDiv 내용
         let typeInfoDiv =
         `
             <div class="typeInfo-div" id="typeInfoDiv${typeInfoList.length + 1}">
@@ -502,9 +503,9 @@ $(document).ready( () => {
                             expand_more
                             </span>
                         </button>
-                        <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode">
+                        <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode" placeholder="번호">
                         <div class="px-1"></div>
-                        <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName">
+                        <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName" placeholder="유형명">
                     </div>
                     <span class="material-icons typeInfoDelete" id="typeInfoDel${typeInfoList.length + 1}">close</span>
                 </div>
@@ -706,7 +707,7 @@ $(document).ready( () => {
     
 function callEssential(testCode) {
     
-    if(confirm("필수유형세팅을 진행하면 기존 입력값이 초기화됩니다.\n진행하시겠습니까?")) {
+    if(confirm("필수유형세팅을 진행하면 아직 저장하지 않은 값은 초기화됩니다.\n진행하시겠습니까?")) {
         location.href = `/testAdminPage/${testCode}/essentialType`;
     }
 }

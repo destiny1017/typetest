@@ -166,9 +166,11 @@
                                 expand_more
                                 </span>
                             </button>
-                            <input type="text" class="q-num-input" th:field="*{questionList[__${questionInfoStat.index}__].num}">
+                            <input type="text" class="q-num-input" placeholder="번호"
+                                   th:field="*{questionList[__${questionInfoStat.index}__].num}">
                             <div class="px-1"></div>
-                            <input type="text" class="q-name-input" th:field="*{questionList[__${questionInfoStat.index}__].question}">
+                            <input type="text" class="q-name-input" placeholder="질문내용"
+                                   th:field="*{questionList[__${questionInfoStat.index}__].question}">
                         </div>
                         <span class="material-icons questionDelete" th:id="|questionDel${questionInfoStat.index + 1}|" th:name="${questionInfoStat.index}">close</span>
                     </div>
@@ -258,9 +260,11 @@
                                 expand_more
                                 </span>
                             </button>
-                            <input type="text" class="typeCode-input" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeCode}">
+                            <input type="text" class="typeCode-input" placeholder="번호"
+                                   th:field="*{typeInfoList[__${typeInfoStat.index}__].typeCode}">
                             <div class="px-1"></div>
-                            <input type="text" class="typeName-input" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeName}">
+                            <input type="text" class="typeName-input" placeholder="유형명"
+                                   th:field="*{typeInfoList[__${typeInfoStat.index}__].typeName}">
                         </div>
                         <span class="material-icons typeInfoDelete" th:id="|typeInfoDel${typeInfoStat.index + 1}|">close</span>
                     </div>
