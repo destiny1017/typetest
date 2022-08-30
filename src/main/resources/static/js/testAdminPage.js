@@ -496,7 +496,7 @@ $(document).ready( () => {
             <div class="typeInfo-div" id="typeInfoDiv${typeInfoList.length + 1}">
                 <div class="typeInfo-title">
                     <div class="typeInfoHeadInfo-div">
-                        <button class="fold-btn collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false"
+                        <button class="fold-btn" type="button" data-bs-toggle="collapse" aria-expanded="true"
                                 data-bs-target="#typeInfoContentDiv${typeInfoList.length + 1}"
                                 aria-controls="typeInfoContentDiv${typeInfoList.length + 1}">
                             <span class="material-icons">
@@ -509,7 +509,7 @@ $(document).ready( () => {
                     </div>
                     <span class="material-icons typeInfoDelete" id="typeInfoDel${typeInfoList.length + 1}">close</span>
                 </div>
-                <div class="typeInfoContent-div collapse" id="typeInfoContentDiv${typeInfoList.length + 1}">
+                <div class="typeInfoContent-div collapse show" id="typeInfoContentDiv${typeInfoList.length + 1}">
                     <input type="hidden" name="typeInfoList[${typeInfoList.length}].id">
                     <input type="hidden" name="typeInfoList[${typeInfoList.length}].updated" value="0">
                     <input type="hidden" name="typeInfoList[${typeInfoList.length}].deleted" value="0">
