@@ -4,14 +4,12 @@ import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.login.repository.LoginRepository;
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.data.ExamQuestionDto;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
-import com.typetest.personalities.repository.TestResultDetailRepository;
-import com.typetest.personalities.repository.TestResultRepository;
-import com.typetest.personalities.repository.TestCodeInfoRepository;
-import com.typetest.personalities.repository.TypeInfoRepository;
+import com.typetest.personalities.repository.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +32,6 @@ class PersonalityTestServiceTest {
     private LoginRepository loginRepository;
 
     @Autowired
-//    @Qualifier("personalityTestServiceImpl")
     private PersonalityTestService personalityTestService;
 
     @Autowired
@@ -47,7 +44,57 @@ class PersonalityTestServiceTest {
     TestCodeInfoRepository testCodeInfoRepository;
 
     @Autowired
+    private PersonalityQuestionRepository personalityQuestionRepository;
+
+
+    @Autowired
     EntityManager em;
+
+    @Test
+    @DisplayName("EXAM 질문 정보 저장 테스트")
+    void getQuestionTest() {
+        //given
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
+
+        TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
+
+        em.persist(testCodeInfo1);
+        em.persist(testCodeInfo2);
+        em.persist(indicatorA);
+        em.flush();
+
+        //when
+        List<PersonalityQuestion> questionList = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion" + i, i));
+        }
+
+        for (int i = 0; i < questionList.size(); i++) {
+            for (int j = 1; j <= 5; j++) {
+                questionList.get(i).addAnswer(PersonalityAnswer.builder()
+                        .personalityQuestion(questionList.get(i))
+                        .testCode(testCodeInfo1)
+                        .point(j)
+                        .tendency(Tendency.A)
+                        .build());
+            }
+        }
+
+        personalityQuestionRepository.saveAll(questionList);
+
+        //when
+        List<List<ExamQuestionDto>> questions = personalityTestService.getQuestions("EXAMTEST");
+
+        //then
+        assertThat(questions).hasSize(2); // 12개이므로 2페이지
+        assertThat(questions.get(0)).hasSize(10); // 1페이지에 10개
+        assertThat(questions.get(1)).hasSize(2); // 2페이지에 2개
+        assertThat(questions.get(0).get(0).getAnswerList()).hasSize(5); //1페이지 첫번째 질문에 답변 5개
+        assertThat(questions.get(1).get(1).getAnswerList()).hasSize(5); //2페이지 두번째 질문에 답변 5개
+
+    }
 
     @Test
     @DisplayName("사용자 선택값으로 유형 결과 도출하는 로직 테스트")

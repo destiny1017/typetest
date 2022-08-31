@@ -1,4 +1,4 @@
-package com.typetest.personalities.exam.dto;
+package com.typetest.personalities.data;
 
 import com.typetest.personalities.domain.PersonalityQuestion;
 import lombok.Getter;
