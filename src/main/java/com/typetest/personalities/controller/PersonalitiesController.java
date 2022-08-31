@@ -30,31 +30,31 @@ public class PersonalitiesController {
     private final TestCodeInfoRepository testCodeInfoRepository;
 
     @GetMapping("/{testCode}/testMain")
-    public String examPath(@PathVariable String testCode, Model model) {
+    public String testPath(@PathVariable String testCode, Model model) {
         Optional<TestCodeInfo> testInfo = testCodeInfoRepository.findById(testCode);
         if (testInfo.isPresent()) {
             model.addAttribute("testInfo", testInfo.get());
         }
         model.addAttribute("testCode", testCode);
-        return "personalities/exam/examStart";
+        return "personalities/testStart";
     }
 
     @GetMapping("/{testCode}/testAnswer")
-    public String examTest(@PathVariable String testCode, Model model) {
+    public String testAnswer(@PathVariable String testCode, Model model) {
         Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
         model.addAttribute("testCode", testCode);
         model.addAttribute("questions", personalityTestService.getQuestions(testCode));
         model.addAttribute("questionCount", personalityTestService.getQuestionCnt(testCode));
         if(testCodeInfoOp.get().getAnswerType() == AnswerType.EXAM) {
-            return "personalities/exam/examTest";
+            return "personalities/examTest";
         } else if(testCodeInfoOp.get().getAnswerType() == AnswerType.CARD) {
-            return "personalities/exam/examTestSlide";
+            return "personalities/cardTest";
         }
-        return "personalities/exam/examTest";
+        return "personalities/examTest";
     }
 
-    @GetMapping("/examSubmit")
-    public String examSubmit(@RequestParam Map<String, String> answerMapParam, HttpSession session) {
+    @GetMapping("/testSubmit")
+    public String testSubmit(@RequestParam Map<String, String> answerMapParam, HttpSession session) {
         // 테스트코드 정보 파라미터 맵에서 추출
         String testCode = answerMapParam.get("testCode");
         answerMapParam.remove("testCode");
@@ -68,7 +68,7 @@ public class PersonalitiesController {
         HashMap<Integer, Long> answerMap = new HashMap<>();
         answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Long.parseLong(value)));
         answerInfo.setAnswer(answerMap);
-        answerInfo.setAnswerType(AnswerType.EXAM);
+        answerInfo.setAnswerType(testCodeInfo.get().getAnswerType());
         answerInfo.setTestCodeInfo(testCodeInfo.get());
 
         // 유형 도출
@@ -86,12 +86,12 @@ public class PersonalitiesController {
     }
 
     @GetMapping("/{testCode}/testResult/{type}")
-    public String examResult(@PathVariable String testCode, @PathVariable String type, Model model) {
+    public String testResult(@PathVariable String testCode, @PathVariable String type, Model model) {
         // 유형 결과 반환
         TestResultDto testResultDto = personalityTestService.createTestResultInfo(testCode, type);
         model.addAttribute("result", testResultDto);
         model.addAttribute("testCode", testCode);
-        return "personalities/exam/examResult";
+        return "personalities/testResult";
     }
 
 }
