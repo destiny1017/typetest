@@ -18,7 +18,7 @@
     }
 </style>
 <script th:inline="javascript">
-    const questions = [[${questionsSlide}]];
+    const questions = [[${questions}]];
 
     $(document).ready( () => {
         $('.examAnswerCard').click( () => {
@@ -38,7 +38,7 @@
         let cnt = 0;
         let checkAll = true;
         for(question of questions) {
-            if(!$(`input[name="${question.questionNum}"]`).is(":checked")) {
+            if(!$(`input[name="${question.num}"]`).is(":checked")) {
                 checkAll = false;
             } else cnt++;
         }
@@ -66,10 +66,10 @@
 
         <!-- body text -->
         <form action="/examSubmit" method="get" id="examForm">
-
+            <input type="hidden" th:value="${testCode}" name="testCode"/>
             <div class="slider">
                 <div class="slides">
-                    <div th:each="question : ${questionsSlide}"  th:id="|question-${questionStat.index + 1}|">
+                    <div th:each="question : ${questions}"  th:id="|question-${questionStat.index + 1}|">
                         <div class="questionDiv">
                             
                             <!-- 질문 -->
@@ -80,11 +80,11 @@
                             <div class="py-2"></div>
                             
                             <!-- 응답 -->
-                            <div class="examAnswerCardDiv" th:each="answer : ${question.answer}"
-                                 th:with="inputId = |${question.questionNum}_${question.selectPoint[answerStat.index]}|">
+                            <div class="examAnswerCardDiv" th:each="answer : ${question.answerList}"
+                                 th:with="inputId = |${question.num}_${answer.answerId}|">
                                 <input class="" type="radio" th:id="${inputId}"
-                                       th:name="${question.questionNum}" th:value="${question.selectPoint[answerStat.index]}"/>
-                                <label th:text="${answer}" th:for="${inputId}" class="examAnswerCard"></label>
+                                       th:name="${question.num}" th:value="${answer.answerId}"/>
+                                <label th:text="${answer.answer}" th:for="${inputId}" class="examAnswerCard"></label>
                             </div>
                         </div>
                     </div>

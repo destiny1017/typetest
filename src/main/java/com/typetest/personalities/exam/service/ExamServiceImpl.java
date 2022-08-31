@@ -1,6 +1,7 @@
 package com.typetest.personalities.exam.service;
 
 import com.typetest.exception.NotFoundEntityException;
+import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.PersonalityQuestion;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.exam.dto.ExamQuestionDto;
@@ -32,21 +33,28 @@ public class ExamServiceImpl implements ExamService {
     private final TestCodeInfoRepository testCodeInfoRepository;
 
     @Override
-    public List<List<ExamQuestionDto>> getQuestions(String testCode) {
+    public List getQuestions(String testCode) {
         Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
         if(testCodeInfoOp.isPresent()) {
-            List<List<ExamQuestionDto>> pageQuestions = new ArrayList<>();
-            List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCode(testCodeInfoOp.get());
-            int cnt = -1;
-            for (int i = 0; i < questions.size(); i++) {
-                if((i) % 10 == 0) {
-                    pageQuestions.add(new ArrayList<>());
-                    cnt++; // 10개 추가될 때 마다 다음 인덱스에 담기
+            TestCodeInfo testCodeInfo = testCodeInfoOp.get();
+            List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCode(testCodeInfo);
+            if(testCodeInfo.getAnswerType() == AnswerType.EXAM) {
+                List<List<ExamQuestionDto>> pageQuestions = new ArrayList<>();
+                int cnt = -1;
+                for (int i = 0; i < questions.size(); i++) {
+                    if((i) % 10 == 0) {
+                        pageQuestions.add(new ArrayList<>());
+                        cnt++; // 10개 추가될 때 마다 다음 인덱스에 담기
+                    }
+                    pageQuestions.get(cnt).add(new ExamQuestionDto(questions.get(i)));
                 }
-                pageQuestions.get(cnt).add(new ExamQuestionDto(questions.get(i)));
+                return pageQuestions;
+            } else if(testCodeInfo.getAnswerType() == AnswerType.CARD) {
+                List<ExamQuestionDto> questionDtos = new ArrayList<>();
+                questions.stream().forEach(i -> questionDtos.add(new ExamQuestionDto(i)));
+                return questionDtos;
             }
-
-            return pageQuestions;
+            return null;
         } else {
             throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 테스트정보를 찾을 수 없습니다.");
         }

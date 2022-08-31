@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface ExamService {
-    List<List<ExamQuestionDto>> getQuestions(String testCode);
+    List getQuestions(String testCode);
     Long getQuestionCnt(String testCode);
     Page<ExamQuestionDto> getQuestionsPage(String testCode);
 }

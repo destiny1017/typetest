@@ -128,36 +128,5 @@
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>
-
-<script>
-
-</script>
-<!--
-<script th:inline="javascript">
-    function formSubmit() {
-        var data = {
-            userId : 1,
-            testCode : "EXAM",
-            answer : {}
-        };
-        var url = "examResult"
-
-        for (let i = 1; i <= 9; i++) {
-            var checkedVal = document.querySelector('input[name="answer' + i + '"]:checked');
-            if(checkedVal != null) data.answer[i] = checkedVal.value;
-            else data.answer[i] = 1;
-        }
-
-        console.log("ajax", url, data);
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
-        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8;");
-        xhr.responseType = "json";
-        xhr.onload = function(e) {
-            console.log(this, e);
-        };
-        xhr.send(JSON.stringify(data));
-    }
-</script>-->
 </html>
 

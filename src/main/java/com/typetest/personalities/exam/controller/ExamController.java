@@ -40,9 +40,15 @@ public class ExamController {
 
     @GetMapping("/{testCode}/testAnswer")
     public String examTest(@PathVariable String testCode, Model model) {
+        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
         model.addAttribute("testCode", testCode);
         model.addAttribute("questions", examService.getQuestions(testCode));
         model.addAttribute("questionCount", examService.getQuestionCnt(testCode));
+        if(testCodeInfoOp.get().getAnswerType() == AnswerType.EXAM) {
+            return "personalities/exam/examTest";
+        } else if(testCodeInfoOp.get().getAnswerType() == AnswerType.CARD) {
+            return "personalities/exam/examTestSlide";
+        }
         return "personalities/exam/examTest";
     }
 
