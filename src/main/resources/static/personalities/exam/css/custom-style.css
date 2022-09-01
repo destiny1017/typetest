@@ -6,6 +6,10 @@
 
 }
 
+.navbar > .container-fluid {
+    justify-content: space-around;
+}
+
 footer {
     position: relative;
     bottom: 0;
