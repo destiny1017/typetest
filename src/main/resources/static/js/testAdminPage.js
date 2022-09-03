@@ -1,4 +1,21 @@
+function appendLoadingDiv() {
+    let loadingDiv =
+    `<div class="back-div">
+        <div class="loading-div">
+          <img src="/assets/images/loading2.gif">
+        </div>
+     </div>
+    `;
+    $("body").append(loadingDiv);
+}
+
+function deleteLoadingDiv() {
+    $(".back-div").remove();
+}
+
+
 $(document).ready( () => {
+
     /**
      *  이벤트 연결
      */
@@ -702,6 +719,9 @@ $(document).ready( () => {
         }
     }
 
+    // 로딩 표시 삭제
+    deleteLoadingDiv();
+
 });
 
     
@@ -711,3 +731,4 @@ function callEssential(testCode) {
         location.href = `/testAdminPage/${testCode}/essentialType`;
     }
 }
+
