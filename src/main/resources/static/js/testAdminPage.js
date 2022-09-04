@@ -728,7 +728,7 @@ $(document).ready( () => {
 function callEssential(testCode) {
     
     if(confirm("필수유형세팅을 진행하면 아직 저장하지 않은 값은 초기화됩니다.\n진행하시겠습니까?")) {
-        location.href = `/testAdminPage/${testCode}/essentialType`;
+        location.href = `/adminPage/testAdminPage/${testCode}/essentialType`;
     }
 }
 

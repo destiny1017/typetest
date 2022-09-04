@@ -24,7 +24,7 @@ public class TestAdminController {
 
     private final TestAdminService testAdminService;
 
-    @GetMapping("/testAdminPage")
+    @GetMapping("/adminPage/testAdminPage")
     public String testAdminPage() {
         return "admin/testadmin/testAdminPage";
     }
@@ -49,7 +49,7 @@ public class TestAdminController {
         return testAdminService.findAllTestInfo();
     }
 
-    @GetMapping({"/testAdminPage/{testCode}", "/testAdminPage/{testCode}/{tab}"})
+    @GetMapping({"/adminPage/testAdminPage/{testCode}", "/adminPage/testAdminPage/{testCode}/{tab}"})
     public String testAdminPage(@PathVariable String testCode,
                                 @PathVariable(value = "tab", required = false) Integer tab, Model model) {
         model.addAttribute("testInfoDto", testAdminService.createTestInfoDto(testCode));
@@ -83,38 +83,38 @@ public class TestAdminController {
         return "admin/testadmin/testAdminPage";
     }
 
-    @GetMapping("/testAdmin/step1Submit")
+    @GetMapping("/adminPage/testAdmin/step1Submit")
     public String step1Submit(@ModelAttribute TestInfoDto testInfoDto) {
         testAdminService.saveTestInfo(testInfoDto);
-        return "redirect:/testAdminPage/" + testInfoDto.getTestCode() + "/1";
+        return "redirect:/adminPage/testAdminPage/" + testInfoDto.getTestCode() + "/1";
     }
 
-    @GetMapping("/testAdmin/step2Submit")
+    @PostMapping("/adminPage/testAdmin/step2Submit")
     public String step2Submit(@ModelAttribute IndicatorForm indicatorForm) {
         List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
         testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
-        return "redirect:/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2";
+        return "redirect:/adminPage/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2";
     }
 
-    @PostMapping("/testAdmin/step3Submit")
+    @PostMapping("/adminPage/testAdmin/step3Submit")
     public String step3Submit(@ModelAttribute QuestionForm questionForm) {
         List<QuestionDto> questionList = questionForm.getQuestionList();
         testAdminService.saveQuestionInfo(questionList, questionForm.getQuestionTestCode());
-        return "redirect:/testAdminPage/" + questionForm.getQuestionTestCode() + "/3";
+        return "redirect:/adminPage/testAdminPage/" + questionForm.getQuestionTestCode() + "/3";
     }
 
-    @PostMapping("/testAdmin/step4Submit")
+    @PostMapping("/adminPage/testAdmin/step4Submit")
     public String step4Submit(@ModelAttribute TypeInfoForm typeInfoForm) {
         List<TypeInfoDto> typeInfoList = typeInfoForm.getTypeInfoList();
         testAdminService.saveTypeInfo(typeInfoList, typeInfoForm.getTypeInfoTestCode());
-        return "redirect:/testAdminPage/" + typeInfoForm.getTypeInfoTestCode() + "/4";
+        return "redirect:/adminPage/testAdminPage/" + typeInfoForm.getTypeInfoTestCode() + "/4";
     }
 
-    @GetMapping("/testAdminPage/{testCode}/essentialType")
+    @GetMapping("/adminPage/testAdminPage/{testCode}/essentialType")
     public String essentialTypeList(@PathVariable String testCode, Model model) {
         List<String> essentialTypeList = testAdminService.getEssentialTypeList(testCode);
         model.addAttribute("essentialTypeList", essentialTypeList);
-        return "forward:/testAdminPage/" + testCode + "/4";
+        return "forward:/adminPage/testAdminPage/" + testCode + "/4";
     }
 
 }
