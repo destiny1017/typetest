@@ -80,6 +80,9 @@ public class PersonalitiesController {
             answerInfo.setUserId(user.getId());
             personalityTestService.saveTestInfo(answerInfo, type);
             log.info("answerInfo = {}", answerInfo);
+        } else {
+            session.setAttribute("answerInfo", answerInfo);
+            session.setAttribute("type", type);
         }
 
         return "redirect:" + testCode + "/testResult/" + type;
