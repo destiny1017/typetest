@@ -14,26 +14,35 @@
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <div th:if="${session.user == null}" class="offcanvas-profile profile-guest">
+            <div th:if="${session.user == null}" class="offcanvas-profile profile-guest" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <span class="material-icons">
                 account_circle
                 </span>
             </div>
-            <div th:unless="${session.user == null}" class="offcanvas-profile" th:style="|background-image: url(${session.user.picture})|"></div>
+            <div th:unless="${session.user == null}" class="offcanvas-profile logined" th:style="|background-image: url(${session.user.picture})|"></div>
+
             <div class="nickname-div">
-                <span th:if="${session.user == null}" id="nickname" style="color: #bbb;">로그인해주세요</span>
-                <span th:unless="${session.user == null}" th:id="nickname" th:text="${session.user.nickname}"></span>
+                <span th:if="${session.user == null}" id="nickname" style="color: #bbb;" data-bs-toggle="modal" data-bs-target="#loginModal">로그인해주세요</span>
+                <span th:unless="${session.user == null}" th:id="nickname" th:text="${session.user.nickname}" class="logined"></span>
             </div>
         </div>
         <div class="offcanvas-body">
             <div class="">
                 Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
             </div>
-            <div class="mt-3 menu-mypage">
+            <div th:if="${session.user != null}" class="mt-3 menu-mypage logined">
                 <span class="material-icons">
                 person_outline
                 </span>
                 <p>마이페이지</p>
+            </div>
+
+            <div th:if="${(session.user != null) && (session.user.role.getKey().equals('ROLE_ADMIN'))}"
+                 class="mt-3 menu-mypage adminPage">
+                <span class="material-icons">
+                settings
+                </span>
+                <p>관리자페이지</p>
             </div>
 
             <div class="mt-3 menu-logout">
@@ -44,13 +53,42 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="text-center login-title">
+                    <h1 class="figure"> 로그인 </h1>
+                </div>
+
+                <!-- Oauth2 button line -->
+                <div class="text-center py-3">
+                    <div class="panel-body panel-margin sns-buttons">
+                        <a href="/oauth2/authorization/google" id="google-connect-link" class="btn btn-google d-block">
+                            <span class="icon-social icon-google"></span>구글으로 로그인</a>
+                        <a href="/oauth2/authorization/facebook" id="facebook-connect-link" class="btn btn-facebook d-block mt-1">
+                            <span class="icon-social icon-facebook"></span>페이스북으로 로그인</a>
+                        <a href="/oauth2/authorization/kakao" id="kakao-connect-link" class="btn btn-kakao d-block mt-1">
+                            <span class="icon-social icon-kakao"></span>카카오로 로그인</a>
+                        <a href="/oauth2/authorization/naver" id="naver-connect-link" class="btn btn-naver d-block mt-1">
+                            <span class="icon-social icon-naver"></span>네이버로 로그인</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(".material-icons").click( () => {
             $('.offcanvas').height($(window).height());
         });
 
-        $(".offcanvas-header, .menu-mypage").click( () => {
+        $(".logined").click( () => {
             location.href="/myPage";
+        });
+        $(".adminPage").click( () => {
+            location.href="/adminPage";
         });
 
         $(".menu-logout").click( () => {

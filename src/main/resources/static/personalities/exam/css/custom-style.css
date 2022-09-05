@@ -64,6 +64,11 @@ div[class$="container"] {
     margin-right: 5px;
 }
 
+.menu-adminPage {
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 .menu-logout {
     display: flex;
     position: absolute;
@@ -626,9 +631,34 @@ div.add-icon {
     padding: 0px 30px 0px 30px;
 }
 
+.login-title {
+    padding: 3rem 0 1.5rem 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 .result-login-text {
     font-size: 20px;
     font-family: 'Single Day', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.result-login-text:hover {
+    cursor: pointer;
+    color: #aaa;
+}
+
+.result-login-text > p {
+    margin: 0 0 0 10px;
+}
+
+.modal-dialog {
+    margin: 7rem 5rem;
+}
+
+.modal-content {
+    padding: 0 30px;
 }
 
 .exam-container {

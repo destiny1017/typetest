@@ -29,19 +29,18 @@
             <a class="btn btn-primary exam-rounded-btn" th:href="|/${testCode}/testAnswer|">
                 <span>테스트 시작!</span>
             </a>
-            <!--<button class="btn btn-primary exam-rounded-btn" th:onclick="|location.href='@{examTestSlide(testCode=${testCode})}'|">
-                <span>Slide 테스트</span>
-            </button>-->
         </div>
 
         <div class="py-3"></div>
 
         <!-- login button line -->
-        <div class="text-center py-5">
-            <div class="result-login-text">
+        <div th:if="${session.user == null}" class="text-center py-5">
+            <div class="result-login-text" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <span class="material-icons">
+                login
+                </span>
                 <p>로그인 하면 더 정밀한 성격진단이 가능해요!</p>
             </div>
-            <button class="btn btn-outline-info" onclick="location.href='loginPage'">Login</button>
         </div>
     </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
