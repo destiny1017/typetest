@@ -7,7 +7,9 @@
 }
 
 div[class$="container"] {
+    position: relative;
     overflow: hidden;
+    min-height: 100%;
 }
 
 .menu-icon {
@@ -31,7 +33,7 @@ div[class$="container"] {
 
 footer {
     position: relative;
-    bottom: 0;
+    width: 100%;
 }
 
 #progress {
