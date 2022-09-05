@@ -29,6 +29,47 @@ div[class$="container"] {
 
 .offcanvas {
     position: absolute;
+    width: 300px !important;
+}
+
+.offcanvas-header {
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.offcanvas-profile {
+    width: 80px;
+    height: 80px;
+    background-repeat: round;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.profile-guest > span {
+    font-size: 5rem;
+    color: #bbb;
+}
+
+.menu-mypage {
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.menu-mypage:hover {
+    cursor: pointer !important;
+    color: #aaa !important;
+}
+
+.menu-mypage > span {
+    margin-right: 5px;
+}
+
+.menu-logout {
+    display: flex;
+    position: absolute;
+    font-family: 'Noto Sans KR', sans-serif;
+    bottom: 0;
+    cursor: pointer;
 }
 
 footer {
@@ -693,6 +734,7 @@ div.add-icon {
     height: 100%;
     width: 20%;
     background: #ddd;
+    border-radius: 50%;
 }
 
 .profile-desc {
@@ -702,13 +744,10 @@ div.add-icon {
 }
 
 .nickname-div {
-    width: 100%;
-    height: 35%;
     padding: 5px 10px 5px 10px;
 }
 
 .type-div {
-    width: 100%;
     height: 65%;
     padding: 5px;
 }
@@ -723,7 +762,7 @@ span.type-label {
 #nickname {
     font-size: 20px;
     font-weight: bold;
-    color: #1baf00;
+    color: #333;
 }
 
 /*
