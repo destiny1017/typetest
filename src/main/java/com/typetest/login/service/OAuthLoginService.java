@@ -48,7 +48,6 @@ public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, O
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
-//                null,
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }

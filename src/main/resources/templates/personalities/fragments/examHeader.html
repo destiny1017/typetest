@@ -3,9 +3,42 @@
 <link rel="stylesheet" href="/startbootstrap-shop-homepage/css/styles.css" crossorigin="anonymous">
 
 <nav class="navbar navbar-header" th:fragment="examHeader">
+    <div class="menu-icon">
+        <span class="material-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        menu
+        </span>
+    </div>
     <div class="container-fluid">
         <span class="header-logo" onclick="location.href='/'"></span>
     </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="">
+                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Dropdown button
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".material-icons").click( () => {
+            $('.offcanvas').height($('div[class$="container"]').height());
+        });
+    </script>
 </nav>
+
 
 </html>
