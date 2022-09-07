@@ -26,6 +26,7 @@ public class TestCodeInfo {
 
     private String image;
     private String description;
+    private Integer active;
     private Long playCount;
 
     public TestCodeInfo(String testCode, String testName, AnswerType answerType) {
