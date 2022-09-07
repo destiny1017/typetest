@@ -107,7 +107,8 @@ footer {
     padding-top: 1rem;
     padding-bottom: 1rem;
     width: 100%;
-    background: #76a0df;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
 }
 
 .font-singleDay {
