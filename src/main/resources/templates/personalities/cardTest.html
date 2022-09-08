@@ -4,18 +4,7 @@
     <meta charset="utf-8">
 </head>
 <style>
-    input[name="answer"] {
-        margin: 5px 20px 5px 20px;
-    }
 
-    .questionDiv {
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-
-    .slides {
-        scroll-behavior: auto;
-    }
 </style>
 <script th:inline="javascript">
     const questions = [[${questions}]];
@@ -71,6 +60,11 @@
                 <div class="slides">
                     <div th:each="question : ${questions}"  th:id="|question-${questionStat.index + 1}|">
                         <div class="questionDiv">
+
+                            <!-- 이미지 -->
+                            <div class="cardImageDiv">
+                                <img th:src="${question.questionImage}">
+                            </div>
                             
                             <!-- 질문 -->
                             <div class="questionStr">
