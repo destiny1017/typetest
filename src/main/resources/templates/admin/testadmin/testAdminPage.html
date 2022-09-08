@@ -82,6 +82,19 @@
                         <textarea class="form-control" th:field="*{testInfoDto.description}"></textarea>
                     </div>
                 </div>
+                <div>
+                    <label class="name-label">테스트 활성화</label>
+                    <div class="d-flex">
+                        <div class="answerType-title-div">
+                            <input type="radio" class="form-check-input" th:field="*{testInfoDto.active}" value="1">
+                            <label class="form-check-label" th:for="${#ids.prev('active')}">활성화</label>
+                        </div>
+                        <div class="answerType-title-div px-2">
+                            <input type="radio" class="form-check-input" th:field="*{testInfoDto.active}" value="0">
+                            <label class="form-check-label" th:for="${#ids.prev('active')}">비활성화</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="tabSubmit-div">
                     <button class="btn btn-primary" type="submit">저장</button>
                 </div>
@@ -393,6 +406,7 @@
         const tendencyNameList = [[${tendencyNameList}]];
         const typeInfoList = [[${typeInfoForm.typeInfoList}]];
         const essentialTypeList = [[${essentialTypeList}]];
+        const essentialSet = [[${essentialSet}]];
     </script>
     <script src="/js/testAdminPage.js"></script>
 </div>

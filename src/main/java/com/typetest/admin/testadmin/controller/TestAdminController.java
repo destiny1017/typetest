@@ -72,6 +72,12 @@ public class TestAdminController {
         typeInfoForm.setTypeInfoTestCode(testCode);
         typeInfoForm.setTypeInfoList(typeInfoList);
 
+        // 필수 유형정보 세팅
+        if(!testCode.equals("NEW")) {
+            List<String> essentialTypeList = testAdminService.getEssentialTypeList(testCode);
+            model.addAttribute("essentialTypeList", essentialTypeList);
+        }
+
         model.addAttribute("indicatorForm", indicatorForm);
         model.addAttribute("questionForm", questionForm);
         model.addAttribute("typeInfoForm", typeInfoForm);
@@ -112,8 +118,7 @@ public class TestAdminController {
 
     @GetMapping("/adminPage/testAdminPage/{testCode}/essentialType")
     public String essentialTypeList(@PathVariable String testCode, Model model) {
-        List<String> essentialTypeList = testAdminService.getEssentialTypeList(testCode);
-        model.addAttribute("essentialTypeList", essentialTypeList);
+        model.addAttribute("essentialSet", true);
         return "forward:/adminPage/testAdminPage/" + testCode + "/4";
     }
 

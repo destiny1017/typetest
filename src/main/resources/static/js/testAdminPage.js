@@ -163,572 +163,566 @@ $(document).ready( () => {
     }, (e) => {
         typeDescriptionInfoHoverOutEvent(e);
     });
-
-    function indicatorDeleteEvent(e) {
-        let targetNum = e.target.id.replace("indiDel", "");
-        $("#indicatorDiv" + targetNum).hide();
-        $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        $(`[name="indicatorList[${targetNum - 1}].deleted"]`).val(1);
-    }
-
-    function settingDeleteEvent(e) {
-        let targetNum = e.target.id.replace("delSetting", "");
-        let targetIndexes = targetNum.split("-");
-        $("#settingDiv" + targetNum).hide();
-        $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        $(`[name="indicatorList[${targetIndexes[1] - 1}].indicatorSettings[${targetIndexes[2]}].deleted"]`).val(1);
-    }
-
-    function settingInfoHoverInEvent(e) {
-        let targetId = e.currentTarget.id.replace("settingDiv", "");
-        $("#delSetting" + targetId).show();
-    }
-
-    function settingInfoHoverOutEvent(e) {
-        let targetId = e.currentTarget.id.replace("settingDiv", "");
-        $("#delSetting" + targetId).hide();
-    }
-
-    function answerTypeChange() {
-        if($("#answerType1").is(":checked")) {
-            $(".answerContent-div").hide();
-        } else {
-            $(".answerContent-div").show();
-        }
-    }
-    
-    
-    function questionDeleteEvent(e) {
-        let targetNum = e.target.id.replace("questionDel", "");
-        $("#questionDiv" + targetNum).hide();
-        $("#questionDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        $(`[name="questionList[${targetNum - 1}].deleted"]`).val(1);
-    };
-
-    function answerDeleteEvent(e) {
-        let targetNum = e.target.id.replace("delAnswer", "");
-        let targetIndexes = targetNum.split("-"); // delAnswer-n-n
-        $("#answerDiv" + targetNum).hide();
-        $("#answerDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        $("#answerDiv" + targetNum + " option").remove();
-        $(`[name="questionList[${targetIndexes[1] - 1}].answerList[${targetIndexes[2]}].deleted"]`).val(1);
-    };
-    
-    function answerInfoHoverInEvent(e) {
-        let targetId = e.currentTarget.id.replace("answerDiv", "");
-        $("#delAnswer" + targetId).show();
-    }
-
-    function answerInfoHoverOutEvent(e) {
-        let targetId = e.currentTarget.id.replace("answerDiv", "");
-        $("#delAnswer" + targetId).hide();
-    }
-    
-    
-    function typeInfoDeleteEvent(e) {
-        let targetNum = e.target.id.replace("typeInfoDel", "");
-        $("#typeInfoDiv" + targetNum).hide();
-        $("#typeInfoDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        $(`[name="typeInfoList[${targetNum - 1}].deleted"]`).val(1);
-    };
-
-    function typeImageDeleteEvent(e) {
-        let targetNum = e.target.id.replace("delTypeImage", "");
-        let targetIndexes = targetNum.split("-");
-        $("#typeImageDiv" + targetNum).hide();
-        $("#typeImageDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        $("#typeImageDiv" + targetNum + " option").remove();
-        $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeImageList[${targetIndexes[2]}].deleted"]`).val(1);
-    };
-    
-    function typeImageInfoHoverInEvent(e) {
-        let targetId = e.currentTarget.id.replace("typeImageDiv", "");
-        $("#delTypeImage" + targetId).show();
-    }
-
-    function typeImageInfoHoverOutEvent(e) {
-        let targetId = e.currentTarget.id.replace("typeImageDiv", "");
-        $("#delTypeImage" + targetId).hide();
-    }
-    
-    function typeDescriptionDeleteEvent(e) {
-        let targetNum = e.target.id.replace("delTypeDescription", "");
-        let targetIndexes = targetNum.split("-");
-        $("#typeDescriptionDiv" + targetNum).hide();
-        $("#typeDescriptionDiv" + targetNum + ' input:not([type="hidden"])').val("");
-        $("#typeDescriptionDiv" + targetNum + " option").remove();
-        $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeDescriptionList[${targetIndexes[2]}].deleted"]`).val(1);
-    };
-    
-    function typeDescriptionInfoHoverInEvent(e) {
-        let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
-        $("#delTypeDescription" + targetId).show();
-    }
-
-    function typeDescriptionInfoHoverOutEvent(e) {
-        let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
-        $("#delTypeDescription" + targetId).hide();
-    }
- 
-
-    function indicatorAddEvent() {
-        // 새롭게 추가될 indicatorDiv 내용
-        let indicatorDiv =
-        `
-            <div class="indicator-div" id="indicatorDiv${indicatorList.length + 1}">
-                <div class="indicator-title">
-                    <p><span class="material-icons">edit</span>유형 지표 정보</p>
-                    <span class="material-icons indicatorDelete" id="indiDel${indicatorList.length + 1}">close</span>
-                </div>
-                <input type="hidden" name="indicatorList[${indicatorList.length}].id">
-                <input type="hidden" name="indicatorList[${indicatorList.length}].updated" value="0">
-                <input type="hidden" name="indicatorList[${indicatorList.length}].deleted" value="0">
-                <div class="indicatorInfo-div">
-                    <div class="indicatorElement-div">
-                        <label>지표 번호</label>
-                        <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum">
-                    </div>
-                    <div>
-                        <label>지표 이름</label>
-                        <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorName">
-                    </div>
-                </div>
-                <div class="setting-div">
-                    <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
-                        <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
-                    </div>
-                </div>
-            </div>
-        `;
-        // 추가버튼 위에 새 div 추가
-        $("#addIndicator").before(indicatorDiv);
-
-        // 요소 개수 카운트를 위해 indicator배열에 빈 객체 추가
-        indicatorList.push({indicatorSettings:[]});
-
-        // 추가된 indicator 삭제버튼에 이벤트 연결
-        $("#indiDel" + (indicatorList.length)).click( (e) => {
-            indicatorDeleteEvent(e);
-        });
-
-        // 추가된 setting추가 버튼에 이벤트 연결
-        $("#settingAdd-" + (indicatorList.length)).click( (e) => {
-            settingAddEvent(e);
-        });
-    }
-
-    function settingAddEvent(e) {
-        // 새롭게 추가될 setting div 내용
-        let targetNum = e.target.id.replace("settingAdd-", "");
-        let settingDiv =
-        `
-            <div class="settingInfo-div"
-                id="settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
-                <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].id">
-                <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].updated" value="0">
-                <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].deleted" value="0">
-                <div class="settingElement-div">
-                    <label>지표 코드</label>
-                    <input type="text" class="form-control code-input"
-                        name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].result">
-                </div>
-                <div class="settingElement-div">
-                    <label>지표 결정 점수</label>
-                    <input type="text" class="form-control"
-                        name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].cuttingPoint">
-                </div>
-                <span class="material-icons delSetting" id="delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}"
-                        style="display: none;">
-                    delete
-                </span>
-            </div>
-        `;
-        // 추가버튼 위에 div 추가
-        $("#settingAdd-div-" + targetNum).before(settingDiv);
-
-        // 데이터 카운트를 위해 빈 객체 추가
-        indicatorList[targetNum - 1].indicatorSettings.push({});
-
-        // 추가된 삭제버튼에 삭제 이벤트 연결
-        $(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).click( (e) => {
-            settingDeleteEvent(e);
-        });
-
-        // 추가된 삭제버튼에 hover 이벤트 연결
-        $(`#settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).hover( (e) => {
-            settingInfoHoverInEvent(e);
-        }, (e) => {
-            settingInfoHoverOutEvent(e);
-        });
-    }
-    
-    function questionAddEvent() {
-        // 새롭게 추가될 questionDiv 내용
-        let questionDiv =
-        `
-                <div class="question-div" id="questionDiv${questionList.length + 1}">
-                    <div class="question-title">
-                        <div class="questionHeadInfo-div">
-                            <button class="fold-btn" type="button" data-bs-toggle="collapse" aria-expanded="true"
-                                    data-bs-target="#questionContentDiv${questionList.length + 1}"
-                                    aria-controls="questionContentDiv${questionList.length + 1}">
-                                <span class="material-icons">
-                                expand_more
-                                </span>
-                            </button>
-                            <input type="text" class="q-num-input" name="questionList[${questionList.length}].num" placeholder="번호">
-                            <div class="px-1"></div>
-                            <input type="text" class="q-name-input" name="questionList[${questionList.length}].question" placeholder="질문내용">
-                        </div>
-                        <span class="material-icons questionDelete" id="questionDel${questionList.length + 1}">close</span>
-                    </div>
-                    <div class="questionContent-div collapse show" id="questionContentDiv${questionList.length + 1}">
-                        <input type="hidden" name="questionList[${questionList.length}].id">
-                        <input type="hidden" name="questionList[${questionList.length}].updated" value="0">
-                        <input type="hidden" name="questionList[${questionList.length}].deleted" value="0">
-                        <div class="questionInfo-div">
-                            <div class="indicatorElement-div">
-                                <label>질문 이미지</label>
-                                <input type="text" class="form-control" name="questionList[${questionList.length}].questionImage">
-                            </div>
-                        </div>
-                        <div class="answer-div">
-                            <div class="answerTitle-div">
-                                <label>답변 정보</label>
-                            </div>
-                            <div class="answerAdd-div" id="answerAdd-div-${questionList.length + 1}">
-                                <span class="answerAdd" id="answerAdd-${questionList.length + 1}">+ 답변 정보 추가</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        `;
-        // 추가버튼 위에 새 div 추가
-        $("#addQuestion").before(questionDiv);
-
-        // 요소 개수 카운트를 위해 question 빈 객체 추가
-        questionList.push({answerList:[]});
-
-        // 추가된 question 삭제버튼에 이벤트 연결
-        console.log("#questionDel" + (questionList.length));
-        $("#questionDel" + (questionList.length)).click( (e) => {
-            questionDeleteEvent(e);
-        });
-
-        // 추가된 answer 버튼에 이벤트 연결
-        $("#answerAdd-" + (questionList.length)).click( (e) => {
-            answerAddEvent(e);
-        });
-    }
-    
-    function answerAddEvent(e) {
-        // 새롭게 추가될 answer div 내용
-        let targetNum = e.target.id.replace("answerAdd-", "");
-        let indicatorListOption = "";
-        let tendencyListOption = "";
-        // 지표 select박스 내용 만들기
-        $.each(indicatorList, (i, val) => {
-            let optionStr = `<option value="${val.id}">${val.indicatorName}</option>`;
-            indicatorListOption += optionStr;
-        });
-        // 성향 select박스 내용 만들기
-        $.each(tendencyNameList, (i, val) => {
-            let optionStr = `<option value="${tendencyList[i]}">${val}</option>`;
-            tendencyListOption += optionStr;
-        });
-        
-        let answerDiv =
-        `
-            <div class="answerInfo-div" id="answerDiv-${targetNum}-${questionList[targetNum-1].answerList.length}">
-                <span class="material-icons answerDelete" style="display: none;"
-                      id="delAnswer-${targetNum}-${questionList[targetNum-1].answerList.length}">close</span>
-                <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].id">
-                <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].updated" value="0">
-                <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].deleted" value="0">
-                <div class="answerElement-div answerContent-div">
-                    <label>답변 이미지</label>
-                    <input type="text" class="form-control code-input"
-                           name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].answerImage">
-                </div>
-                <div class="answerElement-div answerContent-div">
-                    <label>답변 내용</label>
-                    <input type="text" class="form-control"
-                           name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].answer">
-                </div>
-                <div class="answerElement-div answerElementDetail-div">
-                    <div class="answerDetail-div">
-                        <label>답변 점수</label>
-                        <input type="text" class="form-control"
-                               name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].point">
-                    </div>
-                    <div class="answerDetail-div">
-                        <label>답변 지표</label>
-                        <select class="answer-select form-select" 
-                                name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].typeIndicatorId">
-                            ${indicatorListOption}
-                        </select>
-                    </div>
-                    <div class="answerDetail-div">
-                        <label>답변 성향</label>
-                        <select class="answer-select form-select" 
-                                name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].tendency">
-                            ${tendencyListOption}
-                        </select>
-                    </div>
-                </div>
-            </div>
-        `;
-        // 추가버튼 위에 div 추가
-        $("#answerAdd-div-" + targetNum).before(answerDiv);
-
-        // 데이터 카운트를 위해 빈 객체 추가
-        questionList[targetNum - 1].answerList.push({});
-
-        // 추가된 삭제버튼에 삭제 이벤트 연결
-        $(`#delAnswer-${targetNum}-${questionList[targetNum-1].answerList.length - 1}`).click( (e) => {
-            answerDeleteEvent(e);
-        });
-
-        // 추가된 삭제버튼에 hover 이벤트 연결
-        $(`#answerDiv-${targetNum}-${questionList[targetNum-1].answerList.length - 1}`).hover( (e) => {
-            answerInfoHoverInEvent(e);
-        }, (e) => {
-            answerInfoHoverOutEvent(e);
-        });
-        
-        answerTypeChange();
-    }
-    
-    function typeInfoAddEvent() {
-        let typeInfoListOption = "";
-        // 유형 select박스 내용 만들기
-        $.each(typeInfoList, (i, val) => {
-            let optionStr = `<option value="${val.id}">${val.typeCode}(${val.typeName})</option>`;
-            typeInfoListOption += optionStr;
-        });
-
-        // 새롭게 추가될 typeInfoDiv 내용
-        let typeInfoDiv =
-        `
-            <div class="typeInfo-div" id="typeInfoDiv${typeInfoList.length + 1}">
-                <div class="typeInfo-title">
-                    <div class="typeInfoHeadInfo-div">
-                        <button class="fold-btn" type="button" data-bs-toggle="collapse" aria-expanded="true"
-                                data-bs-target="#typeInfoContentDiv${typeInfoList.length + 1}"
-                                aria-controls="typeInfoContentDiv${typeInfoList.length + 1}">
-                            <span class="material-icons">
-                            expand_more
-                            </span>
-                        </button>
-                        <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode" placeholder="번호">
-                        <div class="px-1"></div>
-                        <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName" placeholder="유형명">
-                    </div>
-                    <span class="material-icons typeInfoDelete" id="typeInfoDel${typeInfoList.length + 1}">close</span>
-                </div>
-                <div class="typeInfoContent-div collapse show" id="typeInfoContentDiv${typeInfoList.length + 1}">
-                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].id">
-                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].updated" value="0">
-                    <input type="hidden" name="typeInfoList[${typeInfoList.length}].deleted" value="0">
-                    <div class="typeImage-div">
-                        <div class="typeImageTitle-div">
-                            <label>결과 이미지</label>
-                        </div>
-
-                        <div class="typeImageAdd-div" id="typeImageAdd-div-${typeInfoList.length + 1}">
-                            <span class="typeImageAdd" id="typeImageAdd-${typeInfoList.length + 1}">+ 이미지 추가</span>
-                        </div>
-                    </div>
-
-                    <div class="typeDescription-div">
-                        <div class="typeDescriptionTitle-div">
-                            <label>유형 설명</label>
-                        </div>
-
-                        <div class="typeDescriptionAdd-div" id="typeDescriptionAdd-div-${typeInfoList.length + 1}">
-                            <span class="typeDescriptionAdd" id="typeDescriptionAdd-${typeInfoList.length + 1}">+ 설명 추가</span>
-                        </div>
-                    </div>
-
-                    <div class="typeRelation-div">
-                        <div class="typeRelationTitle-div">
-                            <label>유형 관계 정보</label>
-                        </div>
-                        <div class="typeRelationInfo-div" id="typeRelationDiv-${typeInfoList.length + 1}">
-                            <span class="material-icons typeRelationDelete" style="display: none;"
-                                  id="delTypeRelation-${typeInfoList.length + 1}">close</span>
-                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.id">
-                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.updated" value="0">
-                            <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.deleted" value="0">
-                            <div class="typeRelationElement-div typeRelationContent-div">
-                                <label>Best 유형</label>
-                                <select class="typeRelation-select form-select" name="typeInfoList[${typeInfoList.length}].typeRelation.bestTypeId"">
-                                    <option value="">미지정</option>
-                                    ${typeInfoListOption}
-                                </select>
-                            </div>
-                            <div class="typeRelationElement-div typeRelationContent-div">
-                                <label>Worst 유형</label>
-                                <select class="typeRelation-select form-select" name="typeInfoList[${typeInfoList.length}].typeRelation.worstTypeId"">
-                                    <option value="">미지정</option>
-                                    ${typeInfoListOption}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        // 추가버튼 위에 새 div 추가
-        $("#addTypeInfo").before(typeInfoDiv);
-
-        // 요소 개수 카운트를 위해 typeInfo 빈 객체 추가
-        typeInfoList.push({typeImageList:[], typeDescriptionList:[]});
-
-        // 추가된 typeInfo 삭제버튼에 이벤트 연결
-        console.log("#typeInfoDel" + (typeInfoList.length));
-        $("#typeInfoDel" + (typeInfoList.length)).click( (e) => {
-            typeInfoDeleteEvent(e);
-        });
-
-        // 추가된 image 버튼에 이벤트 연결
-        $("#typeImageAdd-" + (typeInfoList.length)).click( (e) => {
-            typeImageAddEvent(e);
-        });
-        
-        // 추가된 description 버튼에 이벤트 연결
-        $("#typeDescriptionAdd-" + (typeInfoList.length)).click( (e) => {
-            typeDescriptionAddEvent(e);
-        });
-    }
-    
-    function typeImageAddEvent(e) {
-        // 새롭게 추가될 image div 내용
-        let targetNum = e.target.id.replace("typeImageAdd-", "");
-        let typeImageDiv =
-        `
-            <div class="typeImageInfo-div" id="typeImageDiv-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">
-                <span class="material-icons typeImageDelete" style="display: none;"
-                      id="delTypeImage-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">close</span>
-                <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].id">
-                <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].updated" value="0">
-                <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].deleted" value="0">
-                <div class="typeImageDetail-div">
-                    <div class="typeImageNum-div typeImageContent-div">
-                        <label>이미지 번호</label>
-                        <input type="text" class="form-control code-input"
-                               name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imgNum">
-                    </div>
-                    <div class="typeImageUrl-div typeImageContent-div">
-                        <label>이미지 URL</label>
-                        <input type="text" class="form-control"
-                               name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imageUrl">
-                    </div>
-                </div>
-                <div class="typeImagePicture-div">
-                    <label>이미지</label>
-                    <div class="">
-                        <img src="">
-                    </div>
-                </div>
-            </div>
-        `
-        // 추가버튼 위에 div 추가
-        $("#typeImageAdd-div-" + targetNum).before(typeImageDiv);
-
-        // 데이터 카운트를 위해 빈 객체 추가
-        typeInfoList[targetNum - 1].typeImageList.push({});
-
-        // 추가된 삭제버튼에 삭제 이벤트 연결
-        $(`#delTypeImage-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length - 1}`).click( (e) => {
-            typeImageDeleteEvent(e);
-        });
-
-        // 추가된 삭제버튼에 hover 이벤트 연결
-        $(`#typeImageDiv-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length - 1}`).hover( (e) => {
-            typeImageInfoHoverInEvent(e);
-        }, (e) => {
-            typeImageInfoHoverOutEvent(e);
-        });
-    }
-    
-    function typeDescriptionAddEvent(e) {
-        // 새롭게 추가될 image div 내용
-        let targetNum = e.target.id.replace("typeDescriptionAdd-", "");
-        let typeDescriptionDiv = 
-        `
-            <div class="typeDescriptionInfo-div" id="typeDescriptionDiv-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">
-                <span class="material-icons typeDescriptionDelete" style="display: none;"
-                      id="delTypeDescription-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">close</span>
-                <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].id">
-                <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].updated" value="0">
-                <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].deleted" value="0">
-                <div class="typeDescriptionElement-div typeDescriptionContent-div">
-                    <label>설명 번호</label>
-                    <input type="text" class="form-control code-input"
-                           name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].descNum">
-                </div>
-                <div class="typeDescriptionElement-div typeDescriptionContent-div">
-                    <label>설명</label>
-                    <textarea type="text" class="form-control"
-                           name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].description"></textarea>
-                </div>
-            </div>
-        `
-        // 추가버튼 위에 div 추가
-        $("#typeDescriptionAdd-div-" + targetNum).before(typeDescriptionDiv);
-
-        // 데이터 카운트를 위해 빈 객체 추가
-        typeInfoList[targetNum - 1].typeDescriptionList.push({});
-
-        // 추가된 삭제버튼에 삭제 이벤트 연결
-        $(`#delTypeDescription-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length - 1}`).click( (e) => {
-            typeDescriptionDeleteEvent(e);
-        });
-
-        // 추가된 삭제버튼에 hover 이벤트 연결
-        $(`#typeDescriptionDiv-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length - 1}`).hover( (e) => {
-            typeDescriptionInfoHoverInEvent(e);
-        }, (e) => {
-            typeDescriptionInfoHoverOutEvent(e);
-        });
-    }
-    
-
     
     
     $('input[name="answerType"]').trigger("change"); // 화면 최초 로딩 후 테스트 방식에 따른 tab3 요소 변경
     
-    // 필수유형 추가돼 있는지 확인하여 없으면 추가해주는 로직
-    if(essentialTypeList != null) {
-        for(essentialType of essentialTypeList) {
-            let exist = false;
-            for(const [i, typeInfo] of typeInfoList.entries()) {
-                if(essentialType == typeInfo.typeCode) {
-                    $(`#typeInfoDiv${i+1}`).addClass("essential-type");
-                    exist = true;
-                    break;
-                }
-            }
-            
-            if(exist == false) {
-                typeInfoAddEvent();
-                $(`input[name="typeInfoList[${typeInfoList.length-1}].typeCode"]`).val(essentialType);
-                $(`#typeInfoDiv${typeInfoList.length}`).addClass("essential-type");
-            }
-        }
-    }
 
     // 로딩 표시 삭제
     deleteLoadingDiv();
 
 });
 
+function indicatorDeleteEvent(e) {
+    let targetNum = e.target.id.replace("indiDel", "");
+    $("#indicatorDiv" + targetNum).hide();
+    $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $(`[name="indicatorList[${targetNum - 1}].deleted"]`).val(1);
+}
+
+function settingDeleteEvent(e) {
+    let targetNum = e.target.id.replace("delSetting", "");
+    let targetIndexes = targetNum.split("-");
+    $("#settingDiv" + targetNum).hide();
+    $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $(`[name="indicatorList[${targetIndexes[1] - 1}].indicatorSettings[${targetIndexes[2]}].deleted"]`).val(1);
+}
+
+function settingInfoHoverInEvent(e) {
+    let targetId = e.currentTarget.id.replace("settingDiv", "");
+    $("#delSetting" + targetId).show();
+}
+
+function settingInfoHoverOutEvent(e) {
+    let targetId = e.currentTarget.id.replace("settingDiv", "");
+    $("#delSetting" + targetId).hide();
+}
+
+function answerTypeChange() {
+    if($("#answerType1").is(":checked")) {
+        $(".answerContent-div").hide();
+    } else {
+        $(".answerContent-div").show();
+    }
+}
+
+
+function questionDeleteEvent(e) {
+    let targetNum = e.target.id.replace("questionDel", "");
+    $("#questionDiv" + targetNum).hide();
+    $("#questionDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $(`[name="questionList[${targetNum - 1}].deleted"]`).val(1);
+};
+
+function answerDeleteEvent(e) {
+    let targetNum = e.target.id.replace("delAnswer", "");
+    let targetIndexes = targetNum.split("-"); // delAnswer-n-n
+    $("#answerDiv" + targetNum).hide();
+    $("#answerDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#answerDiv" + targetNum + " option").remove();
+    $(`[name="questionList[${targetIndexes[1] - 1}].answerList[${targetIndexes[2]}].deleted"]`).val(1);
+};
+
+function answerInfoHoverInEvent(e) {
+    let targetId = e.currentTarget.id.replace("answerDiv", "");
+    $("#delAnswer" + targetId).show();
+}
+
+function answerInfoHoverOutEvent(e) {
+    let targetId = e.currentTarget.id.replace("answerDiv", "");
+    $("#delAnswer" + targetId).hide();
+}
+
+
+function typeInfoDeleteEvent(e) {
+    let targetNum = e.target.id.replace("typeInfoDel", "");
+    $("#typeInfoDiv" + targetNum).hide();
+    $("#typeInfoDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $(`[name="typeInfoList[${targetNum - 1}].deleted"]`).val(1);
+};
+
+function typeImageDeleteEvent(e) {
+    let targetNum = e.target.id.replace("delTypeImage", "");
+    let targetIndexes = targetNum.split("-");
+    $("#typeImageDiv" + targetNum).hide();
+    $("#typeImageDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#typeImageDiv" + targetNum + " option").remove();
+    $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeImageList[${targetIndexes[2]}].deleted"]`).val(1);
+};
+
+function typeImageInfoHoverInEvent(e) {
+    let targetId = e.currentTarget.id.replace("typeImageDiv", "");
+    $("#delTypeImage" + targetId).show();
+}
+
+function typeImageInfoHoverOutEvent(e) {
+    let targetId = e.currentTarget.id.replace("typeImageDiv", "");
+    $("#delTypeImage" + targetId).hide();
+}
+
+function typeDescriptionDeleteEvent(e) {
+    let targetNum = e.target.id.replace("delTypeDescription", "");
+    let targetIndexes = targetNum.split("-");
+    $("#typeDescriptionDiv" + targetNum).hide();
+    $("#typeDescriptionDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#typeDescriptionDiv" + targetNum + " option").remove();
+    $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeDescriptionList[${targetIndexes[2]}].deleted"]`).val(1);
+};
+
+function typeDescriptionInfoHoverInEvent(e) {
+    let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
+    $("#delTypeDescription" + targetId).show();
+}
+
+function typeDescriptionInfoHoverOutEvent(e) {
+    let targetId = e.currentTarget.id.replace("typeDescriptionDiv", "");
+    $("#delTypeDescription" + targetId).hide();
+}
+
+
+function indicatorAddEvent() {
+    // 새롭게 추가될 indicatorDiv 내용
+    let indicatorDiv =
+    `
+        <div class="indicator-div" id="indicatorDiv${indicatorList.length + 1}">
+            <div class="indicator-title">
+                <p><span class="material-icons">edit</span>유형 지표 정보</p>
+                <span class="material-icons indicatorDelete" id="indiDel${indicatorList.length + 1}">close</span>
+            </div>
+            <input type="hidden" name="indicatorList[${indicatorList.length}].id">
+            <input type="hidden" name="indicatorList[${indicatorList.length}].updated" value="0">
+            <input type="hidden" name="indicatorList[${indicatorList.length}].deleted" value="0">
+            <div class="indicatorInfo-div">
+                <div class="indicatorElement-div">
+                    <label>지표 번호</label>
+                    <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum">
+                </div>
+                <div>
+                    <label>지표 이름</label>
+                    <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorName">
+                </div>
+            </div>
+            <div class="setting-div">
+                <div class="settingAdd-div" id="settingAdd-div-${indicatorList.length + 1}">
+                    <span class="settingAdd" id="settingAdd-${indicatorList.length + 1}">+ 지표 정보 추가</span>
+                </div>
+            </div>
+        </div>
+    `;
+    // 추가버튼 위에 새 div 추가
+    $("#addIndicator").before(indicatorDiv);
+
+    // 요소 개수 카운트를 위해 indicator배열에 빈 객체 추가
+    indicatorList.push({indicatorSettings:[]});
+
+    // 추가된 indicator 삭제버튼에 이벤트 연결
+    $("#indiDel" + (indicatorList.length)).click( (e) => {
+        indicatorDeleteEvent(e);
+    });
+
+    // 추가된 setting추가 버튼에 이벤트 연결
+    $("#settingAdd-" + (indicatorList.length)).click( (e) => {
+        settingAddEvent(e);
+    });
+}
+
+function settingAddEvent(e) {
+    // 새롭게 추가될 setting div 내용
+    let targetNum = e.target.id.replace("settingAdd-", "");
+    let settingDiv =
+    `
+        <div class="settingInfo-div"
+            id="settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}">
+            <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].id">
+            <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].updated" value="0">
+            <input type="hidden" name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].deleted" value="0">
+            <div class="settingElement-div">
+                <label>지표 코드</label>
+                <input type="text" class="form-control code-input"
+                    name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].result">
+            </div>
+            <div class="settingElement-div">
+                <label>지표 결정 점수</label>
+                <input type="text" class="form-control"
+                    name="indicatorList[${targetNum - 1}].indicatorSettings[${indicatorList[targetNum-1].indicatorSettings.length}].cuttingPoint">
+            </div>
+            <span class="material-icons delSetting" id="delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length}"
+                    style="display: none;">
+                delete
+            </span>
+        </div>
+    `;
+    // 추가버튼 위에 div 추가
+    $("#settingAdd-div-" + targetNum).before(settingDiv);
+
+    // 데이터 카운트를 위해 빈 객체 추가
+    indicatorList[targetNum - 1].indicatorSettings.push({});
+
+    // 추가된 삭제버튼에 삭제 이벤트 연결
+    $(`#delSetting-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).click( (e) => {
+        settingDeleteEvent(e);
+    });
+
+    // 추가된 삭제버튼에 hover 이벤트 연결
+    $(`#settingDiv-${targetNum}-${indicatorList[targetNum-1].indicatorSettings.length - 1}`).hover( (e) => {
+        settingInfoHoverInEvent(e);
+    }, (e) => {
+        settingInfoHoverOutEvent(e);
+    });
+}
+
+function questionAddEvent() {
+    // 새롭게 추가될 questionDiv 내용
+    let questionDiv =
+    `
+            <div class="question-div" id="questionDiv${questionList.length + 1}">
+                <div class="question-title">
+                    <div class="questionHeadInfo-div">
+                        <button class="fold-btn" type="button" data-bs-toggle="collapse" aria-expanded="true"
+                                data-bs-target="#questionContentDiv${questionList.length + 1}"
+                                aria-controls="questionContentDiv${questionList.length + 1}">
+                            <span class="material-icons">
+                            expand_more
+                            </span>
+                        </button>
+                        <input type="text" class="q-num-input" name="questionList[${questionList.length}].num" placeholder="번호">
+                        <div class="px-1"></div>
+                        <input type="text" class="q-name-input" name="questionList[${questionList.length}].question" placeholder="질문내용">
+                    </div>
+                    <span class="material-icons questionDelete" id="questionDel${questionList.length + 1}">close</span>
+                </div>
+                <div class="questionContent-div collapse show" id="questionContentDiv${questionList.length + 1}">
+                    <input type="hidden" name="questionList[${questionList.length}].id">
+                    <input type="hidden" name="questionList[${questionList.length}].updated" value="0">
+                    <input type="hidden" name="questionList[${questionList.length}].deleted" value="0">
+                    <div class="questionInfo-div">
+                        <div class="indicatorElement-div">
+                            <label>질문 이미지</label>
+                            <input type="text" class="form-control" name="questionList[${questionList.length}].questionImage">
+                        </div>
+                    </div>
+                    <div class="answer-div">
+                        <div class="answerTitle-div">
+                            <label>답변 정보</label>
+                        </div>
+                        <div class="answerAdd-div" id="answerAdd-div-${questionList.length + 1}">
+                            <span class="answerAdd" id="answerAdd-${questionList.length + 1}">+ 답변 정보 추가</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    `;
+    // 추가버튼 위에 새 div 추가
+    $("#addQuestion").before(questionDiv);
+
+    // 요소 개수 카운트를 위해 question 빈 객체 추가
+    questionList.push({answerList:[]});
+
+    // 추가된 question 삭제버튼에 이벤트 연결
+    console.log("#questionDel" + (questionList.length));
+    $("#questionDel" + (questionList.length)).click( (e) => {
+        questionDeleteEvent(e);
+    });
+
+    // 추가된 answer 버튼에 이벤트 연결
+    $("#answerAdd-" + (questionList.length)).click( (e) => {
+        answerAddEvent(e);
+    });
+}
+
+function answerAddEvent(e) {
+    // 새롭게 추가될 answer div 내용
+    let targetNum = e.target.id.replace("answerAdd-", "");
+    let indicatorListOption = "";
+    let tendencyListOption = "";
+    // 지표 select박스 내용 만들기
+    $.each(indicatorList, (i, val) => {
+        let optionStr = `<option value="${val.id}">${val.indicatorName}</option>`;
+        indicatorListOption += optionStr;
+    });
+    // 성향 select박스 내용 만들기
+    $.each(tendencyNameList, (i, val) => {
+        let optionStr = `<option value="${tendencyList[i]}">${val}</option>`;
+        tendencyListOption += optionStr;
+    });
+
+    let answerDiv =
+    `
+        <div class="answerInfo-div" id="answerDiv-${targetNum}-${questionList[targetNum-1].answerList.length}">
+            <span class="material-icons answerDelete" style="display: none;"
+                  id="delAnswer-${targetNum}-${questionList[targetNum-1].answerList.length}">close</span>
+            <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].id">
+            <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].updated" value="0">
+            <input type="hidden" name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].deleted" value="0">
+            <div class="answerElement-div answerContent-div">
+                <label>답변 이미지</label>
+                <input type="text" class="form-control code-input"
+                       name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].answerImage">
+            </div>
+            <div class="answerElement-div answerContent-div">
+                <label>답변 내용</label>
+                <input type="text" class="form-control"
+                       name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].answer">
+            </div>
+            <div class="answerElement-div answerElementDetail-div">
+                <div class="answerDetail-div">
+                    <label>답변 점수</label>
+                    <input type="text" class="form-control"
+                           name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].point">
+                </div>
+                <div class="answerDetail-div">
+                    <label>답변 지표</label>
+                    <select class="answer-select form-select" 
+                            name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].typeIndicatorId">
+                        ${indicatorListOption}
+                    </select>
+                </div>
+                <div class="answerDetail-div">
+                    <label>답변 성향</label>
+                    <select class="answer-select form-select" 
+                            name="questionList[${targetNum-1}].answerList[${questionList[targetNum-1].answerList.length}].tendency">
+                        ${tendencyListOption}
+                    </select>
+                </div>
+            </div>
+        </div>
+    `;
+    // 추가버튼 위에 div 추가
+    $("#answerAdd-div-" + targetNum).before(answerDiv);
+
+    // 데이터 카운트를 위해 빈 객체 추가
+    questionList[targetNum - 1].answerList.push({});
+
+    // 추가된 삭제버튼에 삭제 이벤트 연결
+    $(`#delAnswer-${targetNum}-${questionList[targetNum-1].answerList.length - 1}`).click( (e) => {
+        answerDeleteEvent(e);
+    });
+
+    // 추가된 삭제버튼에 hover 이벤트 연결
+    $(`#answerDiv-${targetNum}-${questionList[targetNum-1].answerList.length - 1}`).hover( (e) => {
+        answerInfoHoverInEvent(e);
+    }, (e) => {
+        answerInfoHoverOutEvent(e);
+    });
+
+    answerTypeChange();
+}
+
+function typeInfoAddEvent() {
+    let typeInfoListOption = "";
+    // 유형 select박스 내용 만들기
+    $.each(typeInfoList, (i, val) => {
+        let optionStr = `<option value="${val.id}">${val.typeCode}(${val.typeName})</option>`;
+        typeInfoListOption += optionStr;
+    });
+
+    // 새롭게 추가될 typeInfoDiv 내용
+    let typeInfoDiv =
+    `
+        <div class="typeInfo-div" id="typeInfoDiv${typeInfoList.length + 1}">
+            <div class="typeInfo-title">
+                <div class="typeInfoHeadInfo-div">
+                    <button class="fold-btn" type="button" data-bs-toggle="collapse" aria-expanded="true"
+                            data-bs-target="#typeInfoContentDiv${typeInfoList.length + 1}"
+                            aria-controls="typeInfoContentDiv${typeInfoList.length + 1}">
+                        <span class="material-icons">
+                        expand_more
+                        </span>
+                    </button>
+                    <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode" placeholder="번호">
+                    <div class="px-1"></div>
+                    <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName" placeholder="유형명">
+                </div>
+                <span class="material-icons typeInfoDelete" id="typeInfoDel${typeInfoList.length + 1}">close</span>
+            </div>
+            <div class="typeInfoContent-div collapse show" id="typeInfoContentDiv${typeInfoList.length + 1}">
+                <input type="hidden" name="typeInfoList[${typeInfoList.length}].id">
+                <input type="hidden" name="typeInfoList[${typeInfoList.length}].updated" value="0">
+                <input type="hidden" name="typeInfoList[${typeInfoList.length}].deleted" value="0">
+                <div class="typeImage-div">
+                    <div class="typeImageTitle-div">
+                        <label>결과 이미지</label>
+                    </div>
+
+                    <div class="typeImageAdd-div" id="typeImageAdd-div-${typeInfoList.length + 1}">
+                        <span class="typeImageAdd" id="typeImageAdd-${typeInfoList.length + 1}">+ 이미지 추가</span>
+                    </div>
+                </div>
+
+                <div class="typeDescription-div">
+                    <div class="typeDescriptionTitle-div">
+                        <label>유형 설명</label>
+                    </div>
+
+                    <div class="typeDescriptionAdd-div" id="typeDescriptionAdd-div-${typeInfoList.length + 1}">
+                        <span class="typeDescriptionAdd" id="typeDescriptionAdd-${typeInfoList.length + 1}">+ 설명 추가</span>
+                    </div>
+                </div>
+
+                <div class="typeRelation-div">
+                    <div class="typeRelationTitle-div">
+                        <label>유형 관계 정보</label>
+                    </div>
+                    <div class="typeRelationInfo-div" id="typeRelationDiv-${typeInfoList.length + 1}">
+                        <span class="material-icons typeRelationDelete" style="display: none;"
+                              id="delTypeRelation-${typeInfoList.length + 1}">close</span>
+                        <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.id">
+                        <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.updated" value="0">
+                        <input type="hidden" name="typeInfoList[${typeInfoList.length}].typeRelation.deleted" value="0">
+                        <div class="typeRelationElement-div typeRelationContent-div">
+                            <label>Best 유형</label>
+                            <select class="typeRelation-select form-select" name="typeInfoList[${typeInfoList.length}].typeRelation.bestTypeId"">
+                                <option value="">미지정</option>
+                                ${typeInfoListOption}
+                            </select>
+                        </div>
+                        <div class="typeRelationElement-div typeRelationContent-div">
+                            <label>Worst 유형</label>
+                            <select class="typeRelation-select form-select" name="typeInfoList[${typeInfoList.length}].typeRelation.worstTypeId"">
+                                <option value="">미지정</option>
+                                ${typeInfoListOption}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    // 추가버튼 위에 새 div 추가
+    $("#addTypeInfo").before(typeInfoDiv);
+
+    // 요소 개수 카운트를 위해 typeInfo 빈 객체 추가
+    typeInfoList.push({typeImageList:[], typeDescriptionList:[]});
+
+    // 추가된 typeInfo 삭제버튼에 이벤트 연결
+    console.log("#typeInfoDel" + (typeInfoList.length));
+    $("#typeInfoDel" + (typeInfoList.length)).click( (e) => {
+        typeInfoDeleteEvent(e);
+    });
+
+    // 추가된 image 버튼에 이벤트 연결
+    $("#typeImageAdd-" + (typeInfoList.length)).click( (e) => {
+        typeImageAddEvent(e);
+    });
+
+    // 추가된 description 버튼에 이벤트 연결
+    $("#typeDescriptionAdd-" + (typeInfoList.length)).click( (e) => {
+        typeDescriptionAddEvent(e);
+    });
+}
+
+function typeImageAddEvent(e) {
+    // 새롭게 추가될 image div 내용
+    let targetNum = e.target.id.replace("typeImageAdd-", "");
+    let typeImageDiv =
+    `
+        <div class="typeImageInfo-div" id="typeImageDiv-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">
+            <span class="material-icons typeImageDelete" style="display: none;"
+                  id="delTypeImage-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length}">close</span>
+            <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].id">
+            <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].updated" value="0">
+            <input type="hidden" name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].deleted" value="0">
+            <div class="typeImageDetail-div">
+                <div class="typeImageNum-div typeImageContent-div">
+                    <label>이미지 번호</label>
+                    <input type="text" class="form-control code-input"
+                           name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imgNum">
+                </div>
+                <div class="typeImageUrl-div typeImageContent-div">
+                    <label>이미지 URL</label>
+                    <input type="text" class="form-control"
+                           name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imageUrl">
+                </div>
+            </div>
+            <div class="typeImagePicture-div">
+                <label>이미지</label>
+                <div class="">
+                    <img src="">
+                </div>
+            </div>
+        </div>
+    `
+    // 추가버튼 위에 div 추가
+    $("#typeImageAdd-div-" + targetNum).before(typeImageDiv);
+
+    // 데이터 카운트를 위해 빈 객체 추가
+    typeInfoList[targetNum - 1].typeImageList.push({});
+
+    // 추가된 삭제버튼에 삭제 이벤트 연결
+    $(`#delTypeImage-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length - 1}`).click( (e) => {
+        typeImageDeleteEvent(e);
+    });
+
+    // 추가된 삭제버튼에 hover 이벤트 연결
+    $(`#typeImageDiv-${targetNum}-${typeInfoList[targetNum-1].typeImageList.length - 1}`).hover( (e) => {
+        typeImageInfoHoverInEvent(e);
+    }, (e) => {
+        typeImageInfoHoverOutEvent(e);
+    });
+}
+
+function typeDescriptionAddEvent(e) {
+    // 새롭게 추가될 image div 내용
+    let targetNum = e.target.id.replace("typeDescriptionAdd-", "");
+    let typeDescriptionDiv = 
+    `
+        <div class="typeDescriptionInfo-div" id="typeDescriptionDiv-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">
+            <span class="material-icons typeDescriptionDelete" style="display: none;"
+                  id="delTypeDescription-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length}">close</span>
+            <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].id">
+            <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].updated" value="0">
+            <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].deleted" value="0">
+            <div class="typeDescriptionElement-div typeDescriptionContent-div">
+                <label>설명 번호</label>
+                <input type="text" class="form-control code-input"
+                       name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].descNum">
+            </div>
+            <div class="typeDescriptionElement-div typeDescriptionContent-div">
+                <label>설명</label>
+                <textarea type="text" class="form-control"
+                       name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].description"></textarea>
+            </div>
+        </div>
+    `
+    // 추가버튼 위에 div 추가
+    $("#typeDescriptionAdd-div-" + targetNum).before(typeDescriptionDiv);
+
+    // 데이터 카운트를 위해 빈 객체 추가
+    typeInfoList[targetNum - 1].typeDescriptionList.push({});
+
+    // 추가된 삭제버튼에 삭제 이벤트 연결
+    $(`#delTypeDescription-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length - 1}`).click( (e) => {
+        typeDescriptionDeleteEvent(e);
+    });
+
+    // 추가된 삭제버튼에 hover 이벤트 연결
+    $(`#typeDescriptionDiv-${targetNum}-${typeInfoList[targetNum-1].typeDescriptionList.length - 1}`).hover( (e) => {
+        typeDescriptionInfoHoverInEvent(e);
+    }, (e) => {
+        typeDescriptionInfoHoverOutEvent(e);
+    });
+}
+
     
 function callEssential(testCode) {
     
-    if(confirm("필수유형세팅을 진행하면 아직 저장하지 않은 값은 초기화됩니다.\n진행하시겠습니까?")) {
-        location.href = `/adminPage/testAdminPage/${testCode}/essentialType`;
+    // 필수유형 추가돼 있는지 확인하여 없으면 추가해주는 로직
+    for(essentialType of essentialTypeList) {
+        let exist = false;
+        for(const [i, typeInfo] of typeInfoList.entries()) {
+            if(essentialType == typeInfo.typeCode) {
+                $(`#typeInfoDiv${i+1}`).addClass("essential-type");
+                exist = true;
+                break;
+            }
+        }
+
+        if(exist == false) {
+            typeInfoAddEvent();
+            $(`input[name="typeInfoList[${typeInfoList.length-1}].typeCode"]`).val(essentialType);
+            $(`#typeInfoDiv${typeInfoList.length}`).addClass("essential-type");
+        }
     }
+    
 }
 
