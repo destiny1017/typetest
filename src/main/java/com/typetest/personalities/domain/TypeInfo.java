@@ -48,7 +48,6 @@ public class TypeInfo {
     }
 
     public TypeInfo(TestCodeInfo testCode, String typeCode, String typeName) {
-
         this.testCode = testCode;
         this.typeCode = typeCode;
         this.typeName = typeName;

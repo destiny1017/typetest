@@ -38,19 +38,14 @@ public class InitDB {
 
         public void init() {
             if(!env.getProperty("spring.profiles.active").equals("test")) {
-                // 임시 테스트코드
+                // EXAMTEST 테스트용 데이터
                 TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,
-                        "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
-                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
-                        0);
-                TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD,
                         "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
                         "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
                         0);
                 TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
                 TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에이");
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
-                TypeInfo typeInfo4 = new TypeInfo(testCodeInfo2, "INTP", "인팁");
                 TypeInfo typeInfo5 = new TypeInfo(testCodeInfo1, "BBB", "비비비이");
                 TypeInfo typeInfo6 = new TypeInfo(testCodeInfo1, "BBC", "비비씨?");
 
@@ -76,11 +71,9 @@ public class InitDB {
                 TypeRelation typeRelation2 = new TypeRelation(typeInfo5, typeInfo3, typeInfo2);
 
                 em.persist(testCodeInfo1);
-                em.persist(testCodeInfo2);
                 em.persist(typeInfo1);
                 em.persist(typeInfo2);
                 em.persist(typeInfo3);
-                em.persist(typeInfo4);
                 em.persist(typeInfo5);
                 em.persist(typeInfo6);
                 em.persist(indicatorA);
@@ -99,6 +92,58 @@ public class InitDB {
                 em.persist(typeRelation1);
                 em.persist(typeRelation2);
 
+
+                // CARDTEST 테스트용 데이터
+                TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "분위기 컬러 테스트", AnswerType.CARD,
+                        "https://cdn.banggooso.com/assets/images/game108/1651571103(2).gif",
+                        "나의 분위기 컬러를 알아봐요!",
+                        0);
+
+                TypeInfo typeInfoCard1 = new TypeInfo(testCodeInfo2, "BBA", "비비에이");
+                TypeInfo typeInfoCard2 = new TypeInfo(testCodeInfo2, "AAA", "에에에이");
+                TypeInfo typeInfoCard3 = new TypeInfo(testCodeInfo2, "BAB", "비에이비");
+                TypeInfo typeInfoCard5 = new TypeInfo(testCodeInfo2, "BBB", "비비비이");
+                TypeInfo typeInfoCard6 = new TypeInfo(testCodeInfo2, "BBC", "비비씨?");
+
+                TypeIndicator indicatorCardA = new TypeIndicator(testCodeInfo2, 1, "A지표");
+                TypeIndicator indicatorCardB = new TypeIndicator(testCodeInfo2, 2, "B지표");
+                TypeIndicator indicatorCardC = new TypeIndicator(testCodeInfo2, 3, "C지표");
+                TypeIndicator indicatorListCard[] = {indicatorCardA, indicatorCardB, indicatorCardC};
+
+                IndicatorSetting indicatorSettingCard1 = new IndicatorSetting(indicatorCardA, testCodeInfo2, 0, "B");
+                IndicatorSetting indicatorSettingCard2 = new IndicatorSetting(indicatorCardA, testCodeInfo2, 6, "A");
+                IndicatorSetting indicatorSettingCard3 = new IndicatorSetting(indicatorCardB, testCodeInfo2, 0, "B");
+                IndicatorSetting indicatorSettingCard4 = new IndicatorSetting(indicatorCardB, testCodeInfo2, 6, "A");
+                IndicatorSetting indicatorSettingCard5 = new IndicatorSetting(indicatorCardC, testCodeInfo2, 0, "B");
+                IndicatorSetting indicatorSettingCard6 = new IndicatorSetting(indicatorCardC, testCodeInfo2, 6, "A");
+
+                TypeDescription bbbDescriptionCard1 = new TypeDescription(typeInfoCard5, 1, "BBB description1");
+                TypeDescription aaaDescriptionCard1 = new TypeDescription(typeInfoCard2, 1, "AAA description1");
+
+                TypeImage bbbImageCard1 = new TypeImage(typeInfoCard5, 1, "https://cdn.banggooso.com/assets/images/game108/result/ENTP.jpg");
+                TypeImage aaaImageCard1 = new TypeImage(typeInfoCard2, 1, "https://cdn.banggooso.com/assets/images/game108/result/ESTP.jpg");
+
+                em.persist(testCodeInfo2);
+                em.persist(typeInfoCard1);
+                em.persist(typeInfoCard2);
+                em.persist(typeInfoCard3);
+                em.persist(typeInfoCard5);
+                em.persist(typeInfoCard6);
+                em.persist(indicatorCardA);
+                em.persist(indicatorCardB);
+                em.persist(indicatorCardC);
+                em.persist(indicatorSettingCard1);
+                em.persist(indicatorSettingCard2);
+                em.persist(indicatorSettingCard3);
+                em.persist(indicatorSettingCard4);
+                em.persist(indicatorSettingCard5);
+                em.persist(indicatorSettingCard6);
+                em.persist(bbbDescriptionCard1);
+                em.persist(aaaDescriptionCard1);
+                em.persist(bbbImageCard1);
+                em.persist(aaaImageCard1);
+
+
                 User user = User.builder()
                             .name("김대호")
                             .email("eogh6428@gmail.com")
@@ -108,16 +153,15 @@ public class InitDB {
                             .build();
                 TestResult pt1 = new TestResult(user, testCodeInfo1, typeInfo2);
                 TestResult pt2 = new TestResult(user, testCodeInfo1, typeInfo1);
-                TestResult pt3 = new TestResult(user, testCodeInfo2, typeInfo4);
                 em.persist(user);
                 em.persist(pt1);
                 em.persist(pt2);
-                em.persist(pt3);
 
                 em.flush();
 
 
                 List<PersonalityQuestion> questionList = new ArrayList<>();
+                List<PersonalityQuestion> questionListCard = new ArrayList<>();
 
                 for (int i = 1; i <= 12; i++) {
                      questionList.add(new PersonalityQuestion(testCodeInfo1, "examQuestion"+i, i));
@@ -138,6 +182,37 @@ public class InitDB {
                 }
 
                 personalityQuestionRepository.saveAll(questionList);
+
+
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion1", 1, "https://cdn.banggooso.com/assets/images/game108/page/Q01.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion2", 2, "https://cdn.banggooso.com/assets/images/game108/page/Q02.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion3", 3, "https://cdn.banggooso.com/assets/images/game108/page/Q03.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion4", 4, "https://cdn.banggooso.com/assets/images/game108/page/Q04.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion5", 5, "https://cdn.banggooso.com/assets/images/game108/page/Q05.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion6", 6, "https://cdn.banggooso.com/assets/images/game108/page/Q06.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion7", 7, "https://cdn.banggooso.com/assets/images/game108/page/Q07.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion8", 8, "https://cdn.banggooso.com/assets/images/game108/page/Q08.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion9", 9, "https://cdn.banggooso.com/assets/images/game108/page/Q09.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion10", 10, "https://cdn.banggooso.com/assets/images/game108/page/Q10.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion11", 11, "https://cdn.banggooso.com/assets/images/game108/page/Q11.jpg"));
+                questionListCard.add(new PersonalityQuestion(testCodeInfo2, "examQuestion12", 12, "https://cdn.banggooso.com/assets/images/game108/page/Q12.jpg"));
+
+                int cnt2 = 0;
+                for (int i = 0; i < questionListCard.size(); i++) {
+                    for (int j = 1; j <= 3; j++) {
+                        questionListCard.get(i).addAnswer(PersonalityAnswer.builder()
+                                .personalityQuestion(questionListCard.get(i))
+                                .testCode(testCodeInfo2)
+                                .answer("example answer" + j)
+                                .point(j)
+                                .tendency(Tendency.A)
+                                .typeIndicator(indicatorListCard[cnt2])
+                                .build());
+                    }
+                    if((i+1) % (questionListCard.size() / 3) == 0 && cnt2 < indicatorList.length-1) cnt2++;
+                }
+
+                personalityQuestionRepository.saveAll(questionListCard);
             }
 
         }

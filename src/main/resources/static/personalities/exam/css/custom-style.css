@@ -571,6 +571,7 @@ div.add-icon {
 
 .typeImagePicture-div {
     display: flex;
+    align-items: center;
 }
 
 .typeImagePicture-div > div > img {
