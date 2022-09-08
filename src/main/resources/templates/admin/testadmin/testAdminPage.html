@@ -86,7 +86,7 @@
                     <label class="name-label">테스트 활성화</label>
                     <div class="d-flex">
                         <div class="answerType-title-div">
-                            <input type="radio" class="form-check-input" th:field="*{testInfoDto.active}" value="1">
+                            <input type="radio" class="form-check-input" th:field="*{testInfoDto.active}" value="1" onclick="enableActive()">
                             <label class="form-check-label" th:for="${#ids.prev('active')}">활성화</label>
                         </div>
                         <div class="answerType-title-div px-2">

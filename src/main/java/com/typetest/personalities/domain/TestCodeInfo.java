@@ -35,12 +35,13 @@ public class TestCodeInfo {
         this.answerType = answerType;
     }
 
-    public TestCodeInfo(String testCode, String testName, AnswerType answerType, String image, String description) {
+    public TestCodeInfo(String testCode, String testName, AnswerType answerType, String image, String description, Integer active) {
         this.testCode = testCode;
         this.testName = testName;
         this.answerType = answerType;
         this.image = image;
         this.description = description;
+        this.active = active;
     }
 
     public TestCodeInfo(TestInfoDto testInfoDto) {
@@ -49,5 +50,6 @@ public class TestCodeInfo {
         this.answerType = testInfoDto.getAnswerType();
         this.image = testInfoDto.getImage();
         this.description = testInfoDto.getDescription();
+        this.active = testInfoDto.getActive();
     }
 }

@@ -14,6 +14,7 @@ public class TestInfoDto {
     private AnswerType answerType;
     private String image;
     private String description;
+    private Integer active;
 
     public TestInfoDto() {
     }
@@ -24,5 +25,6 @@ public class TestInfoDto {
         this.answerType = testCodeInfo.getAnswerType();
         this.image = testCodeInfo.getImage();
         this.description = testCodeInfo.getDescription();
+        this.active = testCodeInfo.getActive();
     }
 }

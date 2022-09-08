@@ -37,14 +37,16 @@ public class InitDB {
         private final PersonalityQuestionRepository personalityQuestionRepository;
 
         public void init() {
-            if(!env.getProperty("spring.profiles.active").equals("test") && false) {
+            if(!env.getProperty("spring.profiles.active").equals("test")) {
                 // 임시 테스트코드
                 TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,
                         "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
-                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.");
+                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
+                        0);
                 TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD,
                         "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
-                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.");
+                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
+                        0);
                 TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
                 TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에이");
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
@@ -101,7 +103,7 @@ public class InitDB {
                             .name("김대호")
                             .email("eogh6428@gmail.com")
                             .picture("https://lh3.googleusercontent.com/a-/AFdZucr_8gjDmt791JrOHftPA1UX3kvt1WiRxW19AH4JdQ=s96-c")
-                            .role(Role.USER)
+                            .role(Role.ADMIN)
                             .nickname("디앙")
                             .build();
                 TestResult pt1 = new TestResult(user, testCodeInfo1, typeInfo2);

@@ -726,3 +726,35 @@ function callEssential(testCode) {
     
 }
 
+function enableActive() {
+    
+    if(indicatorList.length == 0) {
+        alert("지표정보가 등록되지 않았습니다.");
+        return;
+    }
+    
+    if(questionList.length == 0) {
+        alert("질문 정보가 등록되지 않았습니다.");
+        return;
+    }
+    
+    for(essentialType of essentialTypeList) {
+        let exist = false;
+        for(const [i, typeInfo] of typeInfoList.entries()) {
+            if(essentialType == typeInfo.typeCode) {
+                $(`#typeInfoDiv${i+1}`).addClass("essential-type");
+                exist = true;
+                break;
+            }
+        }
+
+        if(exist == false) {
+            $("#active2").prop("checked", true);
+            alert("아직 세팅되지 않은 필수유형 정보가 있습니다.");
+            return;
+        }
+    }
+    
+    
+}
+
