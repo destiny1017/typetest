@@ -81,6 +81,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
+                .nickname("익명이")
                 .role(Role.USER) // 기본 권한 USER
                 .build();
     }

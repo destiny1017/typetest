@@ -763,8 +763,9 @@ div.add-icon {
 
 .profile-image {
     height: 100%;
-    width: 20%;
+    width: 20%;cm
     background: #ddd;
+    background-repeat: round;
     border-radius: 50%;
 }
 
