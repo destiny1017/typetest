@@ -28,19 +28,20 @@ public class LoginController {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) {
             model.addAttribute("userName", user.getName());
+            // 로그인 후 세션에 유형 정보 있으면 저장 후 세션 데이터 삭제
+            String type = (String) httpSession.getAttribute("type");
+            PersonalitiesAnswerInfo answerInfo = (PersonalitiesAnswerInfo) httpSession.getAttribute("answerInfo");
+            if(type != null && answerInfo != null) {
+                answerInfo.setUserId(user.getId());
+                personalityTestService.saveTestInfo(answerInfo, type);
+                httpSession.removeAttribute("type");
+                httpSession.removeAttribute("answerInfo");
+            }
         } else {
             model.addAttribute("userName", "손");
         }
         log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
 
-        // 로그인 후 세션에 유형 정보 있으면 저장 후 세션 데이터 삭제
-        String type = (String) httpSession.getAttribute("type");
-        PersonalitiesAnswerInfo answerInfo = (PersonalitiesAnswerInfo) httpSession.getAttribute("answerInfo");
-        if(type != null && answerInfo != null) {
-            personalityTestService.saveTestInfo(answerInfo, type);
-            httpSession.removeAttribute("type");
-            httpSession.removeAttribute("answerInfo");
-        }
 
         return "index";
     }
