@@ -10,16 +10,20 @@
             <span class="h4">ExamTest</span>
         </div>
     </nav>
-    <div class="py-2 px-1">
-        <p th:text="${userName} + '님 로그인'" >손님 로그인</p>
+    <div class="mainTitle-div">
+        <p class="mainTitle">디앙랩의 모든 테스트</p>
+    </div>
+    <div class="py-2 px-1 testInfoMain-div">
+        <div class="card testInfoCard" th:each="testInfo : ${testInfoList}">
+            <img th:src="${testInfo.image}" class="card-img-top" alt="이미지가 없습니다.">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${testInfo.testName}">Card title</h5>
+                <p class="card-text" th:text="${testInfo.thumbnailDesc}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a th:href="|/${testInfo.testCode}/testMain|" class="btn btn-primary">테스트 하러가기</a>
+            </div>
+        </div>
     </div>
     <hr>
-    <div class="px-3 vstack">
-        <a href="/EXAMTEST/testMain" class="btn btn-outline-secondary">EXAMTEST</a>
-        <div class="py-1"></div>
-        <a href="/CARDTEST/testMain" class="btn btn-outline-secondary">CARDTEST</a>
-        <hr>
-    </div>
     <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
 </div>
 </body>

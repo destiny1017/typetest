@@ -1,5 +1,7 @@
 package com.typetest.login.controller;
 
+import com.typetest.admin.testadmin.data.TestInfoDto;
+import com.typetest.admin.testadmin.service.TestAdminService;
 import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.service.PersonalityTestService;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -22,6 +26,7 @@ public class LoginController {
 
     private final HttpSession httpSession;
     private final PersonalityTestService personalityTestService;
+    private final TestAdminService testAdminService;
 
     @GetMapping(value = {"/", "/oauth2/authorization/*"})
     public String welcome(Model model, HttpServletRequest request) {
@@ -42,6 +47,10 @@ public class LoginController {
         }
         log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
 
+        List<TestInfoDto> testInfoList = testAdminService.findAllTestInfo()
+                .stream().filter(i -> i.getActive() == 1).map(TestInfoDto::new).collect(Collectors.toList());
+
+        model.addAttribute("testInfoList", testInfoList);
 
         return "index";
     }

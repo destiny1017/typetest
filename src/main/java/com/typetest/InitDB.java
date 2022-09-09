@@ -40,9 +40,9 @@ public class InitDB {
             if(!env.getProperty("spring.profiles.active").equals("test")) {
                 // EXAMTEST 테스트용 데이터
                 TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,
-                        "https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg",
+                        "https://d2k6w3n3qf94c4.cloudfront.net/media/banners/images/07_mmangsi.png",
                         "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
-                        0);
+                        1);
                 TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
                 TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에이");
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
@@ -97,7 +97,7 @@ public class InitDB {
                 TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "분위기 컬러 테스트", AnswerType.CARD,
                         "https://cdn.banggooso.com/assets/images/game108/1651571103(2).gif",
                         "나의 분위기 컬러를 알아봐요!",
-                        0);
+                        1);
 
                 TypeInfo typeInfoCard1 = new TypeInfo(testCodeInfo2, "BBA", "비비에이");
                 TypeInfo typeInfoCard2 = new TypeInfo(testCodeInfo2, "AAA", "에에에이");
