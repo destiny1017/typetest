@@ -730,11 +730,13 @@ function enableActive() {
     
     if(indicatorList.length == 0) {
         alert("지표정보가 등록되지 않았습니다.");
+        $("#active2").prop("checked", true);
         return;
     }
     
     if(questionList.length == 0) {
         alert("질문 정보가 등록되지 않았습니다.");
+        $("#active2").prop("checked", true);
         return;
     }
     

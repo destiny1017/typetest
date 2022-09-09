@@ -26,6 +26,7 @@ public class TestCodeInfo {
 
     private String image;
     private String description;
+    private String thumbnailDesc;
     private Integer active;
     private Long playCount;
 
@@ -50,6 +51,7 @@ public class TestCodeInfo {
         this.answerType = testInfoDto.getAnswerType();
         this.image = testInfoDto.getImage();
         this.description = testInfoDto.getDescription();
+        this.thumbnailDesc = testInfoDto.getThumbnailDesc();
         this.active = testInfoDto.getActive();
     }
 }
