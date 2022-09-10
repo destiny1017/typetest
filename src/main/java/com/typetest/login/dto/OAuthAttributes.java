@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +34,9 @@ public class OAuthAttributes {
         }
         if("kakao".equals(registrationId)) {
             return ofKakao(userNameAttributeName, attributes);
+        }
+        if("facebook".equals(registrationId)) {
+            return ofFacebook(userNameAttributeName, attributes);
         }
         return ofGoogle(userNameAttributeName, attributes);
     }
@@ -73,6 +77,19 @@ public class OAuthAttributes {
                 .picture((String) kakaoProfile.get("profile_image"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    private static OAuthAttributes ofFacebook(String userNameAttributeName, Map<String, Object> attributes) {
+        LinkedHashMap pictureMap1 = (LinkedHashMap) attributes.get("picture");
+        LinkedHashMap pictureMap2 = (LinkedHashMap) pictureMap1.get("data");
+        String pictureUrl = (String) pictureMap2.get("url");
+        return OAuthAttributes.builder()
+                .name((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .picture(pictureUrl)
+                .nameAttributeKey(userNameAttributeName)
+                .attributes(attributes)
                 .build();
     }
 
