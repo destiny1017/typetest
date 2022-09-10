@@ -36,7 +36,7 @@ public class PersonalitiesController {
             model.addAttribute("testInfo", testInfo.get());
         }
         model.addAttribute("testCode", testCode);
-        return "personalities/testStart";
+        return "personalities/" + testCode + "-start";
     }
 
     @GetMapping("/{testCode}/testAnswer")
@@ -45,12 +45,12 @@ public class PersonalitiesController {
         model.addAttribute("testCode", testCode);
         model.addAttribute("questions", personalityTestService.getQuestions(testCode));
         model.addAttribute("questionCount", personalityTestService.getQuestionCnt(testCode));
-        if(testCodeInfoOp.get().getAnswerType() == AnswerType.EXAM) {
-            return "personalities/examTest";
-        } else if(testCodeInfoOp.get().getAnswerType() == AnswerType.CARD) {
-            return "personalities/cardTest";
-        }
-        return "personalities/examTest";
+//        if(testCodeInfoOp.get().getAnswerType() == AnswerType.EXAM) {
+//            return "personalities/examTest";
+//        } else if(testCodeInfoOp.get().getAnswerType() == AnswerType.CARD) {
+//            return "personalities/cardTest";
+//        }
+        return "personalities/" + testCode + "-test";
     }
 
     @GetMapping("/testSubmit")
@@ -90,11 +90,12 @@ public class PersonalitiesController {
 
     @GetMapping("/{testCode}/testResult/{type}")
     public String testResult(@PathVariable String testCode, @PathVariable String type, Model model) {
+        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
         // 유형 결과 반환
         TestResultDto testResultDto = personalityTestService.createTestResultInfo(testCode, type);
         model.addAttribute("result", testResultDto);
         model.addAttribute("testCode", testCode);
-        return "personalities/testResult";
+        return "personalities/" + testCode + "-result";
     }
 
 }

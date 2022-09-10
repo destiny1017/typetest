@@ -99,7 +99,8 @@ public class OAuthAttributes {
                 .email(email)
                 .picture(picture)
                 .nickname("익명이")
-                .role(Role.USER) // 기본 권한 USER
+//                .role(Role.USER) // 기본 권한 USER
+                .role(Role.ADMIN) // (테스트용) 기본 권한 ADMIN
                 .build();
     }
 
