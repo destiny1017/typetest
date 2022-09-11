@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="personalities/fragments/header.html :: header">
+<head th:replace="fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
 <body>
 <div class="primary-container">
-    <nav class="navbar bg-light" th:replace="personalities/fragments/examHeader :: examHeader">
+    <nav class="navbar bg-light" th:replace="fragments/examHeader :: examHeader">
         <div class="container-fluid">
             <span class="h4">Diang.Lab</span>
         </div>
@@ -16,7 +16,7 @@
         <a href="#" class="btn btn-outline-secondary my-2">회원 관리</a>
     </div>
     <hr>
-    <footer th:replace="personalities/fragments/footer.html :: footer"></footer>
+    <footer th:replace="fragments/footer.html :: footer"></footer>
 </div>
 </body>
 </html>

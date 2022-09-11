@@ -53,29 +53,8 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="text-center login-title">
-                    <h1 class="figure"> 로그인 </h1>
-                </div>
+    <div th:replace="fragments/loginModal :: loginModal">
 
-                <!-- Oauth2 button line -->
-                <div class="text-center py-3">
-                    <div class="panel-body panel-margin sns-buttons">
-                        <a href="/oauth2/authorization/google" id="google-connect-link" class="btn btn-google d-block">
-                            <span class="icon-social icon-google"></span>구글으로 로그인</a>
-                        <a href="/oauth2/authorization/facebook" id="facebook-connect-link" class="btn btn-facebook d-block mt-1">
-                            <span class="icon-social icon-facebook"></span>페이스북으로 로그인</a>
-                        <a href="/oauth2/authorization/kakao" id="kakao-connect-link" class="btn btn-kakao d-block mt-1">
-                            <span class="icon-social icon-kakao"></span>카카오로 로그인</a>
-                        <a href="/oauth2/authorization/naver" id="naver-connect-link" class="btn btn-naver d-block mt-1">
-                            <span class="icon-social icon-naver"></span>네이버로 로그인</a>
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
