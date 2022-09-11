@@ -46,7 +46,7 @@
 <body>
 <div class="exam-container">
     <!-- contents -->
-    <div style="display: inline-block; height: 90%;">
+    <div class="EXAMTEST-background">
         <!-- head -->
         <nav class="navbar bg-light" th:replace="fragments/examHeader :: examHeader">
             <div class="container-fluid">
@@ -55,15 +55,15 @@
         </nav>
 
         <!-- body text -->
-        <figure class="text-center py-3 exam-contents">
-            <blockquote class="blockquote">
+        <div class="exam-contents">
+            <div class="blockquote">
                 <p class="testTitle-text" th:text="${testInfo.testName}"></p>
                 <img class="img-fluid py-3 form-floating"
                      src="https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg"
                      th:src="${testInfo.image}">
                 <p th:text="${testInfo.description}">테스트 설명란</p>
-            </blockquote>
-        </figure>
+            </div>
+        </div>
 
         <!-- button line -->
         <div class="text-center py-3">

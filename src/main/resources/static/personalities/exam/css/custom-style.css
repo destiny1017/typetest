@@ -726,7 +726,8 @@ div.add-icon {
 }
 
 .exam-contents {
-    padding: 0px 30px 0px 30px;
+    padding: 20px 30px 0px 30px;
+    text-align: center;
 }
 
 .exam-rounded-btn {
@@ -1117,9 +1118,12 @@ input[name="answer"] {
 
 
 .CARDTEST-background {
-    display: inline-block;
-    height: 90%;
-    background-image: url(https://cdn.banggooso.com/assets/images/game108/background.png);
+    background-image: url("https://cdn.banggooso.com/assets/images/game108/background.png");
+    background-size: contain;
+}
+
+.EXAMTEST-background {
+    background-image: url("https://t1.daumcdn.net/cfile/tistory/991CD6365C6D05C432");
     background-size: contain;
 }
 
