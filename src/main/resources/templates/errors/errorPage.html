@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header.html :: header">
+    <meta charset="utf-8">
+</head>
+<body>
+<div class="error-container">
+    <div class="px-3 error-content">
+        <img src="/assets/images/logo/diang_logo2.png" onclick="javascript:location.href='/'">
+        <hr>
+        <div class="px-2" th:object="${errorInfo}">
+            <div class="error-code-div">
+                <span class="material-icons error-icon">cancel</span>
+                <label th:text="|*{errorCode} *{errorName}|">404 Not Found</label>
+            </div>
+            <div class="error-text-div">
+                <li>
+                    <label th:text="*{errorMessage}">페이지를 찾을 수 없어요 (˚ ˃̣̣̥⌓˂̣̣̥ )</label>
+                </li>
+                <li th:if="*{errorMessage2} != null">
+                    <label th:text="*{errorMessage2}">관리자에게 문의해주세요</label>
+                </li>
+                <li>
+                    <a href="/" class="">돌아가기</a>
+                </li>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

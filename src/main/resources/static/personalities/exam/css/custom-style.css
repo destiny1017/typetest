@@ -1132,3 +1132,47 @@ input[name="answer"] {
     justify-content: center;
     margin-bottom: 10px;
 }
+
+.error-container {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-container img {
+    width: 200px;
+    cursor: pointer;
+}
+
+.error-content {
+    width: 100%;
+    height: 20rem;
+}
+
+.error-text-div {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.error-text-div label {
+    font-size: 18px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #555;
+}
+
+.error-icon {
+    color: #ff5b5b;
+    font-size: 40px !important;
+    margin-right: 5px;
+}
+
+.error-code-div {
+    display: flex;
+    font-size: 24px;
+    font-weight: bold;
+    align-items: center;
+}
