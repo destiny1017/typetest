@@ -54,9 +54,4 @@ public class LoginController {
 
         return "index";
     }
-
-    @GetMapping("/loginPage")
-    public String loginPage(Model model) {
-        return "login/login";
-    }
 }

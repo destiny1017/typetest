@@ -81,8 +81,8 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofFacebook(String userNameAttributeName, Map<String, Object> attributes) {
-        LinkedHashMap pictureMap1 = (LinkedHashMap) attributes.get("picture");
-        LinkedHashMap pictureMap2 = (LinkedHashMap) pictureMap1.get("data");
+        LinkedHashMap<String, Object> pictureMap1 = (LinkedHashMap<String, Object>) attributes.get("picture");
+        LinkedHashMap<String, Object> pictureMap2 = (LinkedHashMap<String, Object>) pictureMap1.get("data");
         String pictureUrl = (String) pictureMap2.get("url");
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))

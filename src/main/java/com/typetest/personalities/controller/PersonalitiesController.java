@@ -45,11 +45,6 @@ public class PersonalitiesController {
         model.addAttribute("testCode", testCode);
         model.addAttribute("questions", personalityTestService.getQuestions(testCode));
         model.addAttribute("questionCount", personalityTestService.getQuestionCnt(testCode));
-//        if(testCodeInfoOp.get().getAnswerType() == AnswerType.EXAM) {
-//            return "personalities/examTest";
-//        } else if(testCodeInfoOp.get().getAnswerType() == AnswerType.CARD) {
-//            return "personalities/cardTest";
-//        }
         return "personalities/" + testCode + "-test";
     }
 

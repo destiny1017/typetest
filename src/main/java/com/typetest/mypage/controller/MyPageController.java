@@ -29,6 +29,6 @@ public class MyPageController {
             model.addAttribute("userTypeMap", userTypeMap);
             return "mypage/myPage";
         }
-        return "login/login";
+        return "index";
     }
 }
