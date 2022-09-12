@@ -26,7 +26,7 @@ public class TypeInfo {
 
     private String typeCode;
     private String typeName;
-    private Integer resultCount;
+    private int resultCount;
 
     @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
     private List<TypeDescription> descriptions = new ArrayList<>();

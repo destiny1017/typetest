@@ -5,6 +5,7 @@ import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeDescription;
 import com.typetest.personalities.domain.TypeImage;
 import com.typetest.personalities.domain.TypeInfo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class TypeInfoRepositoryTest {
     private TypeDescriptionRepository typeDescriptionRepository;
     @Autowired
     private TypeImageRepository typeImageRepository;
+    @Autowired
+    private TestCodeInfoRepository testCodeInfoRepository;
 
     @Test
     @DisplayName("유형 설명정보 및 이미지정보 세팅 테스트")
@@ -94,4 +97,28 @@ public class TypeInfoRepositoryTest {
         assertThat(byTypeInfoImg3).contains(typeImage5, typeImage6);
 
     }
+
+    @Test
+    @DisplayName("유형 resultCount 증가 테스트")
+    void plusResultCount() {
+        //given
+        TestCodeInfo testCode = new TestCodeInfo("COUNT_TEST", "테스트", AnswerType.EXAM);
+        TypeInfo typeInfo = new TypeInfo(testCode, "BBB", "BBB");
+
+        //when
+        testCodeInfoRepository.save(testCode);
+        testCodeInfoRepository.flush();
+        typeInfoRepository.save(typeInfo);
+        typeInfoRepository.flush();
+
+        Assertions.assertEquals(0, typeInfo.getResultCount());
+        typeInfoRepository.plusResultCount(typeInfo);
+        typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCode, "BBB").get();
+
+        //then
+        Assertions.assertEquals(1, typeInfo.getResultCount());
+
+    }
+
+
 }

@@ -147,4 +147,18 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
             throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
         }
     }
+
+    @Override
+    public void plusResultCount(TestCodeInfo testCodeInfo, String type) {
+        Optional<TypeInfo> typeInfoOp = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo, type);
+        testCodeInfoRepository.plusPlayCount(testCodeInfo);
+
+        if (typeInfoOp.isPresent()) {
+            TypeInfo typeInfo = typeInfoOp.get();
+            typeInfoRepository.plusResultCount(typeInfo);
+        } else {
+            throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
+        }
+
+    }
 }

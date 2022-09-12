@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -45,6 +46,9 @@ class PersonalityTestServiceTest {
 
     @Autowired
     private PersonalityQuestionRepository personalityQuestionRepository;
+
+    @Autowired
+    private TypeInfoRepository typeInfoRepository;
 
 
     @Autowired
@@ -437,5 +441,32 @@ class PersonalityTestServiceTest {
         assertThat(testResultDto.getTypeName()).isEqualTo("비비에이");
         assertThat(testResultDto.getDescriptions()).hasSize(1);
         assertThat(testResultDto.getImages()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("테스트 결과 count 증가 테스트")
+    void plusResultCount() {
+        //given
+        TestCodeInfo testCode = new TestCodeInfo("COUNT_TEST", "테스트", AnswerType.EXAM);
+        TypeInfo typeInfo = new TypeInfo(testCode, "BBB", "BBB");
+
+        //when
+        testCodeInfoRepository.save(testCode);
+        testCodeInfoRepository.flush();
+        typeInfoRepository.save(typeInfo);
+        typeInfoRepository.flush();
+
+        assertEquals(0, testCode.getPlayCount());
+        assertEquals(0, typeInfo.getResultCount());
+
+        typeInfoRepository.plusResultCount(typeInfo);
+        testCodeInfoRepository.plusPlayCount(testCode);
+        testCode = testCodeInfoRepository.findById(testCode.getTestCode()).get();
+        typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCode, "BBB").get();
+
+        //then
+        assertEquals(1, testCode.getPlayCount());
+        assertEquals(1, typeInfo.getResultCount());
+
     }
 }

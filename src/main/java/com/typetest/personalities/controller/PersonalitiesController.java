@@ -72,10 +72,8 @@ public class PersonalitiesController {
         // 유형 도출
         String type = personalityTestService.calcType(answerInfo);
 
-        // 해당 테스트 플레이카운트 +1 증가
-        testCodeInfoRepository.plusPlayCount(testCodeInfo);
-
-
+        // 해당 테스트 및 유형 play/result 카운트 +1 증가
+        personalityTestService.plusResultCount(testCodeInfo, type);
 
         // 세션에 user정보 있으면 테스트결과 DB저장
         SessionUser user = (SessionUser) session.getAttribute("user");
