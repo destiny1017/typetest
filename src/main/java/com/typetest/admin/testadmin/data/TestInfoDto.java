@@ -15,6 +15,7 @@ public class TestInfoDto {
     private String image;
     private String description;
     private String thumbnailDesc;
+    private Long playCount;
     private Integer active;
 
     public TestInfoDto() {
@@ -27,6 +28,7 @@ public class TestInfoDto {
         this.image = testCodeInfo.getImage();
         this.description = testCodeInfo.getDescription();
         this.thumbnailDesc = testCodeInfo.getThumbnailDesc();
+        this.playCount = testCodeInfo.getPlayCount();
         this.active = testCodeInfo.getActive();
     }
 }

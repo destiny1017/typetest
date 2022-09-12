@@ -19,7 +19,17 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${testInfo.testName}">Card title</h5>
                 <p class="card-text" th:text="${testInfo.thumbnailDesc}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a th:href="|/${testInfo.testCode}/testMain|" class="btn btn-primary">테스트 하러가기</a>
+                <div class="card-button-div">
+                    <a th:href="|/${testInfo.testCode}/testMain|" class="btn btn-primary">테스트 하러가기</a>
+                    <div class="playCount-div">
+                        <span class="material-icons">
+                        play_arrow
+                        </span>
+                        <label th:text="${testInfo.playCount}">
+                        0
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

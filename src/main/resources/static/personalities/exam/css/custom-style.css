@@ -1110,6 +1110,22 @@ input[name="answer"] {
     max-width: 90%;
 }
 
+.card-button-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.playCount-div {
+    display: flex;
+    align-items: center;
+}
+
+.playCount-div > span {
+    color: #5543fc;
+    margin-right: 5px;
+    font-size: 28px;
+}
+
 .testTitle-text {
     font-size: 3rem;
     font-family: 'Dongle', sans-serif;
