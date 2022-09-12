@@ -31,4 +31,10 @@ public class TestInfoDto {
         this.playCount = testCodeInfo.getPlayCount();
         this.active = testCodeInfo.getActive();
     }
+
+    public String playCountStr() {
+        String count1 = String.valueOf(Double.valueOf(playCount) / 10000); // 0.0000
+        int dotIndex = count1.indexOf(".");
+        return count1.substring(0, dotIndex + 2) + "만";
+    }
 }

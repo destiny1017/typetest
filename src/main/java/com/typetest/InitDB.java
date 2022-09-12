@@ -43,6 +43,7 @@ public class InitDB {
                         "https://d2k6w3n3qf94c4.cloudfront.net/media/banners/images/07_mmangsi.png",
                         "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
                         1);
+                testCodeInfo1.setPlayCount(145594);
                 TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
                 TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에이");
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
@@ -98,6 +99,7 @@ public class InitDB {
                         "https://cdn.banggooso.com/assets/images/game108/1651571103(2).gif",
                         "나의 분위기 컬러를 알아봐요!",
                         1);
+                testCodeInfo2.setPlayCount(92843);
 
                 TypeInfo typeInfoCard1 = new TypeInfo(testCodeInfo2, "BBA", "비비에이");
                 TypeInfo typeInfoCard2 = new TypeInfo(testCodeInfo2, "AAA", "에에에이");

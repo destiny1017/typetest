@@ -54,4 +54,8 @@ public class TestCodeInfo {
         this.thumbnailDesc = testInfoDto.getThumbnailDesc();
         this.active = testInfoDto.getActive();
     }
+
+    public void setPlayCount(int count) {
+        this.playCount = this.playCount + count;
+    }
 }
