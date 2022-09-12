@@ -53,9 +53,12 @@ public class PersonalitiesController {
         // 테스트코드 정보 파라미터 맵에서 추출
         String testCode = answerMapParam.get("testCode");
         answerMapParam.remove("testCode");
-        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-        if(!testCodeInfo.isPresent()) {
+        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
+        TestCodeInfo testCodeInfo;
+        if(!testCodeInfoOp.isPresent()) {
             throw new NotFoundEntityException("테스트 코드[" + testCode + "]에 해당하는 테스트를 찾을 수 없습니다.");
+        } else {
+            testCodeInfo = testCodeInfoOp.get();
         }
 
         // 응답정보 객체 세팅
@@ -63,11 +66,16 @@ public class PersonalitiesController {
         HashMap<Integer, Long> answerMap = new HashMap<>();
         answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Long.parseLong(value)));
         answerInfo.setAnswer(answerMap);
-        answerInfo.setAnswerType(testCodeInfo.get().getAnswerType());
-        answerInfo.setTestCodeInfo(testCodeInfo.get());
+        answerInfo.setAnswerType(testCodeInfo.getAnswerType());
+        answerInfo.setTestCodeInfo(testCodeInfo);
 
         // 유형 도출
         String type = personalityTestService.calcType(answerInfo);
+
+        // 해당 테스트 플레이카운트 +1 증가
+        testCodeInfoRepository.plusPlayCount(testCodeInfo);
+
+
 
         // 세션에 user정보 있으면 테스트결과 DB저장
         SessionUser user = (SessionUser) session.getAttribute("user");

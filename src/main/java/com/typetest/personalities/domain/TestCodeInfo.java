@@ -28,7 +28,7 @@ public class TestCodeInfo {
     private String description;
     private String thumbnailDesc;
     private Integer active;
-    private Long playCount;
+    private long playCount;
 
     public TestCodeInfo(String testCode, String testName, AnswerType answerType) {
         this.testCode = testCode;
