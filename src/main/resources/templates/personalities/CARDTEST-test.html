@@ -8,19 +8,22 @@
 </style>
 <script th:inline="javascript">
     const questions = [[${questions}]];
+    let processing= false;
 
     $(document).ready( () => {
-        $('.examAnswerCard').click( (e) => {
-            let $target = $(`label[for="${e.target.htmlFor}"]`);
-            $target.css("background", "#acffff");
-            setTimeout( () => {
-                $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
-            }, 200);
-        });
 
-        $('.examAnswerCardDiv input').change( () => {
-            if(checkSelect()) {
-                $('#examForm').submit();
+        $('.examAnswerCardDiv input').change( (e) => {
+            if(processing == false) {
+                processing = true;
+                let $target = $(`label[for="${e.target.id}"]`);
+                $target.css("background", "#acffff");
+                setTimeout( () => {
+                    $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
+                    if(checkSelect()) {
+                        $('#examForm').submit();
+                    }
+                    processing = false;
+                }, 200);
             }
         });
 
