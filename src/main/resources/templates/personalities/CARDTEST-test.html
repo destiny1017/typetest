@@ -10,8 +10,12 @@
     const questions = [[${questions}]];
 
     $(document).ready( () => {
-        $('.examAnswerCard').click( () => {
-            $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
+        $('.examAnswerCard').click( (e) => {
+            let $target = $(`label[for="${e.target.htmlFor}"]`);
+            $target.css("background", "#acffff");
+            setTimeout( () => {
+                $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
+            }, 200);
         });
 
         $('.examAnswerCardDiv input').change( () => {
@@ -65,14 +69,14 @@
                             <div class="cardImageDiv">
                                 <img th:src="${question.questionImage}">
                             </div>
-                            
+
                             <!-- 질문 -->
                             <div class="questionStr">
                                 <p th:text="${question.question}"></p>
                             </div>
-                            
+
                             <div class="py-2"></div>
-                            
+
                             <!-- 응답 -->
                             <div class="examAnswerCardDiv" th:each="answer : ${question.answerList}"
                                  th:with="inputId = |${question.num}_${answer.answerId}|">

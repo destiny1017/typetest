@@ -1109,9 +1109,9 @@ input[name="answer"] {
     cursor: pointer;
 }
 
-.examAnswerCard:active {
+/*.examAnswerCard:active {
     background: #acffff;
-}
+}*/
 
 .cardImageDiv > img, .questionStr > p {
     max-width: 90%;
