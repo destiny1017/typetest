@@ -1209,3 +1209,17 @@ input[name="answer"] {
     font-weight: bold;
 }
 
+.start-count-div {
+    font-size: 2.0rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Dongle', sans-serif;
+}
+
+.start-count-div > p {
+    display: inline-block;
+    font-size: 3rem;
+    color: #6a3df6;
+    padding: 05px;
+}
