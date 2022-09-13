@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Service
@@ -139,6 +140,8 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
             Optional<TypeInfo> typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo.get(), type);
             if(typeInfo.isPresent()) {
                 TestResultDto testResultDto = new TestResultDto(typeInfo.get());
+                double rate = ((double) typeInfo.get().getResultCount() / testCodeInfo.get().getPlayCount());
+                testResultDto.setTypeRate(new DecimalFormat("#.#%").format(rate));
                 return testResultDto;
             } else {
                 throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");

@@ -49,6 +49,11 @@ public class InitDB {
                 TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
                 TypeInfo typeInfo5 = new TypeInfo(testCodeInfo1, "BBB", "비비비이");
                 TypeInfo typeInfo6 = new TypeInfo(testCodeInfo1, "BBC", "비비씨?");
+                typeInfo1.plusResultCount(10000);
+                typeInfo2.plusResultCount(18000);
+                typeInfo3.plusResultCount(25000);
+                typeInfo5.plusResultCount(9000);
+                typeInfo6.plusResultCount(14000);
 
                 TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
                 TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
@@ -106,6 +111,12 @@ public class InitDB {
                 TypeInfo typeInfoCard3 = new TypeInfo(testCodeInfo2, "BAB", "비에이비");
                 TypeInfo typeInfoCard5 = new TypeInfo(testCodeInfo2, "BBB", "비비비이");
                 TypeInfo typeInfoCard6 = new TypeInfo(testCodeInfo2, "BBC", "비비씨?");
+
+                typeInfoCard1.plusResultCount(10000);
+                typeInfoCard2.plusResultCount(8000);
+                typeInfoCard3.plusResultCount(5000);
+                typeInfoCard5.plusResultCount(9000);
+                typeInfoCard6.plusResultCount(14000);
 
                 TypeIndicator indicatorCardA = new TypeIndicator(testCodeInfo2, 1, "A지표");
                 TypeIndicator indicatorCardB = new TypeIndicator(testCodeInfo2, 2, "B지표");

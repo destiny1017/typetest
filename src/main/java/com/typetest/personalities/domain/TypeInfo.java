@@ -59,4 +59,9 @@ public class TypeInfo {
         this.typeCode = typeInfoDto.getTypeCode();
         this.typeName = typeInfoDto.getTypeName();
     }
+
+    public int plusResultCount(int cnt) {
+        resultCount += cnt;
+        return resultCount;
+    }
 }

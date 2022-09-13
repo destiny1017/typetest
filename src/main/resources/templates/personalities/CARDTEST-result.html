@@ -57,12 +57,13 @@
         <div class="blockquote">
             <p class="testTitle-text" th:text="${result.typeName}">TYPE</p>
             <img th:src="${result.images[1]}" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="img-fluid py-3 form-floating" alt="...">
-            <p th:text="${result.descriptions[1]}">
+            <p th:text="${result.descriptions[1]}" class="result-description">
                 default description..
             </p>
         </div>
         <div class="blockquote-footer">
-            Someone famous in <cite title="Source Title">Source Title</cite>
+            전체 참여자의 <p th:text="${result.typeRate}"></p>가 같은 유형이에요.
+            <!--Someone famous in <cite title="Source Title">Source Title</cite>-->
         </div>
     </div>
 

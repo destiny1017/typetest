@@ -2,14 +2,17 @@ package com.typetest.personalities.data;
 
 import com.typetest.personalities.domain.TypeInfo;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 
 @Getter
+@Setter
 public class TestResultDto {
 
     private String typeCode;
     private String typeName;
+    private String typeRate;
     private HashMap<Integer, String> descriptions;
     private HashMap<Integer, String> images;
 
