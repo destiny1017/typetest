@@ -10,6 +10,7 @@ plugins {
 	//querydsl 추가
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'com'
@@ -57,6 +58,98 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+
+jacoco {
+	toolVersion = '0.8.7'
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		html.enabled true
+		xml.enabled true
+		csv.enabled true
+
+		html.destination file("src/jacoco/jacoco.html")
+		xml.destination file("src/jacoco/jacoco.xml")
+	}
+
+	def Qdomains = []
+	for (qPattern in '**/QA'..'**/QZ') {
+		Qdomains.add(qPattern + '*')
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(
+				files(classDirectories.files.collect {
+					fileTree(dir: it, excludes: [
+							'**/InitDB*',
+							'**/BlogApplication*',
+							'**/*Request*',
+							'**/*Response*',
+							'**/*Dto*',
+							'**/*OAuth*',
+							'**/*Session*',
+							'**/*Interceptor*',
+							'**/*Exception*',
+							'**/*Storage*',
+							'**/*BaseDate*',
+							'**/*PageController*'
+					] + Qdomains)
+				})
+		)
+	}
+
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+	def Qdomains = []
+	for (qPattern in '*.QA'..'*.QZ') {
+		Qdomains.add(qPattern + '*')
+	}
+
+	violationRules {
+		rule {
+			element = 'CLASS' // 클래스 단위 커버리지 체크
+			enabled = true // 활성화
+
+			// 라인 커버리지 제한 60%로 설정
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.60
+			}
+
+			// 메서드 커버리지 제한 60%로 설정
+			limit {
+				counter = 'METHOD'
+				value = 'COVEREDRATIO'
+				minimum = 0.60
+			}
+
+			// 제외할 파일명 규칙
+			excludes = [
+					'**.*BlogApplication*',
+					'**.*Request*',
+					'**.*Response*',
+					'**.*Dto*',
+					'**.*OAuthClient*',
+					'**.*Interceptor*',
+					'**.*Exception*',
+					'**.*Storage*',
+					'**.*BaseDate*',
+					'**.*PageController*',
+			] + Qdomains
+		}
 	}
 }
 
