@@ -92,17 +92,15 @@ jacocoTestReport {
 				files(classDirectories.files.collect {
 					fileTree(dir: it, excludes: [
 							'**/InitDB*',
-							'**/BlogApplication*',
+							'**/TypeTestApplication*',
 							'**/*Request*',
 							'**/*Response*',
 							'**/*Dto*',
 							'**/*OAuth*',
 							'**/*Session*',
-							'**/*Interceptor*',
 							'**/*Exception*',
-							'**/*Storage*',
-							'**/*BaseDate*',
-							'**/*PageController*'
+							'**/*Login*',
+							'**/User*'
 					] + Qdomains)
 				})
 		)
