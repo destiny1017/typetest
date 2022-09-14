@@ -31,7 +31,7 @@ class MyPageServiceTest {
 
     @Test
     @DisplayName("사용자의 저장된 테스트 결과 정보 가져오기")
-    void getUserTypeInfoTest() {
+    void getUserTypeInfoTest() throws InterruptedException {
         // 임시 테스트코드
         TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "CARD예제", AnswerType.CARD);
@@ -39,6 +39,8 @@ class MyPageServiceTest {
         TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "AAB", "비비에이");
         TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "BAB", "비에이비");
         TypeInfo typeInfo3 = new TypeInfo(testCodeInfo2, "ISFP", "잇픕");
+        Thread.sleep(1000);
+        TypeInfo typeInfo4 = new TypeInfo(testCodeInfo1, "BBB", "비비비");
         em.persist(testCodeInfo1);
         em.persist(testCodeInfo2);
         em.persist(typeInfo1);
@@ -67,7 +69,7 @@ class MyPageServiceTest {
 
         //then
         assertThat(typeMap).hasSize(2);
-        assertThat(typeMap.get(testCodeInfo1.getTestCode()).getTypeInfo()).isEqualTo(typeInfo2);
-        assertThat(typeMap.get(testCodeInfo2.getTestCode()).getTypeInfo()).isEqualTo(typeInfo3);
+        assertThat(typeMap.get(testCodeInfo1.getTestCode()).getTypeInfo().getTestCode()).isEqualTo(typeInfo4.getTestCode());
+        assertThat(typeMap.get(testCodeInfo2.getTestCode()).getTypeInfo().getTestCode()).isEqualTo(typeInfo3.getTestCode());
     }
 }
