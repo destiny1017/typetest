@@ -27,18 +27,6 @@ public class TypeIndicator {
     @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
     private List<IndicatorSetting> indicatorSettings = new ArrayList<>();
 
-    public void updateIndicatorInfo(TypeIndicatorDto indicatorDto) {
-        this.indicatorNum = indicatorDto.getIndicatorNum();
-        this.indicatorName = indicatorDto.getIndicatorName();
-    }
-
-    public boolean checkSameValue(TypeIndicatorDto indicatorDto) {
-        return (this.indicatorName == null ?
-                    indicatorDto.getIndicatorName() == null :
-                    indicatorDto.getIndicatorName().equals(this.indicatorName)) &&
-                this.indicatorNum == indicatorDto.getIndicatorNum();
-    }
-
     public TypeIndicator(TestCodeInfo testCode, int indicatorNum, String indicatorName) {
         this.testCode = testCode;
         this.indicatorNum = indicatorNum;

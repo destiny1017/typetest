@@ -28,18 +28,6 @@ public class IndicatorSetting {
 
     private String result;
 
-    public boolean checkSameValue(IndicatorSettingDto indicatorSettingDto) {
-        return (this.result == null ?
-                indicatorSettingDto.getResult() == null :
-                indicatorSettingDto.getResult().equals(this.result))
-                && this.cuttingPoint == indicatorSettingDto.getCuttingPoint();
-    }
-
-    public void updateIndicatorSetting(IndicatorSettingDto indicatorSetting) {
-        this.cuttingPoint = indicatorSetting.getCuttingPoint();
-        this.result = indicatorSetting.getResult();
-    }
-
     public IndicatorSetting(TypeIndicator typeIndicator, TestCodeInfo testCode, int cuttingPoint, String result) {
         this.typeIndicator = typeIndicator;
         this.testCode = testCode;

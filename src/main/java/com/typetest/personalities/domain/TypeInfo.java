@@ -47,6 +47,10 @@ public class TypeInfo {
         image.setTypeInfo(this);
     }
 
+    public void setTypeRelation(TypeRelation typeRelation) {
+        this.typeRelation = typeRelation;
+    }
+
     public TypeInfo(TestCodeInfo testCode, String typeCode, String typeName) {
         this.testCode = testCode;
         this.typeCode = typeCode;
