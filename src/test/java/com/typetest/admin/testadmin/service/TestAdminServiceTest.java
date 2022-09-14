@@ -1,15 +1,13 @@
 package com.typetest.admin.testadmin.service;
 
-import com.typetest.admin.testadmin.data.QuestionDto;
-import com.typetest.admin.testadmin.data.TestInfoDto;
-import com.typetest.admin.testadmin.data.TypeIndicatorDto;
-import com.typetest.admin.testadmin.data.TypeInfoDto;
+import com.typetest.admin.testadmin.data.*;
 import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
+import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.repository.TypeIndicatorRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -34,6 +34,9 @@ public class TestAdminServiceTest {
 
     @Autowired
     private PersonalityQuestionRepository personalityQuestionRepository;
+
+    @Autowired
+    private TestCodeInfoRepository testCodeInfoRepository;
     
     @Autowired
     private TestAdminService testAdminService;
@@ -79,7 +82,7 @@ public class TestAdminServiceTest {
 
         TypeRelation typeRelation1 = new TypeRelation(typeInfo2, typeInfo1, typeInfo5);
         TypeRelation typeRelation2 = new TypeRelation(typeInfo5, typeInfo3, typeInfo2);
-
+//
         em.persist(testCodeInfo1);
         em.persist(testCodeInfo2);
         em.persist(typeInfo1);
@@ -277,9 +280,76 @@ public class TestAdminServiceTest {
 
     }
 
+    @Test @DisplayName("유형정보 저장 및 가져오기 테스트")
+    void saveTypeInfoTest() {
+        //given
+        TestCodeInfo testCode = testCodeInfoRepository.findById("EXAMTEST").get();
 
-//    int saveTypeInfo(List<TypeInfoDto> typeInfoDtoList, String testCode);
-//    List<TypeInfoDto> findTypeInfo(String testCode);
+        TypeInfo typeInfo1 = new TypeInfo(testCode, "BCB", "비씨비");
+        TypeInfo typeInfo2 = new TypeInfo(testCode, "CCB", "씨씨비");
+        TypeInfo typeInfo3 = new TypeInfo(testCode, "ACC", "에씨씨");
 
+        TypeDescription bbbDescription1 = new TypeDescription(typeInfo1, 1, "BBB description1");
+        TypeImage bbbImage1 = new TypeImage(typeInfo1, 1, "url");
+
+        typeInfo1.addDescription(bbbDescription1);
+        typeInfo1.addImage(bbbImage1);
+
+        TypeDescription bbbDescription2 = new TypeDescription(typeInfo2, 1, "CCB description1");
+        TypeImage bbbImage2 = new TypeImage(typeInfo2, 1, "url");
+
+        typeInfo2.addDescription(bbbDescription2);
+        typeInfo2.addImage(bbbImage2);
+
+        TypeDescription bbbDescription3 = new TypeDescription(typeInfo3, 1, "ACC description1");
+        TypeImage bbbImage3 = new TypeImage(typeInfo3, 1, "url");
+
+        typeInfo3.addDescription(bbbDescription3);
+        typeInfo3.addImage(bbbImage3);
+
+        List<TypeInfo> typeList = new ArrayList();
+
+        typeList.add(typeInfo1);
+        typeList.add(typeInfo2);
+        typeList.add(typeInfo3);
+
+        List<TypeInfoDto> typeInfoDtoList = typeList.stream().map(TypeInfoDto::new).collect(Collectors.toList());
+        for (TypeInfoDto typeInfoDto : typeInfoDtoList) {
+            typeInfoDto.setUpdated(1);
+            typeInfoDto.getTypeImageList().get(0).setUpdated(1);
+            typeInfoDto.getTypeDescriptionList().get(0).setUpdated(1);
+            typeInfoDto.setTypeRelation(new TypeRelationDto());
+        }
+
+        //when
+        testAdminService.saveTypeInfo(typeInfoDtoList, "EXAMTEST");
+        em.flush();
+        em.clear();
+        List<TypeInfoDto> findTypeInfoList = testAdminService.findTypeInfo("EXAMTEST");
+        List<TypeInfoDto> newTypeList = testAdminService.findTypeInfo("NEW");
+
+        List<String> typeCodeList = new ArrayList<>();
+        List<String> typeImageList = new ArrayList<>();
+        List<String> typeDescriptionList = new ArrayList<>();
+        for (TypeInfoDto t : findTypeInfoList) {
+            typeCodeList.add(t.getTypeCode());
+            List<TypeImageDto> imgList = t.getTypeImageList();
+            List<TypeDescriptionDto> descList = t.getTypeDescriptionList();
+            if(imgList.size() > 0) {
+                typeImageList.add(imgList.get(0).getImageUrl());
+            }
+            if(descList.size() > 0) {
+                typeDescriptionList.add(descList.get(0).getDescription());
+            }
+        }
+
+        //then
+        assertThat(typeCodeList).contains(typeInfo1.getTypeCode(), typeInfo2.getTypeCode(), typeInfo3.getTypeCode());
+        assertThat(typeImageList).contains(bbbImage1.getImageUrl(), bbbImage2.getImageUrl(), bbbImage3.getImageUrl());
+        assertThat(typeDescriptionList).contains(bbbDescription1.getDescription(),
+                                                    bbbDescription2.getDescription(),
+                                                    bbbDescription3.getDescription());
+        assertThat(newTypeList).hasSize(0);
+    }
 
 }
