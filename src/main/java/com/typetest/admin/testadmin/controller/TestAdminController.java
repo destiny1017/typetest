@@ -24,11 +24,6 @@ public class TestAdminController {
 
     private final TestAdminService testAdminService;
 
-    @GetMapping("/adminPage/testAdminPage")
-    public String testAdminPage() {
-        return "admin/testadmin/testAdminPage";
-    }
-
     @ModelAttribute(name = "answerTypeList")
     public AnswerType[] answerTypeList() {
         return AnswerType.values();

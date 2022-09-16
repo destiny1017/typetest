@@ -42,11 +42,4 @@ public class TestResultDetail {
         this.personalityAnswer = personalityAnswer;
     }
 
-    @Override
-    public String toString() {
-        return "TestResultDetail{" +
-                ", num=" + num +
-                ", answer=" + personalityAnswer +
-                '}';
-    }
 }

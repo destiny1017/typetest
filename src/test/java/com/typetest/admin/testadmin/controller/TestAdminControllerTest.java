@@ -10,6 +10,7 @@ import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
+import com.typetest.personalities.repository.TypeInfoRepository;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,8 @@ class TestAdminControllerTest {
     TestCodeInfoRepository testCodeInfoRepository;
     @Autowired
     TestAdminService testAdminService;
+    @Autowired
+    TypeInfoRepository typeInfoRepository;
 
     @BeforeEach
     void beforeEach() {
@@ -331,6 +334,31 @@ class TestAdminControllerTest {
                 bbbDescription2.getDescription(),
                 bbbDescription3.getDescription());
         assertThat(newTypeList).hasSize(0);
+    }
+
+    @Test
+    void step4SubmitRelation() throws Exception {
+        em.flush();
+        em.clear();
+        TestCodeInfo testCodeInfo = new TestCodeInfo("EXAMTEST", "", AnswerType.EXAM);
+        TypeInfo typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo, "AAA").get();
+        TypeInfoDto typeInfoDto = new TypeInfoDto(typeInfo);
+        typeInfoDto.getTypeRelation().setUpdated(1);
+
+        ArrayList<TypeInfoDto> typeInfoDtoList = new ArrayList<>();
+        typeInfoDtoList.add(typeInfoDto);
+        TypeInfoForm typeInfoForm = new TypeInfoForm();
+        typeInfoForm.setTypeInfoTestCode("EXAMTEST");
+        typeInfoForm.setTypeInfoList(typeInfoDtoList);
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.post("/adminPage/testAdmin/step4Submit")
+                        .flashAttr("typeInfoForm", typeInfoForm)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+
+
     }
 
 }

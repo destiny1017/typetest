@@ -151,18 +151,26 @@ class PersonalitiesControllerTest {
     }
 
     @Test
-    void testPath() throws Exception {
+    void testPathEXAMTEST() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/EXAMTEST/testMain"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attribute("testCode", "EXAMTEST"));
     }
 
     @Test
-    void testAnswer() throws Exception {
+    void testAnswerEXAMTEST() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/EXAMTEST/testAnswer"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attributeExists("testCode", "questions", "questionCount"))
                 .andExpect(MockMvcResultMatchers.model().attribute("testCode", "EXAMTEST"));
+    }
+
+    @Test
+    void testAnswerCARDTEST() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/CARDTEST/testAnswer"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("testCode", "questions", "questionCount"))
+                .andExpect(MockMvcResultMatchers.model().attribute("testCode", "CARDTEST"));
     }
 
     @Test

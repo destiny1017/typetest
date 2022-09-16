@@ -27,21 +27,10 @@ public class TypeRelation {
     @JoinColumn(name = "WORST_TYPE")
     private TypeInfo worstType;
 
-    public TypeRelation(TypeInfo typeInfo, TypeInfo bestType) {
-        this.typeInfo = typeInfo;
-        this.bestType = bestType;
-    }
-
     public TypeRelation(TypeInfo typeInfo, TypeInfo bestType, TypeInfo worstType) {
         this.typeInfo = typeInfo;
         this.bestType = bestType;
         this.worstType = worstType;
     }
 
-    public TypeRelation(TypeRelationDto typeRelationDto) {
-        this.id = typeRelationDto.getId();
-        this.typeInfo = typeInfo;
-        this.bestType = bestType;
-        this.worstType = worstType;
-    }
 }
