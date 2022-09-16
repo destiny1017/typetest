@@ -42,8 +42,6 @@ class TestAdminControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    ObjectMapper objectMapper;
-    @Autowired
     EntityManager em;
     @Autowired
     PersonalityQuestionRepository personalityQuestionRepository;

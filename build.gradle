@@ -99,6 +99,7 @@ jacocoTestReport {
 							'**/*OAuth*',
 							'**/*Session*',
 							'**/*Exception*',
+							'**/*Error*',
 							'**/*Login*',
 							'**/User*'
 					] + Qdomains)

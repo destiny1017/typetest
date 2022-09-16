@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -48,7 +46,7 @@ public class PersonalitiesController {
         return "personalities/" + testCode + "-test";
     }
 
-    @GetMapping("/testSubmit")
+    @PostMapping("/testSubmit")
     public String testSubmit(@RequestParam Map<String, String> answerMapParam, HttpSession session) {
         // 테스트코드 정보 파라미터 맵에서 추출
         String testCode = answerMapParam.get("testCode");
@@ -80,7 +78,6 @@ public class PersonalitiesController {
         if(user != null) {
             answerInfo.setUserId(user.getId());
             personalityTestService.saveTestInfo(answerInfo, type);
-            log.info("answerInfo = {}", answerInfo);
         } else {
             session.setAttribute("answerInfo", answerInfo);
             session.setAttribute("type", type);
