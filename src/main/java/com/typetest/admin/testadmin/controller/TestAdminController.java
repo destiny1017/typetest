@@ -89,7 +89,7 @@ public class TestAdminController {
         return "admin/testadmin/testAdminPage";
     }
 
-    @GetMapping("/adminPage/testAdmin/step1Submit")
+    @PostMapping("/adminPage/testAdmin/step1Submit")
     public String step1Submit(@ModelAttribute TestInfoDto testInfoDto) {
         testAdminService.saveTestInfo(testInfoDto);
         return "redirect:/adminPage/testAdminPage/" + testInfoDto.getTestCode() + "/1";
