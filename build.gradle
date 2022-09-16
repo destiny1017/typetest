@@ -92,7 +92,7 @@ jacocoTestReport {
 				files(classDirectories.files.collect {
 					fileTree(dir: it, excludes: [
 							'**/InitDB*',
-							'**/TypeTestApplication*',
+							'**/TypetestApplication*',
 							'**/*Request*',
 							'**/*Response*',
 							'**/*Dto*',
