@@ -1,8 +1,7 @@
 package com.typetest.admin.testadmin.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.typetest.admin.testadmin.data.IndicatorForm;
-import com.typetest.admin.testadmin.data.TestInfoDto;
+import com.typetest.admin.testadmin.data.*;
 import com.typetest.admin.testadmin.service.TestAdminService;
 import com.typetest.login.domain.Role;
 import com.typetest.login.domain.User;
@@ -10,6 +9,7 @@ import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
+import com.typetest.personalities.repository.TestCodeInfoRepository;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@WithMockUser(username = "", roles = {"ADMIN"})
 class TestAdminControllerTest {
 
     @Autowired
@@ -45,6 +47,8 @@ class TestAdminControllerTest {
     EntityManager em;
     @Autowired
     PersonalityQuestionRepository personalityQuestionRepository;
+    @Autowired
+    TestCodeInfoRepository testCodeInfoRepository;
     @Autowired
     TestAdminService testAdminService;
 
@@ -153,7 +157,6 @@ class TestAdminControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "", roles = {"ADMIN"})
     void testAdminPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/adminPage/testAdminPage/EXAMTEST"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -162,7 +165,6 @@ class TestAdminControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "", roles = {"ADMIN"})
     void step1Submit() throws Exception {
         //given
         TestInfoDto examtest = testAdminService.createTestInfoDto("EXAMTEST");
@@ -186,18 +188,151 @@ class TestAdminControllerTest {
     }
 
     @Test
-    void step2Submit() {
+    void step2Submit() throws Exception {
+        //given
+        em.clear();
+        List<TypeIndicatorDto> indicatorInfoList = testAdminService.findIndicatorInfo("EXAMTEST");
+
+        //when
+        indicatorInfoList.get(0).setIndicatorName("A지표수정");
+        indicatorInfoList.get(0).setUpdated(1);
+        indicatorInfoList.get(1).setIndicatorNum(4);
+        indicatorInfoList.get(1).setUpdated(1);
+        indicatorInfoList.get(2).getIndicatorSettings().get(0).setCuttingPoint(6);
+        indicatorInfoList.get(2).getIndicatorSettings().get(0).setUpdated(1);
+        IndicatorForm indicatorForm = new IndicatorForm();
+        indicatorForm.setIndicatorTestCode("EXAMTEST");
+        indicatorForm.setIndicatorList(indicatorInfoList);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/adminPage/testAdmin/step2Submit")
+                        .flashAttr("indicatorForm", indicatorForm)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+
+        indicatorInfoList = testAdminService.findIndicatorInfo("EXAMTEST");
+
+        //then
+        assertThat(indicatorInfoList).hasSize(3);
+        assertThat(indicatorInfoList.get(0).getIndicatorName()).isEqualTo("A지표수정");
+        assertThat(indicatorInfoList.get(1).getIndicatorNum()).isEqualTo(4);
+        assertThat(indicatorInfoList.get(2).getIndicatorSettings().get(0).getCuttingPoint()).isEqualTo(6);
+
     }
 
     @Test
-    void step3Submit() {
+    void step3Submit() throws Exception {
+        //given
+        List<QuestionDto> befQuestionInfoList = testAdminService.findQuestionInfo("EXAMTEST");
+
+        //when
+        befQuestionInfoList.get(0).setQuestion("질문수정");
+        befQuestionInfoList.get(0).setUpdated(1);
+        befQuestionInfoList.get(2).setQuestionImage("이미지수정");
+        befQuestionInfoList.get(2).setUpdated(1);
+        befQuestionInfoList.get(2).getAnswerList().get(0).setAnswer("답변수정");
+        befQuestionInfoList.get(2).getAnswerList().get(0).setUpdated(1);
+        befQuestionInfoList.get(3).getAnswerList().get(1).setPoint(7);
+        befQuestionInfoList.get(3).getAnswerList().get(1).setUpdated(1);
+
+        QuestionForm questionForm = new QuestionForm();
+        questionForm.setQuestionTestCode("EXAMTEST");
+        questionForm.setQuestionList(befQuestionInfoList);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/adminPage/testAdmin/step3Submit")
+                        .flashAttr("questionForm", questionForm)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+        em.flush();
+        em.clear();
+        List<QuestionDto> questionInfoList = testAdminService.findQuestionInfo("EXAMTEST");
+
+        //then
+        assertThat(questionInfoList.get(0).getQuestion()).isEqualTo("질문수정");
+        assertThat(questionInfoList.get(2).getQuestionImage()).isEqualTo("이미지수정");
+        assertThat(questionInfoList.get(2).getAnswerList().get(0).getAnswer()).isEqualTo("답변수정");
+        assertThat(questionInfoList.get(3).getAnswerList().get(1).getPoint()).isEqualTo(7);
     }
 
     @Test
-    void step4Submit() {
+    void step4Submit() throws Exception {
+        //given
+        TestCodeInfo testCode = testCodeInfoRepository.findById("EXAMTEST").get();
+
+        TypeInfo typeInfo1 = new TypeInfo(testCode, "BCB", "비씨비");
+        TypeInfo typeInfo2 = new TypeInfo(testCode, "CCB", "씨씨비");
+        TypeInfo typeInfo3 = new TypeInfo(testCode, "ACC", "에씨씨");
+
+        TypeDescription bbbDescription1 = new TypeDescription(typeInfo1, 1, "BBB description1");
+        TypeImage bbbImage1 = new TypeImage(typeInfo1, 1, "url");
+
+        typeInfo1.addDescription(bbbDescription1);
+        typeInfo1.addImage(bbbImage1);
+
+        TypeDescription bbbDescription2 = new TypeDescription(typeInfo2, 1, "CCB description1");
+        TypeImage bbbImage2 = new TypeImage(typeInfo2, 1, "url");
+
+        typeInfo2.addDescription(bbbDescription2);
+        typeInfo2.addImage(bbbImage2);
+
+        TypeDescription bbbDescription3 = new TypeDescription(typeInfo3, 1, "ACC description1");
+        TypeImage bbbImage3 = new TypeImage(typeInfo3, 1, "url");
+
+        typeInfo3.addDescription(bbbDescription3);
+        typeInfo3.addImage(bbbImage3);
+
+        List<TypeInfo> typeList = new ArrayList();
+
+        typeList.add(typeInfo1);
+        typeList.add(typeInfo2);
+        typeList.add(typeInfo3);
+
+        List<TypeInfoDto> typeInfoDtoList = typeList.stream().map(TypeInfoDto::new).collect(Collectors.toList());
+        for (TypeInfoDto typeInfoDto : typeInfoDtoList) {
+            typeInfoDto.setUpdated(1);
+            typeInfoDto.getTypeImageList().get(0).setUpdated(1);
+            typeInfoDto.getTypeDescriptionList().get(0).setUpdated(1);
+            typeInfoDto.setTypeRelation(new TypeRelationDto());
+        }
+
+        TypeInfoForm typeInfoForm = new TypeInfoForm();
+        typeInfoForm.setTypeInfoTestCode("EXAMTEST");
+        typeInfoForm.setTypeInfoList(typeInfoDtoList);
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.post("/adminPage/testAdmin/step4Submit")
+                        .flashAttr("typeInfoForm", typeInfoForm)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+        em.flush();
+        em.clear();
+        List<TypeInfoDto> findTypeInfoList = testAdminService.findTypeInfo("EXAMTEST");
+        List<TypeInfoDto> newTypeList = testAdminService.findTypeInfo("NEW");
+
+        List<String> typeCodeList = new ArrayList<>();
+        List<String> typeImageList = new ArrayList<>();
+        List<String> typeDescriptionList = new ArrayList<>();
+        for (TypeInfoDto t : findTypeInfoList) {
+            typeCodeList.add(t.getTypeCode());
+            List<TypeImageDto> imgList = t.getTypeImageList();
+            List<TypeDescriptionDto> descList = t.getTypeDescriptionList();
+            if(imgList.size() > 0) {
+                typeImageList.add(imgList.get(0).getImageUrl());
+            }
+            if(descList.size() > 0) {
+                typeDescriptionList.add(descList.get(0).getDescription());
+            }
+        }
+
+        //then
+        assertThat(typeCodeList).contains(typeInfo1.getTypeCode(), typeInfo2.getTypeCode(), typeInfo3.getTypeCode());
+        assertThat(typeImageList).contains(bbbImage1.getImageUrl(), bbbImage2.getImageUrl(), bbbImage3.getImageUrl());
+        assertThat(typeDescriptionList).contains(bbbDescription1.getDescription(),
+                bbbDescription2.getDescription(),
+                bbbDescription3.getDescription());
+        assertThat(newTypeList).hasSize(0);
     }
 
-    @Test
-    void essentialTypeList() {
-    }
 }
