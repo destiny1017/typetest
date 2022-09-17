@@ -253,6 +253,9 @@ function typeImageDeleteEvent(e) {
     $("#typeImageDiv" + targetNum + ' input:not([type="hidden"])').val("");
     $("#typeImageDiv" + targetNum + " option").remove();
     $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeImageList[${targetIndexes[2]}].deleted"]`).val(1);
+    
+    let index = targetNum.substr(1, targetNum.lastIndexOf("-")-1) - 1;
+    typeImageSeq(index);
 };
 
 function typeImageInfoHoverInEvent(e) {
@@ -272,6 +275,9 @@ function typeDescriptionDeleteEvent(e) {
     $("#typeDescriptionDiv" + targetNum + ' input:not([type="hidden"])').val("");
     $("#typeDescriptionDiv" + targetNum + " option").remove();
     $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeDescriptionList[${targetIndexes[2]}].deleted"]`).val(1);
+    
+    let index = targetNum.substr(1, targetNum.lastIndexOf("-")-1) - 1;
+    typeDescriptionSeq(index);
 };
 
 function typeDescriptionInfoHoverInEvent(e) {
@@ -632,7 +638,7 @@ function typeImageAddEvent(e) {
             <div class="typeImageDetail-div">
                 <div class="typeImageNum-div typeImageContent-div">
                     <label>이미지 번호</label>
-                    <input type="text" class="form-control code-input"
+                    <input type="text" class="form-control code-input" readonly
                            name="typeInfoList[${targetNum-1}].typeImageList[${typeInfoList[targetNum-1].typeImageList.length}].imgNum">
                 </div>
                 <div class="typeImageUrl-div typeImageContent-div">
@@ -666,10 +672,12 @@ function typeImageAddEvent(e) {
     }, (e) => {
         typeImageInfoHoverOutEvent(e);
     });
+    
+    typeImageSeq(targetNum - 1);
 }
 
 function typeDescriptionAddEvent(e) {
-    // 새롭게 추가될 image div 내용
+    // 새롭게 추가될 description div 내용
     let targetNum = e.target.id.replace("typeDescriptionAdd-", "");
     let typeDescriptionDiv = 
     `
@@ -681,7 +689,7 @@ function typeDescriptionAddEvent(e) {
             <input type="hidden" name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].deleted" value="0">
             <div class="typeDescriptionElement-div typeDescriptionContent-div">
                 <label>설명 번호</label>
-                <input type="text" class="form-control code-input"
+                <input type="text" class="form-control code-input" readonly
                        name="typeInfoList[${targetNum-1}].typeDescriptionList[${typeInfoList[targetNum-1].typeDescriptionList.length}].descNum">
             </div>
             <div class="typeDescriptionElement-div typeDescriptionContent-div">
@@ -708,6 +716,8 @@ function typeDescriptionAddEvent(e) {
     }, (e) => {
         typeDescriptionInfoHoverOutEvent(e);
     });
+    
+    typeDescriptionSeq(targetNum - 1);
 }
 
     
@@ -717,7 +727,7 @@ function callEssential(testCode) {
     for(essentialType of essentialTypeList) {
         let exist = false;
 
-        $('input[name*="typeCode"]').each( (i,v) => {
+        $('input[name$="typeCode"]').each( (i,v) => {
             if(essentialType == v.value) {
                 $(`#typeInfoDiv${i+1}`).addClass("essential-type");
                 exist = true;
@@ -739,12 +749,21 @@ function enableActive() {
     if(indicatorList.length == 0) {
         alert("지표정보가 등록되지 않았습니다.");
         $("#active2").prop("checked", true);
+        $("#step2").trigger("click");
         return;
     }
     
     if(questionList.length == 0) {
         alert("질문 정보가 등록되지 않았습니다.");
         $("#active2").prop("checked", true);
+        $("#step3").trigger("click");
+        return;
+    }
+    
+    if(noAnswerQuestion()) {
+        alert("답변정보가 등록되지 않은 질문이 있습니다.");
+        $("#active2").prop("checked", true);
+        $("#step3").trigger("click");
         return;
     }
     
@@ -761,6 +780,7 @@ function enableActive() {
         if(exist == false) {
             $("#active2").prop("checked", true);
             alert("아직 세팅되지 않은 필수유형 정보가 있습니다.");
+            $("#step4").trigger("click");
             return;
         }
     }
@@ -769,7 +789,7 @@ function enableActive() {
 
 function indicatorSeq() {
     let cnt = 1;
-    $('input[name*="indicatorNum"]').each((i,v) => {
+    $('input[name$="indicatorNum"]').each((i,v) => {
         let indicator = v.name.substr(0, v.name.indexOf("."));
         if($(`input[name="${indicator}.deleted"]`).val() == 0) {
             v.value = cnt++;
@@ -782,3 +802,63 @@ function indicatorSeq() {
     });
 }
 
+
+function typeImageSeq(index) {
+    let cnt = 0;
+    let num = 1;
+    while(true) {
+        let $target = $(`input[name="typeInfoList[${index}].typeImageList[${cnt}].deleted"]`);
+        if($target.length > 0) {
+            
+            if($target.val() == 0) {
+                $target = $(`input[name="typeInfoList[${index}].typeImageList[${cnt}].imgNum"]`);
+                $target.val(num++);
+                if(typeInfoList[index].typeImageList[cnt].imgNum != $target.val()) {
+                    $target = $(`input[name="typeInfoList[${index}].typeImageList[${cnt}].updated"]`);
+                    $target.val(1);
+                    console.log($target);
+                }
+            }
+            cnt++;
+        } else {
+            break;
+        }
+        
+    }
+}
+
+function typeDescriptionSeq(index) {
+    let cnt = 0;
+    let num = 1;
+    while(true) {
+        let $target = $(`input[name="typeInfoList[${index}].typeDescriptionList[${cnt}].deleted"]`);
+        if($target.length > 0) {
+            
+            if($target.val() == 0) {
+                $target = $(`input[name="typeInfoList[${index}].typeDescriptionList[${cnt}].descNum"]`);
+                $target.val(num++);
+                if(typeInfoList[index].typeDescriptionList[cnt].imgNum != $target.val()) {
+                    $target = $(`input[name="typeInfoList[${index}].typeDescriptionList[${cnt}].updated"]`);
+                    $target.val(1);
+                    console.log($target);
+                }
+            }
+            cnt++;
+        } else {
+            break;
+        }
+        
+    }
+}
+
+
+function noAnswerQuestion() {
+    let existEmpty = false;
+    for(question of questionList) {
+        if(question.answerList.length == 0) {
+            existEmpty = true;
+            $("#questionDiv" + question.num).addClass("no-answer");
+        } 
+    }
+    return existEmpty;
+}

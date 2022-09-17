@@ -311,7 +311,7 @@
                                 <div class="typeImageDetail-div">
                                     <div class="typeImageNum-div typeImageContent-div">
                                         <label>이미지 번호</label>
-                                        <input type="text" class="form-control code-input"
+                                        <input type="text" class="form-control code-input" readonly
                                                th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].imgNum}">
                                     </div>
                                     <div class="typeImageUrl-div typeImageContent-div">
@@ -345,7 +345,7 @@
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].deleted}">
                                 <div class="typeDescriptionElement-div typeDescriptionContent-div">
                                     <label>설명 번호</label>
-                                    <input type="text" class="form-control code-input"
+                                    <input type="text" class="form-control code-input" readonly
                                            th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].descNum}">
                                 </div>
                                 <div class="typeDescriptionElement-div typeDescriptionContent-div">

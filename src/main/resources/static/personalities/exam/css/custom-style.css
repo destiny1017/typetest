@@ -600,6 +600,10 @@ div.add-icon {
     border: 2px solid #8389ff;
 }
 
+.no-answer {
+    border: 2px solid #ff3f3f;
+}
+
 .typeInfoDelete {
     padding-left: 10px;
     cursor: pointer;
