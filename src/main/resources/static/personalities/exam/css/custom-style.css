@@ -49,6 +49,27 @@ div[class$="container"] {
     margin: 0;
 }
 
+.mainTitle-div3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainTitle-div3 > p {
+    background-color: red;
+    background-image: linear-gradient(45deg, #8699fb, #ff3770);
+    background-size: 100%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    font-size: 42px;
+    font-weight: bold;
+    margin: 25px 0 15px 0;
+    font-family: 'Dongle', sans-serif;
+}
+
 .testInfoCard {
     width: 100%;
     box-shadow: 1px 2px 4px 1px #ddd;
@@ -1162,6 +1183,11 @@ input[name="answer"] {
     font-family: 'Noto Sans KR', sans-serif;
     justify-content: center;
     margin-bottom: 10px;
+}
+
+.testAdminTitle > img {
+    width: 200px;
+    cursor: pointer;
 }
 
 .error-container {
