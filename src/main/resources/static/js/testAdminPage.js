@@ -536,7 +536,7 @@ function typeInfoAddEvent() {
                         expand_more
                         </span>
                     </button>
-                    <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode" placeholder="번호">
+                    <input type="text" class="typeCode-input" name="typeInfoList[${typeInfoList.length}].typeCode" placeholder="CODE">
                     <div class="px-1"></div>
                     <input type="text" class="typeName-input" name="typeInfoList[${typeInfoList.length}].typeName" placeholder="유형명">
                 </div>
@@ -716,14 +716,15 @@ function callEssential(testCode) {
     // 필수유형 추가돼 있는지 확인하여 없으면 추가해주는 로직
     for(essentialType of essentialTypeList) {
         let exist = false;
-        for(const [i, typeInfo] of typeInfoList.entries()) {
-            if(essentialType == typeInfo.typeCode) {
+
+        $('input[name*="typeCode"]').each( (i,v) => {
+            if(essentialType == v.value) {
                 $(`#typeInfoDiv${i+1}`).addClass("essential-type");
                 exist = true;
-                break;
+                return false;
             }
-        }
-
+        });
+        
         if(exist == false) {
             typeInfoAddEvent();
             $(`input[name="typeInfoList[${typeInfoList.length-1}].typeCode"]`).val(essentialType);
