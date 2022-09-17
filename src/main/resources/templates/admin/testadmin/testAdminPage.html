@@ -37,6 +37,7 @@
         <!-- tab1 contents div-->
         <div id="step1Content" class="tab-contents" th:classappend="${tab} == 1 ? active">
             <form method="post" action="/adminPage/testAdmin/step1Submit" class="tab-contentsForm">
+                <input type="hidden" th:field="${testInfoDto.playCount}">
                 <div class="select-div">
                     <div>
                         <label class="name-label">테스트 선택</label>

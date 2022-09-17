@@ -52,6 +52,7 @@ public class TestCodeInfo {
         this.image = testInfoDto.getImage();
         this.description = testInfoDto.getDescription();
         this.thumbnailDesc = testInfoDto.getThumbnailDesc();
+        this.playCount = testInfoDto.getPlayCount();
         this.active = testInfoDto.getActive();
     }
 
