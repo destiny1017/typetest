@@ -217,6 +217,7 @@ function questionDeleteEvent(e) {
     $("#questionDiv" + targetNum).hide();
     $("#questionDiv" + targetNum + ' input:not([type="hidden"])').val("");
     $(`[name="questionList[${targetNum - 1}].deleted"]`).val(1);
+    questionSeq();
 };
 
 function answerDeleteEvent(e) {
@@ -398,7 +399,7 @@ function questionAddEvent() {
                             expand_more
                             </span>
                         </button>
-                        <input type="text" class="q-num-input" name="questionList[${questionList.length}].num" placeholder="번호">
+                        <input type="text" class="q-num-input" name="questionList[${questionList.length}].num" placeholder="번호" readonly>
                         <div class="px-1"></div>
                         <input type="text" class="q-name-input" name="questionList[${questionList.length}].question" placeholder="질문내용">
                     </div>
@@ -441,6 +442,8 @@ function questionAddEvent() {
     $("#answerAdd-" + (questionList.length)).click( (e) => {
         answerAddEvent(e);
     });
+    
+    questionSeq();
 }
 
 function answerAddEvent(e) {
@@ -797,6 +800,21 @@ function indicatorSeq() {
             if(indicatorList[i].indicatorNum != v.value) {
                 $(`input[name="${indicator}.updated"]`).val(1);
                 console.log(indicator);        
+            }
+        }
+    });
+}
+
+function questionSeq() {
+    let cnt = 1;
+    $('input[name$="num"]').each((i,v) => {
+        let question = v.name.substr(0, v.name.indexOf("."));
+        if($(`input[name="${question}.deleted"]`).val() == 0) {
+            v.value = cnt++;
+
+            if(questionList[i].questionNum != v.value) {
+                $(`input[name="${question}.updated"]`).val(1);
+                console.log(question);        
             }
         }
     });
