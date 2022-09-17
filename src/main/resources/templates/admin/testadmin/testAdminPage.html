@@ -127,7 +127,7 @@
                         <div class="indicatorElement-div">
                             <label>지표 번호</label>
                             <input type="text" class="form-control" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorNum}"
-                                   th:value="${indicator.indicatorNum}">
+                                   th:value="${indicator.indicatorNum}" readonly>
                         </div>
                         <div class="indicatorElement-div">
                             <label>지표 이름</label>
@@ -417,6 +417,7 @@
         const typeInfoList = [[${typeInfoForm.typeInfoList}]];
         const essentialTypeList = [[${essentialTypeList}]];
         const essentialSet = [[${essentialSet}]];
+        const alertMessage = [[${alert}]];
     </script>
     <script src="/js/testAdminPage.js"></script>
 </div>

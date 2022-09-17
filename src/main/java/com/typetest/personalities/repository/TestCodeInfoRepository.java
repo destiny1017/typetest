@@ -13,4 +13,9 @@ public interface TestCodeInfoRepository extends JpaRepository<TestCodeInfo, Stri
     @Modifying(clearAutomatically = true)
     @Query("update TestCodeInfo t set t.playCount = t.playCount + 1 where t = :testCodeInfo")
     void plusPlayCount(@Param("testCodeInfo") TestCodeInfo testCodeInfo);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("update TestCodeInfo t set t.active = 0 where t = :testCodeInfo")
+    void disableTest(@Param("testCodeInfo") TestCodeInfo testCodeInfo);
 }

@@ -102,6 +102,7 @@ public class TestAdminServiceImpl implements TestAdminService {
 
     @Override
     public int saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode) {
+        int deletedIndicator = 0;
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
         for (TypeIndicatorDto typeIndicatorDto : indicatorDtoList) {
             TypeIndicator indicator = null;
@@ -137,10 +138,11 @@ public class TestAdminServiceImpl implements TestAdminService {
                 // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
                 if(!typeIndicatorDto.isNewEntity()) {
                     typeIndicatorRepository.deleteById(typeIndicatorDto.getId());
+                    deletedIndicator = 1;
                 }
             }
         }
-        return 1;
+        return deletedIndicator;
     }
 
     @Override
@@ -318,5 +320,13 @@ public class TestAdminServiceImpl implements TestAdminService {
 
         }
         return 1;
+    }
+
+    @Override
+    public void disableTest(String testCode) {
+        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        if(testCodeInfo.isPresent()) {
+            testCodeInfoRepository.disableTest(testCodeInfo.get());
+        }
     }
 }

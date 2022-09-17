@@ -170,6 +170,10 @@ $(document).ready( () => {
 
     // 로딩 표시 삭제
     deleteLoadingDiv();
+    
+    if(alertMessage != null) {
+        alert(alertMessage);
+    }
 
 });
 
@@ -178,6 +182,7 @@ function indicatorDeleteEvent(e) {
     $("#indicatorDiv" + targetNum).hide();
     $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
     $(`[name="indicatorList[${targetNum - 1}].deleted"]`).val(1);
+    indicatorSeq();
 }
 
 function settingDeleteEvent(e) {
@@ -295,7 +300,7 @@ function indicatorAddEvent() {
             <div class="indicatorInfo-div">
                 <div class="indicatorElement-div">
                     <label>지표 번호</label>
-                    <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum">
+                    <input type="text" class="form-control" name="indicatorList[${indicatorList.length}].indicatorNum" readonly>
                 </div>
                 <div>
                     <label>지표 이름</label>
@@ -324,6 +329,8 @@ function indicatorAddEvent() {
     $("#settingAdd-" + (indicatorList.length)).click( (e) => {
         settingAddEvent(e);
     });
+    
+    indicatorSeq();
 }
 
 function settingAddEvent(e) {
@@ -757,6 +764,20 @@ function enableActive() {
         }
     }
     
-    
+}
+
+function indicatorSeq() {
+    let cnt = 1;
+    $('input[name*="indicatorNum"]').each((i,v) => {
+        let indicator = v.name.substr(0, v.name.indexOf("."));
+        if($(`input[name="${indicator}.deleted"]`).val() == 0) {
+            v.value = cnt++;
+
+            if(indicatorList[i].indicatorNum != v.value) {
+                $(`input[name="${indicator}.updated"]`).val(1);
+                console.log(indicator);        
+            }
+        }
+    });
 }
 

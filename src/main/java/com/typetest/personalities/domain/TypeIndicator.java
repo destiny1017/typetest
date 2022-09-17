@@ -27,7 +27,11 @@ public class TypeIndicator {
     @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
     private List<IndicatorSetting> indicatorSettings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
+    private List<PersonalityAnswer> answerList = new ArrayList<>();
+
     public TypeIndicator(TestCodeInfo testCode, int indicatorNum, String indicatorName) {
+
         this.testCode = testCode;
         this.indicatorNum = indicatorNum;
         this.indicatorName = indicatorName;

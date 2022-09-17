@@ -20,4 +20,5 @@ public interface TestAdminService {
     List<QuestionDto> findQuestionInfo(String testCode);
     List<TypeInfoDto> findTypeInfo(String testCode);
     List<String> getEssentialTypeList(String testCode);
+    void disableTest(String testCode);
 }

@@ -44,9 +44,13 @@ public class TestAdminController {
         return testAdminService.findAllTestInfo();
     }
 
-    @GetMapping({"/adminPage/testAdminPage/{testCode}", "/adminPage/testAdminPage/{testCode}/{tab}"})
+    @GetMapping({"/adminPage/testAdminPage/{testCode}",
+                "/adminPage/testAdminPage/{testCode}/{tab}",
+                "/adminPage/testAdminPage/{testCode}/{tab}/{del}"})
     public String testAdminPage(@PathVariable String testCode,
-                                @PathVariable(value = "tab", required = false) Integer tab, Model model) {
+                                @PathVariable(value = "tab", required = false) Integer tab,
+                                @PathVariable(value = "del", required = false) Integer del,
+                                Model model) {
         model.addAttribute("testInfoDto", testAdminService.createTestInfoDto(testCode));
 
         // 테스트 코드에 해당하는 지표정보 세팅하기
@@ -81,6 +85,12 @@ public class TestAdminController {
         if(tab == null) tab = 1;
         model.addAttribute("tab", tab);
 
+        if(del != null && del == 2) {
+            model.addAttribute("alert",
+                    "지표정보가 삭제되어 테스트가 비활성화 되었습니다.\n" +
+                            "질문/답변 및 결과유형 정보를 확인하고 다시 활성화해주시기 바랍니다.");
+        }
+
         return "admin/testadmin/testAdminPage";
     }
 
@@ -93,7 +103,11 @@ public class TestAdminController {
     @PostMapping("/adminPage/testAdmin/step2Submit")
     public String step2Submit(@ModelAttribute IndicatorForm indicatorForm) {
         List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
-        testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
+        int result = testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
+        if(result == 1) {
+            testAdminService.disableTest(indicatorForm.getIndicatorTestCode());
+            return "redirect:/adminPage/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2/2";
+        }
         return "redirect:/adminPage/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2";
     }
 
