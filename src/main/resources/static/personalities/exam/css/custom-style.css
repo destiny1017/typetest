@@ -2,8 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle&family=Noto+Sans+KR&family=Single+Day&Gamja+Flower&display=swap');
 
 /* 모바일 환경에서만 적용할 css */
-@media screen and (min-width: 500px) {
-
+@media screen and (max-width: 500px) {
+    .mainTitle-div3 > p {
+        font-size: 2rem !important;
+    }
 }
 
 div[class$="container"] {
@@ -64,7 +66,7 @@ div[class$="container"] {
     -webkit-text-fill-color: transparent;
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
-    font-size: 42px;
+    font-size: 2.3rem;
     font-weight: bold;
     margin: 25px 0 15px 0;
     font-family: 'Dongle', sans-serif;
@@ -1186,7 +1188,7 @@ input[name="answer"] {
 }
 
 .testAdminTitle > img {
-    width: 200px;
+    width: 150px;
     cursor: pointer;
 }
 
