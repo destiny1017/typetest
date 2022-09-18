@@ -37,7 +37,7 @@
 
         <!-- tab1 contents div-->
         <div id="step1Content" class="tab-contents" th:classappend="${tab} == 1 ? active">
-            <form method="post" action="/adminPage/testAdmin/step1Submit" class="tab-contentsForm">
+            <form method="post" action="/adminPage/testAdmin/step1Submit" class="tab-contentsForm" id="tab1Form">
                 <input type="hidden" th:field="${testInfoDto.playCount}">
                 <div class="select-div">
                     <div>
@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 <div class="tabSubmit-div">
-                    <button class="btn btn-primary" type="submit">저장</button>
+                    <button class="btn btn-primary" type="submit" id="tab1SubmitBtn">저장</button>
                 </div>
             </form>
         </div>
@@ -208,7 +208,7 @@
                         <div class="questionInfo-div">
                             <div class="indicatorElement-div">
                                 <label>질문 이미지</label>
-                                <input type="text" class="form-control" th:field="*{questionList[__${questionInfoStat.index}__].questionImage}">
+                                <input type="text" class="form-control optional" th:field="*{questionList[__${questionInfoStat.index}__].questionImage}">
                             </div>
                         </div>
                         <div class="answer-div">
@@ -224,7 +224,7 @@
                                 <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].deleted}">
                                 <div class="answerElement-div answerContent-div">
                                     <label>답변 이미지</label>
-                                    <input type="text" class="form-control code-input"
+                                    <input type="text" class="form-control code-input optional"
                                            th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].answerImage}">
                                 </div>
                                 <div class="answerElement-div answerContent-div">
@@ -318,7 +318,7 @@
                                     </div>
                                     <div class="typeImageUrl-div typeImageContent-div">
                                         <label>이미지 URL</label>
-                                        <input type="text" class="form-control"
+                                        <input type="text" class="form-control optional"
                                                th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].imageUrl}">
                                     </div>
                                 </div>

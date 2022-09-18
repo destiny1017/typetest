@@ -27,9 +27,9 @@ $(document).ready( () => {
     });
     
     // submit 중복 클릭 막기
-    $('button[type="submit"]').click( (e) => {
-        $(e.target).css("pointer-events", "none");
-    });
+//    $('button[type="submit"]').click( (e) => {
+//        $(e.target).css("pointer-events", "none");
+//    });
     
     // 값 변경시 update
     $(".tab-contentsForm [name]").focusin( (e) => {
@@ -171,16 +171,25 @@ $(document).ready( () => {
     // 로딩 표시 삭제
     deleteLoadingDiv();
     
+    // 알림 메시지 있을 경우 띄우기
     if(alertMessage != null) {
         alert(alertMessage);
     }
+    
+    // submit 유효성 체크
+    $("form").submit( (e) => {
+        if(formCheck(e)) {
+            $('button[type="submit"]').css("pointer-events", "none");
+            return true;
+        } else return false;
+    });
 
 });
 
 function indicatorDeleteEvent(e) {
     let targetNum = e.target.id.replace("indiDel", "");
     $("#indicatorDiv" + targetNum).hide();
-    $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val(0);
     $(`[name="indicatorList[${targetNum - 1}].deleted"]`).val(1);
     indicatorSeq();
 }
@@ -189,7 +198,7 @@ function settingDeleteEvent(e) {
     let targetNum = e.target.id.replace("delSetting", "");
     let targetIndexes = targetNum.split("-");
     $("#settingDiv" + targetNum).hide();
-    $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#settingDiv" + targetNum + ' input:not([type="hidden"])').val(0);
     $(`[name="indicatorList[${targetIndexes[1] - 1}].indicatorSettings[${targetIndexes[2]}].deleted"]`).val(1);
 }
 
@@ -215,7 +224,7 @@ function answerTypeChange() {
 function questionDeleteEvent(e) {
     let targetNum = e.target.id.replace("questionDel", "");
     $("#questionDiv" + targetNum).hide();
-    $("#questionDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#questionDiv" + targetNum + ' input:not([type="hidden"])').val(0);
     $(`[name="questionList[${targetNum - 1}].deleted"]`).val(1);
     questionSeq();
 };
@@ -224,7 +233,7 @@ function answerDeleteEvent(e) {
     let targetNum = e.target.id.replace("delAnswer", "");
     let targetIndexes = targetNum.split("-"); // delAnswer-n-n
     $("#answerDiv" + targetNum).hide();
-    $("#answerDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#answerDiv" + targetNum + ' input:not([type="hidden"])').val(0);
     $("#answerDiv" + targetNum + " option").remove();
     $(`[name="questionList[${targetIndexes[1] - 1}].answerList[${targetIndexes[2]}].deleted"]`).val(1);
 };
@@ -243,7 +252,7 @@ function answerInfoHoverOutEvent(e) {
 function typeInfoDeleteEvent(e) {
     let targetNum = e.target.id.replace("typeInfoDel", "");
     $("#typeInfoDiv" + targetNum).hide();
-    $("#typeInfoDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#typeInfoDiv" + targetNum + ' input:not([type="hidden"])').val(0);
     $(`[name="typeInfoList[${targetNum - 1}].deleted"]`).val(1);
 };
 
@@ -251,7 +260,7 @@ function typeImageDeleteEvent(e) {
     let targetNum = e.target.id.replace("delTypeImage", "");
     let targetIndexes = targetNum.split("-");
     $("#typeImageDiv" + targetNum).hide();
-    $("#typeImageDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#typeImageDiv" + targetNum + ' input:not([type="hidden"])').val(0);
     $("#typeImageDiv" + targetNum + " option").remove();
     $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeImageList[${targetIndexes[2]}].deleted"]`).val(1);
     
@@ -273,7 +282,7 @@ function typeDescriptionDeleteEvent(e) {
     let targetNum = e.target.id.replace("delTypeDescription", "");
     let targetIndexes = targetNum.split("-");
     $("#typeDescriptionDiv" + targetNum).hide();
-    $("#typeDescriptionDiv" + targetNum + ' input:not([type="hidden"])').val("");
+    $("#typeDescriptionDiv" + targetNum + ' input:not([type="hidden"])').val(0);
     $("#typeDescriptionDiv" + targetNum + " option").remove();
     $(`[name="typeInfoList[${targetIndexes[1] - 1}].typeDescriptionList[${targetIndexes[2]}].deleted"]`).val(1);
     
@@ -879,4 +888,33 @@ function noAnswerQuestion() {
         } 
     }
     return existEmpty;
+}
+
+function formCheck(e) {
+    let valid = true;
+    $(`#${e.target.id} input[name]:not([type="hidden"], .optional)`).each( (i, v) => {
+        if(v.type == "radio") {
+            if($(`input[name="${v.name}"]:checked`).length == 0) {
+                alert("아직 체크하지 않은 값이 있습니다.");
+                valid = false;
+                return false;
+            }
+        } else {
+            if(v.value.length == 0) {
+                if(confirm("입력하지 않은 값이 있습니다.")) {
+                    setTimeout( () => {
+                       $(v).focus();
+                        location.href = "#" + v.id; 
+                    }, 100);
+                }
+               
+                valid = false;
+                return false;
+            }
+        }
+    });
+//    if(valid) {
+//        $("#tab1Form").submit();
+//    }
+    return valid;
 }
