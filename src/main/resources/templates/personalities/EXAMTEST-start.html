@@ -3,9 +3,6 @@
 <head th:replace="fragments/header.html :: header">
     <meta charset="utf-8">
 </head>
-<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<!-- SNS 공유용 주소 연결 용 -->
-<script type="text/javascript" src="/js/testInfo.js" async></script>
 <body>
 <div class="exam-container">
     <!-- contents -->
@@ -46,25 +43,8 @@
         <div class="py-3"></div>
 
         <!-- share result -->
-        <div class="text-center py-5">
-            <div class="exam-share-box">
-                <span>테스트 공유하기</span>
-            </div>
-            <div class="py-2"></div>
-            <!-- SNS버튼 시작 -->
-            <div style="width: 100%; text-align: center;" class="share-div">
-                <!-- 페이스북 공유 버튼 -->
-                <a href="" onclick="window.open(url_combine_fb, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/facebook.gif" title="페이스북으로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
-                <!-- 트위터 공유 버튼 -->
-                <a href="" onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/twitter.gif" title="트위터로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
-                <!-- 네이버 공유 버튼 -->
-                <a href="" onclick="window.open(url_combine_naver, '', 'scrollbars=no, width=600, height=600'); return false;"><img src="https://storage.googleapis.com/storage.chris-chris.ai/images/naver.gif" title="네이버로 공유하기" class="sharebtn_custom" style="width: 32px;"></a>
-                <!-- 카카오톡 공유 버튼 -->
-                <a href="#" id="kakaotalk-sharing-btn"><p class="share-kakao-icon d-inline-block"></p></a>
-                <!-- url 공유 버튼 -->
-                <p class="share-url-icon d-inline-block" onclick="copyUrl()"></p><input type="text" id="urlInput">
-            </div>
-            <!-- SNS버튼 끝 -->
+        <div class="text-center py-5" th:replace="fragments/shareBlock :: shareBlock">
+
         </div>
 
         <div class="py-3"></div>
