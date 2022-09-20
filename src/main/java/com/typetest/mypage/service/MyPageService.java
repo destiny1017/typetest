@@ -1,6 +1,7 @@
 package com.typetest.mypage.service;
 
 import com.typetest.login.domain.User;
+import com.typetest.login.repository.LoginRepository;
 import com.typetest.mypage.dto.TypeInfoData;
 import com.typetest.personalities.repository.TestResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.*;
 public class MyPageService {
 
     private final TestResultRepository testResultRepository;
+    private final LoginRepository loginRepository;
 
     /**
      * # 사용자의 검사결과 데이터를 받아와서 가장 최근의 결과를 필터링 해서 돌려주는 메서드
@@ -34,5 +36,10 @@ public class MyPageService {
             }
         }
         return typeMap;
+    }
+
+    public User updateNickname(Long id, String nickname) {
+        loginRepository.updateNickname(id, nickname);
+        return loginRepository.findById(id).get();
     }
 }

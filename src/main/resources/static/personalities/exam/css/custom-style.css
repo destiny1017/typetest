@@ -867,6 +867,38 @@ div.add-icon {
 
 .nickname-div {
     padding: 5px 10px 5px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.nickname-div > .material-icons {
+    margin-left: 7px;
+    color: #555;
+    cursor: pointer;
+}
+
+.email-div {
+    padding: 5px 10px 5px 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.8rem;
+}
+
+.nick-title {
+    text-align: center;
+    padding: 20px 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1.2rem;
+}
+
+.nickname-editForm {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nickname-editForm > button {
+    width: 5rem;
+    margin-left: 10px;
 }
 
 .type-div {

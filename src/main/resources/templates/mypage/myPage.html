@@ -22,8 +22,12 @@
             <div class="profile-desc">
                 <div class="nickname-div">
                     <span id="nickname" th:text="${session.user.nickname}"></span>
+                    <span class="material-icons"data-bs-toggle="modal" data-bs-target="#NicknameEditModal">edit</span>
                 </div>
-                <div class="type-div">
+                <div class="email-div">
+                    <span id="email" th:text="${session.user.email}"></span>
+                </div>
+                <div class="type-div d-none">
                     <span class="type-label" th:each="typeInfo : ${userTypeMap}" th:text="${typeInfo.value.typeName}"></span>
                 </div>
             </div>
@@ -35,6 +39,25 @@
     <div class="vstack" style="width: 100%; height: 300px;">
 
     </div>
+
+    <div class="modal fade" id="NicknameEditModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="text-center nick-title">
+                    <label>닉네임 변경</label>
+                </div>
+
+                <div class="text-center py-3">
+                    <form action="/myPage/editNickname" method="post" class="nickname-editForm">
+                        <input type="hidden" name="id" th:value="${session.user.id}">
+                        <input type="text" name="nickname" class="form-control" th:value="${session.user.nickname}" maxlength="10">
+                        <button class="btn btn-primary">변경</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <hr>
     <footer th:replace="fragments/footer.html :: footer"></footer>
 </div>
