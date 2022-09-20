@@ -901,10 +901,69 @@ div.add-icon {
     margin-left: 10px;
 }
 
+.mypage-contents-div {
+    padding: 10px;
+}
+
 .type-div {
     height: 65%;
     padding: 5px;
 }
+
+.myTestResult-div {
+    display: flex;
+}
+
+.testResultInfoCard {
+    width: 150px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+.testResultInfoCard > img {
+    height: 148px;
+    width: 148px;
+}
+
+.testResultCard-body {
+    padding: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.testResult-title {
+    display: flex;
+    align-items: center;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.testResult-title > .material-icons {
+    padding: 10px 0px 10px 10px;
+}
+
+.scroll {
+    padding: 0px 10px 0px 10px;
+    overflow-x: scroll;
+    box-sizing: border-box;
+    font-family: 'Nanum Gothic';
+    margin-bottom: 10px;
+    overflow-y: hidden;
+}
+
+/* 스크롤바 설정*/
+.type1::-webkit-scrollbar{
+    height: 10px;
+}
+
+/* 스크롤바 막대 설정*/
+.type1::-webkit-scrollbar-thumb{
+    width: 17%;
+    background-color: #ddd;
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;
+}
+
 
 span.type-label {
     border-radius: 1rem;

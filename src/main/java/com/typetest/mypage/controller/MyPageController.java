@@ -19,7 +19,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyPageController {
 
-    private final TestResultRepository testResultRepository;
     private final MyPageService myPageService;
 
     @RequestMapping("/myPage")

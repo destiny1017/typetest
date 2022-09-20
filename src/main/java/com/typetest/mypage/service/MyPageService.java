@@ -42,4 +42,6 @@ public class MyPageService {
         loginRepository.updateNickname(id, nickname);
         return loginRepository.findById(id).get();
     }
+
+
 }

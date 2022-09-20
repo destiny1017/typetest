@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @ToString
@@ -13,15 +14,15 @@ public class TypeInfoData {
     private String testCode;
     private String testName;
     private TypeInfo typeInfo;
-    private String typeName;
     private LocalDateTime createDate;
+    private String formattedDate;
 
     @QueryProjection
-    public TypeInfoData(String testCode, String testName, TypeInfo typeInfo, String typeName, LocalDateTime createDate) {
+    public TypeInfoData(String testCode, String testName, TypeInfo typeInfo, LocalDateTime createDate) {
         this.testCode = testCode;
         this.testName = testName;
         this.typeInfo = typeInfo;
-        this.typeName = typeName;
         this.createDate = createDate;
+        this.formattedDate = createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

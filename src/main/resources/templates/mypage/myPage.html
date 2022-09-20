@@ -28,18 +28,38 @@
                     <span id="email" th:text="${session.user.email}"></span>
                 </div>
                 <div class="type-div d-none">
-                    <span class="type-label" th:each="typeInfo : ${userTypeMap}" th:text="${typeInfo.value.typeName}"></span>
+                    <span class="type-label" th:each="typeInfo : ${userTypeMap}" th:text="${typeInfo.value.typeInfo.typeName}"></span>
                 </div>
             </div>
         </div>
-
     </div>
+
+    <hr>
 
     <!-- content -->
-    <div class="vstack" style="width: 100%; height: 300px;">
-
+    <div class="vstack mypage-contents-div" style="width: 100%; height: 300px;">
+        <div class="testResult-title">
+            <span class="material-icons">
+            chevron_right
+            </span>
+            <span>내 테스트 결과</span>
+        </div>
+        <div class="myTestResult-div scroll type1">
+            <div class="card testResultInfoCard" th:each="typeInfo : ${userTypeMap}" th:id="|${typeInfo.value.testCode}|">
+                <img th:src="${typeInfo.value.typeInfo.images.size() > 0 ?
+                        typeInfo.value.typeInfo.images[0].imageUrl :
+                        'http://memorymaker.co.kr/en/plugin/wz.booking.pension.prm/img/noimage.gif'}"
+                     class="card-img-top" alt="이미지가 없습니다.">
+                <div class="testResultCard-body">
+                    <span class="card-title" th:text="${typeInfo.value.typeInfo.typeName}">Card title</span>
+                    <p class="card-text" th:text="${typeInfo.value.formattedDate}"></p>
+                </div>
+                <input type="hidden" th:id="|${typeInfo.value.testCode}_type|" th:value="${typeInfo.value.typeInfo.typeCode}">
+            </div>
+        </div>
     </div>
 
+    <!-- 닉네임 수정 modal -->
     <div class="modal fade" id="NicknameEditModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -62,4 +82,11 @@
     <footer th:replace="fragments/footer.html :: footer"></footer>
 </div>
 </body>
+<script>
+    $('.testResultInfoCard').click( (e) => {
+        let id = e.currentTarget.id;
+        let typeCode = $(`#${id}_type`).val();
+        location.href = `${id}/testResult/${typeCode}`;
+    });
+</script>
 </html>

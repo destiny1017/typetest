@@ -26,7 +26,6 @@ public class TestResultRepositoryImpl implements TestResultRepositoryCustom {
                     testCodeInfo.testCode,
                     testCodeInfo.testName,
                     testResult.typeInfo,
-                    typeInfo.typeName,
                     testResult.createDate))
                 .from(testResult, typeInfo, testCodeInfo)
                 .where(
