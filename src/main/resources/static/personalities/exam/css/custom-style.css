@@ -925,6 +925,8 @@ div.add-icon {
 .testResultInfoCard > img {
     height: 148px;
     width: 148px;
+    min-height: 148px;
+    min-width: 148px;
 }
 
 .testResultCard-body {
@@ -960,8 +962,11 @@ div.add-icon {
 .type1::-webkit-scrollbar-thumb{
     width: 17%;
     background-color: #ddd;
-    /* 스크롤바 둥글게 설정    */
     border-radius: 10px;
+}
+
+.testResultCard-body > .card-text {
+    font-size: 0.8rem;
 }
 
 
