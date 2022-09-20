@@ -1,5 +1,5 @@
 /* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Noto+Sans+KR&family=Single+Day&Gamja+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Noto+Sans+KR&family=Single+Day&family=Gamja+Flower&family=Jua&display=swap');
 
 /* 모바일 환경에서만 적용할 css */
 @media screen and (max-width: 500px) {
@@ -198,6 +198,10 @@ footer {
 
 .font-gamjaFlower {
     font-family: 'Gamja Flower', cursive;
+}
+
+.font-jua {
+    font-family: 'Jua', sans-serif;
 }
 
 .primary-container {
@@ -1358,3 +1362,70 @@ input[name="answer"] {
     color: #6a3df6;
     padding: 05px;
 }
+
+
+.exam-contents p {
+    margin: 0;
+}
+
+.customResult-title h2 {
+    font-weight: bold;
+    font-family: 'Jua', sans-serif;
+    font-size: 2.0rem;
+    color: #5990f9;
+}
+
+.customResult-title h1 {
+    font-weight: bold;
+    font-family: 'Jua', sans-serif;
+    font-size: 2.5rem;
+}
+
+.custom-desc-div {
+    border: 2px solid #ddd;
+    padding: 20px 15px 25px 10px;
+}
+
+.desc1-div {
+    text-align: left;
+}
+
+.desc1-div > p {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.firstDesc {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1.3rem;
+    color: #5990f9;
+    padding: 10px 0;
+}
+
+.firstDesc:before {
+    font-family: "Material Icons";
+    content: "\ef4a";
+    font-size: 0.5rem;
+    padding: 0 10px;
+}
+
+.custom-desc {
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.custom-desc > span {
+    padding: 0 10px;
+}
+
+.custom-desc-title {
+    font-weight: bold;
+    font-family: 'Jua', sans-serif;
+    font-size: 1.5rem;
+    color: #000;
+}
+
+/*
+.desc1-div > p:not(.firstDesc):before {
+    content: "-";
+    padding: 0 10px;
+}*/

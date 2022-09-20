@@ -276,150 +276,150 @@ public class InitDB {
                 TypeDescription descriptionCustom1_4  = new TypeDescription(typeInfoCustom1 , 4,
                         "“인생조차 효율 갑”");
 
-                TypeDescription descriptionCustom2_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom2_1  = new TypeDescription(typeInfoCustom2 , 1,
                         "");
-                TypeDescription descriptionCustom2_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom2_2  = new TypeDescription(typeInfoCustom2 , 2,
                         "");
-                TypeDescription descriptionCustom2_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom2_3  = new TypeDescription(typeInfoCustom2 , 3,
                         "");
-                TypeDescription descriptionCustom2_4  = new TypeDescription(typeInfoCustom1 , 4,
-                        "");
-
-                TypeDescription descriptionCustom3_1  = new TypeDescription(typeInfoCustom1 , 1,
-                        "");
-                TypeDescription descriptionCustom3_2  = new TypeDescription(typeInfoCustom1 , 2,
-                        "");
-                TypeDescription descriptionCustom3_3  = new TypeDescription(typeInfoCustom1 , 3,
-                        "");
-                TypeDescription descriptionCustom3_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom2_4  = new TypeDescription(typeInfoCustom2 , 4,
                         "");
 
-                TypeDescription descriptionCustom4_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom3_1  = new TypeDescription(typeInfoCustom3 , 1,
                         "");
-                TypeDescription descriptionCustom4_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom3_2  = new TypeDescription(typeInfoCustom3 , 2,
                         "");
-                TypeDescription descriptionCustom4_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom3_3  = new TypeDescription(typeInfoCustom3 , 3,
                         "");
-                TypeDescription descriptionCustom4_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom3_4  = new TypeDescription(typeInfoCustom3 , 4,
                         "");
 
-                TypeDescription descriptionCustom5_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom4_1  = new TypeDescription(typeInfoCustom4 , 1,
+                        "");
+                TypeDescription descriptionCustom4_2  = new TypeDescription(typeInfoCustom4 , 2,
+                        "");
+                TypeDescription descriptionCustom4_3  = new TypeDescription(typeInfoCustom4 , 3,
+                        "");
+                TypeDescription descriptionCustom4_4  = new TypeDescription(typeInfoCustom4 , 4,
+                        "");
+
+                TypeDescription descriptionCustom5_1  = new TypeDescription(typeInfoCustom5 , 1,
                         "나의 행운의 새는\n" +
                                 "내 맘대로 다 되는\n" +
                                 "투명한 큰부리큰기러기");
-                TypeDescription descriptionCustom5_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom5_2  = new TypeDescription(typeInfoCustom5 , 2,
                         "큰부리큰기러기를 닮은 나는\n" +
                                 "인생을 항상 계산적으로 살지만 내 사람들에겐 계산하지 않고 잘해줘요.\n" +
                                 "총대 메고 싫은 말 하는 것을 좋아하진 않지만 이미 내가 나서고 있어요.\n" +
                                 "주변에서 표정관리를 못한다고 하는데 사실 안 하는 거예요.\n" +
                                 "가끔 내가 존멋인 것 같다고 느껴요.\n" +
                                 "내가 제일 우울할 때는 무능하다고 느낄 때예요.");
-                TypeDescription descriptionCustom5_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom5_3  = new TypeDescription(typeInfoCustom5 , 3,
                         "큰부리큰기러기가 줄 올겨울 행운은?\n" +
                                 "모두가 나의 똑똑함을 알아주는 행운\n" +
                                 "쓸모없는 곳 포함 언제 어디서나 1등 하는 행운\n" +
                                 "내가 하자는 대로 다 해주는 친구들을 만난 행운\n" +
                                 "올 초에 세운 연말 계획을 거의 이룬 행운");
-                TypeDescription descriptionCustom5_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom5_4  = new TypeDescription(typeInfoCustom5 , 4,
                         "“인생조차 효율 갑”");
 
-                TypeDescription descriptionCustom6_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom6_1  = new TypeDescription(typeInfoCustom6 , 1,
                         "");
-                TypeDescription descriptionCustom6_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom6_2  = new TypeDescription(typeInfoCustom6 , 2,
                         "");
-                TypeDescription descriptionCustom6_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom6_3  = new TypeDescription(typeInfoCustom6 , 3,
                         "");
-                TypeDescription descriptionCustom6_4  = new TypeDescription(typeInfoCustom1 , 4,
-                        "");
-
-                TypeDescription descriptionCustom7_1  = new TypeDescription(typeInfoCustom1 , 1,
-                        "");
-                TypeDescription descriptionCustom7_2  = new TypeDescription(typeInfoCustom1 , 2,
-                        "");
-                TypeDescription descriptionCustom7_3  = new TypeDescription(typeInfoCustom1 , 3,
-                        "");
-                TypeDescription descriptionCustom7_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom6_4  = new TypeDescription(typeInfoCustom6 , 4,
                         "");
 
-                TypeDescription descriptionCustom8_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom7_1  = new TypeDescription(typeInfoCustom7 , 1,
                         "");
-                TypeDescription descriptionCustom8_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom7_2  = new TypeDescription(typeInfoCustom7 , 2,
                         "");
-                TypeDescription descriptionCustom8_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom7_3  = new TypeDescription(typeInfoCustom7 , 3,
                         "");
-                TypeDescription descriptionCustom8_4  = new TypeDescription(typeInfoCustom1 , 4,
-                        "");
-
-                TypeDescription descriptionCustom9_1  = new TypeDescription(typeInfoCustom1 , 1,
-                        "");
-                TypeDescription descriptionCustom9_2  = new TypeDescription(typeInfoCustom1 , 2,
-                        "");
-                TypeDescription descriptionCustom9_3  = new TypeDescription(typeInfoCustom1 , 3,
-                        "");
-                TypeDescription descriptionCustom9_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom7_4  = new TypeDescription(typeInfoCustom7 , 4,
                         "");
 
-                TypeDescription descriptionCustom10_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom8_1  = new TypeDescription(typeInfoCustom8 , 1,
                         "");
-                TypeDescription descriptionCustom10_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom8_2  = new TypeDescription(typeInfoCustom8 , 2,
                         "");
-                TypeDescription descriptionCustom10_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom8_3  = new TypeDescription(typeInfoCustom8 , 3,
                         "");
-                TypeDescription descriptionCustom10_4  = new TypeDescription(typeInfoCustom1 , 4,
-                        "");
-
-                TypeDescription descriptionCustom11_1  = new TypeDescription(typeInfoCustom1 , 1,
-                        "");
-                TypeDescription descriptionCustom11_2  = new TypeDescription(typeInfoCustom1 , 2,
-                        "");
-                TypeDescription descriptionCustom11_3  = new TypeDescription(typeInfoCustom1 , 3,
-                        "");
-                TypeDescription descriptionCustom11_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom8_4  = new TypeDescription(typeInfoCustom8 , 4,
                         "");
 
-                TypeDescription descriptionCustom12_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom9_1  = new TypeDescription(typeInfoCustom9 , 1,
                         "");
-                TypeDescription descriptionCustom12_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom9_2  = new TypeDescription(typeInfoCustom9 , 2,
                         "");
-                TypeDescription descriptionCustom12_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom9_3  = new TypeDescription(typeInfoCustom9 , 3,
                         "");
-                TypeDescription descriptionCustom12_4  = new TypeDescription(typeInfoCustom1 , 4,
-                        "");
-
-                TypeDescription descriptionCustom13_1  = new TypeDescription(typeInfoCustom1 , 1,
-                        "");
-                TypeDescription descriptionCustom13_2  = new TypeDescription(typeInfoCustom1 , 2,
-                        "");
-                TypeDescription descriptionCustom13_3  = new TypeDescription(typeInfoCustom1 , 3,
-                        "");
-                TypeDescription descriptionCustom13_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom9_4  = new TypeDescription(typeInfoCustom9 , 4,
                         "");
 
-                TypeDescription descriptionCustom14_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom10_1  = new TypeDescription(typeInfoCustom10 , 1,
                         "");
-                TypeDescription descriptionCustom14_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom10_2  = new TypeDescription(typeInfoCustom10 , 2,
                         "");
-                TypeDescription descriptionCustom14_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom10_3  = new TypeDescription(typeInfoCustom10 , 3,
                         "");
-                TypeDescription descriptionCustom14_4  = new TypeDescription(typeInfoCustom1 , 4,
-                        "");
-
-                TypeDescription descriptionCustom15_1  = new TypeDescription(typeInfoCustom1 , 1,
-                        "");
-                TypeDescription descriptionCustom15_2  = new TypeDescription(typeInfoCustom1 , 2,
-                        "");
-                TypeDescription descriptionCustom15_3  = new TypeDescription(typeInfoCustom1 , 3,
-                        "");
-                TypeDescription descriptionCustom15_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom10_4  = new TypeDescription(typeInfoCustom10 , 4,
                         "");
 
-                TypeDescription descriptionCustom16_1  = new TypeDescription(typeInfoCustom1 , 1,
+                TypeDescription descriptionCustom11_1  = new TypeDescription(typeInfoCustom11 , 1,
                         "");
-                TypeDescription descriptionCustom16_2  = new TypeDescription(typeInfoCustom1 , 2,
+                TypeDescription descriptionCustom11_2  = new TypeDescription(typeInfoCustom11 , 2,
                         "");
-                TypeDescription descriptionCustom16_3  = new TypeDescription(typeInfoCustom1 , 3,
+                TypeDescription descriptionCustom11_3  = new TypeDescription(typeInfoCustom11 , 3,
                         "");
-                TypeDescription descriptionCustom16_4  = new TypeDescription(typeInfoCustom1 , 4,
+                TypeDescription descriptionCustom11_4  = new TypeDescription(typeInfoCustom11 , 4,
+                        "");
+
+                TypeDescription descriptionCustom12_1  = new TypeDescription(typeInfoCustom12 , 1,
+                        "");
+                TypeDescription descriptionCustom12_2  = new TypeDescription(typeInfoCustom12 , 2,
+                        "");
+                TypeDescription descriptionCustom12_3  = new TypeDescription(typeInfoCustom12 , 3,
+                        "");
+                TypeDescription descriptionCustom12_4  = new TypeDescription(typeInfoCustom12 , 4,
+                        "");
+
+                TypeDescription descriptionCustom13_1  = new TypeDescription(typeInfoCustom13 , 1,
+                        "");
+                TypeDescription descriptionCustom13_2  = new TypeDescription(typeInfoCustom13 , 2,
+                        "");
+                TypeDescription descriptionCustom13_3  = new TypeDescription(typeInfoCustom13 , 3,
+                        "");
+                TypeDescription descriptionCustom13_4  = new TypeDescription(typeInfoCustom13 , 4,
+                        "");
+
+                TypeDescription descriptionCustom14_1  = new TypeDescription(typeInfoCustom14 , 1,
+                        "");
+                TypeDescription descriptionCustom14_2  = new TypeDescription(typeInfoCustom14 , 2,
+                        "");
+                TypeDescription descriptionCustom14_3  = new TypeDescription(typeInfoCustom14 , 3,
+                        "");
+                TypeDescription descriptionCustom14_4  = new TypeDescription(typeInfoCustom14 , 4,
+                        "");
+
+                TypeDescription descriptionCustom15_1  = new TypeDescription(typeInfoCustom15 , 1,
+                        "");
+                TypeDescription descriptionCustom15_2  = new TypeDescription(typeInfoCustom15 , 2,
+                        "");
+                TypeDescription descriptionCustom15_3  = new TypeDescription(typeInfoCustom15 , 3,
+                        "");
+                TypeDescription descriptionCustom15_4  = new TypeDescription(typeInfoCustom15 , 4,
+                        "");
+
+                TypeDescription descriptionCustom16_1  = new TypeDescription(typeInfoCustom16 , 1,
+                        "");
+                TypeDescription descriptionCustom16_2  = new TypeDescription(typeInfoCustom16 , 2,
+                        "");
+                TypeDescription descriptionCustom16_3  = new TypeDescription(typeInfoCustom16 , 3,
+                        "");
+                TypeDescription descriptionCustom16_4  = new TypeDescription(typeInfoCustom16 , 4,
                         "");
 
                 TypeImage imageCustom1  = new TypeImage(typeInfoCustom1 , 1, "https://cdn.banggooso.com/assets/images/game82/result/INTP.png");
