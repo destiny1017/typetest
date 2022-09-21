@@ -17,17 +17,18 @@
         <!-- body text -->
         <div class="exam-contents">
             <div class="blockquote">
-                <p class="testTitle-text" th:text="${testInfo.testName}"></p>
                 <img class="img-fluid py-3 form-floating"
                      src="https://image.utoimage.com/preview/cp880338/2018/11/201811006148_500.jpg"
                      th:src="${testInfo.image}">
-                <p th:text="${testInfo.description}">테스트 설명란</p>
+                <p class="testTitle-text customStart-title" th:text="${testInfo.testName}"></p>
+                <p class="customStart-desc" th:text="${testInfo.description}">테스트 설명란</p>
             </div>
         </div>
 
+        <div class="py-3"></div>
         <!-- button line -->
         <div class="text-center py-3">
-            <a class="btn btn-primary exam-rounded-btn" th:href="|/${testCode}/testAnswer|">
+            <a class="customStart-btn" th:href="|/${testCode}/testAnswer|">
                 <span>테스트 시작!</span>
             </a>
         </div>

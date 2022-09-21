@@ -1429,3 +1429,32 @@ input[name="answer"] {
     content: "-";
     padding: 0 10px;
 }*/
+
+
+.customStart-desc {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #777;
+}
+
+.customStart-title {
+    font-weight: bold;
+}
+
+.customStart-btn {
+    border-radius: 2.5rem;
+    box-shadow: 3px 3px 3px 2px #ddd;
+    padding: 20px 60px;
+    text-decoration: none;
+    background: #74bbfb;
+    color: white;
+    font-family: 'Jua', sans-serif;
+    font-size: 2rem;
+}
+
+.customStart-btn:hover {
+    text-shadow: 0px 0px 5px #fff;
+}
+
+a:hover {
+    color: #fff;
+}
