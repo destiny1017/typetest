@@ -1396,7 +1396,7 @@ input[name="answer"] {
 
 .firstDesc {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #5990f9;
     padding: 10px 0;
 }
@@ -1457,4 +1457,31 @@ input[name="answer"] {
 
 a:hover {
     color: #fff;
+}
+
+.customAnswerCard {
+    display: flex;
+    width: 80%;
+    height: 100px;
+    border: 2px solid #ddd;
+    border-radius: 3.5rem;
+    margin: 10px 0px 10px 0px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#progress {
+    width: 80%;
+    height: 10px;
+    border-radius: 1.5rem;
+    background: #eee;
+    overflow: hidden;
+}
+
+.progressValue {
+    background: #879bff;
+    height: 100%;
+    width: 0%;
+    border-radius: 2.5rem;
 }

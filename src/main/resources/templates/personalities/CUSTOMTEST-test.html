@@ -16,7 +16,7 @@
             if(processing == false) {
                 processing = true;
                 let $target = $(`label[for="${e.target.id}"]`);
-                $target.css("background", "#acffff");
+                $target.css("background", "#c8ebff");
                 setTimeout( () => {
                     $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
                     if(checkSelect()) {
@@ -38,7 +38,7 @@
                 checkAll = false;
             } else cnt++;
         }
-        $("progress").val(cnt);
+        $(".progressValue").css("width", (cnt / questions.length) * 100 + "%");
 
         return checkAll;
     }
@@ -57,7 +57,10 @@
 
         <!-- progress bar -->
         <div class="progress-div">
-            <progress id="progress" value="0" min="0" th:max="${questionCount}" class="d-block"></progress>
+            <!--<progress id="progress" value="0" min="0" th:max="${questionCount}" class="d-block"></progress>-->
+            <div id="progress">
+                <div class="progressValue"></div>
+            </div>
         </div>
 
         <!-- body text -->
@@ -85,7 +88,7 @@
                                  th:with="inputId = |${question.num}_${answer.answerId}|">
                                 <input class="" type="radio" th:id="${inputId}"
                                        th:name="${question.num}" th:value="${answer.answerId}"/>
-                                <label th:utext="${answer.answer}" th:for="${inputId}" class="examAnswerCard"></label>
+                                <label th:utext="${answer.answer}" th:for="${inputId}" class="customAnswerCard"></label>
                             </div>
                         </div>
                     </div>
