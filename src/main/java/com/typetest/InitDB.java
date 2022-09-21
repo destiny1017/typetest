@@ -243,7 +243,7 @@ public class InitDB {
                 TypeInfo typeInfoCustom2 = new TypeInfo(testCodeInfo3,  "ENTP", "");
                 TypeInfo typeInfoCustom3 = new TypeInfo(testCodeInfo3,  "ISTP", "");
                 TypeInfo typeInfoCustom4 = new TypeInfo(testCodeInfo3,  "ESTP", "");
-                TypeInfo typeInfoCustom5 = new TypeInfo(testCodeInfo3,  "INFP", "");
+                TypeInfo typeInfoCustom5 = new TypeInfo(testCodeInfo3,  "INFP", "투명한 큰부리큰기러기");
                 TypeInfo typeInfoCustom6 = new TypeInfo(testCodeInfo3,  "ENFP", "");
                 TypeInfo typeInfoCustom7 = new TypeInfo(testCodeInfo3,  "INTJ", "");
                 TypeInfo typeInfoCustom8 = new TypeInfo(testCodeInfo3,  "ENTJ", "");

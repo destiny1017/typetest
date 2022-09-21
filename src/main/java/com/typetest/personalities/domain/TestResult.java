@@ -28,7 +28,7 @@ public class TestResult {
     private TestCodeInfo testCode;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn
+    @JoinColumn(name = "TYPE_INFO")
     private TypeInfo typeInfo;
 
     @CreationTimestamp
