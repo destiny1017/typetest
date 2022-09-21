@@ -4,6 +4,7 @@ import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.admin.testadmin.service.TestAdminService;
 import com.typetest.login.dto.SessionUser;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
+import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class LoginController {
 
     private final HttpSession httpSession;
     private final PersonalityTestService personalityTestService;
-    private final TestAdminService testAdminService;
+    private final TestCodeInfoRepository testCodeInfoRepository;
 
     @GetMapping(value = {"/", "/oauth2/authorization/*"})
     public String welcome(Model model, HttpServletRequest request) {
@@ -47,7 +48,7 @@ public class LoginController {
         }
         log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
 
-        List<TestInfoDto> testInfoList = testAdminService.findAllTestInfo()
+        List<TestInfoDto> testInfoList = testCodeInfoRepository.findAll()
                 .stream().filter(i -> i.getActive() == 1).map(TestInfoDto::new).collect(Collectors.toList());
 
         model.addAttribute("testInfoList", testInfoList);
