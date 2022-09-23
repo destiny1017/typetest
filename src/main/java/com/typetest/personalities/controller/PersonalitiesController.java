@@ -1,8 +1,7 @@
 package com.typetest.personalities.controller;
 
 import com.typetest.exception.NotFoundEntityException;
-import com.typetest.login.dto.SessionUser;
-import com.typetest.personalities.data.AnswerType;
+import com.typetest.user.dto.SessionUser;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;

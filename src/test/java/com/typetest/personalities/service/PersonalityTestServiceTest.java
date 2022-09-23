@@ -1,8 +1,8 @@
 package com.typetest.personalities.service;
 
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
-import com.typetest.login.repository.LoginRepository;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
+import com.typetest.user.repository.UserRepository;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.ExamQuestionDto;
 import com.typetest.personalities.data.Tendency;
@@ -10,7 +10,6 @@ import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.*;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PersonalityTestServiceTest {
 
     @Autowired
-    private LoginRepository loginRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PersonalityTestService personalityTestService;

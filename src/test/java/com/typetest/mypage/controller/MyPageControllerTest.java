@@ -1,9 +1,9 @@
 package com.typetest.mypage.controller;
 
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
-import com.typetest.login.dto.SessionUser;
-import com.typetest.login.repository.LoginRepository;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
+import com.typetest.user.dto.SessionUser;
+import com.typetest.user.repository.UserRepository;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
@@ -14,20 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
@@ -36,7 +32,7 @@ class MyPageControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    LoginRepository loginRepository;
+    UserRepository userRepository;
     @Autowired
     EntityManager em;
     @Autowired
@@ -153,7 +149,7 @@ class MyPageControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         // user정보 있음
-        User user = loginRepository.findByEmail("eogh6428@gmail.com").get();
+        User user = userRepository.findByEmail("eogh6428@gmail.com").get();
         SessionUser sessionUser = new SessionUser(user);
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("user", sessionUser);

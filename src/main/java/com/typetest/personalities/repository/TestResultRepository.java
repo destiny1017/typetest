@@ -1,6 +1,6 @@
 package com.typetest.personalities.repository;
 
-import com.typetest.login.domain.User;
+import com.typetest.user.domain.User;
 import com.typetest.personalities.domain.TestResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 

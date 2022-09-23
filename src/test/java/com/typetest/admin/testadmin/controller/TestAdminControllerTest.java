@@ -1,25 +1,21 @@
 package com.typetest.admin.testadmin.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.typetest.admin.testadmin.data.*;
 import com.typetest.admin.testadmin.service.TestAdminService;
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.repository.TypeInfoRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -32,7 +28,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc

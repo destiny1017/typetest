@@ -1,8 +1,8 @@
 package com.typetest.personalities.service;
 
 import com.typetest.exception.NotFoundEntityException;
-import com.typetest.login.domain.User;
-import com.typetest.login.repository.LoginRepository;
+import com.typetest.user.domain.User;
+import com.typetest.user.repository.UserRepository;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.*;
@@ -25,7 +25,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     private final TestResultRepository testResultRepository;
     private final TestResultDetailRepository testResultDetailRepository;
-    private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
     private final TypeInfoRepository typeInfoRepository;
     private final IndicatorSettingRepository indicatorSettingRepository;
     private final PersonalityAnswerRepository personalityAnswerRepository;
@@ -111,7 +111,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
         Long userId = answerInfo.getUserId();
         TestCodeInfo testCode = answerInfo.getTestCodeInfo();
         Map<Integer, Long> answer = answerInfo.getAnswer();
-        Optional<User> byId = loginRepository.findById(userId);
+        Optional<User> byId = userRepository.findById(userId);
         User user;
         if(byId.isPresent()) {
             user = byId.get();

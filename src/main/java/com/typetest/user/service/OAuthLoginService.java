@@ -1,9 +1,9 @@
-package com.typetest.login.service;
+package com.typetest.user.service;
 
-import com.typetest.login.domain.User;
-import com.typetest.login.dto.OAuthAttributes;
-import com.typetest.login.dto.SessionUser;
-import com.typetest.login.repository.LoginRepository;
+import com.typetest.user.domain.User;
+import com.typetest.user.dto.OAuthAttributes;
+import com.typetest.user.dto.SessionUser;
+import com.typetest.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,18 +16,17 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
     private final HttpSession httpSession;
 
     public boolean checkDuplication(String email) {
-        Optional<User> findUser = loginRepository.findByEmail(email);
+        Optional<User> findUser = userRepository.findByEmail(email);
         return findUser.isPresent();
     }
 
@@ -54,9 +53,9 @@ public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, O
 
     // 유저 생성 및 수정 서비스 로직
     private User saveOrUpdate(OAuthAttributes attributes){
-        User user = loginRepository.findByEmail(attributes.getEmail())
+        User user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
-        return loginRepository.save(user);
+        return userRepository.save(user);
     }
 }

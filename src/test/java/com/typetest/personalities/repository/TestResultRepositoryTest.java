@@ -1,8 +1,8 @@
 package com.typetest.personalities.repository;
 
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
-import com.typetest.login.repository.LoginRepository;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
+import com.typetest.user.repository.UserRepository;
 import com.typetest.mypage.dto.TypeInfoData;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
@@ -27,7 +27,7 @@ class TestResultRepositoryTest {
     @Autowired
     private EntityManager em;
     @Autowired
-    private LoginRepository loginRepository;
+    private UserRepository userRepository;
     @Autowired
     private TestResultDetailRepository testResultDetailRepository;
     @Autowired
@@ -124,7 +124,7 @@ class TestResultRepositoryTest {
         em.flush();
 
         //when
-        User findUser = loginRepository.findById(user.getId()).get();
+        User findUser = userRepository.findById(user.getId()).get();
         TestResult findPt = testResultRepository.findById(pt.getId()).get();
         List<TestResultDetail> byTestResult = testResultDetailRepository.findByTestResult(pt);
 
@@ -188,7 +188,7 @@ class TestResultRepositoryTest {
 
         //when
         em.persist(typeInfo);
-        loginRepository.save(user);
+        userRepository.save(user);
         testCodeInfoRepository.save(testCodeInfo1);
         testResultRepository.save(pt);
         testResultDetailRepository.save(ptd1);
@@ -205,7 +205,7 @@ class TestResultRepositoryTest {
         em.persist(testQuestion2);
         em.persist(testQuestion3);
 
-        User findUser = loginRepository.findById(user.getId()).get();
+        User findUser = userRepository.findById(user.getId()).get();
         TestResult findPt = testResultRepository.findById(pt.getId()).get();
         List<TestResultDetail> byTestResult = testResultDetailRepository.findByTestResult(pt);
 

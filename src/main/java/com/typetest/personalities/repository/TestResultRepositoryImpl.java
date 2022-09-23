@@ -1,7 +1,7 @@
 package com.typetest.personalities.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.typetest.login.domain.User;
+import com.typetest.user.domain.User;
 import com.typetest.mypage.dto.QTypeInfoData;
 import com.typetest.mypage.dto.TypeInfoData;
 

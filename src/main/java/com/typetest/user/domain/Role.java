@@ -1,4 +1,4 @@
-package com.typetest.login.domain;
+package com.typetest.user.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
-package com.typetest.login.dto;
+package com.typetest.user.dto;
 
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
 import lombok.Getter;
 import lombok.ToString;
 

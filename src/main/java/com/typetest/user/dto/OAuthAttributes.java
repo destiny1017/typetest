@@ -1,11 +1,10 @@
-package com.typetest.login.dto;
+package com.typetest.user.dto;
 
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;

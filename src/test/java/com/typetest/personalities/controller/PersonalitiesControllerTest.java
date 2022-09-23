@@ -1,18 +1,15 @@
 package com.typetest.personalities.controller;
 
-import com.typetest.admin.testadmin.service.TestAdminService;
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
-import com.typetest.login.dto.SessionUser;
-import com.typetest.login.repository.LoginRepository;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
+import com.typetest.user.dto.SessionUser;
+import com.typetest.user.repository.UserRepository;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.PersonalityQuestionRepository;
-import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.repository.TestResultDetailRepository;
 import com.typetest.personalities.repository.TestResultRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +29,6 @@ import javax.persistence.EntityManager;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -46,7 +42,7 @@ class PersonalitiesControllerTest {
     @Autowired
     PersonalityQuestionRepository personalityQuestionRepository;
     @Autowired
-    LoginRepository loginRepository;
+    UserRepository userRepository;
     @Autowired
     TestResultRepository testResultRepository;
     @Autowired
@@ -213,7 +209,7 @@ class PersonalitiesControllerTest {
         TestCodeInfo testCode = new TestCodeInfo("EXAMTEST", "", AnswerType.EXAM);
         List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCode);
 
-        User user = loginRepository.findByEmail("eogh6428@gmail.com").get();
+        User user = userRepository.findByEmail("eogh6428@gmail.com").get();
         SessionUser sessionUser = new SessionUser(user);
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("user", sessionUser);

@@ -1,7 +1,7 @@
 package com.typetest.mypage.service;
 
-import com.typetest.login.domain.Role;
-import com.typetest.login.domain.User;
+import com.typetest.user.domain.Role;
+import com.typetest.user.domain.User;
 import com.typetest.mypage.dto.TypeInfoData;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestResult;

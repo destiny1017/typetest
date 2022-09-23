@@ -1,29 +1,25 @@
-package com.typetest.login.controller;
+package com.typetest.user.controller;
 
 import com.typetest.admin.testadmin.data.TestInfoDto;
-import com.typetest.admin.testadmin.service.TestAdminService;
-import com.typetest.login.dto.SessionUser;
+import com.typetest.user.dto.SessionUser;
 import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class LoginController {
+public class UserController {
 
     private final HttpSession httpSession;
     private final PersonalityTestService personalityTestService;
@@ -46,7 +42,6 @@ public class LoginController {
         } else {
             model.addAttribute("userName", "손");
         }
-        log.error("user = " + (user != null ? user.toString() : "not found userinfo"));
 
         List<TestInfoDto> testInfoList = testCodeInfoRepository.findAll()
                 .stream().filter(i -> i.getActive() == 1).map(TestInfoDto::new).collect(Collectors.toList());
