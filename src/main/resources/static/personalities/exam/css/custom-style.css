@@ -4,7 +4,7 @@
 /* 모바일 환경에서만 적용할 css */
 @media screen and (max-width: 500px) {
     .mainTitle-div3 > p {
-        font-size: 2rem !important;
+        font-size: 1.8rem !important;
     }
 }
 
@@ -946,7 +946,11 @@ div.add-icon {
 .testResult-title {
     display: flex;
     align-items: center;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 22px;
+    font-family: 'Single Day', cursive;
+    color: #555;
+    font-weight: bold;
+    margin: 5px 10px;
 }
 
 .testResult-title > .material-icons {
