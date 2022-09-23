@@ -2,7 +2,7 @@ package com.typetest.user.controller;
 
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.user.dto.SessionUser;
-import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
+import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;

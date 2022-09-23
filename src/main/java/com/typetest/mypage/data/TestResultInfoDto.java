@@ -1,4 +1,4 @@
-package com.typetest.mypage.dto;
+package com.typetest.mypage.data;
 
 import lombok.Getter;
 import lombok.Setter;

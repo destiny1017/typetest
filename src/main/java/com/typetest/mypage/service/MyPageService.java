@@ -2,7 +2,7 @@ package com.typetest.mypage.service;
 
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
-import com.typetest.mypage.dto.TypeInfoData;
+import com.typetest.mypage.data.TypeInfoData;
 import com.typetest.personalities.repository.TestResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

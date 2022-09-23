@@ -8,7 +8,7 @@ import com.typetest.personalities.data.ExamQuestionDto;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.*;
-import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
+import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonalitiesController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">typetest</a> &gt; <a href="index.source.html" class="el_package">com.typetest.personalities.controller</a> &gt; <span class="el_source">PersonalitiesController.java</span></div><h1>PersonalitiesController.java</h1><pre class="source lang-java linenums">package com.typetest.personalities.controller;
+
+import com.typetest.exception.NotFoundEntityException;
+import com.typetest.user.dto.SessionUser;
+import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.data.TestResultDto;
+import com.typetest.personalities.domain.TestCodeInfo;
+import com.typetest.personalities.data.PersonalitiesAnswerInfo;
+import com.typetest.personalities.repository.TestCodeInfoRepository;
+import com.typetest.personalities.service.PersonalityTestService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+<span class="fc" id="L22">@Slf4j</span>
+@Controller
+@RequiredArgsConstructor
+public class PersonalitiesController {
+
+    private final PersonalityTestService personalityTestService;
+    private final TestCodeInfoRepository testCodeInfoRepository;
+
+    @GetMapping(&quot;/{testCode}/testMain&quot;)
+    public String testPath(@PathVariable String testCode, Model model) {
+<span class="fc" id="L32">        Optional&lt;TestCodeInfo&gt; testInfo = testCodeInfoRepository.findById(testCode);</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (testInfo.isPresent()) {</span>
+<span class="fc" id="L34">            model.addAttribute(&quot;testInfo&quot;, testInfo.get());</span>
+        }
+<span class="fc" id="L36">        model.addAttribute(&quot;testCode&quot;, testCode);</span>
+<span class="fc" id="L37">        return &quot;personalities/&quot; + testCode + &quot;-start&quot;;</span>
+    }
+
+    @GetMapping(&quot;/{testCode}/testAnswer&quot;)
+    public String testAnswer(@PathVariable String testCode, Model model) {
+<span class="fc" id="L42">        Optional&lt;TestCodeInfo&gt; testCodeInfoOp = testCodeInfoRepository.findById(testCode);</span>
+<span class="fc" id="L43">        model.addAttribute(&quot;testCode&quot;, testCode);</span>
+<span class="fc" id="L44">        model.addAttribute(&quot;questions&quot;, personalityTestService.getQuestions(testCode));</span>
+<span class="fc" id="L45">        model.addAttribute(&quot;questionCount&quot;, personalityTestService.getQuestionCnt(testCode));</span>
+<span class="fc" id="L46">        return &quot;personalities/&quot; + testCode + &quot;-test&quot;;</span>
+    }
+
+    @PostMapping(&quot;/testSubmit&quot;)
+    public String testSubmit(@RequestParam Map&lt;String, String&gt; answerMapParam, HttpSession session) {
+        // 테스트코드 정보 파라미터 맵에서 추출
+<span class="fc" id="L52">        String testCode = answerMapParam.get(&quot;testCode&quot;);</span>
+<span class="fc" id="L53">        answerMapParam.remove(&quot;testCode&quot;);</span>
+<span class="fc" id="L54">        Optional&lt;TestCodeInfo&gt; testCodeInfoOp = testCodeInfoRepository.findById(testCode);</span>
+        TestCodeInfo testCodeInfo;
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if(!testCodeInfoOp.isPresent()) {</span>
+<span class="nc" id="L57">            throw new NotFoundEntityException(&quot;테스트 코드[&quot; + testCode + &quot;]에 해당하는 테스트를 찾을 수 없습니다.&quot;);</span>
+        } else {
+<span class="fc" id="L59">            testCodeInfo = testCodeInfoOp.get();</span>
+        }
+
+        // 응답정보 객체 세팅
+<span class="fc" id="L63">        PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();</span>
+<span class="fc" id="L64">        HashMap&lt;Integer, Long&gt; answerMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L65">        answerMapParam.forEach((key, value) -&gt; answerMap.put(Integer.parseInt(key), Long.parseLong(value)));</span>
+<span class="fc" id="L66">        answerInfo.setAnswer(answerMap);</span>
+<span class="fc" id="L67">        answerInfo.setAnswerType(testCodeInfo.getAnswerType());</span>
+<span class="fc" id="L68">        answerInfo.setTestCodeInfo(testCodeInfo);</span>
+
+        // 유형 도출
+<span class="fc" id="L71">        String type = personalityTestService.calcType(answerInfo);</span>
+
+        // 해당 테스트 및 유형 play/result 카운트 +1 증가
+<span class="fc" id="L74">        personalityTestService.plusResultCount(testCodeInfo, type);</span>
+
+        // 세션에 user정보 있으면 테스트결과 DB저장
+<span class="fc" id="L77">        SessionUser user = (SessionUser) session.getAttribute(&quot;user&quot;);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if(user != null) {</span>
+<span class="fc" id="L79">            answerInfo.setUserId(user.getId());</span>
+<span class="fc" id="L80">            personalityTestService.saveTestInfo(answerInfo, type);</span>
+        } else {
+<span class="fc" id="L82">            session.setAttribute(&quot;answerInfo&quot;, answerInfo);</span>
+<span class="fc" id="L83">            session.setAttribute(&quot;type&quot;, type);</span>
+        }
+
+<span class="fc" id="L86">        return &quot;redirect:&quot; + testCode + &quot;/testResult/&quot; + type;</span>
+    }
+
+    @GetMapping(&quot;/{testCode}/testResult/{type}&quot;)
+    public String testResult(@PathVariable String testCode, @PathVariable String type, Model model) {
+<span class="fc" id="L91">        Optional&lt;TestCodeInfo&gt; testCodeInfoOp = testCodeInfoRepository.findById(testCode);</span>
+        // 유형 결과 반환
+<span class="fc" id="L93">        TestResultDto testResultDto = personalityTestService.createTestResultInfo(testCode, type);</span>
+<span class="fc" id="L94">        model.addAttribute(&quot;result&quot;, testResultDto);</span>
+<span class="fc" id="L95">        model.addAttribute(&quot;testCode&quot;, testCode);</span>
+<span class="fc" id="L96">        return &quot;personalities/&quot; + testCode + &quot;-result&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

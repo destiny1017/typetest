@@ -2,7 +2,7 @@ package com.typetest.mypage.controller;
 
 import com.typetest.user.domain.User;
 import com.typetest.user.dto.SessionUser;
-import com.typetest.mypage.dto.TypeInfoData;
+import com.typetest.mypage.data.TypeInfoData;
 import com.typetest.mypage.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

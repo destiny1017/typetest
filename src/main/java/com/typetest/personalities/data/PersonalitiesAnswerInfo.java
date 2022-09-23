@@ -1,4 +1,4 @@
-package com.typetest.personalities.dto;
+package com.typetest.personalities.data;
 
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestCodeInfo;

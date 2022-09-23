@@ -2,7 +2,7 @@ package com.typetest.personalities.service;
 
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
+import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.ExamQuestionDto;
 import org.springframework.data.domain.Page;
 

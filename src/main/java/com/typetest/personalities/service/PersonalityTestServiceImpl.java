@@ -6,7 +6,7 @@ import com.typetest.user.repository.UserRepository;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.*;
-import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
+import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.ExamQuestionDto;
 import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;

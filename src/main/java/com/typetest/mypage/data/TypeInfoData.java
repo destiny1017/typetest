@@ -1,4 +1,4 @@
-package com.typetest.mypage.dto;
+package com.typetest.mypage.data;
 
 import com.querydsl.core.annotations.QueryProjection;
 import com.typetest.personalities.domain.TypeInfo;

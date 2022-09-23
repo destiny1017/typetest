@@ -3,7 +3,7 @@ package com.typetest.personalities.repository;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
-import com.typetest.mypage.dto.TypeInfoData;
+import com.typetest.mypage.data.TypeInfoData;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;

@@ -4,7 +4,7 @@ import com.typetest.exception.NotFoundEntityException;
 import com.typetest.user.dto.SessionUser;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.dto.PersonalitiesAnswerInfo;
+import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.service.PersonalityTestService;
 import lombok.RequiredArgsConstructor;
