@@ -192,7 +192,7 @@ class PersonalityTestServiceTest {
         answerInfo.setTestCodeInfo(testCodeInfo1);
 
         //when
-        String type = personalityTestService.calcType(answerInfo);
+        String type = personalityTestService.calcType(answerInfo.getAnswer());
 
         //then
         assertThat(type).hasSize(3);

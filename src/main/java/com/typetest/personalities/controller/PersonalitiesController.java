@@ -67,7 +67,7 @@ public class PersonalitiesController {
         answerInfo.setTestCodeInfo(testCodeInfo);
 
         // 유형 도출
-        String type = personalityTestService.calcType(answerInfo);
+        String type = personalityTestService.calcType(answerInfo.getAnswer());
 
         // 해당 테스트 및 유형 play/result 카운트 +1 증가
         personalityTestService.plusResultCount(testCodeInfo, type);

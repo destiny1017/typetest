@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -81,26 +83,35 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
         }
     }
 
+    /**
+     * ## 사용자 응답정보와 지표정보를 통해 해당하는 유형을 도출하는 메서드
+     * @param answer {질문번호 : PersonalityAnswer@Id}
+     * @return type
+     */
     @Override
-    public String calcType(PersonalitiesAnswerInfo answerInfo) {
-        HashMap<Integer, Long> answer = answerInfo.getAnswer();
+    public String calcType(HashMap<Integer, Long> answer) {
         List<PersonalityAnswer> answerList = personalityAnswerRepository.findByIdIn(answer.values());
-        Map<TypeIndicator, Integer> pointMap = new LinkedHashMap<>();
+        Map<TypeIndicator, Integer> pointMap = new HashMap<>();
         StringBuffer type = new StringBuffer();
 
         // 응답받은 답변 엔티티들의 점수 합산
         answerList.stream().forEach(selectedAnswer ->
-                // 선택한 답변에 해당하는 indicator를 key로, 선택한 답변의 point를 value로
+                // 선택한 답변에 해당하는 indicator를 key로, 선택한 답변의 point를 value로 합산
                 pointMap.put(selectedAnswer.getTypeIndicator(),
-                        pointMap.getOrDefault(selectedAnswer.getTypeIndicator(), 0) + selectedAnswer.getPoint()));
+                pointMap.getOrDefault(selectedAnswer.getTypeIndicator(), 0) + selectedAnswer.getPoint()));
 
-        // result 하나만 받아올 pageRequest
+        // pointMap을 indicatorNum순서로 정렬
+        List<TypeIndicator> sortedPointMap = pointMap.keySet().stream()
+                .sorted((s1, s2) -> s1.getIndicatorNum().compareTo(s2.getIndicatorNum())).collect(Collectors.toList());
+
+        // 0 index row 하나만 받아오기위한 pageRequest(= limit 1)
         PageRequest pr = PageRequest.of(0, 1);
 
         // indicator별 결과를 type에 차례대로 append
-        pointMap.forEach((indicator, point) ->
+        sortedPointMap.stream().forEach(indicator ->
                 type.append(indicatorSettingRepository
-                        .findByTypeIndicatorAndCuttingPointLessThanOrderByCuttingPointDesc(indicator, point, pr)
+                        .findByTypeIndicatorAndCuttingPointLessThanOrderByCuttingPointDesc(
+                                indicator, pointMap.get(indicator), pr)
                         .get(0).getResult()));
 
         return type.toString();
