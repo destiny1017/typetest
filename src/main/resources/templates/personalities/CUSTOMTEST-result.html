@@ -15,7 +15,7 @@
     <!-- body text -->
     <div class="exam-contents">
         <div class="blockquote">
-            <p class="testTitle-text" th:text="${result.typeName}">TYPE</p>
+            <!-- result title -->
             <div class="customResult-title"th:with="title=${result.descriptions[1].split('\n')}">
                 <h2 th:text="${title[0]}"></h2>
                 <h1>
@@ -29,11 +29,15 @@
             전체 참여자의 <p th:text="${result.typeRate}"></p>가 같은 유형이에요.
         </div>
 
+        <!-- 테스트 결과 설명 -->
         <div class="custom-desc-div">
             <div class="custom-desc-title">
                 <p th:text="${result.descriptions[4]}"></p>
             </div>
+
             <div class="py-2"></div>
+
+            <!-- 엔터 기준으로 split하여 라인 추가 -->
             <div class="desc1-div" th:with="descriptions=${result.descriptions[2].split('\n')}">
                 <div th:each="description : ${descriptions}" class="custom-desc" th:classappend="${descriptionStat.index} == 0 ? firstDesc">
                     <span th:if="${descriptionStat.first}" class="material-icons">circle</span>
@@ -41,7 +45,10 @@
                     <p  th:text="${description}"></p>
                 </div>
             </div>
+
             <div class="py-2"></div>
+
+            <!-- 엔터 기준으로 split하여 라인 추가 -->
             <div class="desc1-div" th:with="descriptions=${result.descriptions[3].split('\n')}">
                 <div th:each="description : ${descriptions}" class="custom-desc" th:classappend="${descriptionStat.index} == 0 ? firstDesc">
                     <span th:if="${descriptionStat.first}" class="material-icons">circle</span>

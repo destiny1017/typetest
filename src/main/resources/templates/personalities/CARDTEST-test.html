@@ -11,11 +11,13 @@
     let processing= false;
 
     $(document).ready( () => {
-
+        // 답변 선택 시 수행되는 로직
         $('.examAnswerCardDiv input').change( (e) => {
             if(processing == false) {
                 processing = true;
                 let $target = $(`label[for="${e.target.id}"]`);
+                
+                // 자신이 무슨 답변을 클릭하였는지 인지 가능하게 하기위해 선택답변의 색을 바꿔주고 0.2초 후에 다음 질문으로 이동
                 $target.css("background", "#acffff");
                 setTimeout( () => {
                     $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
@@ -29,6 +31,7 @@
 
     });
 
+    // 테스트 진행상테 체크 로직
     function checkSelect() {
         console.log("checkSelect");
         let cnt = 0;

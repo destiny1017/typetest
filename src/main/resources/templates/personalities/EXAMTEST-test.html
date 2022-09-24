@@ -26,10 +26,12 @@
     let nowPage = 0;
     
     $(document).ready( () => {
+        // 응답 체크 할 때마다 진행상태 update
         $('.form-check-input-exam').click( () => {
             checkSelect();
         });
         
+        // 다음 버튼 클릭 시 슬라이드
         $('.btnNext').click( () => {
             nowPage++;
             $(".slides").scrollLeft($(".slides").scrollLeft() + $("#question-1").outerWidth());
@@ -39,6 +41,7 @@
 
     });
     
+    // 테스트 진행상테 체크 로직
     function checkSelect() {
         console.log("checkSelect");
         let checkAll = true;
