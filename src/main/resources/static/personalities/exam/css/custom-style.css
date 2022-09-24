@@ -472,8 +472,12 @@ div.add-icon {
     transform: rotate(270deg);
 }
 
-.questionHeadInfo-div > textarea {
+#tab3Form textarea {
     resize: none;
+}
+
+#tab3Form textarea::-webkit-scrollbar {
+    display: none;
 }
 
 .question-div {
