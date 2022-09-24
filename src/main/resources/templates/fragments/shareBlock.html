@@ -25,11 +25,13 @@
         let testCode = [[${testCode}]];
         let testInfo = [[${testInfo}]];
 
+        // 카카오 공유하기 정보 세팅
         function kakaoShareInit() {
             let path = "";
             let image = "";
             let title = "";
             let description = "";
+            // 테스트 시작페이지인지 결과페이지인지에 따라 api파라미터 다르게 설정
             if(result != null) {
                 path = `${testCode}/testResult/${result.typeCode}`;
                 image = result.images[1];
@@ -73,6 +75,7 @@
 
         $(document).ready( () => {
             kakaoShareInit();
+            // 테스트 시작페이지면 counter 애니메이션 수행
             if($("#countAnimation").length > 0) {
                 numberCounter.prototype.counter = function() {
                     var self = this;

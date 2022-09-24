@@ -3,30 +3,39 @@
 <link rel="stylesheet" href="/startbootstrap-shop-homepage/css/styles.css" crossorigin="anonymous">
 
 <nav class="navbar navbar-header" th:fragment="examHeader">
+    <!-- 상단 메뉴 아이콘 -->
     <div class="menu-icon">
         <span class="material-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         menu
         </span>
     </div>
+
+    <!-- 타이틀 로고 -->
     <div class="container-fluid">
         <span class="header-logo" onclick="location.href='/'"></span>
     </div>
 
+    <!-- 메뉴 클릭 시 나타낼 offcanvas-->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
+            <!-- 로그인 돼 있으면 프로필이미지-->
             <div th:if="${session.user == null}" class="offcanvas-profile profile-guest" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <span class="material-icons">
                 account_circle
                 </span>
             </div>
+            <!-- 미로그인이면 기본 이미지 -->
             <div th:unless="${session.user == null}" class="offcanvas-profile logined" th:style="|background-image: url(${session.user.picture})|"></div>
 
             <div class="nickname-div">
+                <!-- 로그인 돼 있으면 닉네임, 안 돼있으면 로그인해주세요 메시지-->
                 <span th:if="${session.user == null}" id="nickname" style="color: #bbb;" data-bs-toggle="modal" data-bs-target="#loginModal">로그인해주세요</span>
                 <span th:unless="${session.user == null}" th:id="nickname" th:text="${session.user.nickname}" class="logined"></span>
             </div>
         </div>
         <hr style="margin: 0 15px;">
+
+        <!-- 메뉴 라인 -->
         <div class="offcanvas-body">
             <div th:if="${session.user != null}" class="mt-3 menu-mypage logined">
                 <span class="material-icons">

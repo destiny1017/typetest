@@ -756,6 +756,7 @@ function callEssential(testCode) {
     
 }
 
+// 테스트 활성화 시 필수 정보 등록 여부 체크
 function enableActive() {
     
     if(indicatorList.length == 0) {
@@ -799,6 +800,7 @@ function enableActive() {
     
 }
 
+// 지표정보 자동 넘버링 함수
 function indicatorSeq() {
     let cnt = 1;
     $('input[name$="indicatorNum"]').each((i,v) => {
@@ -814,6 +816,7 @@ function indicatorSeq() {
     });
 }
 
+// 질문정보 자동 넘버링 함수
 function questionSeq() {
     let cnt = 1;
     $('input[name$="num"]').each((i,v) => {
@@ -829,7 +832,7 @@ function questionSeq() {
     });
 }
 
-
+// 이미지 정보 자동 넘버링 함수
 function typeImageSeq(index) {
     let cnt = 0;
     let num = 1;
@@ -854,6 +857,7 @@ function typeImageSeq(index) {
     }
 }
 
+// 설명 정보 자동 넘버링 함수
 function typeDescriptionSeq(index) {
     let cnt = 0;
     let num = 1;
@@ -878,7 +882,7 @@ function typeDescriptionSeq(index) {
     }
 }
 
-
+// 질문 empty 체크
 function noAnswerQuestion() {
     let existEmpty = false;
     for(question of questionList) {
@@ -890,8 +894,10 @@ function noAnswerQuestion() {
     return existEmpty;
 }
 
+// form 제출 유효성 체크 함수
 function formCheck(e) {
     let valid = true;
+    // hidden input과 필수항목 아닌 필드는 제외하고 선택
     $(`#${e.target.id} input[name]:not([type="hidden"], .optional)`).each( (i, v) => {
         if(v.type == "radio") {
             if($(`input[name="${v.name}"]:checked`).length == 0) {
@@ -907,14 +913,12 @@ function formCheck(e) {
                         location.href = "#" + v.id; 
                     }, 100);
                 }
-               
+                
                 valid = false;
                 return false;
             }
         }
     });
-//    if(valid) {
-//        $("#tab1Form").submit();
-//    }
+    
     return valid;
 }

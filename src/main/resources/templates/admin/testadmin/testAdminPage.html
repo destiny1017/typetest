@@ -117,14 +117,19 @@
         <div id="step2Content" class="tab-contents" th:classappend="${tab} == 2 ? active">
             <form method="post" action="/adminPage/testAdmin/step2Submit" class="tab-contentsForm" th:object="${indicatorForm}" id="tab2Form">
                 <input type="hidden" th:field="*{indicatorTestCode}">
+
+                <!-- 지표 리스트 수만큼 반복 생성 -->
                 <div class="indicator-div" th:each="indicator : *{indicatorList}" th:id="|indicatorDiv${indicatorStat.index + 1}|">
                     <div class="indicator-title">
                         <p><span class="material-icons">edit</span>유형 지표 정보</p>
                         <span class="material-icons indicatorDelete" th:id="|indiDel${indicatorStat.index + 1}|">close</span>
                     </div>
+                    <!-- ID및 삭제,업데이트 정보 확인용 -->
                     <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].id}">
                     <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].updated}">
                     <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].deleted}">
+
+                    <!-- 지표 기본 정보 -->
                     <div class="indicatorInfo-div">
                         <div class="indicatorElement-div">
                             <label>지표 번호</label>
@@ -137,12 +142,18 @@
                                    th:value="${indicator.indicatorName}">
                         </div>
                     </div>
+
+                    <!-- 지표 상세정보 -->
                     <div class="setting-div">
+                        <!-- 지표 내의 indicatorSetting 수 만큼 반복 -->
                         <div th:each="indicatorSetting, stat : *{indicatorList[__${indicatorStat.index}__].indicatorSettings}"
                              class="settingInfo-div" th:id="|settingDiv-${indicatorStat.index + 1}-${stat.index}|">
+
+                            <!-- ID및 삭제,업데이트 정보 확인용 -->
                             <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].id}">
                             <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].updated}">
                             <input type="hidden" th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].deleted}">
+
                             <div class="settingElement-div">
                                 <label>지표 코드</label>
                                 <input type="text" class="form-control code-input"
@@ -155,21 +166,28 @@
                                        th:field="*{indicatorList[__${indicatorStat.index}__].indicatorSettings[__${stat.index}__].cuttingPoint}"
                                        th:value="${indicatorSetting.cuttingPoint}">
                             </div>
+
+                            <!-- 삭제 버튼 -->
                             <span class="material-icons delSetting" th:id="|delSetting-${indicatorStat.index + 1}-${stat.index}|"
                                   style="display: none;">
                                 delete
                             </span>
                         </div>
+
+                        <!-- 지표 상세정보 추가 버튼 -->
                         <div class="settingAdd-div" th:id="|settingAdd-div-${indicatorStat.index + 1}|">
                             <span class="settingAdd" th:id="|settingAdd-${indicatorStat.index + 1}|">+ 지표 정보 추가</span>
                         </div>
                     </div>
                 </div>
+
+                <!-- 지표 정보 추가 버튼 -->
                 <div class="addIndicator-div" id="addIndicator">
                     <div class="add-icon">
                         <span class="material-icons plus-icon">add</span>
                     </div>
                 </div>
+
                 <div class="tabSubmit-div">
                     <button class="btn btn-primary" type="submit">저장</button>
                 </div>
@@ -180,15 +198,23 @@
         <div id="step3Content" class="tab-contents" th:classappend="${tab} == 3 ? active">
             <form method="post" action="/adminPage/testAdmin/step3Submit" class="tab-contentsForm" th:object="${questionForm}" id="tab3Form">
                 <input type="hidden" th:field="*{questionTestCode}">
+
                 <div class="question-main-title">
                     <p><span class="material-icons">edit</span>질문&답변 정보</p>
                 </div>
+
+                <!-- 질문 리스트 수만큼 반복 -->
                 <div class="question-div" th:each="questionInfo : *{questionList}" th:id="|questionDiv${questionInfoStat.index + 1}|">
+
+                    <!-- ID및 삭제,업데이트 정보 확인용 -->
                     <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].id}">
                     <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].updated}"/>
                     <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].deleted}"/>
+
+                    <!-- 질문 기본 정보 -->
                     <div class="question-title">
                         <div class="questionHeadInfo-div">
+                            <!-- fold 버튼 -->
                             <button class="fold-btn collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false"
                                     th:data-bs-target="|#questionContentDiv${questionInfoStat.index + 1}|"
                                     th:aria-controls="|questionContentDiv${questionInfoStat.index + 1}|">
@@ -202,8 +228,11 @@
                             <input type="text" class="q-name-input" placeholder="질문내용"
                                    th:field="*{questionList[__${questionInfoStat.index}__].question}">
                         </div>
+                        <!-- 삭제 버튼 -->
                         <span class="material-icons questionDelete" th:id="|questionDel${questionInfoStat.index + 1}|" th:name="${questionInfoStat.index}">close</span>
                     </div>
+
+                    <!-- fold 액션 시 보여지거나 숨겨지는 컨텐츠 -->
                     <div class="questionContent-div collapse" th:id="|questionContentDiv${questionInfoStat.index + 1}|">
                         <div class="questionInfo-div">
                             <div class="indicatorElement-div">
@@ -215,13 +244,19 @@
                             <div class="answerTitle-div">
                                 <label>답변 정보</label>
                             </div>
+
+                            <!-- 질문 내의 답변 수만큼 반복 생성 -->
                             <div th:each="answer, stat : *{questionList[__${questionInfoStat.index}__].answerList}"
                                  class="answerInfo-div" th:id="|answerDiv-${questionInfoStat.index + 1}-${stat.index}|">
                                 <span class="material-icons answerDelete" style="display: none;"
                                       th:id="|delAnswer-${questionInfoStat.index + 1}-${stat.index}|">close</span>
+
+                                <!-- ID및 삭제,업데이트 정보 확인용 -->
                                 <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].id}">
                                 <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].updated}">
                                 <input type="hidden" th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].deleted}">
+
+                                <!-- AnswerType.CARD 일 경우에만 보이는 이미지 및 내용 div -->
                                 <div class="answerElement-div answerContent-div">
                                     <label>답변 이미지</label>
                                     <input type="text" class="form-control code-input optional"
@@ -232,6 +267,8 @@
                                     <input type="text" class="form-control"
                                            th:field="*{questionList[__${questionInfoStat.index}__].answerList[__${stat.index}__].answer}">
                                 </div>
+
+                                <!-- 답변 기본 정보 -->
                                 <div class="answerElement-div answerElementDetail-div">
                                     <div class="answerDetail-div">
                                         <label>답변 점수</label>
@@ -254,12 +291,16 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- 답변 정보 추가 버튼 -->
                             <div class="answerAdd-div" th:id="|answerAdd-div-${questionInfoStat.index + 1}|">
                                 <span class="answerAdd" th:id="|answerAdd-${questionInfoStat.index + 1}|">+ 답변 정보 추가</span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- 질문정보 추가 버튼 -->
                 <div class="addIndicator-div" id="addQuestion">
                     <div class="add-icon">
                         <span class="material-icons plus-icon">add</span>
@@ -271,18 +312,26 @@
             </form>
         </div>
 
+        <!-- tab4 contents div-->
         <div id="step4Content" class="tab-contents" th:classappend="${tab} == 4 ? active">
             <form method="post" action="/adminPage/testAdmin/step4Submit" class="tab-contentsForm" th:object="${typeInfoForm}" id="tab4Form">
                 <input type="hidden" th:field="*{typeInfoTestCode}">
                 <div class="typeInfo-main-title">
                     <p><span class="material-icons">edit</span>유형 정보</p>
                 </div>
+
+                <!-- 유형정보 수만큼 반복 생성 -->
                 <div class="typeInfo-div" th:each="typeInfo : *{typeInfoList}" th:id="|typeInfoDiv${typeInfoStat.index + 1}|">
+
+                    <!-- ID및 삭제,업데이트 정보 확인용 -->
                     <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].id}">
                     <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].updated}">
                     <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].deleted}">
+
+                    <!-- 유형 기본 정보 -->
                     <div class="typeInfo-title">
                         <div class="typeInfoHeadInfo-div">
+                            <!-- fold 버튼 -->
                             <button class="fold-btn collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false"
                                     th:data-bs-target="|#typeInfoContentDiv${typeInfoStat.index + 1}|"
                                     th:aria-controls="|typeInfoContentDiv${typeInfoStat.index + 1}|">
@@ -298,18 +347,26 @@
                         </div>
                         <span class="material-icons typeInfoDelete" th:id="|typeInfoDel${typeInfoStat.index + 1}|">close</span>
                     </div>
+
+                    <!-- fold 액션 시 보여지거나 숨겨지는 컨텐츠 -->
                     <div class="typeInfoContent-div collapse" th:id="|typeInfoContentDiv${typeInfoStat.index + 1}|">
                         <div class="typeImage-div">
                             <div class="typeImageTitle-div">
                                 <label>결과 이미지</label>
                             </div>
+
+                            <!-- 유형 정보의 이미지 수만큼 반복 생성 -->
                             <div th:each="typeImage, stat : *{typeInfoList[__${typeInfoStat.index}__].typeImageList}"
                                  class="typeImageInfo-div" th:id="|typeImageDiv-${typeInfoStat.index + 1}-${stat.index}|">
                                 <span class="material-icons typeImageDelete" style="display: none;"
                                       th:id="|delTypeImage-${typeInfoStat.index + 1}-${stat.index}|">close</span>
+
+                                <!-- ID및 삭제,업데이트 정보 확인용 -->
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].id}">
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].updated}">
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeImageList[__${stat.index}__].deleted}">
+
+                                <!-- 이미지 정보 -->
                                 <div class="typeImageDetail-div">
                                     <div class="typeImageNum-div typeImageContent-div">
                                         <label>이미지 번호</label>
@@ -329,6 +386,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- 이미지 추가 버튼 -->
                             <div class="typeImageAdd-div" th:id="|typeImageAdd-div-${typeInfoStat.index + 1}|">
                                 <span class="typeImageAdd" th:id="|typeImageAdd-${typeInfoStat.index + 1}|">+ 이미지 추가</span>
                             </div>
@@ -338,13 +397,19 @@
                             <div class="typeDescriptionTitle-div">
                                 <label>유형 설명</label>
                             </div>
+
+                            <!-- 유형 정보의 설명 수만큼 반복 생성 -->
                             <div th:each="typeDescription, stat : *{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList}"
                                  class="typeDescriptionInfo-div" th:id="|typeDescriptionDiv-${typeInfoStat.index + 1}-${stat.index}|">
                                 <span class="material-icons typeDescriptionDelete" style="display: none;"
                                       th:id="|delTypeDescription-${typeInfoStat.index + 1}-${stat.index}|">close</span>
+
+                                <!-- ID및 삭제,업데이트 정보 확인용 -->
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].id}">
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].updated}">
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeDescriptionList[__${stat.index}__].deleted}">
+
+                                <!-- 설명 정보 -->
                                 <div class="typeDescriptionElement-div typeDescriptionContent-div">
                                     <label>설명 번호</label>
                                     <input type="text" class="form-control code-input" readonly
@@ -357,11 +422,14 @@
                                     </textarea>
                                 </div>
                             </div>
+
+                            <!-- 설명 추가 정보 -->
                             <div class="typeDescriptionAdd-div" th:id="|typeDescriptionAdd-div-${typeInfoStat.index + 1}|">
                                 <span class="typeDescriptionAdd" th:id="|typeDescriptionAdd-${typeInfoStat.index + 1}|">+ 설명 추가</span>
                             </div>
                         </div>
 
+                        <!-- BEST/WORST 유형 관계 정보 -->
                         <div class="typeRelation-div">
                             <div class="typeRelationTitle-div">
                                 <label>유형 관계 정보</label>
@@ -369,9 +437,12 @@
                             <div class="typeRelationInfo-div" th:id="|typeRelationDiv-${typeInfoStat.index + 1}|">
                                 <span class="material-icons typeRelationDelete" style="display: none;"
                                       th:id="|delTypeRelation-${typeInfoStat.index + 1}|">close</span>
+
+                                <!-- ID및 삭제,업데이트 정보 확인용 -->
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.id}">
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.updated}">
                                 <input type="hidden" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.typeInfoId}">
+
                                 <div class="typeRelationElement-div typeRelationContent-div">
                                     <label>Best 유형</label>
                                     <select class="typeRelation-select form-select" th:field="*{typeInfoList[__${typeInfoStat.index}__].typeRelation.bestTypeId}">

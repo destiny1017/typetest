@@ -22,14 +22,16 @@
             <div class="profile-desc">
                 <div class="nickname-div">
                     <span id="nickname" th:text="${session.user.nickname}"></span>
-                    <span class="material-icons"data-bs-toggle="modal" data-bs-target="#NicknameEditModal">edit</span>
+                    <span class="material-icons"data-bs-toggle="modal" data-bs-target="#nicknameEditModal">edit</span>
                 </div>
                 <div class="email-div">
                     <span id="email" th:text="${session.user.email}"></span>
                 </div>
+                <!--
                 <div class="type-div d-none">
                     <span class="type-label" th:each="typeInfo : ${userTypeMap}" th:text="${typeInfo.value.typeInfo.typeName}"></span>
                 </div>
+                -->
             </div>
         </div>
     </div>
@@ -42,6 +44,7 @@
             <span>내 테스트 결과</span>
         </div>
         <div class="myTestResult-div scroll type1">
+            <!-- 결과 유형 맵만큼 유형카드 반복 생성 -->
             <div class="card testResultInfoCard" th:each="typeInfo : ${userTypeMap}" th:id="|${typeInfo.value.testCode}|">
                 <img th:src="${typeInfo.value.typeInfo.images.size() > 0 ?
                         typeInfo.value.typeInfo.images[0].imageUrl :
@@ -57,7 +60,7 @@
     </div>
 
     <!-- 닉네임 수정 modal -->
-    <div class="modal fade" id="NicknameEditModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="nicknameEditModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="text-center nick-title">
