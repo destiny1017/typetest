@@ -38,7 +38,7 @@
             <div class="py-2"></div>
 
             <!-- 엔터 기준으로 split하여 라인 추가 -->
-            <div class="desc1-div" th:with="descriptions=${result.descriptions[2].split('\n')}">
+            <div class="desc1-div" th:with="descriptions=${result.descriptions[2].split('\r\n')}">
                 <div th:each="description : ${descriptions}" class="custom-desc" th:classappend="${descriptionStat.index} == 0 ? firstDesc">
                     <span th:if="${descriptionStat.first}" class="material-icons">circle</span>
                     <span th:unless="${descriptionStat.first}">-</span>
@@ -49,7 +49,7 @@
             <div class="py-2"></div>
 
             <!-- 엔터 기준으로 split하여 라인 추가 -->
-            <div class="desc1-div" th:with="descriptions=${result.descriptions[3].split('\n')}">
+            <div class="desc1-div" th:with="descriptions=${result.descriptions[3].split('\r\n')}">
                 <div th:each="description : ${descriptions}" class="custom-desc" th:classappend="${descriptionStat.index} == 0 ? firstDesc">
                     <span th:if="${descriptionStat.first}" class="material-icons">circle</span>
                     <span th:unless="${descriptionStat.first}">-</span>

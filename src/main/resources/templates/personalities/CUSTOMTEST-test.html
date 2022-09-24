@@ -81,8 +81,10 @@
                             </div>
 
                             <!-- 질문 -->
-                            <div class="questionStr">
-                                <p th:utext="${question.question}"></p>
+                            <div class="questionStr" th:with="questions=${question.question.split('\r\n')}">
+                                <th:block th:each="question : ${questions}">
+                                    <p th:text="${question}"></p>
+                                </th:block>
                             </div>
 
                             <div class="py-2"></div>
@@ -92,7 +94,10 @@
                                  th:with="inputId = |${question.num}_${answer.answerId}|">
                                 <input class="" type="radio" th:id="${inputId}"
                                        th:name="${question.num}" th:value="${answer.answerId}"/>
-                                <label th:utext="${answer.answer}" th:for="${inputId}" class="customAnswerCard"></label>
+                                <label th:with="answers = ${answer.answer.split('\r\n')}" th:for="${inputId}"
+                                       class="customAnswerCard">
+                                    <p th:each="answerStr : ${answers}" th:text="${answerStr}"></p>
+                                </label>
                             </div>
                         </div>
                     </div>
