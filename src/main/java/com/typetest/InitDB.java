@@ -51,10 +51,19 @@ public class InitDB {
 
 
                 // EXAMTEST 테스트용 데이터
-                TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,
-                        "https://d2k6w3n3qf94c4.cloudfront.net/media/banners/images/07_mmangsi.png",
-                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
-                        1);
+//                TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM,
+//                        "https://d2k6w3n3qf94c4.cloudfront.net/media/banners/images/07_mmangsi.png",
+//                        "These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.",
+//                        1);
+                TestCodeInfo testCodeInfo1 = TestCodeInfo.builder()
+                        .testCode("EXAMTEST")
+                        .testName("EXAM예제")
+                        .answerType(AnswerType.EXAM)
+                        .image("https://d2k6w3n3qf94c4.cloudfront.net/media/banners/images/07_mmangsi.png")
+                        .description("These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.")
+                        .active(1)
+                        .thumbnailDesc("test")
+                        .build();
                 testCodeInfo1.setPlayCount(145594);
                 TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
                 TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에이");
@@ -142,10 +151,19 @@ public class InitDB {
 
 
                 // CARDTEST 테스트용 데이터
-                TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "분위기 컬러 테스트", AnswerType.CARD,
-                        "https://cdn.banggooso.com/assets/images/game108/1651571103(2).gif",
-                        "나의 분위기 컬러를 알아봐요!",
-                        1);
+//                TestCodeInfo testCodeInfo2 = new TestCodeInfo("CARDTEST", "분위기 컬러 테스트", AnswerType.CARD,
+//                        "https://cdn.banggooso.com/assets/images/game108/1651571103(2).gif",
+//                        "나의 분위기 컬러를 알아봐요!",
+//                        1);
+                TestCodeInfo testCodeInfo2 = TestCodeInfo.builder()
+                        .testCode("CARDTEST")
+                        .testName("분위기 컬러 테스트")
+                        .answerType(AnswerType.CARD)
+                        .image("https://cdn.banggooso.com/assets/images/game108/1651571103(2).gif")
+                        .description("나의 분위기 컬러를 알아봐요!")
+                        .active(1)
+                        .thumbnailDesc("test")
+                        .build();
                 testCodeInfo2.setPlayCount(92843);
 
                 TypeInfo typeInfoCard1 = new TypeInfo(testCodeInfo2, "BBA", "비비에이");
@@ -233,10 +251,18 @@ public class InitDB {
 
 
                 // CUSTOMTEST 테스트용 데이터
-                TestCodeInfo testCodeInfo3 = new TestCodeInfo("CUSTOMTEST", "행운의 새 테스트", AnswerType.CARD,
-                        "https://cdn.banggooso.com/assets/images/game82/1638929196(2).gif",
-                        "두근 두근 나의 행운의 새는?",
-                        1);
+//                TestCodeInfo testCodeInfo3 = new TestCodeInfo("CUSTOMTEST", "행운의 새 테스트", AnswerType.CARD,
+//                        "https://cdn.banggooso.com/assets/images/game82/1638929196(2).gif",
+//                        "두근 두근 나의 행운의 새는?",
+//                        1);
+                TestCodeInfo testCodeInfo3 = TestCodeInfo.builder()
+                        .testCode("CUSTOMTEST")
+                        .testName("행운의 새 테스트")
+                        .answerType(AnswerType.CARD)
+                        .image("https://cdn.banggooso.com/assets/images/game82/1638929196(2).gif")
+                        .description("두근 두근 나의 행운의 새는?")
+                        .active(1)
+                        .build();
                 testCodeInfo3.setPlayCount(56258);
 
                 TypeInfo typeInfoCustom1 = new TypeInfo(testCodeInfo3,  "INTP", "");
@@ -257,21 +283,21 @@ public class InitDB {
                 TypeInfo typeInfoCustom16 = new TypeInfo(testCodeInfo3, "ISTJ", "");
 
                 TypeDescription descriptionCustom1_1  = new TypeDescription(typeInfoCustom1 , 1,
-                        "나의 행운의 새는\n" +
-                                "내 맘대로 다 되는\n" +
+                        "나의 행운의 새는\r\n" +
+                                "내 맘대로 다 되는\r\n" +
                                 "투명한 큰부리큰기러기");
                 TypeDescription descriptionCustom1_2  = new TypeDescription(typeInfoCustom1 , 2,
-                        "큰부리큰기러기를 닮은 나는\n" +
-                                "인생을 항상 계산적으로 살지만 내 사람들에겐 계산하지 않고 잘해줘요.\n" +
-                                "총대 메고 싫은 말 하는 것을 좋아하진 않지만 이미 내가 나서고 있어요.\n" +
-                                "주변에서 표정관리를 못한다고 하는데 사실 안 하는 거예요.\n" +
-                                "가끔 내가 존멋인 것 같다고 느껴요.\n" +
+                        "큰부리큰기러기를 닮은 나는\r\n" +
+                                "인생을 항상 계산적으로 살지만 내 사람들에겐 계산하지 않고 잘해줘요.\r\n" +
+                                "총대 메고 싫은 말 하는 것을 좋아하진 않지만 이미 내가 나서고 있어요.\r\n" +
+                                "주변에서 표정관리를 못한다고 하는데 사실 안 하는 거예요.\r\n" +
+                                "가끔 내가 존멋인 것 같다고 느껴요.\r\n" +
                                 "내가 제일 우울할 때는 무능하다고 느낄 때예요.");
                 TypeDescription descriptionCustom1_3  = new TypeDescription(typeInfoCustom1 , 3,
-                        "큰부리큰기러기가 줄 올겨울 행운은?\n" +
-                                "모두가 나의 똑똑함을 알아주는 행운\n" +
-                                "쓸모없는 곳 포함 언제 어디서나 1등 하는 행운\n" +
-                                "내가 하자는 대로 다 해주는 친구들을 만난 행운\n" +
+                        "큰부리큰기러기가 줄 올겨울 행운은?\r\n" +
+                                "모두가 나의 똑똑함을 알아주는 행운\r\n" +
+                                "쓸모없는 곳 포함 언제 어디서나 1등 하는 행운\r\n" +
+                                "내가 하자는 대로 다 해주는 친구들을 만난 행운\r\n" +
                                 "올 초에 세운 연말 계획을 거의 이룬 행운");
                 TypeDescription descriptionCustom1_4  = new TypeDescription(typeInfoCustom1 , 4,
                         "“인생조차 효율 갑”");
@@ -304,21 +330,21 @@ public class InitDB {
                         "");
 
                 TypeDescription descriptionCustom5_1  = new TypeDescription(typeInfoCustom5 , 1,
-                        "나의 행운의 새는\n" +
-                                "내 맘대로 다 되는\n" +
+                        "나의 행운의 새는\r\n" +
+                                "내 맘대로 다 되는\r\n" +
                                 "투명한 큰부리큰기러기");
                 TypeDescription descriptionCustom5_2  = new TypeDescription(typeInfoCustom5 , 2,
-                        "큰부리큰기러기를 닮은 나는\n" +
-                                "인생을 항상 계산적으로 살지만 내 사람들에겐 계산하지 않고 잘해줘요.\n" +
-                                "총대 메고 싫은 말 하는 것을 좋아하진 않지만 이미 내가 나서고 있어요.\n" +
-                                "주변에서 표정관리를 못한다고 하는데 사실 안 하는 거예요.\n" +
-                                "가끔 내가 존멋인 것 같다고 느껴요.\n" +
+                        "큰부리큰기러기를 닮은 나는\r\n" +
+                                "인생을 항상 계산적으로 살지만 내 사람들에겐 계산하지 않고 잘해줘요.\r\n" +
+                                "총대 메고 싫은 말 하는 것을 좋아하진 않지만 이미 내가 나서고 있어요.\r\n" +
+                                "주변에서 표정관리를 못한다고 하는데 사실 안 하는 거예요.\r\n" +
+                                "가끔 내가 존멋인 것 같다고 느껴요.\r\n" +
                                 "내가 제일 우울할 때는 무능하다고 느낄 때예요.");
                 TypeDescription descriptionCustom5_3  = new TypeDescription(typeInfoCustom5 , 3,
-                        "큰부리큰기러기가 줄 올겨울 행운은?\n" +
-                                "모두가 나의 똑똑함을 알아주는 행운\n" +
-                                "쓸모없는 곳 포함 언제 어디서나 1등 하는 행운\n" +
-                                "내가 하자는 대로 다 해주는 친구들을 만난 행운\n" +
+                        "큰부리큰기러기가 줄 올겨울 행운은?\r\n" +
+                                "모두가 나의 똑똑함을 알아주는 행운\r\n" +
+                                "쓸모없는 곳 포함 언제 어디서나 1등 하는 행운\r\n" +
+                                "내가 하자는 대로 다 해주는 친구들을 만난 행운\r\n" +
                                 "올 초에 세운 연말 계획을 거의 이룬 행운");
                 TypeDescription descriptionCustom5_4  = new TypeDescription(typeInfoCustom5 , 4,
                         "“인생조차 효율 갑”");
@@ -600,18 +626,18 @@ public class InitDB {
 
                 List<PersonalityQuestion> questionListCustom = new ArrayList<>();
 
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "도착한 나의 꿈 속!<br>두 갈래 길이 펼쳐졌는데, 내가 선택할 길은?", 1, "https://cdn.banggooso.com/assets/images/game82/page/Q01.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "두 갈래 길을 지나고 나니..<br>이제 어디로 가야하지?!<br>저 쪽의 새들의 무리가 보이는데!", 2, "https://cdn.banggooso.com/assets/images/game82/page/Q02.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "행운의 새를 만나는 곳까지 나를 태워다준다고?!<br>나와 함께 갈 새는", 3, "https://cdn.banggooso.com/assets/images/game82/page/Q03.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "‘유니온타워 꼭대기도 보이네!’<br>하늘을 날 때 느끼는 기분은?", 4, "https://cdn.banggooso.com/assets/images/game82/page/Q04.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "가다가 잠시 쉬기 위해 도착한 하남시 당정뜰!<br>도착한 나는..", 5, "https://cdn.banggooso.com/assets/images/game82/page/Q05.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "뜰에서 함께 사진을 찍자는 새들!<br>나는 어느 위치에?", 6, "https://cdn.banggooso.com/assets/images/game82/page/Q06.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "도착한 나의 꿈 속!\r\n두 갈래 길이 펼쳐졌는데, 내가 선택할 길은?", 1, "https://cdn.banggooso.com/assets/images/game82/page/Q01.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "두 갈래 길을 지나고 나니..\r\n이제 어디로 가야하지?!\r\n저 쪽의 새들의 무리가 보이는데!", 2, "https://cdn.banggooso.com/assets/images/game82/page/Q02.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "행운의 새를 만나는 곳까지 나를 태워다준다고?!\r\n나와 함께 갈 새는", 3, "https://cdn.banggooso.com/assets/images/game82/page/Q03.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "‘유니온타워 꼭대기도 보이네!’\r\n하늘을 날 때 느끼는 기분은?", 4, "https://cdn.banggooso.com/assets/images/game82/page/Q04.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "가다가 잠시 쉬기 위해 도착한 하남시 당정뜰!\r\n도착한 나는..", 5, "https://cdn.banggooso.com/assets/images/game82/page/Q05.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "뜰에서 함께 사진을 찍자는 새들!\r\n나는 어느 위치에?", 6, "https://cdn.banggooso.com/assets/images/game82/page/Q06.png"));
                 questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "이제 출발하려는데 좀 만 더 쉬자는 새들!", 7, "https://cdn.banggooso.com/assets/images/game82/page/Q07.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "다시 가던 중, 이사 온 겨울 철새들 발견!<br>도움을 요청하는데 내가 할 일은?", 8, "https://cdn.banggooso.com/assets/images/game82/page/Q08.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "도와줘서 고맙다고 선물을 주는데..<br>내가 선택할 선물은?", 9, "https://cdn.banggooso.com/assets/images/game82/page/Q09.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "드디어 행운의 새를 만날 장소에 도착!<br>데려다 준 새가 이별 노래를 불러주는데..", 10, "https://cdn.banggooso.com/assets/images/game82/page/Q10.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "데려다 준 새에게<br>감사의 이별 인사를 건넨다면!", 11, "https://cdn.banggooso.com/assets/images/game82/page/Q11.png"));
-                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "다시 만난 행운의 새!<br>꿈에서 깨면 한 가지 행운이 찾아올거라고..<br>내가 원하는 행운은?", 12, "https://cdn.banggooso.com/assets/images/game82/page/Q12.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "다시 가던 중, 이사 온 겨울 철새들 발견!\r\n도움을 요청하는데 내가 할 일은?", 8, "https://cdn.banggooso.com/assets/images/game82/page/Q08.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "도와줘서 고맙다고 선물을 주는데..\r\n내가 선택할 선물은?", 9, "https://cdn.banggooso.com/assets/images/game82/page/Q09.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "드디어 행운의 새를 만날 장소에 도착!\r\n데려다 준 새가 이별 노래를 불러주는데..", 10, "https://cdn.banggooso.com/assets/images/game82/page/Q10.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "데려다 준 새에게\r\n감사의 이별 인사를 건넨다면!", 11, "https://cdn.banggooso.com/assets/images/game82/page/Q11.png"));
+                questionListCustom.add(new PersonalityQuestion(testCodeInfo3, "다시 만난 행운의 새!\r\n꿈에서 깨면 한 가지 행운이 찾아올거라고..\r\n내가 원하는 행운은?", 12, "https://cdn.banggooso.com/assets/images/game82/page/Q12.png"));
 
 
                 questionListCustom.get(0).addAnswer(PersonalityAnswer.builder()
@@ -727,7 +753,7 @@ public class InitDB {
                 questionListCustom.get(6).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionListCustom.get(0))
                         .testCode(testCodeInfo3)
-                        .answer("‘그럼 30분만 더 쉬자!’<br>언제 다시 출발할지 정해놓고 쉰다.")
+                        .answer("‘그럼 30분만 더 쉬자!’\r\n언제 다시 출발할지 정해놓고 쉰다.")
                         .point(1)
                         .tendency(Tendency.A)
                         .typeIndicator(indicatorCustomC)
@@ -736,7 +762,7 @@ public class InitDB {
                 questionListCustom.get(6).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionListCustom.get(0))
                         .testCode(testCodeInfo3)
-                        .answer("‘그래 알겠어~! 좀만 더 쉬자!’<br>더 놀면서 쉴 만큼 충분히 쉬고 간다.")
+                        .answer("‘그래 알겠어~! 좀만 더 쉬자!’\r\n더 놀면서 쉴 만큼 충분히 쉬고 간다.")
                         .point(4)
                         .tendency(Tendency.A)
                         .typeIndicator(indicatorCustomC)
@@ -772,7 +798,7 @@ public class InitDB {
                 questionListCustom.get(8).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionListCustom.get(0))
                         .testCode(testCodeInfo3)
-                        .answer("최저가와 최고가 둘 중 하나가 담긴<br>복불복 랜덤 선물 박스!")
+                        .answer("최저가와 최고가 둘 중 하나가 담긴\r\n복불복 랜덤 선물 박스!")
                         .point(4)
                         .tendency(Tendency.A)
                         .typeIndicator(indicatorCustomC)
@@ -781,7 +807,7 @@ public class InitDB {
                 questionListCustom.get(9).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionListCustom.get(0))
                         .testCode(testCodeInfo3)
-                        .answer("질 수 없지! 노래 배틀이다!<br>나도 노래를 불러준다.")
+                        .answer("질 수 없지! 노래 배틀이다!\r\n나도 노래를 불러준다.")
                         .point(1)
                         .tendency(Tendency.A)
                         .typeIndicator(indicatorCustomD)
@@ -790,7 +816,7 @@ public class InitDB {
                 questionListCustom.get(9).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionListCustom.get(0))
                         .testCode(testCodeInfo3)
-                        .answer("갑자기 노래를..?<br>뚝딱이 리액션을 하며 노래를 듣는다.")
+                        .answer("갑자기 노래를..?\r\n뚝딱이 리액션을 하며 노래를 듣는다.")
                         .point(4)
                         .tendency(Tendency.A)
                         .typeIndicator(indicatorCustomD)
@@ -799,7 +825,7 @@ public class InitDB {
                 questionListCustom.get(10).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionListCustom.get(0))
                         .testCode(testCodeInfo3)
-                        .answer("데려다 줘서 고마워!<br>너의 비행 실력은 따라 올 새가 없다!!")
+                        .answer("데려다 줘서 고마워!\r\n너의 비행 실력은 따라 올 새가 없다!!")
                         .point(1)
                         .tendency(Tendency.A)
                         .typeIndicator(indicatorCustomD)
@@ -808,7 +834,7 @@ public class InitDB {
                 questionListCustom.get(10).addAnswer(PersonalityAnswer.builder()
                         .personalityQuestion(questionListCustom.get(0))
                         .testCode(testCodeInfo3)
-                        .answer("데려다 줘서 고마워!<br>오랫동안 비행하느라 너무 고생했어ㅠㅠ!")
+                        .answer("데려다 줘서 고마워!\r\n오랫동안 비행하느라 너무 고생했어ㅠㅠ!")
                         .point(4)
                         .tendency(Tendency.A)
                         .typeIndicator(indicatorCustomD)

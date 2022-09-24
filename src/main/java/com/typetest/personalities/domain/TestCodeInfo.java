@@ -2,6 +2,7 @@ package com.typetest.personalities.domain;
 
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.personalities.data.AnswerType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -54,6 +55,19 @@ public class TestCodeInfo {
         this.thumbnailDesc = testInfoDto.getThumbnailDesc();
         this.playCount = testInfoDto.getPlayCount();
         this.active = testInfoDto.getActive();
+    }
+
+    @Builder
+    public TestCodeInfo(String testCode, String testName, AnswerType answerType, String image,
+                        String description, String thumbnailDesc, Integer active, long playCount) {
+        this.testCode = testCode;
+        this.testName = testName;
+        this.answerType = answerType;
+        this.image = image;
+        this.description = description;
+        this.thumbnailDesc = thumbnailDesc;
+        this.active = active;
+        this.playCount = playCount;
     }
 
     public void setPlayCount(int count) {
