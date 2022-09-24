@@ -48,7 +48,7 @@
             <div class="card testResultInfoCard" th:each="typeInfo : ${userTypeMap}" th:id="|${typeInfo.value.testCode}|">
                 <img th:src="${typeInfo.value.typeInfo.images.size() > 0 ?
                         typeInfo.value.typeInfo.images[0].imageUrl :
-                        'http://memorymaker.co.kr/en/plugin/wz.booking.pension.prm/img/noimage.gif'}"
+                        '/assets/images/black_background.png'}"
                      class="card-img-top" alt="이미지가 없습니다.">
                 <div class="testResultCard-body">
                     <span class="card-title" th:text="${typeInfo.value.typeInfo.typeName}">Card title</span>

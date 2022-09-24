@@ -225,8 +225,9 @@
                             <input type="text" class="q-num-input" placeholder="번호" readonly
                                    th:field="*{questionList[__${questionInfoStat.index}__].num}">
                             <div class="px-1"></div>
-                            <input type="text" class="q-name-input" placeholder="질문내용"
-                                   th:field="*{questionList[__${questionInfoStat.index}__].question}">
+                            <!--<input type="text" class="q-name-input" placeholder="질문내용"
+                                   th:field="*{questionList[__${questionInfoStat.index}__].question}">-->
+                            <textarea class="form-control" th:field="*{questionList[__${questionInfoStat.index}__].question}"></textarea>
                         </div>
                         <!-- 삭제 버튼 -->
                         <span class="material-icons questionDelete" th:id="|questionDel${questionInfoStat.index + 1}|" th:name="${questionInfoStat.index}">close</span>

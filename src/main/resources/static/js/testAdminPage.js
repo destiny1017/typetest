@@ -183,6 +183,11 @@ $(document).ready( () => {
             return true;
         } else return false;
     });
+    
+    // 테스트 기본정보 미등록 시 나머지탭 비활성화
+    if($(".type-select").val() == "NEW") {
+        $("#step2, #step3, #step4").each((i, v) => {$(v).addClass("disableTab")});
+    }
 
 });
 
@@ -410,7 +415,7 @@ function questionAddEvent() {
                         </button>
                         <input type="text" class="q-num-input" name="questionList[${questionList.length}].num" placeholder="번호" readonly>
                         <div class="px-1"></div>
-                        <input type="text" class="q-name-input" name="questionList[${questionList.length}].question" placeholder="질문내용">
+                        <textarea class="form-control" name="questionList[${questionList.length}].question" placeholder="질문내용"></textarea>
                     </div>
                     <span class="material-icons questionDelete" id="questionDel${questionList.length + 1}">close</span>
                 </div>
@@ -758,15 +763,25 @@ function callEssential(testCode) {
 
 // 테스트 활성화 시 필수 정보 등록 여부 체크
 function enableActive() {
+    let indicatorCnt = 0;
+    let questionCnt = 0;
     
-    if(indicatorList.length == 0) {
+    for(indicator of indicatorList) {
+        if(indicator.deleted == 0) indicatorCnt++;
+    }
+    
+    if(indicatorCnt == 0) {
         alert("지표정보가 등록되지 않았습니다.");
         $("#active2").prop("checked", true);
         $("#step2").trigger("click");
         return;
     }
     
-    if(questionList.length == 0) {
+    for(question of questionList) {
+        if(question.deleted == 0) questionCnt++;
+    }
+    
+    if(questionCnt == 0) {
         alert("질문 정보가 등록되지 않았습니다.");
         $("#active2").prop("checked", true);
         $("#step3").trigger("click");
