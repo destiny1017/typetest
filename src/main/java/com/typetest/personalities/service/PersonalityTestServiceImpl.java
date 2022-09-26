@@ -155,7 +155,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
                 testResultDto.setTypeRate(new DecimalFormat("#.#%").format(rate));
                 return testResultDto;
             } else {
-                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+                throw new NotFoundEntityException("[" + testCode + " > " + type + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
             }
         } else {
             throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
