@@ -64,7 +64,7 @@ public class InitDB {
                         .image("https://d2k6w3n3qf94c4.cloudfront.net/media/banners/images/07_mmangsi.png")
                         .description("These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.")
                         .active(1)
-                        .thumbnailDesc("test")
+                        .thumbnailDesc("테스트용 테스트! 검사결과가 정상적으로 나오지 않습니다.")
                         .build();
                 testCodeInfo1.setPlayCount(145594);
                 TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBA", "비비에이");
@@ -164,7 +164,7 @@ public class InitDB {
                         .image("https://cdn.banggooso.com/assets/images/game108/1651571103(2).gif")
                         .description("나의 분위기 컬러를 알아봐요!")
                         .active(1)
-                        .thumbnailDesc("test")
+                        .thumbnailDesc("테스트용 테스트! 검사결과가 정상적으로 나오지 않습니다.")
                         .build();
                 testCodeInfo2.setPlayCount(92843);
 
