@@ -6,11 +6,12 @@
     .mainTitle-div3 > p {
         font-size: 1.8rem !important;
     }
-}
 
-/* 스크롤 안 보이게 */
-html::-webkit-scrollbar {
-    display: none;
+    /* 스크롤 안 보이게 */
+    html::-webkit-scrollbar {
+        display: none;
+    }
+
 }
 
 div[class$="container"] {
