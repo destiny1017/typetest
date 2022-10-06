@@ -1,8 +1,6 @@
 package com.typetest.admin.testadmin.service;
 
 import com.typetest.admin.testadmin.data.*;
-import com.typetest.exception.EntityValidationContext;
-import com.typetest.exception.ErrorStrategy;
 import com.typetest.exception.NotFoundEntityException;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
@@ -35,8 +33,11 @@ public class TestAdminServiceImpl implements TestAdminService {
             return new TestInfoDto();
         } else {
             Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-            EntityValidationContext<TestInfoDto> context = new EntityValidationContext<>();
-            return context.execute(() -> new TestInfoDto(testCodeInfo.get()), testCodeInfo);
+            if(testCodeInfo.isPresent()) {
+                return new TestInfoDto(testCodeInfo.get());
+            } else {
+                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+            }
         }
     }
 
@@ -103,6 +104,10 @@ public class TestAdminServiceImpl implements TestAdminService {
     public int saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode) {
         int deletedIndicator = 0;
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        if(!testCodeInfo.isPresent()) {
+            throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+        }
+
         for (TypeIndicatorDto typeIndicatorDto : indicatorDtoList) {
             TypeIndicator indicator = null;
             // 삭제된 데이터가 아니라면..
