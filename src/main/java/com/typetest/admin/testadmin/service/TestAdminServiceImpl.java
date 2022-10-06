@@ -1,6 +1,8 @@
 package com.typetest.admin.testadmin.service;
 
 import com.typetest.admin.testadmin.data.*;
+import com.typetest.exception.EntityValidationContext;
+import com.typetest.exception.ErrorStrategy;
 import com.typetest.exception.NotFoundEntityException;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
@@ -33,11 +35,8 @@ public class TestAdminServiceImpl implements TestAdminService {
             return new TestInfoDto();
         } else {
             Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-            if(testCodeInfo.isPresent()) {
-                return new TestInfoDto(testCodeInfo.get());
-            } else {
-                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
-            }
+            EntityValidationContext<TestInfoDto> context = new EntityValidationContext<>();
+            return context.execute(() -> new TestInfoDto(testCodeInfo.get()), testCodeInfo);
         }
     }
 
@@ -218,7 +217,7 @@ public class TestAdminServiceImpl implements TestAdminService {
     }
 
     /***
-     *  도출될 수 있는 모든 유형을 구하는 백트래킹 조합 알고리즘
+     *  도출될 수 있는 모든 유형을 구하는 백트래킹 중복순열 알고리즘
      * @param depth     각 사이클마다 할당되는 depth(index)
      * @param m         결과값 길이
      * @param valueMap  depth(indicatorNum)별 다르게 적용되는 조합지표 정보
