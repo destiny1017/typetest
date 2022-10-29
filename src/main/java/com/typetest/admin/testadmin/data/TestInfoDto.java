@@ -6,16 +6,28 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Getter @Setter
 @ToString
 public class TestInfoDto {
+
+    @NotEmpty
     private String testCode;
+    @NotEmpty
     private String testName;
+
+    @NotNull
     private AnswerType answerType;
+
     private String image;
     private String description;
     private String thumbnailDesc;
+
     private Long playCount;
+
+    @NotNull
     private Integer active;
 
     public TestInfoDto() {

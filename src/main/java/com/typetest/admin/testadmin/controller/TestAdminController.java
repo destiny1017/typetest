@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,13 +96,13 @@ public class TestAdminController {
     }
 
     @PostMapping("/adminPage/testAdmin/step1Submit")
-    public String step1Submit(@ModelAttribute TestInfoDto testInfoDto) {
+    public String step1Submit(@ModelAttribute @Valid TestInfoDto testInfoDto) {
         testAdminService.saveTestInfo(testInfoDto);
         return "redirect:/adminPage/testAdminPage/" + testInfoDto.getTestCode() + "/1";
     }
 
     @PostMapping("/adminPage/testAdmin/step2Submit")
-    public String step2Submit(@ModelAttribute IndicatorForm indicatorForm) {
+    public String step2Submit(@ModelAttribute @Valid IndicatorForm indicatorForm) {
         List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
         int result = testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
         if(result == 1) {
@@ -112,14 +113,14 @@ public class TestAdminController {
     }
 
     @PostMapping("/adminPage/testAdmin/step3Submit")
-    public String step3Submit(@ModelAttribute QuestionForm questionForm) {
+    public String step3Submit(@ModelAttribute @Valid QuestionForm questionForm) {
         List<QuestionDto> questionList = questionForm.getQuestionList();
         testAdminService.saveQuestionInfo(questionList, questionForm.getQuestionTestCode());
         return "redirect:/adminPage/testAdminPage/" + questionForm.getQuestionTestCode() + "/3";
     }
 
     @PostMapping("/adminPage/testAdmin/step4Submit")
-    public String step4Submit(@ModelAttribute TypeInfoForm typeInfoForm) {
+    public String step4Submit(@ModelAttribute @Valid TypeInfoForm typeInfoForm) {
         List<TypeInfoDto> typeInfoList = typeInfoForm.getTypeInfoList();
         testAdminService.saveTypeInfo(typeInfoList, typeInfoForm.getTypeInfoTestCode());
         return "redirect:/adminPage/testAdminPage/" + typeInfoForm.getTypeInfoTestCode() + "/4";
