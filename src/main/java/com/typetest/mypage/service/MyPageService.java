@@ -1,5 +1,7 @@
 package com.typetest.mypage.service;
 
+import com.typetest.personalities.data.Tendency;
+import com.typetest.personalities.data.UserTendencyInfo;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
 import com.typetest.mypage.data.TypeInfoData;
@@ -36,6 +38,21 @@ public class MyPageService {
             }
         }
         return typeMap;
+    }
+
+    public UserTendencyInfo getUserTendencyInfo(User user) {
+        Map<Tendency, Long> tendencyMap = testResultRepository.countTendency(user);
+        long totalCnt = 0;
+        for (Tendency t : Tendency.values()) {
+            long value = tendencyMap.getOrDefault(t, 0L);
+            tendencyMap.put(t, value);
+            totalCnt += value;
+        }
+        for (Tendency t : tendencyMap.keySet()) {
+            tendencyMap.put(t, (tendencyMap.get(t)  * 10) / totalCnt);
+        }
+        //tendencyMap.keySet().stream().forEach(k -> System.out.println("key = " + k + ", val = " + tendencyMap.get(k)));
+        return new UserTendencyInfo(tendencyMap);
     }
 
     public User updateNickname(Long id, String nickname) {

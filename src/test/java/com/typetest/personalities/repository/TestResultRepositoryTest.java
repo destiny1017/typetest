@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -258,6 +259,85 @@ class TestResultRepositoryTest {
         assertThat(userTypeList.stream().map(u -> u.getTypeInfo())).contains(typeInfo2);
         assertThat(userTypeList.stream().map(u -> u.getTypeInfo())).contains(typeInfo3);
 
+    }
+
+    @Test
+    @DisplayName("성향정보 가져오기 테스트")
+    void tendencyTest() {
+        //given
+        User user = User.builder()
+                .name("test_user")
+                .email("test@test.com")
+                .picture("http://test.com/")
+                .role(Role.USER)
+                .nickname("디앙")
+                .build();
+        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+        TypeInfo typeInfo = new TypeInfo(testCodeInfo1, "TEST", "테스트");
+        TestResult pt = new TestResult(user, testCodeInfo1, typeInfo);
+
+        TypeIndicator indicatorA = new TypeIndicator(testCodeInfo1, 1, "A지표");
+        TypeIndicator indicatorB = new TypeIndicator(testCodeInfo1, 2, "B지표");
+        TypeIndicator indicatorC = new TypeIndicator(testCodeInfo1, 3, "C지표");
+
+        PersonalityQuestion testQuestion1 = new PersonalityQuestion(testCodeInfo1, "TestQuestion1", 1);
+        PersonalityQuestion testQuestion2 = new PersonalityQuestion(testCodeInfo1, "TestQuestion2", 2);
+        PersonalityQuestion testQuestion3 = new PersonalityQuestion(testCodeInfo1, "TestQuestion3", 3);
+
+        PersonalityAnswer answer1 = PersonalityAnswer.builder()
+                .personalityQuestion(testQuestion1)
+                .testCode(testCodeInfo1)
+                .point(1)
+                .tendency(Tendency.A)
+                .typeIndicator(indicatorA)
+                .build();
+
+        PersonalityAnswer answer2 = PersonalityAnswer.builder()
+                .personalityQuestion(testQuestion1)
+                .testCode(testCodeInfo1)
+                .point(1)
+                .tendency(Tendency.A)
+                .typeIndicator(indicatorA)
+                .build();
+
+        PersonalityAnswer answer3 = PersonalityAnswer.builder()
+                .personalityQuestion(testQuestion1)
+                .testCode(testCodeInfo1)
+                .point(1)
+                .tendency(Tendency.C)
+                .typeIndicator(indicatorA)
+                .build();
+
+        testQuestion1.addAnswer(answer1);
+        testQuestion1.addAnswer(answer2);
+        testQuestion1.addAnswer(answer3);
+
+        TestResultDetail ptd1 = new TestResultDetail(pt, user, testCodeInfo1, 1, answer1);
+        TestResultDetail ptd2 = new TestResultDetail(pt, user, testCodeInfo1, 2, answer2);
+        TestResultDetail ptd3 = new TestResultDetail(pt, user, testCodeInfo1, 3, answer3);
+
+        em.persist(user);
+        em.persist(pt);
+        em.persist(typeInfo);
+        em.persist(ptd1);
+        em.persist(ptd2);
+        em.persist(ptd3);
+        em.persist(indicatorA);
+        em.persist(indicatorB);
+        em.persist(indicatorC);
+        em.persist(testQuestion1);
+        em.persist(testQuestion2);
+        em.persist(testQuestion3);
+
+        em.flush();
+
+        //when
+        Map<Tendency, Long> tendencyMap = testResultRepository.countTendency(user);
+
+        //then
+        assertThat(tendencyMap).hasSize(2);
+        assertThat(tendencyMap.get(Tendency.A)).isEqualTo(2);
+        assertThat(tendencyMap.get(Tendency.C)).isEqualTo(1);
     }
 
 }

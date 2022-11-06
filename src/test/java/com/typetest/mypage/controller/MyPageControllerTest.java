@@ -138,6 +138,14 @@ class MyPageControllerTest {
             }
             if((i+1) % (questionList.size() / 3) == 0 && cnt < indicatorList.length-1) cnt++;
         }
+        TestResult pt = new TestResult(user, testCodeInfo1, typeInfo1);
+        TestResultDetail ptd1 = new TestResultDetail(pt, user, testCodeInfo1, 1, questionList.get(0).getAnswerList().get(0));
+        TestResultDetail ptd2 = new TestResultDetail(pt, user, testCodeInfo1, 2, questionList.get(1).getAnswerList().get(0));
+        TestResultDetail ptd3 = new TestResultDetail(pt, user, testCodeInfo1, 3, questionList.get(2).getAnswerList().get(0));
+        em.persist(pt);
+        em.persist(ptd1);
+        em.persist(ptd2);
+        em.persist(ptd3);
 
         personalityQuestionRepository.saveAll(questionList);
     }
@@ -157,6 +165,7 @@ class MyPageControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/myPage")
                         .session(session))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().attributeExists("userTypeMap"));
+                .andExpect(MockMvcResultMatchers.model().attributeExists("userTypeMap"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("userTendencyInfo"));
     }
 }

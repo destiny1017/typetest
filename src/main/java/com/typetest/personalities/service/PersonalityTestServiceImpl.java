@@ -1,13 +1,10 @@
 package com.typetest.personalities.service;
 
 import com.typetest.exception.NotFoundEntityException;
+import com.typetest.personalities.data.*;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
-import com.typetest.personalities.data.AnswerType;
-import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.*;
-import com.typetest.personalities.data.PersonalitiesAnswerInfo;
-import com.typetest.personalities.data.ExamQuestionDto;
 import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -175,4 +172,5 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
         }
 
     }
+
 }

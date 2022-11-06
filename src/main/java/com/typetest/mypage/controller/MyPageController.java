@@ -1,5 +1,6 @@
 package com.typetest.mypage.controller;
 
+import com.typetest.personalities.data.UserTendencyInfo;
 import com.typetest.user.domain.User;
 import com.typetest.user.dto.SessionUser;
 import com.typetest.mypage.data.TypeInfoData;
@@ -7,6 +8,7 @@ import com.typetest.mypage.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +28,9 @@ public class MyPageController {
         if(sessionUser != null) {
             User user = User.builder().id(sessionUser.getId()).build();
             Map<String, TypeInfoData> userTypeMap = myPageService.getUserTypeInfo(user);
+            UserTendencyInfo userTendencyInfo = myPageService.getUserTendencyInfo(user);
             model.addAttribute("userTypeMap", userTypeMap);
+            model.addAttribute("userTendencyInfo", userTendencyInfo);
             return "mypage/myPage";
         }
         return "index";
@@ -39,4 +43,5 @@ public class MyPageController {
         session.setAttribute("user", sessionUser);
         return "mypage/myPage";
     }
+
 }
