@@ -6,6 +6,7 @@ import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,6 +102,7 @@ public class TestAdminServiceImpl implements TestAdminService {
     }
 
     @Override
+    @Transactional
     public int saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode) {
         int deletedIndicator = 0;
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
@@ -150,6 +152,7 @@ public class TestAdminServiceImpl implements TestAdminService {
     }
 
     @Override
+    @Transactional
     public int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode) {
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
         for (QuestionDto questionDto : questionDtoList) {
@@ -245,6 +248,7 @@ public class TestAdminServiceImpl implements TestAdminService {
     }
 
     @Override
+    @Transactional
     public int saveTypeInfo(List<TypeInfoDto> typeInfoDtoList, String testCode) {
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
         for (TypeInfoDto typeInfoDto : typeInfoDtoList) {

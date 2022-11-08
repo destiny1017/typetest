@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 @Primary
+@Transactional(readOnly = true)
 public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     private final TestResultRepository testResultRepository;
@@ -115,6 +117,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     }
 
     @Override
+    @Transactional
     public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
         Long userId = answerInfo.getUserId();
         TestCodeInfo testCode = answerInfo.getTestCodeInfo();
@@ -160,6 +163,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     }
 
     @Override
+    @Transactional
     public void plusResultCount(TestCodeInfo testCodeInfo, String type) {
         Optional<TypeInfo> typeInfoOp = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo, type);
         testCodeInfoRepository.plusPlayCount(testCodeInfo);
