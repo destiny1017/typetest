@@ -1,5 +1,6 @@
 package com.typetest.user.domain;
 
+import com.typetest.common.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
                     sequenceName = "user_seq",
                     initialValue = 1,
                     allocationSize = 1)
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     private Long id;
@@ -30,8 +31,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @CreationTimestamp
-    private LocalDateTime createDate;
+//    @CreationTimestamp
+//    private LocalDateTime createDate;
 
     @Builder
     public User(Long id, String name, String email, String picture, Role role, String nickname){
