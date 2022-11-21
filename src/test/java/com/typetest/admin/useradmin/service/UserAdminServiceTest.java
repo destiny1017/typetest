@@ -7,6 +7,7 @@ import com.typetest.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +36,7 @@ class UserAdminServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 리스트 가져오기 테스트")
     void getUserList() {
         createUser();
         Page<UserInfoDto> userList = userAdminService.getUserList(PageRequest.of(0, 10));
@@ -42,6 +44,7 @@ class UserAdminServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 정보 찾기 테스트")
     void findUserInfo() {
         createUser();
         List<UserInfoDto> findUser = userAdminService.findUserInfo("test_user2");
@@ -50,6 +53,7 @@ class UserAdminServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 정보 변경 테스트")
     void updateUserInfo() {
         createUser();
         User findUser = userRepository.findByName("test_user3").get(0);
@@ -63,6 +67,7 @@ class UserAdminServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 삭제 테스트")
     void deleteUserInfo() {
         createUser();
         User user = userRepository.findByName("test_user1").get(0);
