@@ -3,12 +3,14 @@ package com.typetest.admin.useradmin.data;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Data
+@NoArgsConstructor
 public class UserInfoDto {
 
     private Long id;
