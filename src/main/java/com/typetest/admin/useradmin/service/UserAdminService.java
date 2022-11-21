@@ -28,12 +28,12 @@ public class UserAdminService {
                         .collect(Collectors.toList()), pageable, userList.size());
     }
 
-    public List<UserInfoDto> findUserInfo(String name) throws Exception {
+    public List<UserInfoDto> findUserInfo(String name) {
         return userRepository.findByName(name)
                 .stream().map(UserInfoDto::new).collect(Collectors.toList());
     }
 
-    public void updateUserInfo(UserInfoDto userInfoDto) {
+    public UserInfoDto updateUserInfo(UserInfoDto userInfoDto) {
         User user = User.builder()
                 .id(userInfoDto.getId())
                 .name(userInfoDto.getName())
@@ -42,10 +42,10 @@ public class UserAdminService {
                 .role(userInfoDto.getRole())
                 .nickname(userInfoDto.getNickname())
                 .build();
-        userRepository.save(user);
+        return new UserInfoDto(userRepository.save(user));
     }
 
-    public void deleteUserInfo(UserInfoDto userInfoDto) {
-        userRepository.deleteById(userInfoDto.getId());
+    public void deleteUserInfo(Long id) {
+        userRepository.deleteById(id);
     }
 }
