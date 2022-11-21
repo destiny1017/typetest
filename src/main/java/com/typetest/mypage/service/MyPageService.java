@@ -48,10 +48,14 @@ public class MyPageService {
             tendencyMap.put(t, value);
             totalCnt += value;
         }
+
         for (Tendency t : tendencyMap.keySet()) {
-            tendencyMap.put(t, (tendencyMap.get(t)  * 10) / totalCnt);
+            if(totalCnt > 0) {
+                tendencyMap.put(t, (tendencyMap.get(t)  * 10) / totalCnt);
+            } else {
+                tendencyMap.put(t, 0L);
+            }
         }
-        //tendencyMap.keySet().stream().forEach(k -> System.out.println("key = " + k + ", val = " + tendencyMap.get(k)));
         return new UserTendencyInfo(tendencyMap);
     }
 
