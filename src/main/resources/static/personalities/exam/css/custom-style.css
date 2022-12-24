@@ -807,6 +807,16 @@ div.add-icon {
     font-size: 20px;
 }
 
+.share-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.share-div a {
+    margin-right: 5px;
+}
+
 .share-div img {
     border-radius: 1rem;
 }
@@ -842,6 +852,36 @@ div.add-icon {
     background-size: contain;
     width: 32px;
     height: 32px;
+    margin: 0px;
+    border-radius: 1rem;
+    vertical-align: middle;
+}
+
+.share-facebook-icon {
+    background-image: url("/assets/images/icon/facebook_sharing.svg");
+    background-size: contain;
+    width: 38px;
+    height: 38px;
+    margin: 0px;
+    border-radius: 1rem;
+    vertical-align: middle;
+}
+
+.share-naver-icon {
+    background-image: url("/assets/images/icon/naver_sharing.png");
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0px;
+    border-radius: 1rem;
+    vertical-align: middle;
+}
+
+.share-twitter-icon {
+    background-image: url("/assets/images/icon/twitter_sharing.svg");
+    background-size: contain;
+    width: 38px;
+    height: 38px;
     margin: 0px;
     border-radius: 1rem;
     vertical-align: middle;
