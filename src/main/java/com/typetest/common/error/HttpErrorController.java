@@ -1,7 +1,7 @@
-package com.typetest.error;
+package com.typetest.common.error;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @Controller
 public class HttpErrorController implements ErrorController {
 
     @RequestMapping("/error")
     public String returnErrorPage(HttpServletRequest request, Model model) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        Exception e = (Exception) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        if (e != null) {
+            log.error("An Error occurred!", e.getCause());
+        }
         if (status != null) {
             int code = Integer.parseInt(status.toString());
             ErrorInfoDto errorInfoDto = new ErrorInfoDto();

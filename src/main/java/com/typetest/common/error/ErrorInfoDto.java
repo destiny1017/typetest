@@ -1,4 +1,4 @@
-package com.typetest.error;
+package com.typetest.common.error;
 
 import lombok.Getter;
 import lombok.Setter;
