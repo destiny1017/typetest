@@ -1,6 +1,8 @@
 package com.typetest.personalities.service;
 
+import com.typetest.constant.ErrorCode;
 import com.typetest.exception.NotFoundEntityException;
+import com.typetest.exception.TypetestException;
 import com.typetest.personalities.data.*;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
@@ -35,30 +37,35 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     @Override
     public List getQuestions(String testCode) {
-        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
-        if(testCodeInfoOp.isPresent()) {
-            TestCodeInfo testCodeInfo = testCodeInfoOp.get();
-            List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCode(testCodeInfo);
-            if(testCodeInfo.getAnswerType() == AnswerType.EXAM) {
-                List<List<ExamQuestionDto>> pageQuestions = new ArrayList<>();
-                int cnt = -1;
-                for (int i = 0; i < questions.size(); i++) {
-                    if((i) % 10 == 0) {
-                        pageQuestions.add(new ArrayList<>());
-                        cnt++; // 10개 추가될 때 마다 다음 인덱스에 담기
-                    }
-                    pageQuestions.get(cnt).add(new ExamQuestionDto(questions.get(i)));
-                }
-                return pageQuestions;
-            } else if(testCodeInfo.getAnswerType() == AnswerType.CARD) {
-                List<ExamQuestionDto> questionDtos = new ArrayList<>();
-                questions.stream().forEach(i -> questionDtos.add(new ExamQuestionDto(i)));
-                return questionDtos;
-            }
-            return null;
-        } else {
-            throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 테스트정보를 찾을 수 없습니다.");
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        if(testCodeInfo.getAnswerType() == AnswerType.EXAM) {
+            return createPagedQuestions(testCodeInfo);
+        } else if(testCodeInfo.getAnswerType() == AnswerType.CARD) {
+            return createSerializedQuestions(testCodeInfo);
         }
+        return new ArrayList<>();
+    }
+
+    private List<ExamQuestionDto> createSerializedQuestions(TestCodeInfo testCodeInfo) {
+        List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCode(testCodeInfo);
+        List<ExamQuestionDto> questionDtos = new ArrayList<>();
+        questions.stream().forEach(i -> questionDtos.add(new ExamQuestionDto(i)));
+        return questionDtos;
+    }
+
+    private List<List<ExamQuestionDto>> createPagedQuestions(TestCodeInfo testCodeInfo) {
+        List<PersonalityQuestion> questions = personalityQuestionRepository.findByTestCode(testCodeInfo);
+        List<List<ExamQuestionDto>> pageQuestions = new ArrayList<>();
+        int cnt = -1;
+        for (int i = 0; i < questions.size(); i++) {
+            if((i) % 10 == 0) {
+                pageQuestions.add(new ArrayList<>());
+                cnt++; // 10개 추가될 때 마다 다음 인덱스에 담기
+            }
+            pageQuestions.get(cnt).add(new ExamQuestionDto(questions.get(i)));
+        }
+        return pageQuestions;
     }
 
     @Override
