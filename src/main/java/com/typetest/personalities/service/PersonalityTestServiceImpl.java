@@ -70,23 +70,16 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     @Override
     public Page<ExamQuestionDto> getQuestionsPage(String testCode) {
-        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
-        if(testCodeInfoOp.isPresent()) {
-            Page<ExamQuestionDto> questions = personalityQuestionRepository.findByTestCode(testCodeInfoOp.get(), PageRequest.of(0, 10));
-            return questions;
-        } else {
-            throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 질문데이터를 찾을 수 없습니다.");
-        }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        return personalityQuestionRepository.findByTestCode(testCodeInfo, PageRequest.of(0, 10));
     }
 
     @Override
     public Long getQuestionCnt(String testCode) {
-        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
-        if (testCodeInfoOp.isPresent()) {
-            return personalityQuestionRepository.countByTestCode(testCodeInfoOp.get());
-        } else {
-            throw new NotFoundEntityException("테스트코드 [" + testCode + "] 에 해당하는 테스트정보를 찾을 수 없습니다.");
-        }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        return personalityQuestionRepository.countByTestCode(testCodeInfo);
     }
 
     /**
@@ -128,60 +121,43 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
     public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
         Long userId = answerInfo.getUserId();
         TestCodeInfo testCode = answerInfo.getTestCodeInfo();
-        Map<Integer, Long> answer = answerInfo.getAnswer();
-        Optional<User> byId = userRepository.findById(userId);
-        User user;
-        if(byId.isPresent()) {
-            user = byId.get();
-            Optional<TypeInfo> typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCode, type);
-            if(typeInfo.isPresent()) {
-                TestResult pt = new TestResult(user, testCode, typeInfo.get());
-                testResultRepository.save(pt); // 유형정보 저장
-                for (int key : answer.keySet()) {
-                    Optional<PersonalityAnswer> findAnswer = personalityAnswerRepository.findById(answer.get(key));
-                    TestResultDetail ptd = new TestResultDetail(pt, user, testCode, key, findAnswer.get());
-                    testResultDetailRepository.save(ptd); // 테스트 상세 응답 정보 저장
-                }
-            } else {
-                throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
-            }
-        } else {
-            throw new NotFoundEntityException("[" + userId + "] 사용자를 찾을 수 없습니다.");
-        }
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, userId.toString()));
+        TypeInfo typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCode, type)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode.getTestCode(), type));
 
+        // 유형정보 저장
+        TestResult testResult = new TestResult(user, testCode, typeInfo);
+        testResultRepository.save(testResult);
+
+        // 테스트 상세 응답 정보 저장
+        Map<Integer, Long> answer = answerInfo.getAnswer();
+        for (int key : answer.keySet()) {
+            Optional<PersonalityAnswer> findAnswer = personalityAnswerRepository.findById(answer.get(key));
+            TestResultDetail ptd = new TestResultDetail(testResult, user, testCode, key, findAnswer.get());
+            testResultDetailRepository.save(ptd);
+        }
     }
 
     @Override
     public TestResultDto createTestResultInfo(String testCode, String type) {
-        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-        if(testCodeInfo.isPresent()) {
-            Optional<TypeInfo> typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo.get(), type);
-            if(typeInfo.isPresent()) {
-                TestResultDto testResultDto = new TestResultDto(typeInfo.get());
-                double rate = ((double) typeInfo.get().getResultCount() / testCodeInfo.get().getPlayCount());
-                testResultDto.setTypeRate(new DecimalFormat("#.#%").format(rate));
-                return testResultDto;
-            } else {
-                throw new NotFoundEntityException("[" + testCode + " > " + type + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
-            }
-        } else {
-            throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
-        }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        TypeInfo typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo, type)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode, type));
+        TestResultDto testResultDto = new TestResultDto(typeInfo);
+        double rate = ((double) typeInfo.getResultCount() / testCodeInfo.getPlayCount());
+        testResultDto.setTypeRate(new DecimalFormat("#.#%").format(rate));
+        return testResultDto;
     }
 
     @Override
     @Transactional
     public void plusResultCount(TestCodeInfo testCodeInfo, String type) {
-        Optional<TypeInfo> typeInfoOp = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo, type);
+        TypeInfo typeInfo = typeInfoRepository.findByTestCodeAndTypeCode(testCodeInfo, type)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCodeInfo.getTestCode(), type));
         testCodeInfoRepository.plusPlayCount(testCodeInfo);
-
-        if (typeInfoOp.isPresent()) {
-            TypeInfo typeInfo = typeInfoOp.get();
-            typeInfoRepository.plusResultCount(typeInfo);
-        } else {
-            throw new NotFoundEntityException("[" + type + "] 에 해당하는 유형정보를 찾을 수 없습니다.");
-        }
-
+        typeInfoRepository.plusResultCount(typeInfo);
     }
 
 }
