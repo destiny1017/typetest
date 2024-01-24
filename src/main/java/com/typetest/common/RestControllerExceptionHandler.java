@@ -29,6 +29,6 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(TypetestException.class)
     protected ResponseEntity<ErrorResponse> typetestExceptionHandler(TypetestException e) {
-        return ErrorResponse.toResponseEntity(e.getErrorCode(), e.getKey());
+        return ErrorResponse.toResponseEntity(e.getErrorCode(), String.join(",", e.getKeys()));
     }
 }
