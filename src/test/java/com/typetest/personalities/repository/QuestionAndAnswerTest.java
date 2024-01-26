@@ -1,5 +1,6 @@
 package com.typetest.personalities.repository;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.PersonalityAnswer;
@@ -19,9 +20,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
-public class QuestionAndAnswerTest {
+public class QuestionAndAnswerTest extends IntegrationTestSupport {
 
     @Autowired
     private PersonalityQuestionRepository personalityQuestionRepository;

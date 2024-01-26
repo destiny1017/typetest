@@ -1,5 +1,6 @@
 package com.typetest.personalities.service;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -24,9 +26,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
-class PersonalityTestServiceTest {
+class PersonalityTestServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private UserRepository userRepository;

@@ -1,5 +1,6 @@
 package com.typetest.admin.testadmin.service;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.admin.testadmin.data.*;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
@@ -25,7 +26,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-public class TestAdminServiceTest {
+public class TestAdminServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private TypeIndicatorRepository typeIndicatorRepository;

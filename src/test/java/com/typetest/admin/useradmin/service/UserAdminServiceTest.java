@@ -1,5 +1,6 @@
 package com.typetest.admin.useradmin.service;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.admin.useradmin.data.UserInfoDto;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class UserAdminServiceTest {
+class UserAdminServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private UserAdminService userAdminService;

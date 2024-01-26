@@ -1,5 +1,6 @@
 package com.typetest.personalities.repository;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeDescription;
@@ -17,9 +18,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
-public class TypeInfoRepositoryTest {
+public class TypeInfoRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private EntityManager em;

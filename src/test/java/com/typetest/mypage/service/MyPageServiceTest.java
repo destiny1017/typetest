@@ -1,5 +1,6 @@
 package com.typetest.mypage.service;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.data.UserTendencyInfo;
 import com.typetest.personalities.domain.*;
@@ -20,9 +21,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
-class MyPageServiceTest {
+class MyPageServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private MyPageService myPageService;

@@ -1,5 +1,6 @@
 package com.typetest.personalities.repository;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestCodeInfo;
 import org.junit.jupiter.api.Assertions;
@@ -11,9 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
-class TestCodeInfoRepositoryTest {
+class TestCodeInfoRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private TestCodeInfoRepository testCodeInfoRepository;

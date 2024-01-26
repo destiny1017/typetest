@@ -1,5 +1,6 @@
 package com.typetest.personalities.repository;
 
+import com.typetest.IntegrationTestSupport;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
@@ -21,9 +22,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
-class TestResultRepositoryTest {
+class TestResultRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private EntityManager em;
