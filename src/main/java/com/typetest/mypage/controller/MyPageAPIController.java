@@ -26,12 +26,11 @@ public class MyPageAPIController {
 
     @GetMapping("/user-type/{userEmail}")
     public TypeInfoResponse getUserTypeInfo(@PathVariable("userEmail") String userEmail) {
-        Optional<User> user = userRepository.findByEmail(userEmail);
-        if(user.isPresent()) {
-            return new TypeInfoResponse(1, myPageService.getUserTypeInfo(user.get()));
-        } else {
+        User user = userRepository.findByEmail(userEmail).orElse(null);
+        if(user == null) {
             return new TypeInfoResponse(0, null);
         }
+        return new TypeInfoResponse(1, myPageService.getUserTypeInfo(user));
     }
 
 }
