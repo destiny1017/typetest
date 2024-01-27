@@ -2,6 +2,7 @@ package com.typetest.admin.testadmin.data;
 
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.domain.TestCodeInfo;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,6 +32,18 @@ public class TestInfoDto {
     private Integer active;
 
     public TestInfoDto() {
+    }
+
+    @Builder
+    public TestInfoDto(String testCode, String testName, AnswerType answerType, String image, String description, String thumbnailDesc, Long playCount, Integer active) {
+        this.testCode = testCode;
+        this.testName = testName;
+        this.answerType = answerType;
+        this.image = image;
+        this.description = description;
+        this.thumbnailDesc = thumbnailDesc;
+        this.playCount = playCount;
+        this.active = active;
     }
 
     public TestInfoDto(TestCodeInfo testCodeInfo) {

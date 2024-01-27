@@ -1,6 +1,6 @@
 package com.typetest.admin.testadmin.data;
 
-import com.typetest.personalities.domain.TypeIndicator;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,4 +17,10 @@ public class IndicatorForm {
     String indicatorTestCode;
     @NotNull
     List<TypeIndicatorDto> indicatorList;
+
+    @Builder
+    public IndicatorForm(String indicatorTestCode, List<TypeIndicatorDto> indicatorList) {
+        this.indicatorTestCode = indicatorTestCode;
+        this.indicatorList = indicatorList;
+    }
 }

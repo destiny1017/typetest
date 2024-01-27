@@ -105,7 +105,7 @@ public class TestAdminController {
     public String step2Submit(@ModelAttribute @Valid IndicatorForm indicatorForm) {
         List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
         int result = testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
-        if(result == 1) {
+        if(result == 1) { //todo refactor: magic number 변경 필요
             testAdminService.disableTest(indicatorForm.getIndicatorTestCode());
             return "redirect:/adminPage/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2/2";
         }
