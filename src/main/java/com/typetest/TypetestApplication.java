@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 import java.sql.Time;
 import java.util.TimeZone;
 
-@EnableJpaAuditing
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class TypetestApplication {
 
