@@ -33,7 +33,7 @@ public class MyPageController {
             model.addAttribute("userTendencyInfo", userTendencyInfo);
             return "mypage/myPage";
         }
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/myPage/editNickname")
