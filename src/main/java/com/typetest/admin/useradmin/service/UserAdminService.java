@@ -1,10 +1,13 @@
 package com.typetest.admin.useradmin.service;
 
 import com.typetest.admin.useradmin.data.UserInfoDto;
+import com.typetest.constant.ErrorCode;
 import com.typetest.exception.NotFoundEntityException;
+import com.typetest.exception.TypetestException;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +49,10 @@ public class UserAdminService {
     }
 
     public void deleteUserInfo(Long id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+          throw new TypetestException(ErrorCode.MEMBER_NOT_FOUND);
+        }
     }
 }
