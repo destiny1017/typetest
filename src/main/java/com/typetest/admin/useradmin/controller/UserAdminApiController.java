@@ -18,27 +18,27 @@ public class UserAdminApiController {
     private final UserAdminService userAdminService;
 
     @GetMapping("/api/user-admin/users")
-    public ResponseEntity getUserList(Pageable pageable) {
-        Page<UserInfoDto> userList = userAdminService.getUserList(pageable);
-        return new ResponseEntity(userList, HttpStatus.OK);
+    public ResponseEntity<Page<UserInfoDto>> getUserList(Pageable pageable) {
+        Page<UserInfoDto> userListPage = userAdminService.getUserList(pageable);
+        return ResponseEntity.ok(userListPage);
     }
 
     @GetMapping("/api/user-admin/users/{name}")
-    public ResponseEntity findUserInfo(@PathVariable String name) {
+    public ResponseEntity<List<UserInfoDto>> findUserInfo(@PathVariable String name) {
         List<UserInfoDto> userInfo = userAdminService.findUserInfo(name);
-        return new ResponseEntity(userInfo, HttpStatus.OK);
+        return ResponseEntity.ok(userInfo);
     }
 
     @PutMapping("/api/user-admin/users")
-    public ResponseEntity updateUserInfo(@RequestBody UserInfoDto userInfoDto) {
+    public ResponseEntity<UserInfoDto> updateUserInfo(@RequestBody UserInfoDto userInfoDto) {
         UserInfoDto updatedUserInfoDto = userAdminService.updateUserInfo(userInfoDto);
-        return new ResponseEntity(updatedUserInfoDto, HttpStatus.OK);
+        return ResponseEntity.ok(updatedUserInfoDto);
     }
 
     @DeleteMapping("/api/user-admin/users/{id}")
     public ResponseEntity deleteUserInfo(@PathVariable Long id) {
         userAdminService.deleteUserInfo(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
 }
