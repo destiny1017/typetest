@@ -21,11 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ActiveProfiles("test")
 class TestAdminControllerTest extends ControllerTestSupport {
-
-    @MockBean
-    TestAdminService testAdminService;
 
     @Test
     @DisplayName("테스트 정보 관리 페이지로 진입한다.")
@@ -71,7 +67,6 @@ class TestAdminControllerTest extends ControllerTestSupport {
     @Test
     @DisplayName("tab1 submit시 테스트 정보 관리 페이지 tab1으로 redirect 된다.")
     void step1Submit() throws Exception {
-        //given //when // then
         mockMvc.perform(post("/adminPage/testAdmin/step1Submit")
                         .flashAttr("testInfoDto", createTestInfoDto())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -107,10 +102,12 @@ class TestAdminControllerTest extends ControllerTestSupport {
     @Test
     @DisplayName("tab3 submit시 테스트 정보 관리 페이지 tab3로 redirect 된다.")
     void step3Submit() throws Exception {
+        // given
         QuestionForm questionForm = new QuestionForm();
         questionForm.setQuestionTestCode("testCode");
         questionForm.setQuestionList(new ArrayList<>());
 
+        // when, then
         mockMvc.perform(post("/adminPage/testAdmin/step3Submit")
                         .flashAttr("questionForm", questionForm)
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -126,7 +123,7 @@ class TestAdminControllerTest extends ControllerTestSupport {
         TypeInfoForm typeInfoForm = new TypeInfoForm();
         typeInfoForm.setTypeInfoTestCode("testCode");
 
-        //when
+        //when, then
         mockMvc.perform(MockMvcRequestBuilders.post("/adminPage/testAdmin/step4Submit")
                         .flashAttr("typeInfoForm", typeInfoForm)
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
