@@ -1,5 +1,7 @@
 package com.typetest.mypage.service;
 
+import com.typetest.constant.ErrorCode;
+import com.typetest.exception.TypetestException;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.data.UserTendencyInfo;
 import com.typetest.user.domain.User;
@@ -8,6 +10,7 @@ import com.typetest.mypage.data.TypeInfoData;
 import com.typetest.personalities.repository.TestResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -59,9 +62,12 @@ public class MyPageService {
         return new UserTendencyInfo(tendencyMap);
     }
 
+    @Transactional
     public User updateNickname(Long id, String nickname) {
-        userRepository.updateNickname(id, nickname);
-        return userRepository.findById(id).get();
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new TypetestException(ErrorCode.MEMBER_NOT_FOUND, id.toString()));
+        user.updateNickname(nickname);
+        return user;
     }
 
 

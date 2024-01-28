@@ -13,9 +13,4 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     List<User> findByName(String name);
-
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query("update USER_INFO u set u.nickname = :nickname where u.id = :id")
-    void updateNickname(@Param("id") Long id, @Param("nickname") String nickname);
 }
