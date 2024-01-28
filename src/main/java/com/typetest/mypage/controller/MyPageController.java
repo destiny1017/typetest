@@ -22,7 +22,7 @@ public class MyPageController {
 
     private final MyPageService myPageService;
 
-    @RequestMapping("/myPage")
+    @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         if(sessionUser != null) {
