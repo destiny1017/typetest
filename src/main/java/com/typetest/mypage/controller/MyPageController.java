@@ -41,7 +41,7 @@ public class MyPageController {
         User user = myPageService.updateNickname(id, nickname);
         SessionUser sessionUser = new SessionUser(user);
         session.setAttribute("user", sessionUser);
-        return "mypage/myPage";
+        return "redirect:/myPage";
     }
 
 }
