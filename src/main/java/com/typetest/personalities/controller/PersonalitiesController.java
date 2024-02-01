@@ -1,6 +1,8 @@
 package com.typetest.personalities.controller;
 
+import com.typetest.constant.ErrorCode;
 import com.typetest.exception.NotFoundEntityException;
+import com.typetest.exception.TypetestException;
 import com.typetest.user.dto.SessionUser;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.TestCodeInfo;
@@ -18,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -29,10 +32,9 @@ public class PersonalitiesController {
 
     @GetMapping("/{testCode}/testMain")
     public String testPath(@PathVariable String testCode, Model model) {
-        Optional<TestCodeInfo> testInfo = testCodeInfoRepository.findById(testCode);
-        if (testInfo.isPresent()) {
-            model.addAttribute("testInfo", testInfo.get());
-        }
+        TestCodeInfo testInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        model.addAttribute("testInfo", testInfo);
         model.addAttribute("testCode", testCode);
         return "personalities/" + testCode + "-start";
     }
@@ -49,26 +51,16 @@ public class PersonalitiesController {
     @PostMapping("/testSubmit")
     public String testSubmit(@RequestParam Map<String, String> answerMapParam, HttpSession session) {
         // 테스트코드 정보 파라미터 맵에서 추출
-        String testCode = answerMapParam.get("testCode");
-        answerMapParam.remove("testCode");
-        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
-        TestCodeInfo testCodeInfo;
-        if(!testCodeInfoOp.isPresent()) {
-            throw new NotFoundEntityException("테스트 코드[" + testCode + "]에 해당하는 테스트를 찾을 수 없습니다.");
-        } else {
-            testCodeInfo = testCodeInfoOp.get();
-        }
+        String testCode = answerMapParam.remove("testCode");
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
 
         // 응답정보 객체 세팅
-        PersonalitiesAnswerInfo answerInfo = new PersonalitiesAnswerInfo();
-        HashMap<Integer, Long> answerMap = new HashMap<>();
-        answerMapParam.forEach((key, value) -> answerMap.put(Integer.parseInt(key), Long.parseLong(value)));
-        answerInfo.setAnswer(answerMap);
-        answerInfo.setAnswerType(testCodeInfo.getAnswerType());
-        answerInfo.setTestCodeInfo(testCodeInfo);
+        PersonalitiesAnswerInfo answerInfo = PersonalitiesAnswerInfo.of(answerMapParam, testCodeInfo);
 
         // 유형 도출
         String type = personalityTestService.calcType(answerInfo.getAnswer());
+        answerInfo.setType(type);
 
         // 해당 테스트 및 유형 play/result 카운트 +1 증가
         personalityTestService.plusResultCount(testCodeInfo, type);
@@ -77,10 +69,10 @@ public class PersonalitiesController {
         SessionUser user = (SessionUser) session.getAttribute("user");
         if(user != null) {
             answerInfo.setUserId(user.getId());
-            personalityTestService.saveTestInfo(answerInfo, type);
+            personalityTestService.saveTestInfo(answerInfo);
         } else {
+            // 비회원이면 결과 데이터 세션에 저장
             session.setAttribute("answerInfo", answerInfo);
-            session.setAttribute("type", type);
         }
 
         return "redirect:" + testCode + "/testResult/" + type;

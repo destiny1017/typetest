@@ -31,12 +31,10 @@ public class UserController {
         if (user != null) {
             model.addAttribute("userName", user.getName());
             // 로그인 후 세션에 유형 정보 있으면 저장 후 세션 데이터 삭제
-            String type = (String) httpSession.getAttribute("type");
             PersonalitiesAnswerInfo answerInfo = (PersonalitiesAnswerInfo) httpSession.getAttribute("answerInfo");
-            if(type != null && answerInfo != null) {
+            if(answerInfo != null) {
                 answerInfo.setUserId(user.getId());
-                personalityTestService.saveTestInfo(answerInfo, type);
-                httpSession.removeAttribute("type");
+                personalityTestService.saveTestInfo(answerInfo);
                 httpSession.removeAttribute("answerInfo");
             }
         } else {

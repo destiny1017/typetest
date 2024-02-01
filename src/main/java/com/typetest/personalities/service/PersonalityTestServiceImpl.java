@@ -88,7 +88,7 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
      * @return type
      */
     @Override
-    public String calcType(HashMap<Integer, Long> answer) {
+    public String calcType(Map<Integer, Long> answer) {
         List<PersonalityAnswer> answerList = personalityAnswerRepository.findByIdIn(answer.values());
         Map<TypeIndicator, Integer> pointMap = new HashMap<>();
         StringBuffer type = new StringBuffer();
@@ -118,8 +118,9 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
 
     @Override
     @Transactional
-    public void saveTestInfo(PersonalitiesAnswerInfo answerInfo, String type) throws NotFoundEntityException {
+    public void saveTestInfo(PersonalitiesAnswerInfo answerInfo) throws NotFoundEntityException {
         Long userId = answerInfo.getUserId();
+        String type = answerInfo.getType();
         TestCodeInfo testCode = answerInfo.getTestCodeInfo();
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, userId.toString()));
