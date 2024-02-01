@@ -1,26 +1,25 @@
 package com.typetest.personalities.controller;
 
 import com.typetest.constant.ErrorCode;
-import com.typetest.exception.NotFoundEntityException;
 import com.typetest.exception.TypetestException;
-import com.typetest.user.dto.SessionUser;
+import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.repository.TestCodeInfoRepository;
 import com.typetest.personalities.service.PersonalityTestService;
+import com.typetest.user.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -80,8 +79,6 @@ public class PersonalitiesController {
 
     @GetMapping("/{testCode}/testResult/{type}")
     public String testResult(@PathVariable String testCode, @PathVariable String type, Model model) {
-        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
-        // 유형 결과 반환
         TestResultDto testResultDto = personalityTestService.createTestResultInfo(testCode, type);
         model.addAttribute("result", testResultDto);
         model.addAttribute("testCode", testCode);
