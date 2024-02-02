@@ -1,6 +1,7 @@
 package com.typetest.personalities.controller;
 
 import com.typetest.ControllerTestSupport;
+import com.typetest.exception.TypetestException;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.TestResultDto;
@@ -9,12 +10,14 @@ import com.typetest.personalities.domain.TypeInfo;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import com.typetest.user.dto.SessionUser;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Optional;
 
@@ -39,6 +42,17 @@ class PersonalitiesControllerTest extends ControllerTestSupport {
                         "testCode"
                 ))
                 .andExpect(view().name(String.format("personalities/%s-start", testCode)));
+    }
+
+    @DisplayName("미존재 테스트코드로 요청시 Exception이 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"EXAMTEST", "CARDTEST"})
+    void testPathFailTest(String testCode) throws Exception {
+        when(testCodeInfoRepository.findById(anyString()))
+                .thenReturn(Optional.empty());
+        Assertions.assertThatThrownBy(() -> {
+            mockMvc.perform(get(String.format("/%s/testMain", testCode)));
+        }).hasCauseInstanceOf(TypetestException.class);
     }
 
     @DisplayName("각 테스트의 응답 페이지가 리턴된다")
@@ -109,6 +123,20 @@ class PersonalitiesControllerTest extends ControllerTestSupport {
                 .andExpect(redirectedUrl("EXAMTEST/testResult/AAA"));
 
         verify(personalityTestService, times(1)).saveTestInfo(any(PersonalitiesAnswerInfo.class));
+    }
+
+    @Test
+    @DisplayName("미존재 테스트 코드로 응답 정보를 제출하면 Expcetion이 발생한다")
+    void testSubmitFailTest() throws Exception {
+        when(testCodeInfoRepository.findById(anyString()))
+                .thenReturn(Optional.empty());
+
+        Assertions.assertThatThrownBy(() -> {
+            mockMvc.perform(post("/testSubmit")
+                    .param("testCode", "EXAMTEST2")
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .accept(MediaType.APPLICATION_JSON));
+        }).hasCauseInstanceOf(TypetestException.class);
     }
 
     private Optional<TestCodeInfo> createTestCodeInfo(String testCode) {
