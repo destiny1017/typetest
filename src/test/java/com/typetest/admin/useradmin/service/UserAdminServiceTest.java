@@ -2,16 +2,16 @@ package com.typetest.admin.useradmin.service;
 
 import com.typetest.IntegrationTestSupport;
 import com.typetest.admin.useradmin.data.UserInfoDto;
+import com.typetest.exception.TypetestException;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
-import org.assertj.core.api.Assertions;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
 class UserAdminServiceTest extends IntegrationTestSupport {
 
@@ -37,49 +35,80 @@ class UserAdminServiceTest extends IntegrationTestSupport {
     }
 
     @Test
-    @DisplayName("사용자 리스트 가져오기 테스트")
+    @DisplayName("전체 사용자 리스트를 페이지로 불러온다")
     void getUserList() {
-        createUser();
+        // given
+        createUsers();
+
+        // when
         Page<UserInfoDto> userList = userAdminService.getUserList(PageRequest.of(0, 10));
-        assertThat(userList.getContent().size()).isEqualTo(3);
+
+        // then
+        assertThat(userList.getContent()).hasSize(3)
+                .extracting("name", "email", "role", "nickname")
+                .contains(
+                        Tuple.tuple("test_user1", "test1@test.com", Role.USER, "디앙1"),
+                        Tuple.tuple("test_user2", "test2@test.com", Role.USER, "디앙2"),
+                        Tuple.tuple("test_user3", "test3@test.com", Role.USER, "디앙3")
+                );
     }
 
     @Test
-    @DisplayName("사용자 정보 찾기 테스트")
+    @DisplayName("특정 이름에 해당하는 유저 정보들을 불러온다")
     void findUserInfo() {
-        createUser();
+        // given
+        createUsers();
+
+        // when
         List<UserInfoDto> findUser = userAdminService.findUserInfo("test_user2");
-        assertThat(findUser).hasSize(1);
-        assertThat(findUser.get(0).getName()).isEqualTo("test_user2");
+
+        // then
+        assertThat(findUser).hasSize(1)
+                .extracting("name", "email", "role", "nickname")
+                .containsExactly(Tuple.tuple("test_user2", "test2@test.com", Role.USER, "디앙2"));
     }
 
     @Test
-    @DisplayName("사용자 정보 변경 테스트")
+    @DisplayName("사용자 정보 변경시 변경 요청한 데이터만 변경된다")
     void updateUserInfo() {
-        createUser();
-        User findUser = userRepository.findByName("test_user3").get(0);
+        // given
+        User findUser = createUser("user", "email", Role.USER, "nick");
+
+        // when
         UserInfoDto userInfoDto = new UserInfoDto(findUser);
-        userInfoDto.setEmail("updated");
-        userInfoDto.setName("test_user4");
+        userInfoDto.setEmail("updatedEmail");
+        userInfoDto.setName("updatedName");
         UserInfoDto updatedUser = userAdminService.updateUserInfo(userInfoDto);
 
-        assertThat(updatedUser.getEmail()).isEqualTo("updated");
-        assertThat(updatedUser.getName()).isEqualTo("test_user4");
+        //then
+        assertThat(updatedUser).extracting("name", "email", "role", "nickname")
+                .containsExactly("updatedName", "updatedEmail", Role.USER, "nick");
     }
 
     @Test
-    @DisplayName("사용자 삭제 테스트")
+    @DisplayName("사용자 삭제시 해당 사용자만 삭제된다")
     void deleteUserInfo() {
-        createUser();
+        createUsers();
         User user = userRepository.findByName("test_user1").get(0);
         userAdminService.deleteUserInfo(user.getId());
 
         Page<User> users = userRepository.findAll(PageRequest.of(0, 10));
 
-        assertThat(users.getContent().size()).isEqualTo(2);
+        assertThat(users.getContent()).hasSize(2)
+                .extracting("name", "email", "role", "nickname")
+                .containsExactly(
+                        Tuple.tuple("test_user2", "test2@test.com", Role.USER, "디앙2"),
+                        Tuple.tuple("test_user3", "test3@test.com", Role.USER, "디앙3")
+                );
     }
 
-    void createUser() {
+    @Test
+    @DisplayName("미존재 사용자 삭제 시도시 exception 발생")
+    void deleteUserInfoFailTest() throws Exception {
+        Assertions.assertThrows(TypetestException.class, () -> userAdminService.deleteUserInfo(1L));
+    }
+
+    void createUsers() {
         User user1 = User.builder()
                 .name("test_user1")
                 .email("test1@test.com")
@@ -101,10 +130,17 @@ class UserAdminServiceTest extends IntegrationTestSupport {
                 .nickname("디앙3")
                 .build();
 
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-        userRepository.flush();
+        userRepository.saveAll(List.of(user1, user2, user3));
+    }
+
+    User createUser(String name, String email, Role role, String nickname) {
+        User user = User.builder()
+                .name(name)
+                .email(email)
+                .role(role)
+                .nickname(nickname)
+                .build();
+        return userRepository.save(user);
     }
 
 }
