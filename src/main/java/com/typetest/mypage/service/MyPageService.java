@@ -22,9 +22,9 @@ public class MyPageService {
     private final UserRepository userRepository;
 
     /**
-     * # 사용자의 검사결과 데이터를 받아와서 가장 최근의 결과를 필터링 해서 돌려주는 메서드
+     * 사용자의 검사결과 데이터를 받아와서 가장 최근의 결과를 필터링 해서 돌려주는 메서드
      * @param user
-     * @return
+     * @return Map = {"테스트코드": {타입정보}, ...}
      */
     public Map<String, TypeInfoData> getUserTypeInfo(User user) {
         List<TypeInfoData> typeList = testResultRepository.getUserTypeList(user);
@@ -32,32 +32,28 @@ public class MyPageService {
         // 불러온 유형 데이터중 가장 최근의 유형결과만 TestCode별로 따로 추출
         for (TypeInfoData typeInfoData : typeList) {
             TypeInfoData mappedData = typeMap.get(typeInfoData.getTestCode());
-            if(mappedData != null) {
+            if(mappedData == null) {
+                typeMap.put(typeInfoData.getTestCode(), typeInfoData);
+            } else {
                 if (typeInfoData.getCreateDate().isAfter(mappedData.getCreateDate())) {
                     typeMap.put(typeInfoData.getTestCode(), typeInfoData);
                 }
-            } else {
-                typeMap.put(typeInfoData.getTestCode(), typeInfoData);
             }
         }
         return typeMap;
     }
 
+    /**
+     * 사용자의 모든 응답 데이터를 기반으로 각 성향 정보를 계산해서 돌려주는 메서드
+     * @param user
+     * @return tendencyMap = {"성향코드":점수}
+     */
     public UserTendencyInfo getUserTendencyInfo(User user) {
         Map<Tendency, Long> tendencyMap = testResultRepository.countTendency(user);
-        long totalCnt = 0;
+        long totalTendencyCnt =  tendencyMap.values().stream().mapToLong(Long::longValue).sum();
         for (Tendency t : Tendency.values()) {
-            long value = tendencyMap.getOrDefault(t, 0L);
-            tendencyMap.put(t, value);
-            totalCnt += value;
-        }
-
-        for (Tendency t : tendencyMap.keySet()) {
-            if(totalCnt > 0) {
-                tendencyMap.put(t, (tendencyMap.get(t)  * 10) / totalCnt);
-            } else {
-                tendencyMap.put(t, 0L);
-            }
+            Long tendencyValue = tendencyMap.getOrDefault(t, 0L);
+            tendencyMap.put(t, (tendencyValue * 10) / totalTendencyCnt);
         }
         return new UserTendencyInfo(tendencyMap);
     }
