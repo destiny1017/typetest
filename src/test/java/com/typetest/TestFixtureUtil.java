@@ -1,6 +1,7 @@
 package com.typetest;
 
 import com.typetest.personalities.data.AnswerType;
+import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
 import com.typetest.user.domain.Role;
@@ -24,15 +25,22 @@ public class TestFixtureUtil {
         return userRepository.save(user);
     }
 
-    public static TestCodeInfo setDefaultTestCodeInfo(TestCodeInfoRepository testCodeInfoRepository) {
+    public static TestCodeInfo setDefaultExamTestCodeInfo(TestCodeInfoRepository testCodeInfoRepository) {
         TestCodeInfo testCodeInfo = TestCodeInfo.builder()
                 .testCode("EXAMTEST")
                 .testName("EXAM예제")
                 .answerType(AnswerType.EXAM)
-                .image("https://d2k6w3n3qf94c4.cloudfront.net/media/banners/images/07_mmangsi.png")
-                .description("These Sass loops aren’t limited to color maps, either. You can also generate responsive variations of your components.")
                 .active(1)
-                .thumbnailDesc("테스트용 테스트! 검사결과가 정상적으로 나오지 않을 수 있습니다.")
+                .build();
+        return testCodeInfoRepository.save(testCodeInfo);
+    }
+
+    public static TestCodeInfo setDefaultCardTestCodeInfo(TestCodeInfoRepository testCodeInfoRepository) {
+        TestCodeInfo testCodeInfo = TestCodeInfo.builder()
+                .testCode("CARDTEST")
+                .testName("CARD예제")
+                .answerType(AnswerType.CARD)
+                .active(1)
                 .build();
         return testCodeInfoRepository.save(testCodeInfo);
     }
@@ -51,6 +59,53 @@ public class TestFixtureUtil {
         return personalityQuestionRepository.saveAll(questionList);
     }
 
+//    public static PersonalityAnswer setDefaultPersonalityAnswer(
+//            PersonalityAnswerRepository personalityAnswerRepository,
+//            TestCodeInfo testCodeInfo,
+//            TypeIndicator typeIndicator
+//    ) {
+//        PersonalityAnswer.builder()
+//                .testCode(testCodeInfo)
+//                .typeIndicator(typeIndicator)
+//                .answer("답변1")
+//                .tendency(Tendency.A)
+//                .build();
+//    }
+
+    public static PersonalityQuestion setAnswerToQuestion(
+            PersonalityQuestionRepository personalityQuestionRepository,
+            PersonalityAnswerRepository personalityAnswerRepository,
+            PersonalityQuestion question,
+            List<PersonalityAnswer> answerList
+    ) {
+        answerList.forEach(question::addAnswer);
+        personalityAnswerRepository.saveAll(answerList);
+        return personalityQuestionRepository.save(question);
+    }
+
+    public static List<PersonalityAnswer> setDefaultAnswerList(
+            PersonalityAnswerRepository personalityAnswerRepository,
+            TestCodeInfo testCodeInfo,
+            TypeIndicator typeIndicator
+    ) {
+        List<PersonalityAnswer> answerList = new ArrayList<>();
+        answerList.add(PersonalityAnswer.builder()
+                .testCode(testCodeInfo)
+                .answer("응답1")
+                .point(1)
+                .tendency(Tendency.A)
+                .typeIndicator(typeIndicator)
+                .build());
+        answerList.add(PersonalityAnswer.builder()
+                .testCode(testCodeInfo)
+                .answer("응답2")
+                .point(2)
+                .tendency(Tendency.C)
+                .typeIndicator(typeIndicator)
+                .build());
+        return personalityAnswerRepository.saveAll(answerList);
+    }
+
     public static List<TypeIndicator> setDefaultTypeIndicator(
             TypeIndicatorRepository typeIndicatorRepository,
             TestCodeInfo testCodeInfo
@@ -66,7 +121,11 @@ public class TestFixtureUtil {
             TypeInfoRepository typeInfoRepository,
             TestCodeInfo testCodeInfo
     ) {
-        TypeInfo typeInfo = new TypeInfo(testCodeInfo, "타입코드", "타입명");
+        TypeInfo typeInfo = TypeInfo.builder()
+                .testCode(testCodeInfo)
+                .typeCode("타입코드")
+                .typeName("타입명")
+                .build();
         return typeInfoRepository.save(typeInfo);
     }
 
@@ -76,8 +135,30 @@ public class TestFixtureUtil {
             User user,
             TypeInfo typeInfo
     ) {
-        TestResult testResult = new TestResult(user, testCodeInfo, typeInfo);
+        TestResult testResult = TestResult.builder()
+                .user(user)
+                .testCode(testCodeInfo)
+                .typeInfo(typeInfo)
+                .build();
         return testResultRepository.save(testResult);
+    }
+
+    public static TestResultDetail setTestResultDetail(
+            TestResultDetailRepository testResultDetailRepository,
+            TestResult testResult,
+            User user,
+            TestCodeInfo testCodeInfo,
+            PersonalityAnswer personalityAnswer,
+            Integer num
+    ) {
+        TestResultDetail testResultDetail = TestResultDetail.builder()
+                .testCode(testCodeInfo)
+                .testResult(testResult)
+                .user(user)
+                .personalityAnswer(personalityAnswer)
+                .num(num)
+                .build();
+        return testResultDetailRepository.save(testResultDetail);
     }
 
 }
