@@ -1,6 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.user.domain.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +35,7 @@ public class TestResultDetail {
     @JoinColumn
     private PersonalityAnswer personalityAnswer;
 
+    @Builder
     public TestResultDetail(TestResult testResult, User user, TestCodeInfo testCode, int num, PersonalityAnswer personalityAnswer) {
         this.testResult = testResult;
         this.user = user;

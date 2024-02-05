@@ -2,6 +2,7 @@ package com.typetest.personalities.domain;
 
 import com.typetest.admin.testadmin.data.TypeInfoDto;
 import com.typetest.personalities.data.AnswerType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -62,6 +63,17 @@ public class TypeInfo {
         this.testCode = testCode;
         this.typeCode = typeInfoDto.getTypeCode();
         this.typeName = typeInfoDto.getTypeName();
+    }
+
+    @Builder
+    public TypeInfo(TestCodeInfo testCode, String typeCode, String typeName, int resultCount, List<TypeDescription> descriptions, List<TypeImage> images, TypeRelation typeRelation) {
+        this.testCode = testCode;
+        this.typeCode = typeCode;
+        this.typeName = typeName;
+        this.resultCount = resultCount;
+        this.descriptions = descriptions;
+        this.images = images;
+        this.typeRelation = typeRelation;
     }
 
     public int plusResultCount(int cnt) {

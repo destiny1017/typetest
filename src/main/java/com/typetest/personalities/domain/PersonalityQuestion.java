@@ -1,6 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.admin.testadmin.data.QuestionDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -59,5 +60,14 @@ public class PersonalityQuestion {
         this.question = question;
         this.num = num;
         this.questionImage = questionImage;
+    }
+
+    @Builder
+    public PersonalityQuestion(TestCodeInfo testCode, String question, Integer num, String questionImage, List<PersonalityAnswer> answerList) {
+        this.testCode = testCode;
+        this.question = question;
+        this.num = num;
+        this.questionImage = questionImage;
+        this.answerList = answerList;
     }
 }

@@ -1,6 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.user.domain.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,4 +41,11 @@ public class TestResult {
         this.typeInfo = typeInfo;
     }
 
+    @Builder
+    public TestResult(User user, TestCodeInfo testCode, TypeInfo typeInfo, LocalDateTime createDate) {
+        this.user = user;
+        this.testCode = testCode;
+        this.typeInfo = typeInfo;
+        this.createDate = createDate;
+    }
 }
