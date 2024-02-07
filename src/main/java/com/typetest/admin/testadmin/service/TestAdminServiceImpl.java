@@ -1,6 +1,7 @@
 package com.typetest.admin.testadmin.service;
 
 import com.typetest.admin.testadmin.data.*;
+import com.typetest.constant.ResultCode;
 import com.typetest.exception.NotFoundEntityException;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
@@ -103,8 +104,8 @@ public class TestAdminServiceImpl implements TestAdminService {
 
     @Override
     @Transactional
-    public int saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode) {
-        int deletedIndicator = 0;
+    public ResultCode saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode) {
+        ResultCode resultCode = ResultCode.EXIST_INDICATOR_TEST;
         Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
         if(!testCodeInfo.isPresent()) {
             throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
@@ -144,11 +145,11 @@ public class TestAdminServiceImpl implements TestAdminService {
                 // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
                 if(!typeIndicatorDto.isNewEntity()) {
                     typeIndicatorRepository.deleteById(typeIndicatorDto.getId());
-                    deletedIndicator = 1;
+                    resultCode = ResultCode.NONE_INDICATOR_TEST;
                 }
             }
         }
-        return deletedIndicator;
+        return resultCode;
     }
 
     @Override

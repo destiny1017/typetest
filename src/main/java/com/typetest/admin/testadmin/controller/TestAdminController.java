@@ -2,6 +2,7 @@ package com.typetest.admin.testadmin.controller;
 
 import com.typetest.admin.testadmin.data.*;
 import com.typetest.admin.testadmin.service.TestAdminService;
+import com.typetest.constant.ResultCode;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.IndicatorSetting;
@@ -50,7 +51,7 @@ public class TestAdminController {
                 "/adminPage/testAdminPage/{testCode}/{tab}/{del}"})
     public String testAdminPage(@PathVariable String testCode,
                                 @PathVariable(value = "tab", required = false) Integer tab,
-                                @PathVariable(value = "del", required = false) Integer del,
+                                @PathVariable(value = "del", required = false) String del,
                                 Model model) {
         model.addAttribute("testInfoDto", testAdminService.createTestInfoDto(testCode));
 
@@ -86,7 +87,7 @@ public class TestAdminController {
         if(tab == null) tab = 1;
         model.addAttribute("tab", tab);
 
-        if(del != null && del == 2) {
+        if(del != null) {
             model.addAttribute("alert",
                     "지표정보가 삭제되어 테스트가 비활성화 되었습니다.\n" +
                             "질문/답변 및 결과유형 정보를 확인하고 다시 활성화해주시기 바랍니다.");
@@ -104,10 +105,10 @@ public class TestAdminController {
     @PostMapping("/adminPage/testAdmin/step2Submit")
     public String step2Submit(@ModelAttribute @Valid IndicatorForm indicatorForm) {
         List<TypeIndicatorDto> indicatorList = indicatorForm.getIndicatorList();
-        int result = testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
-        if(result == 1) { //todo refactor: magic number 변경 필요
+        ResultCode result = testAdminService.saveIndicatorInfo(indicatorList, indicatorForm.getIndicatorTestCode());
+        if(result == ResultCode.NONE_INDICATOR_TEST) {
             testAdminService.disableTest(indicatorForm.getIndicatorTestCode());
-            return "redirect:/adminPage/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2/2";
+            return "redirect:/adminPage/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2/inactive";
         }
         return "redirect:/adminPage/testAdminPage/" + indicatorForm.getIndicatorTestCode() + "/2";
     }
