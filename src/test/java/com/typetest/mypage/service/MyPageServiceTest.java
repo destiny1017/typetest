@@ -1,6 +1,7 @@
 package com.typetest.mypage.service;
 
 import com.typetest.IntegrationTestSupport;
+import com.typetest.exception.TypetestException;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.data.UserTendencyInfo;
 import com.typetest.personalities.domain.*;
@@ -10,6 +11,7 @@ import com.typetest.user.domain.User;
 import com.typetest.mypage.data.TypeInfoData;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.user.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +105,30 @@ class MyPageServiceTest extends IntegrationTestSupport {
         assertThat(userTendencyInfo.getTendencyMap().get(Tendency.A)).isEqualTo(5L);
         assertThat(userTendencyInfo.getTendencyMap().get(Tendency.C)).isEqualTo(5L);
 
+    }
+
+    @Test
+    @DisplayName("사용자 닉네임 변경시 지정한 닉네임으로 정상적으로 변경된다.")
+    void updateNicknameTest() throws Exception {
+        // given
+        User user = setDefaultUser(userRepository);
+
+        // when
+        User updatedUser = myPageService.updateNickname(user.getId(), "updatedNickname");
+
+        // then
+        assertThat(updatedUser.getNickname()).isEqualTo("updatedNickname");
+    }
+
+    @Test
+    @DisplayName("사용자 닉네임 변경시 존재하지 않는 ID면 Exception이 발생")
+    void updatedNicknameFailTest() throws Exception {
+        // given
+        User user = setDefaultUser(userRepository);
+
+        // when // then
+        Assertions.assertThrows(TypetestException.class, () ->
+                myPageService.updateNickname(-1L, "updatedNickname"));
     }
 
 }
