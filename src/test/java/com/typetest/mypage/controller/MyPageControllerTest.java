@@ -68,7 +68,8 @@ class MyPageControllerTest extends ControllerTestSupport {
         mockMvc.perform(post("/myPage/editNickname")
                 .param("id", "-1")
                 .param("nickname", "name"))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/myPage"));
     }
 
     private SessionUser createSessionUser() {
