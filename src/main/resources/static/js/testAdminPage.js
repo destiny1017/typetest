@@ -172,8 +172,9 @@ $(document).ready( () => {
     deleteLoadingDiv();
     
     // 알림 메시지 있을 경우 띄우기
-    if(alertMessage != null) {
-        alert(alertMessage);
+    if(inactive) {
+        alert("지표정보가 삭제되어 테스트가 비활성화 되었습니다.\n" +
+              "질문/답변 및 결과유형 정보를 확인하고 다시 활성화해주시기 바랍니다.");
     }
     
     // submit 유효성 체크

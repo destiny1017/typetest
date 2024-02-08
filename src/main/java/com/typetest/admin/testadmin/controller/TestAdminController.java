@@ -48,10 +48,10 @@ public class TestAdminController {
 
     @GetMapping({"/adminPage/testAdminPage/{testCode}",
                 "/adminPage/testAdminPage/{testCode}/{tab}",
-                "/adminPage/testAdminPage/{testCode}/{tab}/{del}"})
+                "/adminPage/testAdminPage/{testCode}/{tab}/{inactive}"})
     public String testAdminPage(@PathVariable String testCode,
                                 @PathVariable(value = "tab", required = false) Integer tab,
-                                @PathVariable(value = "del", required = false) String del,
+                                @PathVariable(value = "inactive", required = false) String inactive,
                                 Model model) {
         model.addAttribute("testInfoDto", testAdminService.createTestInfoDto(testCode));
 
@@ -87,10 +87,8 @@ public class TestAdminController {
         if(tab == null) tab = 1;
         model.addAttribute("tab", tab);
 
-        if(del != null) {
-            model.addAttribute("alert",
-                    "지표정보가 삭제되어 테스트가 비활성화 되었습니다.\n" +
-                            "질문/답변 및 결과유형 정보를 확인하고 다시 활성화해주시기 바랍니다.");
+        if(inactive != null) {
+            model.addAttribute("inactive", true);
         }
 
         return "admin/testadmin/testAdminPage";
