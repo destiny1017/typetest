@@ -5,13 +5,11 @@ import com.typetest.admin.testadmin.data.IndicatorForm;
 import com.typetest.admin.testadmin.data.QuestionForm;
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.admin.testadmin.data.TypeInfoForm;
-import com.typetest.admin.testadmin.service.TestAdminService;
+import com.typetest.constant.ResultCode;
 import com.typetest.personalities.data.AnswerType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ class TestAdminControllerTest extends ControllerTestSupport {
     }
 
     @Test
-    @DisplayName("alert을 포함한 테스트 정보 관리 페이지로 진입한다.")
+    @DisplayName("inactive를 포함한 테스트 정보 관리 페이지로 진입한다.")
     void testAdminPage2() throws Exception {
         when(testAdminService.createTestInfoDto(anyString()))
                 .thenReturn(createTestInfoDto());
@@ -59,7 +57,7 @@ class TestAdminControllerTest extends ControllerTestSupport {
                                 "typeInfoForm",
                                 "testCode",
                                 "tab",
-                                "alert"
+                                "inactive"
                         )
                 );
     }
@@ -78,7 +76,7 @@ class TestAdminControllerTest extends ControllerTestSupport {
     @Test
     @DisplayName("tab2 submit시 테스트 정보 관리 페이지 tab2로 redirect 된다.")
     void step2Submit() throws Exception {
-        when(testAdminService.saveIndicatorInfo(any(), any())).thenReturn(0);
+        when(testAdminService.saveIndicatorInfo(any(), any())).thenReturn(ResultCode.EXIST_INDICATOR_TEST);
         mockMvc.perform(MockMvcRequestBuilders.post("/adminPage/testAdmin/step2Submit")
                         .flashAttr("indicatorForm", createIndicatorForm())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -90,13 +88,13 @@ class TestAdminControllerTest extends ControllerTestSupport {
     @Test
     @DisplayName("tab2 submit시 빈 지표정보가 있다면, 테스트 정보 관리 페이지 tab2로 del param을 포함하여 redirect 된다.")
     void step2Submit2() throws Exception {
-        when(testAdminService.saveIndicatorInfo(any(), any())).thenReturn(1);
+        when(testAdminService.saveIndicatorInfo(any(), any())).thenReturn(ResultCode.NONE_INDICATOR_TEST);
         mockMvc.perform(MockMvcRequestBuilders.post("/adminPage/testAdmin/step2Submit")
                         .flashAttr("indicatorForm", createIndicatorForm())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/adminPage/testAdminPage/indicatorTestCode/2/2"));
+                .andExpect(redirectedUrl("/adminPage/testAdminPage/indicatorTestCode/2/inactive"));
     }
 
     @Test
