@@ -57,6 +57,19 @@ public class TestInfoDto {
         this.active = testCodeInfo.getActive();
     }
 
+    public TestCodeInfo toEntity() {
+        return TestCodeInfo.builder()
+                .testCode(this.testCode)
+                .testName(this.testName)
+                .answerType(this.answerType)
+                .image(this.image)
+                .description(this.description)
+                .thumbnailDesc(this.thumbnailDesc)
+                .playCount(this.playCount)
+                .active(this.active)
+                .build();
+    }
+
     public String playCountStr() {
         String count1 = String.valueOf(Double.valueOf(playCount) / 10000); // 0.0000
         int dotIndex = count1.indexOf(".");

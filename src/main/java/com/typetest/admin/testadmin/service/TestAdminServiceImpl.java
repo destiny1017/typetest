@@ -1,8 +1,9 @@
 package com.typetest.admin.testadmin.service;
 
 import com.typetest.admin.testadmin.data.*;
+import com.typetest.constant.ErrorCode;
 import com.typetest.constant.ResultCode;
-import com.typetest.exception.NotFoundEntityException;
+import com.typetest.exception.TypetestException;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,12 +34,9 @@ public class TestAdminServiceImpl implements TestAdminService {
         if(testCode.equals("NEW")) {
             return new TestInfoDto();
         } else {
-            Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-            if(testCodeInfo.isPresent()) {
-                return new TestInfoDto(testCodeInfo.get());
-            } else {
-                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
-            }
+            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+            return new TestInfoDto(testCodeInfo);
         }
     }
 
@@ -50,7 +47,7 @@ public class TestAdminServiceImpl implements TestAdminService {
 
     @Override
     public TestInfoDto saveTestInfo(TestInfoDto testInfoDto) {
-        TestCodeInfo saveResult = testCodeInfoRepository.save(new TestCodeInfo(testInfoDto));
+        testCodeInfoRepository.save(testInfoDto.toEntity());
         return testInfoDto;
     }
 
@@ -59,14 +56,13 @@ public class TestAdminServiceImpl implements TestAdminService {
         if(testCode.equals("NEW")) {
             return new ArrayList<>();
         } else {
-            Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-            if(testCodeInfo.isPresent()) {
-                List<TypeIndicator> indicatorList = typeIndicatorRepository.findByTestCode(testCodeInfo.get());
-                List<TypeIndicatorDto> indicatorDtoList = indicatorList.stream().map(TypeIndicatorDto::new).collect(Collectors.toList());
-                return indicatorDtoList;
-            } else {
-                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
-            }
+            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+            List<TypeIndicator> indicatorList = typeIndicatorRepository.findByTestCode(testCodeInfo);
+            List<TypeIndicatorDto> indicatorDtoList = indicatorList.stream()
+                    .map(TypeIndicatorDto::new)
+                    .collect(Collectors.toList());
+            return indicatorDtoList;
         }
     }
 
@@ -75,14 +71,13 @@ public class TestAdminServiceImpl implements TestAdminService {
         if(testCode.equals("NEW")) {
             return new ArrayList<>();
         } else {
-            Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-            if(testCodeInfo.isPresent()) {
-                List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCodeInfo.get());
-                List<QuestionDto> questionDtoList = questionList.stream().map(QuestionDto::new).collect(Collectors.toList());
-                return questionDtoList;
-            } else {
-                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
-            }
+            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+            List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCodeInfo);
+            List<QuestionDto> questionDtoList = questionList.stream()
+                    .map(QuestionDto::new)
+                    .collect(Collectors.toList());
+            return questionDtoList;
         }
     }
 
@@ -91,14 +86,13 @@ public class TestAdminServiceImpl implements TestAdminService {
         if(testCode.equals("NEW")) {
             return new ArrayList<>();
         } else {
-            Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-            if(testCodeInfo.isPresent()) {
-                List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo.get());
-                List<TypeInfoDto> typeInfoDtoList = typeInfoList.stream().map(TypeInfoDto::new).collect(Collectors.toList());
+            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+                List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo);
+                List<TypeInfoDto> typeInfoDtoList = typeInfoList.stream()
+                        .map(TypeInfoDto::new)
+                        .collect(Collectors.toList());
                 return typeInfoDtoList;
-            } else {
-                throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
-            }
         }
     }
 
@@ -106,10 +100,8 @@ public class TestAdminServiceImpl implements TestAdminService {
     @Transactional
     public ResultCode saveIndicatorInfo(List<TypeIndicatorDto> indicatorDtoList, String testCode) {
         ResultCode resultCode = ResultCode.EXIST_INDICATOR_TEST;
-        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-        if(!testCodeInfo.isPresent()) {
-            throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
-        }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
 
         for (TypeIndicatorDto typeIndicatorDto : indicatorDtoList) {
             TypeIndicator indicator = null;
@@ -117,7 +109,7 @@ public class TestAdminServiceImpl implements TestAdminService {
             if(typeIndicatorDto.getDeleted() != 1) {
                 // 신규 엔티티이거나 업데이트된 엔티티면 save
                 if(typeIndicatorDto.isNewEntity() || typeIndicatorDto.getUpdated() == 1) {
-                    indicator = new TypeIndicator(testCodeInfo.get(), typeIndicatorDto);
+                    indicator = new TypeIndicator(testCodeInfo, typeIndicatorDto);
                     typeIndicatorRepository.save(indicator);
                 }
 
@@ -129,9 +121,9 @@ public class TestAdminServiceImpl implements TestAdminService {
                         // 신규 엔티티이거나 업데이트된 엔티티면 save
                         if(indicatorSettingDto.isNewEntity() || indicatorSettingDto.getUpdated() == 1) {
                             if(indicator == null) {
-                                indicator = new TypeIndicator(testCodeInfo.get(), typeIndicatorDto);
+                                indicator = new TypeIndicator(testCodeInfo, typeIndicatorDto);
                             }
-                            indicatorSetting = new IndicatorSetting(indicator, testCodeInfo.get(), indicatorSettingDto);
+                            indicatorSetting = new IndicatorSetting(indicator, testCodeInfo, indicatorSettingDto);
                             indicatorSettingRepository.save(indicatorSetting);
                         }
                     } else {
@@ -155,14 +147,15 @@ public class TestAdminServiceImpl implements TestAdminService {
     @Override
     @Transactional
     public int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode) {
-        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         for (QuestionDto questionDto : questionDtoList) {
             PersonalityQuestion question = null;
             // 삭제된 데이터가 아니라면..
             if (questionDto.getDeleted() != 1) {
                 // 신규 엔티티 혹은 업데이트된 엔티티면 save
                 if (questionDto.isNewEntity() || questionDto.getUpdated() == 1) {
-                    question = new PersonalityQuestion(questionDto, testCodeInfo.get());
+                    question = new PersonalityQuestion(questionDto, testCodeInfo);
                     personalityQuestionRepository.save(question);
                 }
 
@@ -173,17 +166,14 @@ public class TestAdminServiceImpl implements TestAdminService {
                     if(answerDto.getDeleted() != 1) {
                         // 신규 데이터면 엔티티 새로 만들어 주기
                         if (answerDto.isNewEntity() || answerDto.getUpdated() == 1) {
-                            Optional<TypeIndicator> indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId());
-                            if(indicator.isPresent()) {
-                                if(question == null) {
-                                    question = new PersonalityQuestion(questionDto, testCodeInfo.get());
-                                }
-                                answerDto.setTypeIndicator(indicator.get());
-                                answer = new PersonalityAnswer(answerDto, question, testCodeInfo.get());
-                                personalityAnswerRepository.save(answer);
-                            } else {
-                                throw new NotFoundEntityException();
+                            TypeIndicator indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId())
+                                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, answerDto.getTypeIndicatorId().toString()));
+                            if(question == null) {
+                                question = new PersonalityQuestion(questionDto, testCodeInfo);
                             }
+                            answerDto.setTypeIndicator(indicator);
+                            answer = new PersonalityAnswer(answerDto, question, testCodeInfo);
+                            personalityAnswerRepository.save(answer);
                         }
                     } else {
                         // 삭제데이터이면서 신규데이터가 아니라면 삭제
@@ -205,24 +195,21 @@ public class TestAdminServiceImpl implements TestAdminService {
 
     @Override
     public List<String> getEssentialTypeList(String testCode) {
-        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-        if (testCodeInfo.isPresent()) {
-            HashMap<Integer, List<String>> indicatorMap = new HashMap<>();
-            List<IndicatorSetting> indiSetList = indicatorSettingRepository.findByTestCode(testCodeInfo.get());
-            for (IndicatorSetting indicatorSetting : indiSetList) {
-                Integer indiNum = indicatorSetting.getTypeIndicator().getIndicatorNum() - 1; // 0인덱스부터 조합하기 위해 1 빼줌
-                indicatorMap // 지표 번호(순서)를 key로, 가능한 결과값을 리스트로 생성하여 value에 추가해주기
-                        .getOrDefault(indiNum, indicatorMap.putIfAbsent(indiNum, new ArrayList<>()))
-                        .add(indicatorSetting.getResult());
-            }
-            int typeLength = indicatorMap.size(); // 결과유형 길이
-            String[] tmpArr = new String[typeLength];
-            List<String> allCaseOfType = new ArrayList<>();
-
-            return getAllCaseOfType(0, typeLength, indicatorMap, tmpArr, allCaseOfType);
-        } else {
-            throw new NotFoundEntityException("[" + testCode + "] 에 해당하는 테스트 정보를 찾을 수 없습니다.");
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        HashMap<Integer, List<String>> indicatorMap = new HashMap<>();
+        List<IndicatorSetting> indiSetList = indicatorSettingRepository.findByTestCode(testCodeInfo);
+        for (IndicatorSetting indicatorSetting : indiSetList) {
+            Integer indiNum = indicatorSetting.getTypeIndicator().getIndicatorNum() - 1; // 0인덱스부터 조합하기 위해 1 빼줌
+            indicatorMap // 지표 번호(순서)를 key로, 가능한 결과값을 리스트로 생성하여 value에 추가해주기
+                    .getOrDefault(indiNum, indicatorMap.putIfAbsent(indiNum, new ArrayList<>()))
+                    .add(indicatorSetting.getResult());
         }
+        int typeLength = indicatorMap.size(); // 결과유형 길이
+        String[] tmpArr = new String[typeLength];
+        List<String> allCaseOfType = new ArrayList<>();
+
+        return getAllCaseOfType(0, typeLength, indicatorMap, tmpArr, allCaseOfType);
     }
 
     /***
@@ -251,14 +238,15 @@ public class TestAdminServiceImpl implements TestAdminService {
     @Override
     @Transactional
     public int saveTypeInfo(List<TypeInfoDto> typeInfoDtoList, String testCode) {
-        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         for (TypeInfoDto typeInfoDto : typeInfoDtoList) {
             TypeInfo typeInfo = null;
             // 삭제된 데이터가 아니라면..
             if(typeInfoDto.getDeleted() != 1) {
                 // 신규 엔티티이거나 업데이트된 엔티티면 save
                 if(typeInfoDto.isNewEntity() || typeInfoDto.getUpdated() == 1) {
-                    typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                    typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
                     typeInfoRepository.save(typeInfo);
                 }
 
@@ -267,7 +255,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                 if (typeRelationDto.getUpdated() == 1) {
                     if (typeRelationDto.isNewEntity()) {
                         if(typeInfo == null) {
-                            typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                            typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
                         }
                         typeRelationDto.setTypeInfoId(typeInfo.getId());
                         typeRelationRepository.insertTypeRelation(typeRelationDto);
@@ -284,7 +272,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                         // 신규 엔티티면 새로 만들기
                         if(typeImageDto.isNewEntity() || typeImageDto.getUpdated() == 1) {
                             if(typeInfo == null) {
-                                typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                                typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
                             }
                             typeImage = new TypeImage(typeInfo, typeImageDto);
                             typeImageRepository.save(typeImage);
@@ -306,7 +294,7 @@ public class TestAdminServiceImpl implements TestAdminService {
                         // 신규 엔티티면 새로 만들기
                         if(typeDescriptionDto.isNewEntity() || typeDescriptionDto.getUpdated() == 1) {
                             if(typeInfo == null) {
-                                typeInfo = new TypeInfo(testCodeInfo.get(), typeInfoDto);
+                                typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
                             }
                             typeDescription = new TypeDescription(typeInfo, typeDescriptionDto);
                             typeDescriptionRepository.save(typeDescription);
@@ -333,9 +321,8 @@ public class TestAdminServiceImpl implements TestAdminService {
 
     @Override
     public void disableTest(String testCode) {
-        Optional<TestCodeInfo> testCodeInfo = testCodeInfoRepository.findById(testCode);
-        if(testCodeInfo.isPresent()) {
-            testCodeInfoRepository.disableTest(testCodeInfo.get());
-        }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        testCodeInfoRepository.disableTest(testCodeInfo);
     }
 }

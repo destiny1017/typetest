@@ -46,17 +46,6 @@ public class TestCodeInfo {
         this.active = active;
     }
 
-    public TestCodeInfo(TestInfoDto testInfoDto) {
-        this.testCode = testInfoDto.getTestCode();
-        this.testName = testInfoDto.getTestName();
-        this.answerType = testInfoDto.getAnswerType();
-        this.image = testInfoDto.getImage();
-        this.description = testInfoDto.getDescription();
-        this.thumbnailDesc = testInfoDto.getThumbnailDesc();
-        this.playCount = testInfoDto.getPlayCount();
-        this.active = testInfoDto.getActive();
-    }
-
     @Builder
     public TestCodeInfo(String testCode, String testName, AnswerType answerType, String image,
                         String description, String thumbnailDesc, Integer active, long playCount) {
