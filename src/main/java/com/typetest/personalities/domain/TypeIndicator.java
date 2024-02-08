@@ -1,6 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.admin.testadmin.data.TypeIndicatorDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +31,16 @@ public class TypeIndicator {
     @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
     private List<PersonalityAnswer> answerList = new ArrayList<>();
 
+    @Builder
+    public TypeIndicator(Long id, TestCodeInfo testCode, Integer indicatorNum, String indicatorName, List<IndicatorSetting> indicatorSettings, List<PersonalityAnswer> answerList) {
+        this.id = id;
+        this.testCode = testCode;
+        this.indicatorNum = indicatorNum;
+        this.indicatorName = indicatorName;
+        this.indicatorSettings = indicatorSettings;
+        this.answerList = answerList;
+    }
+
     public TypeIndicator(TestCodeInfo testCode, int indicatorNum, String indicatorName) {
 
         this.testCode = testCode;
@@ -37,10 +48,4 @@ public class TypeIndicator {
         this.indicatorName = indicatorName;
     }
 
-    public TypeIndicator(TestCodeInfo testCode, TypeIndicatorDto typeIndicatorDto) {
-        this.id = typeIndicatorDto.getId();
-        this.testCode = testCode;
-        this.indicatorNum = typeIndicatorDto.getIndicatorNum();
-        this.indicatorName = typeIndicatorDto.getIndicatorName();
-    }
 }

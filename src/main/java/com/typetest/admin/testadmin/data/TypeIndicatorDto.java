@@ -1,5 +1,6 @@
 package com.typetest.admin.testadmin.data;
 
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeIndicator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,12 +30,25 @@ public class TypeIndicatorDto {
                 .map(IndicatorSettingDto::new).collect(Collectors.toList());
     }
 
+    public TypeIndicator toEntity(TestCodeInfo testCodeInfo) {
+        return TypeIndicator.builder()
+                .id(this.id)
+                .indicatorName(this.indicatorName)
+                .indicatorNum(this.indicatorNum)
+                .testCode(testCodeInfo)
+                .build();
+    }
+
     public boolean emptyValueCheck() {
         return (indicatorName == null || indicatorName.isEmpty()) &&
                 indicatorNum == null;
     }
 
-    public boolean isNewEntity() {
-        return id == null;
+    public boolean isDeletedEntity() {
+        return id != null && this.deleted == 1;
+    }
+
+    public boolean isNewOrUpdatedEntity() {
+        return id == null || this.updated == 1;
     }
 }

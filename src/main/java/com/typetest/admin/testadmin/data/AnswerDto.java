@@ -2,6 +2,8 @@ package com.typetest.admin.testadmin.data;
 
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.domain.PersonalityAnswer;
+import com.typetest.personalities.domain.PersonalityQuestion;
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeIndicator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,19 @@ public class AnswerDto {
         this.typeIndicatorId = answer.getTypeIndicator().getId();
     }
 
+    public PersonalityAnswer toEntity(TestCodeInfo testCodeInfo, PersonalityQuestion question, TypeIndicator indicator) {
+        return PersonalityAnswer.builder()
+                .id(this.id)
+                .testCode(testCodeInfo)
+                .personalityQuestion(question)
+                .answer(this.answer)
+                .point(this.point)
+                .answerImage(this.answerImage)
+                .tendency(this.tendency)
+                .typeIndicator(indicator)
+                .build();
+    }
+
     public boolean emptyValueCheck() {
         return  (answer == null || answer.isEmpty()) &&
                 (answerImage == null || answerImage.isEmpty()) &&
@@ -39,7 +54,11 @@ public class AnswerDto {
                 typeIndicatorId == null;
     }
 
-    public boolean isNewEntity() {
-        return id == null;
+    public boolean isDeletedEntity() {
+        return id != null && this.deleted == 1;
+    }
+
+    public boolean isNewOrUpdatedEntity() {
+        return id == null || this.updated == 1;
     }
 }

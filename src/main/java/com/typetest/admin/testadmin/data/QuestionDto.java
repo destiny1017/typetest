@@ -1,6 +1,7 @@
 package com.typetest.admin.testadmin.data;
 
 import com.typetest.personalities.domain.PersonalityQuestion;
+import com.typetest.personalities.domain.TestCodeInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,13 +31,27 @@ public class QuestionDto {
                 .map(AnswerDto::new).collect(Collectors.toList());
     }
 
+    public PersonalityQuestion toEntity(TestCodeInfo testCodeInfo) {
+        return PersonalityQuestion.builder()
+                .id(this.id)
+                .testCode(testCodeInfo)
+                .question(this.question)
+                .num(this.num)
+                .questionImage(this.questionImage)
+                .build();
+    }
+
     public boolean emptyValueCheck() {
         return  (question == null || question.isEmpty()) &&
                 (questionImage == null || questionImage.isEmpty()) &&
                 num == null;
     }
 
-    public boolean isNewEntity() {
-        return id == null;
+    public boolean isDeletedEntity() {
+        return id != null && this.deleted == 1;
+    }
+
+    public boolean isNewOrUpdatedEntity() {
+        return id == null || this.updated == 1;
     }
 }

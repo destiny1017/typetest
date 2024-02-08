@@ -42,7 +42,8 @@ public class PersonalityAnswer {
     }
 
     @Builder
-    public PersonalityAnswer(PersonalityQuestion personalityQuestion, TestCodeInfo testCode, String answer, int point, Tendency tendency, String answerImage, TypeIndicator typeIndicator) {
+    public PersonalityAnswer(Long id, PersonalityQuestion personalityQuestion, TestCodeInfo testCode, String answer, int point, Tendency tendency, String answerImage, TypeIndicator typeIndicator) {
+        this.id = id;
         this.personalityQuestion = personalityQuestion;
         this.testCode = testCode;
         this.answer = answer;

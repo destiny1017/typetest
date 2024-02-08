@@ -46,9 +46,8 @@ public class TestAdminServiceImpl implements TestAdminService {
     }
 
     @Override
-    public TestInfoDto saveTestInfo(TestInfoDto testInfoDto) {
+    public void saveTestInfo(TestInfoDto testInfoDto) {
         testCodeInfoRepository.save(testInfoDto.toEntity());
-        return testInfoDto;
     }
 
     @Override
@@ -59,10 +58,9 @@ public class TestAdminServiceImpl implements TestAdminService {
             TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                     .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
             List<TypeIndicator> indicatorList = typeIndicatorRepository.findByTestCode(testCodeInfo);
-            List<TypeIndicatorDto> indicatorDtoList = indicatorList.stream()
+            return indicatorList.stream()
                     .map(TypeIndicatorDto::new)
                     .collect(Collectors.toList());
-            return indicatorDtoList;
         }
     }
 
@@ -74,10 +72,9 @@ public class TestAdminServiceImpl implements TestAdminService {
             TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                     .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
             List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCodeInfo);
-            List<QuestionDto> questionDtoList = questionList.stream()
+            return questionList.stream()
                     .map(QuestionDto::new)
                     .collect(Collectors.toList());
-            return questionDtoList;
         }
     }
 
@@ -89,10 +86,9 @@ public class TestAdminServiceImpl implements TestAdminService {
             TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                     .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
                 List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo);
-                List<TypeInfoDto> typeInfoDtoList = typeInfoList.stream()
+                return typeInfoList.stream()
                         .map(TypeInfoDto::new)
                         .collect(Collectors.toList());
-                return typeInfoDtoList;
         }
     }
 
@@ -104,140 +100,61 @@ public class TestAdminServiceImpl implements TestAdminService {
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
 
         for (TypeIndicatorDto typeIndicatorDto : indicatorDtoList) {
-            TypeIndicator indicator = null;
-            // 삭제된 데이터가 아니라면..
-            if(typeIndicatorDto.getDeleted() != 1) {
-                // 신규 엔티티이거나 업데이트된 엔티티면 save
-                if(typeIndicatorDto.isNewEntity() || typeIndicatorDto.getUpdated() == 1) {
-                    indicator = new TypeIndicator(testCodeInfo, typeIndicatorDto);
-                    typeIndicatorRepository.save(indicator);
-                }
-
-                // 자식 리스트 순회
-                for (IndicatorSettingDto indicatorSettingDto : typeIndicatorDto.getIndicatorSettings()) {
-                    IndicatorSetting indicatorSetting = null;
-                    // 삭제된 데이터가 아니라면..
-                    if(indicatorSettingDto.getDeleted() != 1) {
-                        // 신규 엔티티이거나 업데이트된 엔티티면 save
-                        if(indicatorSettingDto.isNewEntity() || indicatorSettingDto.getUpdated() == 1) {
-                            if(indicator == null) {
-                                indicator = new TypeIndicator(testCodeInfo, typeIndicatorDto);
-                            }
-                            indicatorSetting = new IndicatorSetting(indicator, testCodeInfo, indicatorSettingDto);
-                            indicatorSettingRepository.save(indicatorSetting);
-                        }
-                    } else {
-                        // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
-                        if(!indicatorSettingDto.isNewEntity()) {
-                            indicatorSettingRepository.deleteById(indicatorSettingDto.getId());
-                        }
-                    }
-                }
-            } else {
-                // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
-                if(!typeIndicatorDto.isNewEntity()) {
-                    typeIndicatorRepository.deleteById(typeIndicatorDto.getId());
-                    resultCode = ResultCode.NONE_INDICATOR_TEST;
-                }
+            if(typeIndicatorDto.isNewOrUpdatedEntity()) {
+                TypeIndicator indicator = typeIndicatorDto.toEntity(testCodeInfo);
+                indicator = typeIndicatorRepository.save(indicator);
+                saveIndicatorSettings(testCodeInfo, indicator, typeIndicatorDto.getIndicatorSettings());
+            } else if(typeIndicatorDto.isDeletedEntity()) {
+                typeIndicatorRepository.deleteById(typeIndicatorDto.getId());
+                resultCode = ResultCode.NONE_INDICATOR_TEST;
             }
         }
         return resultCode;
     }
 
+    private void saveIndicatorSettings(TestCodeInfo testCodeInfo, TypeIndicator indicator, List<IndicatorSettingDto> indicatorSettings) {
+        for (IndicatorSettingDto indicatorSettingDto : indicatorSettings) {
+            if(indicatorSettingDto.isNewOrUpdatedEntity()) {
+                IndicatorSetting indicatorSetting = indicatorSettingDto.toEntity(indicator, testCodeInfo);
+                indicatorSettingRepository.save(indicatorSetting);
+            } else if(indicatorSettingDto.isDeletedEntity()) {
+                indicatorSettingRepository.deleteById(indicatorSettingDto.getId());
+            }
+        }
+    }
+
     @Override
     @Transactional
-    public int saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode) {
+    public void saveQuestionInfo(List<QuestionDto> questionDtoList, String testCode) {
         TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         for (QuestionDto questionDto : questionDtoList) {
-            PersonalityQuestion question = null;
-            // 삭제된 데이터가 아니라면..
-            if (questionDto.getDeleted() != 1) {
-                // 신규 엔티티 혹은 업데이트된 엔티티면 save
-                if (questionDto.isNewEntity() || questionDto.getUpdated() == 1) {
-                    question = new PersonalityQuestion(questionDto, testCodeInfo);
-                    personalityQuestionRepository.save(question);
-                }
-
-                // 자식 리스트 순회
-                for (AnswerDto answerDto : questionDto.getAnswerList()) {
-                    PersonalityAnswer answer = null;
-                    // 삭제한 데이터가 아니면
-                    if(answerDto.getDeleted() != 1) {
-                        // 신규 데이터면 엔티티 새로 만들어 주기
-                        if (answerDto.isNewEntity() || answerDto.getUpdated() == 1) {
-                            TypeIndicator indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId())
-                                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, answerDto.getTypeIndicatorId().toString()));
-                            if(question == null) {
-                                question = new PersonalityQuestion(questionDto, testCodeInfo);
-                            }
-                            answerDto.setTypeIndicator(indicator);
-                            answer = new PersonalityAnswer(answerDto, question, testCodeInfo);
-                            personalityAnswerRepository.save(answer);
-                        }
-                    } else {
-                        // 삭제데이터이면서 신규데이터가 아니라면 삭제
-                        if(!answerDto.isNewEntity()) {
-                            personalityAnswerRepository.deleteById(answerDto.getId());
-                        }
-                    }
-                }
-            } else {
-                // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
-                if(!questionDto.isNewEntity()) {
-                    personalityQuestionRepository.deleteById(questionDto.getId());
-                }
+            if (questionDto.isNewOrUpdatedEntity()) {
+                PersonalityQuestion question = questionDto.toEntity(testCodeInfo);
+                personalityQuestionRepository.save(question);
+                saveAnswerList(testCodeInfo, question, questionDto.getAnswerList());
+            } else if(questionDto.isDeletedEntity()) {
+                personalityQuestionRepository.deleteById(questionDto.getId());
             }
-
         }
-        return 1;
     }
 
-    @Override
-    public List<String> getEssentialTypeList(String testCode) {
-        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
-                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
-        HashMap<Integer, List<String>> indicatorMap = new HashMap<>();
-        List<IndicatorSetting> indiSetList = indicatorSettingRepository.findByTestCode(testCodeInfo);
-        for (IndicatorSetting indicatorSetting : indiSetList) {
-            Integer indiNum = indicatorSetting.getTypeIndicator().getIndicatorNum() - 1; // 0인덱스부터 조합하기 위해 1 빼줌
-            indicatorMap // 지표 번호(순서)를 key로, 가능한 결과값을 리스트로 생성하여 value에 추가해주기
-                    .getOrDefault(indiNum, indicatorMap.putIfAbsent(indiNum, new ArrayList<>()))
-                    .add(indicatorSetting.getResult());
+    private void saveAnswerList(TestCodeInfo testCodeInfo, PersonalityQuestion question, List<AnswerDto> answerList) {
+        for (AnswerDto answerDto : answerList) {
+            if(answerDto.isNewOrUpdatedEntity()) {
+                TypeIndicator indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId())
+                        .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, answerDto.getTypeIndicatorId().toString()));
+                PersonalityAnswer answer = answerDto.toEntity(testCodeInfo, question, indicator);
+                personalityAnswerRepository.save(answer);
+            } else if(answerDto.isDeletedEntity()) {
+                personalityAnswerRepository.deleteById(answerDto.getId());
+            }
         }
-        int typeLength = indicatorMap.size(); // 결과유형 길이
-        String[] tmpArr = new String[typeLength];
-        List<String> allCaseOfType = new ArrayList<>();
-
-        return getAllCaseOfType(0, typeLength, indicatorMap, tmpArr, allCaseOfType);
-    }
-
-    /***
-     *  도출될 수 있는 모든 유형을 구하는 백트래킹 중복순열 알고리즘
-     * @param depth     각 사이클마다 할당되는 depth(index)
-     * @param m         결과값 길이
-     * @param valueMap  depth(indicatorNum)별 다르게 적용되는 조합지표 정보
-     * @param tmpArr    조합가능한 유형 담아둘 배열
-     * @param result    결과 담아서 보내줄 리스트
-     * @return
-     */
-    public List<String> getAllCaseOfType(int depth, int m, HashMap<Integer, List<String>> valueMap,
-                                      String[] tmpArr, List<String> result) {
-        if(depth == m) {
-            result.add(String.join("", tmpArr));
-            return null;
-        }
-
-        for (int i = 0; i < valueMap.get(depth).size(); i++) {
-            tmpArr[depth] = valueMap.get(depth).get(i);
-            getAllCaseOfType(depth+1, m, valueMap, tmpArr, result);
-        }
-        return result;
     }
 
     @Override
     @Transactional
-    public int saveTypeInfo(List<TypeInfoDto> typeInfoDtoList, String testCode) {
+    public void saveTypeInfo(List<TypeInfoDto> typeInfoDtoList, String testCode) {
         TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         for (TypeInfoDto typeInfoDto : typeInfoDtoList) {
@@ -314,9 +231,49 @@ public class TestAdminServiceImpl implements TestAdminService {
                     typeInfoRepository.deleteById(typeInfoDto.getId());
                 }
             }
-
         }
-        return 1;
+    }
+
+    @Override
+    public List<String> getEssentialTypeList(String testCode) {
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        HashMap<Integer, List<String>> indicatorMap = new HashMap<>();
+        List<IndicatorSetting> indiSetList = indicatorSettingRepository.findByTestCode(testCodeInfo);
+        for (IndicatorSetting indicatorSetting : indiSetList) {
+            Integer indiNum = indicatorSetting.getTypeIndicator().getIndicatorNum() - 1; // 0인덱스부터 조합하기 위해 1 빼줌
+            indicatorMap // 지표 번호(순서)를 key로, 가능한 결과값을 리스트로 생성하여 value에 추가해주기
+                    .getOrDefault(indiNum, indicatorMap.putIfAbsent(indiNum, new ArrayList<>()))
+                    .add(indicatorSetting.getResult());
+        }
+        int typeLength = indicatorMap.size(); // 결과유형 길이
+        String[] tmpArr = new String[typeLength];
+        List<String> allCaseOfType = new ArrayList<>();
+
+        return getAllCaseOfType(0, typeLength, indicatorMap, tmpArr, allCaseOfType);
+    }
+
+    /***
+     *  도출될 수 있는 모든 유형을 구하는 백트래킹 중복순열 알고리즘
+     * @param depth     각 사이클마다 할당되는 depth(index)
+     * @param m         결과값 길이
+     * @param valueMap  depth(indicatorNum)별 다르게 적용되는 조합지표 정보
+     * @param tmpArr    조합가능한 유형 담아둘 배열
+     * @param result    결과 담아서 보내줄 리스트
+     * @return List<String>
+     */
+    public List<String> getAllCaseOfType(int depth, int m, HashMap<Integer, List<String>> valueMap,
+                                      String[] tmpArr, List<String> result) {
+        if(depth == m) {
+            result.add(String.join("", tmpArr));
+            return null;
+        }
+
+        for (int i = 0; i < valueMap.get(depth).size(); i++) {
+            tmpArr[depth] = valueMap.get(depth).get(i);
+            getAllCaseOfType(depth+1, m, valueMap, tmpArr, result);
+        }
+        return result;
     }
 
     @Override

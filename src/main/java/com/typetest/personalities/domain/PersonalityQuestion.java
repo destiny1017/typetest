@@ -63,7 +63,8 @@ public class PersonalityQuestion {
     }
 
     @Builder
-    public PersonalityQuestion(TestCodeInfo testCode, String question, Integer num, String questionImage, List<PersonalityAnswer> answerList) {
+    public PersonalityQuestion(Long id, TestCodeInfo testCode, String question, Integer num, String questionImage, List<PersonalityAnswer> answerList) {
+        this.id = id;
         this.testCode = testCode;
         this.question = question;
         this.num = num;

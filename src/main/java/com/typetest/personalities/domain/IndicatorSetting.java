@@ -2,6 +2,7 @@ package com.typetest.personalities.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.typetest.admin.testadmin.data.IndicatorSettingDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,18 +29,13 @@ public class IndicatorSetting {
 
     private String result;
 
-    public IndicatorSetting(TypeIndicator typeIndicator, TestCodeInfo testCode, int cuttingPoint, String result) {
+    @Builder
+    public IndicatorSetting(Long id, TypeIndicator typeIndicator, TestCodeInfo testCode, int cuttingPoint, String result) {
+        this.id = id;
         this.typeIndicator = typeIndicator;
         this.testCode = testCode;
         this.cuttingPoint = cuttingPoint;
         this.result = result;
     }
 
-    public IndicatorSetting(TypeIndicator typeIndicator, TestCodeInfo testCode, IndicatorSettingDto indicatorSettingDto) {
-        this.id = indicatorSettingDto.getId();
-        this.typeIndicator = typeIndicator;
-        this.testCode = testCode;
-        this.cuttingPoint = indicatorSettingDto.getCuttingPoint();
-        this.result = indicatorSettingDto.getResult();
-    }
 }
