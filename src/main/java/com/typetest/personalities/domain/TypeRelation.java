@@ -1,6 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.admin.testadmin.data.TypeRelationDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +28,9 @@ public class TypeRelation {
     @JoinColumn(name = "WORST_TYPE")
     private TypeInfo worstType;
 
-    public TypeRelation(TypeInfo typeInfo, TypeInfo bestType, TypeInfo worstType) {
+    @Builder
+    public TypeRelation(Long id, TypeInfo typeInfo, TypeInfo bestType, TypeInfo worstType) {
+        this.id = id;
         this.typeInfo = typeInfo;
         this.bestType = bestType;
         this.worstType = worstType;

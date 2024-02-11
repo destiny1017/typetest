@@ -25,10 +25,10 @@ public class TypeIndicator {
 
     private String indicatorName;
 
-    @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<IndicatorSetting> indicatorSettings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "typeIndicator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PersonalityAnswer> answerList = new ArrayList<>();
 
     @Builder

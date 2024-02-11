@@ -29,13 +29,13 @@ public class TypeInfo {
     private String typeName;
     private int resultCount;
 
-    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TypeDescription> descriptions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "typeInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TypeImage> images = new ArrayList<>();
 
-    @OneToOne(mappedBy = "typeInfo", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "typeInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private TypeRelation typeRelation;
 
     public void addDescription(TypeDescription description) {
@@ -66,7 +66,8 @@ public class TypeInfo {
     }
 
     @Builder
-    public TypeInfo(TestCodeInfo testCode, String typeCode, String typeName, int resultCount, List<TypeDescription> descriptions, List<TypeImage> images, TypeRelation typeRelation) {
+    public TypeInfo(Long id, TestCodeInfo testCode, String typeCode, String typeName, int resultCount, List<TypeDescription> descriptions, List<TypeImage> images, TypeRelation typeRelation) {
+        this.id = id;
         this.testCode = testCode;
         this.typeCode = typeCode;
         this.typeName = typeName;
