@@ -48,7 +48,7 @@ public class TypeInfo {
         image.setTypeInfo(this);
     }
 
-    public void setTypeRelation(TypeRelation typeRelation) {
+    public void updateTypeRelation(TypeRelation typeRelation) {
         this.typeRelation = typeRelation;
     }
 
@@ -56,13 +56,6 @@ public class TypeInfo {
         this.testCode = testCode;
         this.typeCode = typeCode;
         this.typeName = typeName;
-    }
-
-    public TypeInfo(TestCodeInfo testCode, TypeInfoDto typeInfoDto) {
-        this.id = typeInfoDto.getId();
-        this.testCode = testCode;
-        this.typeCode = typeInfoDto.getTypeCode();
-        this.typeName = typeInfoDto.getTypeName();
     }
 
     @Builder

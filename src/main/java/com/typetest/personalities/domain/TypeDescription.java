@@ -1,6 +1,7 @@
 package com.typetest.personalities.domain;
 
 import com.typetest.admin.testadmin.data.TypeDescriptionDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,16 +26,12 @@ public class TypeDescription {
         this.typeInfo = typeInfo;
     }
 
-    public TypeDescription(TypeInfo typeInfo, int descNum, String description) {
+    @Builder
+    public TypeDescription(Long id, TypeInfo typeInfo, int descNum, String description) {
+        this.id = id;
         this.typeInfo = typeInfo;
         this.descNum = descNum;
         this.description = description;
     }
 
-    public TypeDescription(TypeInfo typeInfo, TypeDescriptionDto typeDescriptionDto) {
-        this.id = typeDescriptionDto.getId();
-        this.typeInfo = typeInfo;
-        this.descNum = typeDescriptionDto.getDescNum();
-        this.description = typeDescriptionDto.getDescription();
-    }
 }

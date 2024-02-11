@@ -25,6 +25,15 @@ public class TypeRelationDto {
         this.worstTypeId = typeRelation.getWorstType().getId();
     }
 
+    public TypeRelation toEntity() {
+        return TypeRelation.builder()
+                .id(this.id)
+                .typeInfo(TypeInfo.builder().id(this.typeInfoId).build())
+                .bestType(TypeInfo.builder().id(this.bestTypeId).build())
+                .worstType(TypeInfo.builder().id(this.worstTypeId).build())
+                .build();
+    }
+
     public boolean isNewEntity() {
         return id == null;
     }

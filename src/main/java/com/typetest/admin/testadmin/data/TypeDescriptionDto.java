@@ -1,6 +1,7 @@
 package com.typetest.admin.testadmin.data;
 
 import com.typetest.personalities.domain.TypeDescription;
+import com.typetest.personalities.domain.TypeInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +23,20 @@ public class TypeDescriptionDto {
         this.description = typeDescription.getDescription();
     }
 
-    public boolean isNewEntity() {
-        return id == null;
+    public TypeDescription toEntity(TypeInfo typeInfo) {
+        return TypeDescription.builder()
+                .id(this.id)
+                .typeInfo(typeInfo)
+                .descNum(this.descNum)
+                .description(this.description)
+                .build();
+    }
+
+    public boolean isDeletedEntity() {
+        return id != null && this.deleted == 1;
+    }
+
+    public boolean isNewOrUpdatedEntity() {
+        return id == null || this.updated == 1;
     }
 }

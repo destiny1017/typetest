@@ -158,78 +158,40 @@ public class TestAdminServiceImpl implements TestAdminService {
         TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         for (TypeInfoDto typeInfoDto : typeInfoDtoList) {
-            TypeInfo typeInfo = null;
-            // 삭제된 데이터가 아니라면..
-            if(typeInfoDto.getDeleted() != 1) {
-                // 신규 엔티티이거나 업데이트된 엔티티면 save
-                if(typeInfoDto.isNewEntity() || typeInfoDto.getUpdated() == 1) {
-                    typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
-                    typeInfoRepository.save(typeInfo);
-                }
+            if(typeInfoDto.isNewOrUpdatedEntity()) {
+                TypeInfo typeInfo = typeInfoDto.toEntity(testCodeInfo);
 
-                // 1:1 관계인 typeRelation 처리
                 TypeRelationDto typeRelationDto = typeInfoDto.getTypeRelation();
-                if (typeRelationDto.getUpdated() == 1) {
-                    if (typeRelationDto.isNewEntity()) {
-                        if(typeInfo == null) {
-                            typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
-                        }
-                        typeRelationDto.setTypeInfoId(typeInfo.getId());
-                        typeRelationRepository.insertTypeRelation(typeRelationDto);
-                    } else {
-                        typeRelationRepository.updateTypeRelation(typeRelationDto);
-                    }
-                }
+                typeRelationDto.setTypeInfoId(typeInfo.getId());
+                typeInfo.updateTypeRelation(typeRelationDto.toEntity());
+                typeInfoRepository.save(typeInfo);
 
-                // 자식 리스트 순회
-                for (TypeImageDto typeImageDto : typeInfoDto.getTypeImageList()) {
-                    TypeImage typeImage = null;
-                    // 삭제된 데이터가 아니라면..
-                    if(typeImageDto.getDeleted() != 1) {
-                        // 신규 엔티티면 새로 만들기
-                        if(typeImageDto.isNewEntity() || typeImageDto.getUpdated() == 1) {
-                            if(typeInfo == null) {
-                                typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
-                            }
-                            typeImage = new TypeImage(typeInfo, typeImageDto);
-                            typeImageRepository.save(typeImage);
-                        }
+                saveTypeImages(typeInfoDto.getTypeImageList(), typeInfo);
+                saveTypeDescriptions(typeInfoDto.getTypeDescriptionList(), typeInfo);
+            } else if(typeInfoDto.isDeletedEntity()) {
+                typeInfoRepository.deleteById(typeInfoDto.getId());
+            }
+        }
+    }
 
-                    } else {
-                        // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
-                        if(!typeImageDto.isNewEntity()) {
-                            typeImageRepository.deleteById(typeImageDto.getId());
-                        }
-                    }
-                }
+    private void saveTypeImages(List<TypeImageDto> typeImageList, TypeInfo typeInfo) {
+        for (TypeImageDto typeImageDto : typeImageList) {
+            if(typeImageDto.isNewOrUpdatedEntity()) {
+                TypeImage typeImage = typeImageDto.toEntity(typeInfo);
+                typeImageRepository.save(typeImage);
+            } else if(typeImageDto.isDeletedEntity()) {
+                typeImageRepository.deleteById(typeImageDto.getId());
+            }
+        }
+    }
 
-                // 자식 리스트 순회
-                for (TypeDescriptionDto typeDescriptionDto : typeInfoDto.getTypeDescriptionList()) {
-                    TypeDescription typeDescription = null;
-                    // 삭제된 데이터가 아니라면..
-                    if(typeDescriptionDto.getDeleted() != 1) {
-                        // 신규 엔티티면 새로 만들기
-                        if(typeDescriptionDto.isNewEntity() || typeDescriptionDto.getUpdated() == 1) {
-                            if(typeInfo == null) {
-                                typeInfo = new TypeInfo(testCodeInfo, typeInfoDto);
-                            }
-                            typeDescription = new TypeDescription(typeInfo, typeDescriptionDto);
-                            typeDescriptionRepository.save(typeDescription);
-                        }
-
-                    } else {
-                        // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
-                        if(!typeDescriptionDto.isNewEntity()) {
-                            typeDescriptionRepository.deleteById(typeDescriptionDto.getId());
-                        }
-                    }
-                }
-
-            } else {
-                // 삭제 데이터면 신규 엔티티여부 확인 하여 아닐시 삭제
-                if(!typeInfoDto.isNewEntity()) {
-                    typeInfoRepository.deleteById(typeInfoDto.getId());
-                }
+    private void saveTypeDescriptions(List<TypeDescriptionDto> typeDescriptionList, TypeInfo typeInfo) {
+        for (TypeDescriptionDto typeDescriptionDto : typeDescriptionList) {
+            if(typeDescriptionDto.isNewOrUpdatedEntity()) {
+                TypeDescription typeDescription = typeDescriptionDto.toEntity(typeInfo);
+                typeDescriptionRepository.save(typeDescription);
+            } else if(typeDescriptionDto.isDeletedEntity()) {
+                typeDescriptionRepository.deleteById(typeDescriptionDto.getId());
             }
         }
     }

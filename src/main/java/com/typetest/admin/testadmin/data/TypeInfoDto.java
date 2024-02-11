@@ -1,5 +1,6 @@
 package com.typetest.admin.testadmin.data;
 
+import com.typetest.personalities.domain.TestCodeInfo;
 import com.typetest.personalities.domain.TypeInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,7 +47,20 @@ public class TypeInfoDto {
         }
     }
 
-    public boolean isNewEntity() {
-        return id == null;
+    public TypeInfo toEntity(TestCodeInfo testCodeInfo) {
+        return TypeInfo.builder()
+                .id(this.id)
+                .testCode(testCodeInfo)
+                .typeCode(this.typeCode)
+                .typeName(this.typeName)
+                .build();
+    }
+
+    public boolean isDeletedEntity() {
+        return id != null && this.deleted == 1;
+    }
+
+    public boolean isNewOrUpdatedEntity() {
+        return id == null || this.updated == 1;
     }
 }

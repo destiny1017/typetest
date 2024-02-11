@@ -32,7 +32,7 @@ public class PersonalityQuestion {
 
     private String questionImage;
 
-    @OneToMany(mappedBy = "personalityQuestion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "personalityQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PersonalityAnswer> answerList = new ArrayList<>();
 
     // 연관관계 편의 메서드
