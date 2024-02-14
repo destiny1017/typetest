@@ -13,17 +13,13 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TypeInfoDto {
-    private Long id;
+public class TypeInfoDto extends EntityState {
     private String typeCode;
     private String typeName;
     private boolean essentialType;
     List<TypeImageDto> typeImageList = new ArrayList<>();
     List<TypeDescriptionDto> typeDescriptionList = new ArrayList<>();
     TypeRelationDto typeRelation;
-
-    private Integer updated = 0;
-    private Integer deleted = 0;
 
     public TypeInfoDto(TypeInfo typeInfo) {
         this.id = typeInfo.getId();
@@ -56,11 +52,4 @@ public class TypeInfoDto {
                 .build();
     }
 
-    public boolean isDeletedEntity() {
-        return id != null && this.deleted == 1;
-    }
-
-    public boolean isNewOrUpdatedEntity() {
-        return id == null || this.updated == 1;
-    }
 }

@@ -12,15 +12,11 @@ import java.util.stream.Collectors;
 
 @Getter @Setter
 @NoArgsConstructor
-public class QuestionDto {
-    private Long id;
+public class QuestionDto extends EntityState {
     private String question;
     private Integer num;
     private String questionImage;
     private List<AnswerDto> answerList = new ArrayList<>();
-
-    private Integer updated = 0;
-    private Integer deleted = 0;
 
     public QuestionDto(PersonalityQuestion question) {
         this.id = question.getId();
@@ -47,11 +43,4 @@ public class QuestionDto {
                 num == null;
     }
 
-    public boolean isDeletedEntity() {
-        return id != null && this.deleted == 1;
-    }
-
-    public boolean isNewOrUpdatedEntity() {
-        return id == null || this.updated == 1;
-    }
 }

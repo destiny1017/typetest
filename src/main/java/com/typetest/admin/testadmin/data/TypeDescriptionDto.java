@@ -9,13 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TypeDescriptionDto {
-    private Long id;
+public class TypeDescriptionDto extends EntityState {
     private Integer descNum;
     private String description;
-
-    private Integer updated = 0;
-    private Integer deleted = 0;
 
     public TypeDescriptionDto(TypeDescription typeDescription) {
         this.id = typeDescription.getId();
@@ -32,11 +28,4 @@ public class TypeDescriptionDto {
                 .build();
     }
 
-    public boolean isDeletedEntity() {
-        return id != null && this.deleted == 1;
-    }
-
-    public boolean isNewOrUpdatedEntity() {
-        return id == null || this.updated == 1;
-    }
 }

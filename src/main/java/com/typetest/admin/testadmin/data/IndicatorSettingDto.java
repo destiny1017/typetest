@@ -10,13 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class IndicatorSettingDto {
-    private Long id;
+public class IndicatorSettingDto extends EntityState {
     private String result;
     private Integer cuttingPoint;
-
-    private Integer updated = 0;
-    private Integer deleted = 0;
 
     public IndicatorSettingDto(IndicatorSetting indicatorSetting) {
         this.id = indicatorSetting.getId();
@@ -39,11 +35,4 @@ public class IndicatorSettingDto {
                 cuttingPoint == null;
     }
 
-    public boolean isDeletedEntity() {
-        return id != null && this.deleted == 1;
-    }
-
-    public boolean isNewOrUpdatedEntity() {
-        return id == null || this.updated == 1;
-    }
 }

@@ -13,14 +13,10 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TypeIndicatorDto {
-    private Long id;
+public class TypeIndicatorDto extends EntityState {
     private Integer indicatorNum;
     private String indicatorName;
     private List<IndicatorSettingDto> indicatorSettings = new ArrayList<>();
-
-    private Integer updated = 0;
-    private Integer deleted = 0;
 
     public TypeIndicatorDto(TypeIndicator typeIndicator) {
         this.id = typeIndicator.getId();
@@ -44,11 +40,4 @@ public class TypeIndicatorDto {
                 indicatorNum == null;
     }
 
-    public boolean isDeletedEntity() {
-        return id != null && this.deleted == 1;
-    }
-
-    public boolean isNewOrUpdatedEntity() {
-        return id == null || this.updated == 1;
-    }
 }

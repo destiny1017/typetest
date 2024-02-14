@@ -100,24 +100,24 @@ public class TestAdminServiceImpl implements TestAdminService {
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
 
         for (TypeIndicatorDto typeIndicatorDto : indicatorDtoList) {
-            if(typeIndicatorDto.isNewOrUpdatedEntity()) {
-                TypeIndicator indicator = typeIndicatorDto.toEntity(testCodeInfo);
+            TypeIndicator indicator = typeIndicatorDto.toEntity(testCodeInfo);
+            if(isNewOrUpdatedEntity(typeIndicatorDto)) {
                 indicator = typeIndicatorRepository.save(indicator);
-                saveIndicatorSettings(testCodeInfo, indicator, typeIndicatorDto.getIndicatorSettings());
-            } else if(typeIndicatorDto.isDeletedEntity()) {
+            } else if(isDeletedEntity(typeIndicatorDto)) {
                 typeIndicatorRepository.deleteById(typeIndicatorDto.getId());
                 resultCode = ResultCode.NONE_INDICATOR_TEST;
             }
+            saveIndicatorSettings(testCodeInfo, indicator, typeIndicatorDto.getIndicatorSettings());
         }
         return resultCode;
     }
 
     private void saveIndicatorSettings(TestCodeInfo testCodeInfo, TypeIndicator indicator, List<IndicatorSettingDto> indicatorSettings) {
         for (IndicatorSettingDto indicatorSettingDto : indicatorSettings) {
-            if(indicatorSettingDto.isNewOrUpdatedEntity()) {
+            if(isNewOrUpdatedEntity(indicatorSettingDto)) {
                 IndicatorSetting indicatorSetting = indicatorSettingDto.toEntity(indicator, testCodeInfo);
                 indicatorSettingRepository.save(indicatorSetting);
-            } else if(indicatorSettingDto.isDeletedEntity()) {
+            } else if(isDeletedEntity(indicatorSettingDto)) {
                 indicatorSettingRepository.deleteById(indicatorSettingDto.getId());
             }
         }
@@ -129,24 +129,24 @@ public class TestAdminServiceImpl implements TestAdminService {
         TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         for (QuestionDto questionDto : questionDtoList) {
-            if (questionDto.isNewOrUpdatedEntity()) {
-                PersonalityQuestion question = questionDto.toEntity(testCodeInfo);
+            PersonalityQuestion question = questionDto.toEntity(testCodeInfo);
+            if (isNewOrUpdatedEntity(questionDto)) {
                 personalityQuestionRepository.save(question);
-                saveAnswerList(testCodeInfo, question, questionDto.getAnswerList());
-            } else if(questionDto.isDeletedEntity()) {
+            } else if(isDeletedEntity(questionDto)) {
                 personalityQuestionRepository.deleteById(questionDto.getId());
             }
+            saveAnswerList(testCodeInfo, question, questionDto.getAnswerList());
         }
     }
 
     private void saveAnswerList(TestCodeInfo testCodeInfo, PersonalityQuestion question, List<AnswerDto> answerList) {
         for (AnswerDto answerDto : answerList) {
-            if(answerDto.isNewOrUpdatedEntity()) {
+            if(isNewOrUpdatedEntity(answerDto)) {
                 TypeIndicator indicator = typeIndicatorRepository.findById(answerDto.getTypeIndicatorId())
                         .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, answerDto.getTypeIndicatorId().toString()));
                 PersonalityAnswer answer = answerDto.toEntity(testCodeInfo, question, indicator);
                 personalityAnswerRepository.save(answer);
-            } else if(answerDto.isDeletedEntity()) {
+            } else if(isDeletedEntity(answerDto)) {
                 personalityAnswerRepository.deleteById(answerDto.getId());
             }
         }
@@ -158,28 +158,26 @@ public class TestAdminServiceImpl implements TestAdminService {
         TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         for (TypeInfoDto typeInfoDto : typeInfoDtoList) {
-            if(typeInfoDto.isNewOrUpdatedEntity()) {
-                TypeInfo typeInfo = typeInfoDto.toEntity(testCodeInfo);
-
+            TypeInfo typeInfo = typeInfoDto.toEntity(testCodeInfo);
+            if(isNewOrUpdatedEntity(typeInfoDto)) {
                 TypeRelationDto typeRelationDto = typeInfoDto.getTypeRelation();
                 typeRelationDto.setTypeInfoId(typeInfo.getId());
                 typeInfo.updateTypeRelation(typeRelationDto.toEntity());
                 typeInfoRepository.save(typeInfo);
-
-                saveTypeImages(typeInfoDto.getTypeImageList(), typeInfo);
-                saveTypeDescriptions(typeInfoDto.getTypeDescriptionList(), typeInfo);
-            } else if(typeInfoDto.isDeletedEntity()) {
+            } else if(isDeletedEntity(typeInfoDto)) {
                 typeInfoRepository.deleteById(typeInfoDto.getId());
             }
+            saveTypeImages(typeInfoDto.getTypeImageList(), typeInfo);
+            saveTypeDescriptions(typeInfoDto.getTypeDescriptionList(), typeInfo);
         }
     }
 
     private void saveTypeImages(List<TypeImageDto> typeImageList, TypeInfo typeInfo) {
         for (TypeImageDto typeImageDto : typeImageList) {
-            if(typeImageDto.isNewOrUpdatedEntity()) {
+            if(isNewOrUpdatedEntity(typeImageDto)) {
                 TypeImage typeImage = typeImageDto.toEntity(typeInfo);
                 typeImageRepository.save(typeImage);
-            } else if(typeImageDto.isDeletedEntity()) {
+            } else if(isDeletedEntity(typeImageDto)) {
                 typeImageRepository.deleteById(typeImageDto.getId());
             }
         }
@@ -187,10 +185,10 @@ public class TestAdminServiceImpl implements TestAdminService {
 
     private void saveTypeDescriptions(List<TypeDescriptionDto> typeDescriptionList, TypeInfo typeInfo) {
         for (TypeDescriptionDto typeDescriptionDto : typeDescriptionList) {
-            if(typeDescriptionDto.isNewOrUpdatedEntity()) {
+            if(isNewOrUpdatedEntity(typeDescriptionDto)) {
                 TypeDescription typeDescription = typeDescriptionDto.toEntity(typeInfo);
                 typeDescriptionRepository.save(typeDescription);
-            } else if(typeDescriptionDto.isDeletedEntity()) {
+            } else if(isDeletedEntity(typeDescriptionDto)) {
                 typeDescriptionRepository.deleteById(typeDescriptionDto.getId());
             }
         }
@@ -243,5 +241,14 @@ public class TestAdminServiceImpl implements TestAdminService {
         TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
         testCodeInfoRepository.disableTest(testCodeInfo);
+    }
+
+    private boolean isDeletedEntity(EntityState dto) {
+        return dto.getId() != null && dto.getDeleted() == 1;
+    }
+
+    private boolean isNewOrUpdatedEntity(EntityState dto) {
+        return (dto.getId() == null && dto.getDeleted() == 0) ||
+                (dto.getId() != null && dto.getUpdated() == 1);
     }
 }

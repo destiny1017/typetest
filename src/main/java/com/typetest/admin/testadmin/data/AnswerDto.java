@@ -12,8 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AnswerDto {
-    private Long id;
+public class AnswerDto extends EntityState {
+//    private Long id;
     private String answer;
     private Integer point;
     private String answerImage;
@@ -21,8 +21,8 @@ public class AnswerDto {
     private Long typeIndicatorId;
     private TypeIndicator typeIndicator;
 
-    private Integer updated = 0;
-    private Integer deleted = 0;
+//    private Integer updated = 0;
+//    private Integer deleted = 0;
 
     public AnswerDto(PersonalityAnswer answer) {
         this.id = answer.getId();
@@ -54,11 +54,4 @@ public class AnswerDto {
                 typeIndicatorId == null;
     }
 
-    public boolean isDeletedEntity() {
-        return id != null && this.deleted == 1;
-    }
-
-    public boolean isNewOrUpdatedEntity() {
-        return id == null || this.updated == 1;
-    }
 }
