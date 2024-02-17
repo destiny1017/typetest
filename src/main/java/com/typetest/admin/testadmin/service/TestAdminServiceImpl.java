@@ -33,11 +33,10 @@ public class TestAdminServiceImpl implements TestAdminService {
     public TestInfoDto createTestInfoDto(String testCode) {
         if(testCode.equals("NEW")) {
             return new TestInfoDto();
-        } else {
-            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
-                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
-            return new TestInfoDto(testCodeInfo);
         }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        return new TestInfoDto(testCodeInfo);
     }
 
     @Override
@@ -54,42 +53,39 @@ public class TestAdminServiceImpl implements TestAdminService {
     public List<TypeIndicatorDto> findIndicatorInfo(String testCode) {
         if(testCode.equals("NEW")) {
             return new ArrayList<>();
-        } else {
-            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
-                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
-            List<TypeIndicator> indicatorList = typeIndicatorRepository.findByTestCode(testCodeInfo);
-            return indicatorList.stream()
-                    .map(TypeIndicatorDto::new)
-                    .collect(Collectors.toList());
         }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        List<TypeIndicator> indicatorList = typeIndicatorRepository.findByTestCode(testCodeInfo);
+        return indicatorList.stream()
+                .map(TypeIndicatorDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<QuestionDto> findQuestionInfo(String testCode) {
         if(testCode.equals("NEW")) {
             return new ArrayList<>();
-        } else {
-            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
-                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
-            List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCodeInfo);
-            return questionList.stream()
-                    .map(QuestionDto::new)
-                    .collect(Collectors.toList());
         }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+        List<PersonalityQuestion> questionList = personalityQuestionRepository.findByTestCode(testCodeInfo);
+        return questionList.stream()
+                .map(QuestionDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<TypeInfoDto> findTypeInfo(String testCode) {
         if(testCode.equals("NEW")) {
             return new ArrayList<>();
-        } else {
-            TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
-                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
-                List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo);
-                return typeInfoList.stream()
-                        .map(TypeInfoDto::new)
-                        .collect(Collectors.toList());
         }
+        TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
+                .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
+            List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo);
+            return typeInfoList.stream()
+                    .map(TypeInfoDto::new)
+                    .collect(Collectors.toList());
     }
 
     @Override
