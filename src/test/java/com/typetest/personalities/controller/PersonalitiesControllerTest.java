@@ -1,7 +1,7 @@
 package com.typetest.personalities.controller;
 
 import com.typetest.ControllerTestSupport;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.TestResultDto;
@@ -17,7 +17,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Optional;
 

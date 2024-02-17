@@ -4,9 +4,8 @@ import com.typetest.admin.testadmin.data.QuestionDto;
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.admin.testadmin.data.TypeIndicatorDto;
 import com.typetest.admin.testadmin.data.TypeInfoDto;
-import com.typetest.constant.ResultCode;
+import com.typetest.common.constant.ResultCode;
 import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.domain.TypeIndicator;
 
 import java.util.List;
 

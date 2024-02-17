@@ -1,9 +1,9 @@
 package com.typetest.admin.testadmin.service;
 
 import com.typetest.admin.testadmin.data.*;
-import com.typetest.constant.ErrorCode;
-import com.typetest.constant.ResultCode;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.constant.ErrorCode;
+import com.typetest.common.constant.ResultCode;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,6 @@ public class TestAdminServiceImpl implements TestAdminService {
     private final TypeInfoRepository typeInfoRepository;
     private final TypeImageRepository typeImageRepository;
     private final TypeDescriptionRepository typeDescriptionRepository;
-    private final TypeRelationRepository typeRelationRepository;
 
     @Override
     public TestInfoDto createTestInfoDto(String testCode) {
@@ -82,10 +81,10 @@ public class TestAdminServiceImpl implements TestAdminService {
         }
         TestCodeInfo testCodeInfo = testCodeInfoRepository.findById(testCode)
                 .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, testCode));
-            List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo);
-            return typeInfoList.stream()
-                    .map(TypeInfoDto::new)
-                    .collect(Collectors.toList());
+        List<TypeInfo> typeInfoList = typeInfoRepository.findByTestCode(testCodeInfo);
+        return typeInfoList.stream()
+                .map(TypeInfoDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override

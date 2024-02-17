@@ -1,8 +1,8 @@
 package com.typetest.common;
 
-import com.typetest.constant.ErrorCode;
-import com.typetest.exception.ErrorResponse;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.constant.ErrorCode;
+import com.typetest.common.exception.ErrorResponse;
+import com.typetest.common.exception.TypetestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

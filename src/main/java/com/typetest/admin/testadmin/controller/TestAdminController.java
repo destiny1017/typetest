@@ -2,12 +2,10 @@ package com.typetest.admin.testadmin.controller;
 
 import com.typetest.admin.testadmin.data.*;
 import com.typetest.admin.testadmin.service.TestAdminService;
-import com.typetest.constant.ResultCode;
+import com.typetest.common.constant.ResultCode;
 import com.typetest.personalities.data.AnswerType;
 import com.typetest.personalities.data.Tendency;
-import com.typetest.personalities.domain.IndicatorSetting;
 import com.typetest.personalities.domain.TestCodeInfo;
-import com.typetest.personalities.domain.TypeIndicator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

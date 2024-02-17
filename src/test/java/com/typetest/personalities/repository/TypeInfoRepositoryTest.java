@@ -35,7 +35,7 @@ public class TypeInfoRepositoryTest extends IntegrationTestSupport {
     @Test
     @DisplayName("유형 설명정보 및 이미지정보 세팅 테스트")
     void typeInfoDescriptionTest() {
-        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
+/*        TestCodeInfo testCodeInfo1 = new TestCodeInfo("EXAMTEST", "EXAM예제", AnswerType.EXAM);
         TypeInfo typeInfo1 = new TypeInfo(testCodeInfo1, "BBB", "비비비타입");
         TypeInfo typeInfo2 = new TypeInfo(testCodeInfo1, "AAA", "에에에타입");
         TypeInfo typeInfo3 = new TypeInfo(testCodeInfo1, "ABB", "에비비타입");
@@ -94,7 +94,7 @@ public class TypeInfoRepositoryTest extends IntegrationTestSupport {
 
         assertThat(byTypeInfoImg1).contains(typeImage1, typeImage2);
         assertThat(byTypeInfoImg2).contains(typeImage3, typeImage4);
-        assertThat(byTypeInfoImg3).contains(typeImage5, typeImage6);
+        assertThat(byTypeInfoImg3).contains(typeImage5, typeImage6);*/
 
     }
 

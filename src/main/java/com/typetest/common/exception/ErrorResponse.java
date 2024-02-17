@@ -1,6 +1,6 @@
-package com.typetest.exception;
+package com.typetest.common.exception;
 
-import com.typetest.constant.ErrorCode;
+import com.typetest.common.constant.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;

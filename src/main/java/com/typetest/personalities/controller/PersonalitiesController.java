@@ -1,7 +1,7 @@
 package com.typetest.personalities.controller;
 
-import com.typetest.constant.ErrorCode;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.constant.ErrorCode;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.personalities.data.PersonalitiesAnswerInfo;
 import com.typetest.personalities.data.TestResultDto;
 import com.typetest.personalities.domain.TestCodeInfo;

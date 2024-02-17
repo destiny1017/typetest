@@ -1,15 +1,13 @@
 package com.typetest.mypage.service;
 
 import com.typetest.IntegrationTestSupport;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.data.UserTendencyInfo;
 import com.typetest.personalities.domain.*;
 import com.typetest.personalities.repository.*;
-import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import com.typetest.mypage.data.TypeInfoData;
-import com.typetest.personalities.data.AnswerType;
 import com.typetest.user.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -196,6 +196,7 @@ function indicatorDeleteEvent(e) {
     let targetNum = e.target.id.replace("indiDel", "");
     $("#indicatorDiv" + targetNum).hide();
     $("#indicatorDiv" + targetNum + ' input:not([type="hidden"])').val(0);
+    // todo settings deleted value도 같이 업데이트 하도록 수정 필요
     $(`[name="indicatorList[${targetNum - 1}].deleted"]`).val(1);
     indicatorSeq();
 }

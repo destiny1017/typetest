@@ -1,4 +1,4 @@
-package com.typetest.constant;
+package com.typetest.common.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

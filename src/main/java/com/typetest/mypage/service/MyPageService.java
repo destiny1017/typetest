@@ -1,7 +1,7 @@
 package com.typetest.mypage.service;
 
-import com.typetest.constant.ErrorCode;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.constant.ErrorCode;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.personalities.data.Tendency;
 import com.typetest.personalities.data.UserTendencyInfo;
 import com.typetest.user.domain.User;

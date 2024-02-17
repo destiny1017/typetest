@@ -1,9 +1,8 @@
 package com.typetest.admin.useradmin.service;
 
 import com.typetest.admin.useradmin.data.UserInfoDto;
-import com.typetest.constant.ErrorCode;
-import com.typetest.exception.NotFoundEntityException;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.constant.ErrorCode;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

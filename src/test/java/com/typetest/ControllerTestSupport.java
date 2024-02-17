@@ -5,7 +5,7 @@ import com.typetest.admin.testadmin.controller.TestAdminController;
 import com.typetest.admin.testadmin.service.TestAdminService;
 import com.typetest.admin.useradmin.controller.UserAdminApiController;
 import com.typetest.admin.useradmin.service.UserAdminService;
-import com.typetest.config.SecurityConfig;
+import com.typetest.common.config.SecurityConfig;
 import com.typetest.mypage.controller.MyPageController;
 import com.typetest.mypage.service.MyPageService;
 import com.typetest.personalities.controller.PersonalitiesController;

@@ -1,4 +1,4 @@
-package com.typetest.config;
+package com.typetest.common.config;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 

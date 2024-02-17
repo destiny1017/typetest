@@ -1,8 +1,8 @@
 package com.typetest.personalities.service;
 
-import com.typetest.constant.ErrorCode;
-import com.typetest.exception.NotFoundEntityException;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.constant.ErrorCode;
+import com.typetest.common.exception.NotFoundEntityException;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.personalities.data.*;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor

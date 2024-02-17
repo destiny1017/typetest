@@ -1,4 +1,4 @@
-package com.typetest.config;
+package com.typetest.common.config;
 
 import com.typetest.user.domain.Role;
 import com.typetest.user.service.OAuthLoginService;

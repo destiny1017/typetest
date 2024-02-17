@@ -2,7 +2,7 @@ package com.typetest.admin.useradmin.service;
 
 import com.typetest.IntegrationTestSupport;
 import com.typetest.admin.useradmin.data.UserInfoDto;
-import com.typetest.exception.TypetestException;
+import com.typetest.common.exception.TypetestException;
 import com.typetest.user.domain.Role;
 import com.typetest.user.domain.User;
 import com.typetest.user.repository.UserRepository;

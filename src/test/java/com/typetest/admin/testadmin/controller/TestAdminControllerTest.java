@@ -5,7 +5,7 @@ import com.typetest.admin.testadmin.data.IndicatorForm;
 import com.typetest.admin.testadmin.data.QuestionForm;
 import com.typetest.admin.testadmin.data.TestInfoDto;
 import com.typetest.admin.testadmin.data.TypeInfoForm;
-import com.typetest.constant.ResultCode;
+import com.typetest.common.constant.ResultCode;
 import com.typetest.personalities.data.AnswerType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
