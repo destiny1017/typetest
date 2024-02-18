@@ -133,8 +133,9 @@ public class PersonalityTestServiceImpl implements PersonalityTestService {
         // 테스트 상세 응답 정보 저장
         Map<Integer, Long> answer = answerInfo.getAnswer();
         for (int key : answer.keySet()) {
-            Optional<PersonalityAnswer> findAnswer = personalityAnswerRepository.findById(answer.get(key));
-            TestResultDetail ptd = new TestResultDetail(testResult, user, testCode, key, findAnswer.get());
+            PersonalityAnswer findAnswer = personalityAnswerRepository.findById(answer.get(key))
+                    .orElseThrow(() -> new TypetestException(ErrorCode.NOT_FOUND_ENTITY, answer.get(key).toString()));
+            TestResultDetail ptd = new TestResultDetail(testResult, user, testCode, key, findAnswer);
             testResultDetailRepository.save(ptd);
         }
     }

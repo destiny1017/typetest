@@ -40,7 +40,6 @@ public class PersonalitiesController {
 
     @GetMapping("/{testCode}/testAnswer")
     public String testAnswer(@PathVariable String testCode, Model model) {
-        Optional<TestCodeInfo> testCodeInfoOp = testCodeInfoRepository.findById(testCode);
         model.addAttribute("testCode", testCode);
         model.addAttribute("questions", personalityTestService.getQuestions(testCode));
         model.addAttribute("questionCount", personalityTestService.getQuestionCnt(testCode));
