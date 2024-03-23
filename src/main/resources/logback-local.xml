@@ -7,10 +7,10 @@
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M -%msg%n"/>
     <property name="LOG_PATH" value="D:/development/logs/${spring.application.name}"/>
 
-    <springProfile name="develop">
+    <springProfile name="local">
         <appender name="dailyRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <filter class="ch.qos.logback.classic.filter.LevelFilter">
-                <level>debug</level>
+                <level>DEBUG</level>
                 <!--<level>error</level>-->
                 <onMatch>ACCEPT</onMatch>
                 <onMismatch>DENY</onMismatch>

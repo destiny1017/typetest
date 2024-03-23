@@ -5,6 +5,7 @@ import com.typetest.user.dto.OAuthAttributes;
 import com.typetest.user.dto.SessionUser;
 import com.typetest.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
@@ -44,6 +46,7 @@ public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, O
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user)); // SessionUser (직렬화된 dto 클래스 사용)
+        log.debug("Oauth2 login info : platform={}, id={}, name={}, email={}", registrationId, user.getId(), user.getName(), user.getEmail());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
