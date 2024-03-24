@@ -50,10 +50,12 @@ public class MyPageService {
      */
     public UserTendencyInfo getUserTendencyInfo(User user) {
         Map<Tendency, Long> tendencyMap = testResultRepository.countTendency(user);
-        long totalTendencyCnt =  tendencyMap.values().stream().mapToLong(Long::longValue).sum();
-        for (Tendency t : Tendency.values()) {
-            Long tendencyValue = tendencyMap.getOrDefault(t, 0L);
-            tendencyMap.put(t, (tendencyValue * 10) / totalTendencyCnt);
+        if (tendencyMap.size() > 0) {
+            long totalTendencyCnt =  tendencyMap.values().stream().mapToLong(Long::longValue).sum();
+            for (Tendency t : Tendency.values()) {
+                Long tendencyValue = tendencyMap.getOrDefault(t, 0L);
+                tendencyMap.put(t, (tendencyValue * 10) / totalTendencyCnt);
+            }
         }
         return new UserTendencyInfo(tendencyMap);
     }
