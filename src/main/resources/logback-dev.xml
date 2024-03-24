@@ -10,7 +10,7 @@
     <springProfile name="dev">
         <appender name="dailyRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <filter class="ch.qos.logback.classic.filter.LevelFilter">
-                <level>debug</level>
+                <level>DEBUG</level>
                 <!--<level>error</level>-->
                 <onMatch>ACCEPT</onMatch>
                 <onMismatch>DENY</onMismatch>
